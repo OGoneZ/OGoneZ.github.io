@@ -1,0 +1,750 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 单链表链表是一种物理存储单元上非连续、非顺序的存储结构，插入和删除速度快，并且不需要像数组一样预先开辟空间链表结构可以充分利用计算机内存空间，实现灵活地内存动态管理。  链表由一系列结点组成，每个结点包括两个部分：  存储数据元素的数据域 存储下一个结点地址的指针域  1.1 链表的创建1.定义结构体存储结点信息 1234struct node &#123;	int data;  &#x2F;&#x2F;存储当前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表">
+<meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 单链表链表是一种物理存储单元上非连续、非顺序的存储结构，插入和删除速度快，并且不需要像数组一样预先开辟空间链表结构可以充分利用计算机内存空间，实现灵活地内存动态管理。  链表由一系列结点组成，每个结点包括两个部分：  存储数据元素的数据域 存储下一个结点地址的指针域  1.1 链表的创建1.定义结构体存储结点信息 1234struct node &#123;	int data;  &#x2F;&#x2F;存储当前">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/cpp_assets/c_linklist_info%201.png">
+<meta property="og:image" content="http://example.com/cpp_assets/c_link_delete%201.gif">
+<meta property="og:image" content="http://example.com/cpp_assets/c_link_insert%201.gif">
+<meta property="og:image" content="http://example.com/cpp_assets/c_double_link%201.png">
+<meta property="og:image" content="http://example.com/cpp_assets/c_double_delete%201.gif">
+<meta property="og:image" content="http://example.com/cpp_assets/c_double_insert%201.gif">
+<meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-26T13:15:26.329Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/cpp_assets/c_linklist_info%201.png">
+  
+  
+  
+  <title>链表 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="链表"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-26 00:00" pubdate>
+          2025年10月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">链表</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-单链表"><a href="#1-单链表" class="headerlink" title="1 单链表"></a>1 单链表</h1><p>链表是一种物理存储单元上<strong>非连续、非顺序的存储结构</strong>，插入和删除速度快，并且不需要像数组一样预先开辟空间链表结构可以充分利用计算机内存空间，实现灵活地内存动态管理。</p>
+<p><img src="/../../../cpp_assets/c_linklist_info%201.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<p>链表由一系列结点组成，每个结点包括两个部分：</p>
+<ul>
+<li>存储数据元素的数据域</li>
+<li>存储下一个结点地址的指针域</li>
+</ul>
+<h2 id="1-1-链表的创建"><a href="#1-1-链表的创建" class="headerlink" title="1.1 链表的创建"></a>1.1 链表的创建</h2><p><strong>1.定义结构体存储结点信息</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span> &#123;<br>	<span class="hljs-type">int</span> data;  <span class="hljs-comment">//存储当前结点的数据值</span><br>	node *next;  /存储下一个结点的地址<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.创建头尾节点</strong></p>
+<ul>
+<li>使用 <code>new</code> 运算符来动态申请空间</li>
+<li>使用 <code>-&gt;</code> 结构体指针运算符来访问内部成员</li>
+<li>头结点数据域通常不做存储（删除结点只能通过它前一个结点指向它后一个结点，头结点没有前一个结点）</li>
+</ul>
+<p><code>*head.data</code> 和 <code>head-&gt;data</code> 效果是一样的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">node *head, *tail;  <span class="hljs-comment">//定义头结点和尾结点</span><br>head = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//动态申请内存空间</span><br>head-&gt;next = <span class="hljs-literal">NULL</span>;  <span class="hljs-comment">//指针域初始化为空</span><br>tail = head;  <span class="hljs-comment">//此时的头结点也是尾结点</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3.添加新结点</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> x;<br><span class="hljs-keyword">while</span>(cin &gt;&gt; x) &#123;  <span class="hljs-comment">//会自动获取到输入内容的结束位置，再终止输入</span><br>	node *p = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//定义新结点p，动态申请新的空间</span><br>	p-&gt;data = x;  <span class="hljs-comment">//给数据域赋值</span><br>	p-&gt;next = <span class="hljs-literal">NULL</span>;  <span class="hljs-comment">//指针域初始化为空</span><br>	tail-&gt;next = p;  <span class="hljs-comment">//连到尾结点后面</span><br>	tail = p;  <span class="hljs-comment">//尾结点更新为当前的p</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="1-2-链表的遍历"><a href="#1-2-链表的遍历" class="headerlink" title="1.2 链表的遍历"></a>1.2 链表的遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">node *p = head;  <span class="hljs-comment">//使用p作为当前结点，从头开始遍历</span><br><span class="hljs-keyword">while</span>(p-&gt;next != <span class="hljs-literal">NULL</span>) &#123;  <span class="hljs-comment">//判断下一个结点是否为空</span><br>	cout &lt;&lt; p-&gt;next-&gt;data &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">//输出下一个结点的数据，因为头结点无数据</span><br>	p = p-&gt;next;  <span class="hljs-comment">//p更新为下一个结点</span><br>&#125; <br></code></pre></td></tr></table></figure>
+
+<h2 id="1-3-链表的删除"><a href="#1-3-链表的删除" class="headerlink" title="1.3 链表的删除"></a>1.3 链表的删除</h2><p>删除单链表中p结点的下一个结点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">p-&gt;next = p-&gt;next-&gt;next;  <span class="hljs-comment">//将p所指的下一个结点修改为下一个结点的下一个结点</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../../../cpp_assets/c_link_delete%201.gif" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<h2 id="1-4-链表的插入"><a href="#1-4-链表的插入" class="headerlink" title="1.4 链表的插入"></a>1.4 链表的插入</h2><p>在p结点之后插入一个结点s</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">node *s = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//动态申请新的空间</span><br>s-&gt;next = p-&gt;next;  <span class="hljs-comment">//先将新结点的指针域指向p的下一个结点</span><br>p-&gt;next = s;  <span class="hljs-comment">//再将p的下一个结点修改为s</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../../../cpp_assets/c_link_insert%201.gif" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<h2 id="1-5-链表和数组"><a href="#1-5-链表和数组" class="headerlink" title="1.5 链表和数组"></a>1.5 链表和数组</h2><p><strong>数组：</strong></p>
+<ul>
+<li>优点：<br>随机访问性强，查找速度快。</li>
+<li>缺点：<br>插入和删除效率低，，可能浪费内存，，内存空间要求高，数组大小固定，不能动态拓展。</li>
+</ul>
+<p><strong>链表：</strong></p>
+<ul>
+<li>优点：<br>插入删除速度快；内存利用率高，不会浪费内存；大小没有固定，拓展很灵活。</li>
+<li>缺点：<br>不能随机查找，必须从第一个开始遍历，查找效率低。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">查找</th>
+<th>插入</th>
+<th>删除</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">数组</td>
+<td align="center">O(1)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td align="center">链表</td>
+<td align="center">O(n)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<h1 id="2-双向链表"><a href="#2-双向链表" class="headerlink" title="2 双向链表"></a>2 双向链表</h1><p>双向链表也叫双链表，是链表的一种，它的每个数据结点中都有<strong>两个指针</strong>，分别指向<strong>直接后继</strong>和<strong>直接前驱</strong>，所以，从双向链表中的任意一个结点开始，都可以很方便地访问它的<strong>前驱结点</strong>和<strong>后继结点</strong>。</p>
+<p><img src="/../../../cpp_assets/c_double_link%201.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<p>双向链表每个节点有三个部分：</p>
+<ul>
+<li>存储数据元素的数据域</li>
+<li>存储上一个节点地址的指针域</li>
+<li>存储下一个结点地址的指针域</li>
+</ul>
+<h2 id="2-1-双链表的创建"><a href="#2-1-双链表的创建" class="headerlink" title="2.1 双链表的创建"></a>2.1 双链表的创建</h2><p><strong>1.定义结构体存储结点信息</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span> &#123;<br>	<span class="hljs-type">int</span> data;  <span class="hljs-comment">//存储当前结点的数据值</span><br>	node *pre, *next;  /存储前驱和后继结点的地址<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>2.创建头尾节点</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">node *head, *tail;  <span class="hljs-comment">//定义头结点和尾结点</span><br>head = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//动态申请内存空间</span><br>head-&gt;pre = <span class="hljs-literal">NULL</span>;  <span class="hljs-comment">//前驱指针初始化为空</span><br>head-&gt;next = <span class="hljs-literal">NULL</span>;  <span class="hljs-comment">//后继指针初始化为空</span><br>tail = head;  <span class="hljs-comment">//此时的头结点也是尾结点</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>3.添加新结点</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> x;<br><span class="hljs-keyword">while</span>(cin &gt;&gt; x) &#123;  <span class="hljs-comment">//会自动获取到输入内容的结束位置，再终止输入</span><br>	node *p = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//定义新结点p，动态申请新的空间</span><br>	p-&gt;data = x;  <span class="hljs-comment">//给数据域赋值</span><br>	p-&gt;pre = tail;  <span class="hljs-comment">//前驱指针指向前驱节点tail</span><br>	p-&gt;next = <span class="hljs-literal">NULL</span>;  <span class="hljs-comment">//后继指针初始化为空</span><br>	tail-&gt;next = p;  <span class="hljs-comment">//尾结点的后继指针指向p</span><br>	tail = p;  <span class="hljs-comment">//尾结点更新为当前的p</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-2-双链表的删除"><a href="#2-2-双链表的删除" class="headerlink" title="2.2 双链表的删除"></a>2.2 双链表的删除</h2><p>删除双链表中p结点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">p-&gt;pre-&gt;next = p-&gt;next;  <span class="hljs-comment">//将p上一个结点的后继指针指向p的下一个结点</span><br>p-&gt;next-&gt;pre = p-&gt;pre;  <span class="hljs-comment">//将p下一个结点的前驱指针指向p的上一个结点</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../../../cpp_assets/c_double_delete%201.gif" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<h2 id="2-3-双链表的插入"><a href="#2-3-双链表的插入" class="headerlink" title="2.3 双链表的插入"></a>2.3 双链表的插入</h2><p>在p结点之后插入一个结点s</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">node *s = <span class="hljs-keyword">new</span> node;  <span class="hljs-comment">//动态申请新的空间</span><br>s-&gt;next = p-&gt;next;  <span class="hljs-comment">//新结点的后继指针域指向p的下一个结点</span><br>s-&gt;pre = p;  <span class="hljs-comment">//新结点的前驱指针指向p</span><br>p-&gt;next-&gt;pre = s;  <span class="hljs-comment">// p的下一个结点的前驱指针指向s</span><br>p-&gt;next = s;  <span class="hljs-comment">//p的后继指针指向s</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/../../../cpp_assets/c_double_insert%201.gif" srcset="/img/loading.gif" lazyload alt="Pasted-image-2025040117473344f072a03e24e176.png"></p>
+<h2 id="2-4-双向循环链表"><a href="#2-4-双向循环链表" class="headerlink" title="2.4 双向循环链表"></a>2.4 双向循环链表</h2><p>双向循环链表：最后一个结点的后继指针指向头结点，且头结点的前驱指针指向最后一个结点。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">head-&gt;pre = tail;<br>tail-&gt;next = head;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-5-双链表优缺点"><a href="#2-5-双链表优缺点" class="headerlink" title="2.5 双链表优缺点"></a>2.5 双链表优缺点</h2><ul>
+<li><strong>优点：</strong><br>从双向链表中的任意一个结点开始，都可以很方便地访问前驱结点和后继结点</li>
+<li><strong>缺点：</strong><br>增加删除节点复杂，需要多分配一个指针存储空间</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-%E7%AE%97%E6%B3%95/" class="category-chain-item">C++算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="print-no-link">#数据结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>链表</div>
+      <div>http://example.com/2025/10/26/C++与算法/数据结构/链表/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/" title="树">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/" title="高精度加减">
+                        <span class="hidden-mobile">高精度加减</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

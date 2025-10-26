@@ -1,0 +1,819 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 字符数组 strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面，返回charr1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符数组与字符串">
+<meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 字符数组 strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面，返回charr1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/cpp_assets/c_string.png">
+<meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-26T13:14:51.248Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="C基本语法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/cpp_assets/c_string.png">
+  
+  
+  
+  <title>字符数组与字符串 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="字符数组与字符串"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-26 00:00" pubdate>
+          2025年10月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">字符数组与字符串</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-字符数组"><a href="#1-字符数组" class="headerlink" title="1 字符数组"></a>1 字符数组</h1><ul>
+<li><code>strlen(charr)</code> 返回字符串的长度，不包含结束符\0</li>
+<li><code>strcpy(charr1, charr2)</code> 复制字符串，字符串charr2复制给charr1，返回charr1</li>
+<li><code>strncpy(charr1, charr2)</code> 将charr2前n个字符复制给charr1</li>
+<li><code>strcat(charr1, charr2)</code> 拼接字符串，字符串charr2拼接在charr1后面，返回charr1</li>
+<li><code>strncat(charr1, charr2)</code> 将字符串charr2前n个字符拼接到charr1<ul>
+<li><strong>注</strong>：如果添加或者复制后的charr1数组越界则会报错</li>
+</ul>
+</li>
+<li><code>strcmp(charr1,charr2)</code> 比较字符串，如果charr1&gt;charr2 返回正整数，charr1&#x3D;charr2 返回0，charr1&lt;charr2 返回负整数</li>
+<li><code>strncmp(charr1,charr2)</code> 比较charr1和charr2的前n个字符</li>
+</ul>
+<p>字符数组转 <code>int</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;123456&quot;</span>;<br><span class="hljs-type">int</span> d = <span class="hljs-built_in">atoi</span>(a);<br></code></pre></td></tr></table></figure>
+
+<p>字符数组转 &#96;string</p>
+<ul>
+<li><p>直接赋值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello&quot;</span>;<br>string s = a;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello world&quot;</span>;  <br><span class="hljs-function">string <span class="hljs-title">str1</span><span class="hljs-params">(a)</span></span>;  <span class="hljs-comment">// 全部转换</span><br><span class="hljs-function">string <span class="hljs-title">str2</span><span class="hljs-params">(a, <span class="hljs-number">5</span>)</span></span>;  <span class="hljs-comment">// 指定长度转换</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="2-string类"><a href="#2-string类" class="headerlink" title="2 string类"></a>2 string类</h1><h2 id="2-1-基础概念"><a href="#2-1-基础概念" class="headerlink" title="2.1 基础概念"></a>2.1 基础概念</h2><p>在 <code>#inlcude &lt;string&gt;</code> 中使用</p>
+<blockquote>
+<p><code>string</code>不是<strong>基本数据类型</strong>，是C++中对<strong>char</strong>封装成的<strong>类</strong>。主要用于<strong>字符串</strong>处理，可以使用<strong>输入输出流</strong>方式直接进行<code>string</code>操作，也可以通过<strong>文件</strong>等手段进行<code>string</code>操作。</p>
+</blockquote>
+<p><img src="/../../../cpp_assets/c_string.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-2-声明"><a href="#2-2-声明" class="headerlink" title="2.2 声明"></a>2.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">string s; <span class="hljs-comment">//空字符串</span><br><span class="hljs-function">string <span class="hljs-title">s1</span><span class="hljs-params">(<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;a&#x27;</span>)</span></span>; <span class="hljs-comment">//5个a</span><br>string s2 = <span class="hljs-string">&quot;123456&quot;</span>; <span class="hljs-comment">//s2为123456</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="2-3-输入输出"><a href="#2-3-输入输出" class="headerlink" title="2.3 输入输出"></a>2.3 输入输出</h2><ul>
+<li><p><code>cin &gt;&gt; s;</code>   读到空格、回车、文件结束符停止</p>
+</li>
+<li><p><code>getline(cin, s);</code> 读入一整行</p>
+</li>
+<li><p><code>cout &lt;&lt; s;</code> 输出整个字符串</p>
+</li>
+<li><p><code>cout &lt;&lt; s[2];</code> 按下标输出</p>
+</li>
+</ul>
+<h2 id="2-4-遍历"><a href="#2-4-遍历" class="headerlink" title="2.4 遍历"></a>2.4 遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>(); i++) cout &lt;&lt; s[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> c : s) cout &lt;&lt; c &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-5-常用函数"><a href="#2-5-常用函数" class="headerlink" title="2.5 常用函数"></a>2.5 常用函数</h2><ul>
+<li><code>str.length()</code>&#x2F;<code>str.size()</code> 返回字符串真实长度，不包含结束符\0</li>
+<li><code>sizeof(type)</code>数据类型用括号  <code>sizeof var_name</code>  变量名可以不用括号 </li>
+<li><code>str.empty()</code> 字符串判空，空串返回<code>true</code>，非空返回<code>false</code></li>
+<li><code>str1.insert(pos, str2)</code> 在str1下标pos处插入str2</li>
+<li><code>str.substr(pos,len)</code> 返回一个从下标pos开始截取长度为len的字符串</li>
+<li><code>str.erase(pos, len)</code> 删除从下标pos开始的len个字符</li>
+<li><code>str1.replace(pos, len, str2) </code> 将str1中下标为pos开始的len个元素替换为str2</li>
+<li><code>str.find(s, pos)</code> 从str中下标为pos的位置开始查找，返回s第一次出现的下标，查找不到返回 <code>string::npos</code></li>
+<li><code>str.clear()</code> 清空str中的内容</li>
+<li>string的拼接复制比较可以直接使用<code>+</code> <code>=</code> <code>&gt; &lt; &gt;= &lt;= != ==</code></li>
+</ul>
+<h4 id="size-获取大小"><a href="#size-获取大小" class="headerlink" title="size()  获取大小"></a><code>size()</code>  <strong>获取大小</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.size()</strong><br>返回<strong>元素数目</strong></p>
+</blockquote>
+<hr>
+<h4 id="length-获取长度"><a href="#length-获取长度" class="headerlink" title="length() 获取长度"></a><code>length()</code> <strong>获取长度</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.length()</strong><br>返回<strong>字符串长度</strong>, 与**size()**返回的数字相同</p>
+</blockquote>
+<hr>
+<h4 id="empty-判空"><a href="#empty-判空" class="headerlink" title="empty() 判空"></a><code>empty()</code> <strong>判空</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.empty()</strong><br>若为空, 返回<strong>true</strong>, 非空返回<strong>false</strong></p>
+</blockquote>
+<hr>
+<h4 id="clear-清空"><a href="#clear-清空" class="headerlink" title="clear() 清空"></a><code>clear()</code> <strong>清空</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.clear</strong>()<br><strong>清空所有元素</strong></p>
+</blockquote>
+<hr>
+<h4 id="push-back-尾部插入"><a href="#push-back-尾部插入" class="headerlink" title="push_back() 尾部插入"></a><code>push_back()</code> <strong>尾部插入</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.push_back(c)</strong><br><strong>尾部插入一个字符</strong>，可用+&#x3D;代替</p>
+</blockquote>
+<hr>
+<h4 id="pop-back-尾部删除"><a href="#pop-back-尾部删除" class="headerlink" title="pop_back() 尾部删除"></a><code>pop_back()</code> <strong>尾部删除</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.pop_back()</strong><br><strong>尾部删除一个元素</strong></p>
+</blockquote>
+<hr>
+<h4 id="back-访问尾部"><a href="#back-访问尾部" class="headerlink" title="back() 访问尾部"></a><code>back()</code> <strong>访问尾部</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.back()</strong><br><strong>访问尾部元素</strong></p>
+</blockquote>
+<hr>
+<h4 id="front-访问头部"><a href="#front-访问头部" class="headerlink" title="front() 访问头部"></a><code>front()</code> <strong>访问头部</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.front()</strong><br><strong>访问头部第一个元素</strong>，可用s[0]代替</p>
+</blockquote>
+<hr>
+<h4 id="insert-插入"><a href="#insert-插入" class="headerlink" title="insert() 插入"></a><code>insert()</code> <strong>插入</strong></h4><p>语法:</p>
+<blockquote>
+<p> <strong>s1.insert(pos, s2)</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.</span><span class="hljs-built_in">insert</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;bd&quot;</span>); <span class="hljs-comment">//在下标2处插入bd</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">insert</span> (<span class="hljs-number">4</span>, s2); <span class="hljs-comment">//在下标4处插入s2</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="erase-删除"><a href="#erase-删除" class="headerlink" title="erase() 删除"></a><code>erase()</code> <strong>删除</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.erase(pos, num)</strong><br><strong>s.erase(pos)</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s.<span class="hljs-built_in">erase</span>(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>); <span class="hljs-comment">//从下标2开始删除4个字符</span><br>s.<span class="hljs-built_in">erase</span>(<span class="hljs-number">3</span>) <span class="hljs-comment">//从下标3开始删除后面所有字符</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="substr-截取"><a href="#substr-截取" class="headerlink" title="substr() 截取"></a><code>substr()</code> <strong>截取</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.substr(pos, num)</strong><br><strong>s.substr(pos)</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s1 = s<span class="hljs-number">2.</span><span class="hljs-built_in">substr</span>(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标1开始截取3个字符</span><br>s1 = s<span class="hljs-number">2.</span><span class="hljs-built_in">substr</span>(<span class="hljs-number">2</span>); <span class="hljs-comment">//从下标2开始截取整个s2</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="find-查找"><a href="#find-查找" class="headerlink" title="find() 查找"></a><code>find()</code> <strong>查找</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s1.find(s2, pos)</strong><br><strong>s1.find(s2)</strong><br>查到返回<strong>下标</strong>, 查不到返回 <strong>string::npos</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.f</span>ind(<span class="hljs-string">&quot;3&quot;</span>); <span class="hljs-comment">//查找整个s1, 返回第一次出现&quot;3&quot;的下标</span><br>s<span class="hljs-number">1.f</span>ind(<span class="hljs-string">&quot;42&quot;</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">//从下标1开始向后查找, 返回第一次出现&quot;42&quot;的下标</span><br>s<span class="hljs-number">1.f</span>ind(s2, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标3开始向后查找, 返回第一次出现s2的下标</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="rfind-逆序查找"><a href="#rfind-逆序查找" class="headerlink" title="rfind 逆序查找"></a><code>rfind</code> <strong>逆序查找</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s1.rfind(s2, pos)</strong><br><strong>s1.rfind(s2)</strong><br>查到返回<strong>下标</strong>, 查不到返回 <strong>string::npos</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(<span class="hljs-string">&quot;3&quot;</span>); <span class="hljs-comment">//逆序查找整个s1, 返回第一次出现&quot;3&quot;的下标</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(<span class="hljs-string">&quot;42&quot;</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">//从下标1开始向前查找, 返回第一次出现&quot;42&quot;的下标</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(s2, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标3开始向前查找, 返回第一次出现s2的下标</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="reverse-逆置"><a href="#reverse-逆置" class="headerlink" title="reverse() 逆置"></a><code>reverse()</code> <strong>逆置</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>reverse(s.begin, s.end)</strong> &#x2F;&#x2F;包含在&lt;algorithm&gt;中<br><strong>字符串逆置</strong></p>
+</blockquote>
+<hr>
+<h4 id="to-string-int-转-string"><a href="#to-string-int-转-string" class="headerlink" title="to_string() int 转 string"></a><code>to_string()</code> <strong>int 转 string</strong></h4><p>语法</p>
+<blockquote>
+<p> <strong>to_string(int)</strong><br> 返回一个<strong>string</strong></p>
+</blockquote>
+<hr>
+<h4 id="stoi-string-转-int"><a href="#stoi-string-转-int" class="headerlink" title="stoi() string 转 int"></a><code>stoi()</code> <strong>string 转 int</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>stoi(string)</strong><br>返回一个<strong>int</strong></p>
+</blockquote>
+<hr>
+<h4 id="copy-复制"><a href="#copy-复制" class="headerlink" title="copy() 复制"></a><code>copy()</code> <strong>复制</strong></h4><p>语法:</p>
+<blockquote>
+<p><strong>s.copy(a, num, pos)</strong><br><strong>s.copy(a, num)</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">10</span>];<br>s.<span class="hljs-built_in">copy</span>(a, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">//从下标2开始复制5个字符到字符数组a</span><br>s.<span class="hljs-built_in">copy</span>(a,<span class="hljs-number">6</span>); <span class="hljs-comment">//从下标0开始复制6个字符到字符数组a</span><br></code></pre></td></tr></table></figure>
+
+<h1 id="3-字符数组和string类的区别"><a href="#3-字符数组和string类的区别" class="headerlink" title="3  字符数组和string类的区别"></a>3  字符数组和string类的区别</h1><ul>
+<li><code>string</code>是一个类，<code>string s=&quot;abcd&quot;;</code>中的s是一个对象</li>
+<li>初始化方式不同<ul>
+<li>字符数组后面有 [] ，string类型后面没有[]</li>
+<li>初始化的关键字一个是<code>char</code> 一个是<code>string</code></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> charr1[<span class="hljs-number">20</span>];<br><span class="hljs-type">char</span> charr2[] = <span class="hljs-string">&quot;Hello&quot;</span>;<br>string str1;<br>string str2 = <span class="hljs-string">&quot;Hello&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>都可以使用<code>cin cout</code>的方式进行输入输出，<code>getline</code>使用有区别</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> charr1[<span class="hljs-number">20</span>]; <br>cin.<span class="hljs-built_in">getline</span>(charr1,<span class="hljs-number">20</span>);<br>string str;<br><span class="hljs-built_in">getline</span>(cin,str);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>都可以使用下标来访问元素</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-%E7%AE%97%E6%B3%95/" class="category-chain-item">C++算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" class="print-no-link">#C基本语法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>字符数组与字符串</div>
+      <div>http://example.com/2025/10/26/C++与算法/字符数组与字符串/字符数组与字符串/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/" title="基础算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基础算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/" title="常见排序总结">
+                        <span class="hidden-mobile">常见排序总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
