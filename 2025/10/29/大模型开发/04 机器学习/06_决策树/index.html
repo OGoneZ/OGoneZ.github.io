@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 概述决策树（Decision Tree）是一种基于树形结构的算法，根据一系列条件判断逐步划分数据，缩小范围，最终得出预测结果。决策树由 4 部分组成：  根节点：树的节点，包含所有数据 内部节点：表示特征上的判断条件 分支：根据判断条件分出的路径 叶子节点：最终分类或回归的结果  决策树适用于需要规则化、可解释性和快速决策的场景，尤其在数据特征明确、样本量适中的情况下表现良好。在复杂任务中，它">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_决策树">
+<meta property="og:url" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/06_%E5%86%B3%E7%AD%96%E6%A0%91/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 概述决策树（Decision Tree）是一种基于树形结构的算法，根据一系列条件判断逐步划分数据，缩小范围，最终得出预测结果。决策树由 4 部分组成：  根节点：树的节点，包含所有数据 内部节点：表示特征上的判断条件 分支：根据判断条件分出的路径 叶子节点：最终分类或回归的结果  决策树适用于需要规则化、可解释性和快速决策的场景，尤其在数据特征明确、样本量适中的情况下表现良好。在复杂任务中，它">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/ai_assets/06_tree_direct.png">
+<meta property="og:image" content="http://example.com/ai_assets/06_decision_tree_plot.png">
+<meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-29T05:32:15.178Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/ai_assets/06_tree_direct.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>06_决策树 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="06_决策树"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-29 00:00" pubdate>
+          2025年10月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">06_决策树</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>决策树（Decision Tree）是一种基于树形结构的算法，根据一系列条件判断逐步划分数据，缩小范围，最终得出预测结果。决策树由 4 部分组成：</p>
+<ul>
+<li>根节点：树的节点，包含所有数据</li>
+<li>内部节点：表示特征上的判断条件</li>
+<li>分支：根据判断条件分出的路径</li>
+<li>叶子节点：最终分类或回归的结果</li>
+</ul>
+<p>决策树适用于需要规则化、可解释性和快速决策的场景，尤其在数据特征明确、样本量适中的情况下表现良好。在复杂任务中，它常作为基模型，与集成学习结合（如随机森林、梯度提升树）以提升性能。<br><img src="/../../../ai_assets/06_tree_direct.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-决策树工作流程"><a href="#2-决策树工作流程" class="headerlink" title="2 决策树工作流程"></a>2 决策树工作流程</h1><p>训练决策树模型有三个核心的步骤：特征选择、决策树构建和决策树剪枝。</p>
+<p>递归选择最优特征，并根据该特征对训练数据进行划分，使得对各个子数据集有一个最好的分类。</p>
+<ol>
+<li>首先构建根结点，将所有训练数据都放在根结点。</li>
+<li>选择一个最优特征，按照这一特征将训练数据集划分成子集，使得各个子集有一个在当前条件下最好的分类。</li>
+<li>如果这些子集已经能够被基本正确分类，那么构建叶结点，并将这些子集分到所对应的叶结点中去； 如果还有子集不能被基本正确分类，那么就对这些子集选择新的最优特征，继续对其进行划分并构建相应的结点。</li>
+<li>如此递归直至所有训练数据子集被基本正确分类，或者没有合适的特征为止。</li>
+</ol>
+<p>最后每个子集都被分到叶结点有了明确的类，这就生成了一棵决策树。这样生成的决策树对训练数据有很好的分类能力，但可能发生过拟合现象。因此需要对已生成的树进行剪枝，将树变得更简单，从而使它具有更好的泛化能力。</p>
+<h2 id="2-1-特征选择"><a href="#2-1-特征选择" class="headerlink" title="2.1 特征选择"></a>2.1 特征选择</h2><p>特征选择在于选取对训练数据具有分类能力的特征，这样可以提高决策树学习的效率。<br>如果一个特征能够使得分类后的分支结点尽可能属于同一类别，即该结点有着较高的<strong>纯度</strong>（purity），那么该特征对数据集而言就具备较强的分类能力。</p>
+<p>通常选择的准则有信息增益、信息增益率和基尼指数</p>
+<h3 id="2-1-1-信息增益与-ID3"><a href="#2-1-1-信息增益与-ID3" class="headerlink" title="2.1.1 信息增益与 ID3"></a>2.1.1 信息增益与 ID3</h3><p>信息熵（entropy）是度量样本集合“纯度”的一个指标，当前样本集合 $D$ 中共有 $k$ 种类别，第 $i$ 类样本样本的比例（也就是出现概率）为 $p_k$，则 $D$ 的<strong>信息熵</strong>定义为：<br>$$Ent(D) &#x3D; -\sum_{i &#x3D; 1}^{k} p_i,log_2,p_i$$<br>不难发现，信息熵越小，$D$ 的纯度越大。可以得出，$Ent(D)$的最小值为 0，最大值为 $log_2k$。</p>
+<p>直接以信息熵为基础，计算当前划分对信息熵所造成的变化，也就是<strong>信息增益（information gain）</strong>，衡量的是当前划分对信息的不确定性减少的贡献程度。公式为 <strong>划分前的信息熵 - 划分后的信息熵</strong>。<br>$$\mathrm{Gain}(D,A)&#x3D;\mathrm{Ent}(D)-\sum_{v&#x3D;1}^{V}\frac{|D_v|}{|D|}\mathrm{Ent}(D_v)$$<br>可以看出， 划分后的信息熵表达的是在给定特征 $A$ 的条件下，数据集 $D$ 的不确定性，称为<strong>条件熵</strong>：<br>$$Ent(D|A)&#x3D;\sum_{v&#x3D;1}^{V}\frac{|D_v|}{|D|}\mathrm{Ent}(D_v)$$</p>
+<ul>
+<li>特征 $A$ 的取值：${a_1, a_2,…a_v}$，共有 V 个</li>
+<li>$D_v$：$D$ 在特征 $A$ 上取值为 $a_v$ 的样本子集</li>
+<li>$\frac{|D_v|}{D}$：取值为 $a_v$ 的样本比例，第 $v$ 个分支的权重，样本越多越重要</li>
+<li>$Ent(D_v)$：子集 $D_v$ 的信息熵</li>
+</ul>
+<p>ID3 算法就是基于信息增益进行特征选择的。</p>
+<h3 id="2-1-2-信息增益率与-C4-5"><a href="#2-1-2-信息增益率与-C4-5" class="headerlink" title="2.1.2 信息增益率与 C4.5"></a>2.1.2 信息增益率与 C4.5</h3><p>信息增益作为划分准则时，倾向于筛选性强的特征，极端来看每个特征值只对应一个结果，那么结果就够纯，所以<strong>信息增益会倾向于选择取值较多的特征</strong>。</p>
+<p><strong>信息增益率（information gain ratio）</strong> 可以对这一问题进行校正：<br>$$\mathrm{Gain_ratio}(D,A)&#x3D;\frac{\mathrm{Gain}(D,A)}{\mathrm{IV}(A)}$$<br>其中 $IV(A)$ 为：<br>$${IV}(A)&#x3D;-\sum_{v&#x3D;1}^{V}\frac{|D_{v}|}{|D|}\log_{2}\frac{|D_{v}|}{|D|}$$<br> $IV(A)$ 表述的基本思想是特征 $A$ 的取值信息熵，取值数目越多，则  $IV(A)$ 取值越大。</p>
+<p>信息增益率希望选择的是：</p>
+<ol>
+<li>信息增益尽可能大</li>
+<li>特征取值尽可能少</li>
+</ol>
+<p>C4.5 算法就是基于信息增益比进行特征选择的，但不是仅仅参考信息增益比，而是采用了<strong>启发式方法</strong>，会在 避免取值较多的特征 和 避免信息增益过小 之间找到平衡。</p>
+<h3 id="2-1-3-基尼指数与-CART"><a href="#2-1-3-基尼指数与-CART" class="headerlink" title="2.1.3 基尼指数与 CART"></a>2.1.3 基尼指数与 CART</h3><p>样本 $D$ 有 $k$ 种类别，样本属于第 $k$ 种类别的概率为 $p_k$，那么两次抽到的是同一类别的概率为 ${p_k}^2$，一共 $k$ 种类别求和得到抽到任一同样类别的概率，用 1 减去这个概率，反映的是<strong>从样本 D 中任取两个样本，其类别标签不一致的概率</strong>。<br>$$Gini(D) &#x3D; 1 - \sum_{k&#x3D;1}^{n}{p_{k}}^{2}$$<br>该值称为<strong>基尼指数（Gini index）</strong>，基尼指数越大样本集合的不确定性也越大，这与信息熵相似。</p>
+<p>属性 A 的基尼指数为：<br>$$Gini_index(D, A) &#x3D; \sum_{v&#x3D;1}^{V}\frac{\lvert D_{v} \rvert}{\lvert D \rvert}Gini(D_{v})$$<br>和特征熵类似，根据特征 A 的取值，将数据集分为 V 个子集， 分别计算每个子集的基尼指数，按照权重（占比）进行求和。</p>
+<p>CART 算法就是基于基尼指数进行特征选择的，CART 既可以生成分类树，也可以生成回归树。</p>
+<blockquote>
+<p>在回归问题中面对的特征是连续值，可以通过遍历特征所有可能的取值，找到切分点 $\small{x}$ 让切分后的子集在信息增益比或基尼指数方面达到最优，在数据分裂时以 $\small{x}$ 为分界点将数据划分为 $\small{D_{1}}$ 和 $\small{D_{2}}$ 两个子集，其中 $\small{D_{1}}$ 包含特征值小于等于 $\small{x}$ 的样本， $\small{D_{2}}$ 包含特征值大于 $\small{x}$ 的样本。</p>
+</blockquote>
+<h2 id="2-2-数据分裂"><a href="#2-2-数据分裂" class="headerlink" title="2.2 数据分裂"></a>2.2 数据分裂</h2><p>通过上述准则选定特征后就要进行数据分裂，根据选定特征将数据集分成两个或多个子集，每个子集对应于特征的不同取值。递归对每个子集重复特征选择和数据分裂的动作，直到满足停止条件。</p>
+<p>常见的停止条件：</p>
+<ol>
+<li>树达到预设的深度</li>
+<li>当前结点的样本数量少于预设的阈值</li>
+<li>结点上所有样本属于同一个类别</li>
+<li>信息增益或 Gini 指数的变动低于某个阈值</li>
+</ol>
+<h2 id="2-3-决策树剪枝"><a href="#2-3-决策树剪枝" class="headerlink" title="2.3 决策树剪枝"></a>2.3 决策树剪枝</h2><p>剪枝可以减少树结构的复杂性，避免过拟合的风险，提升泛化能力。</p>
+<ul>
+<li><strong>预剪枝</strong>（pre-pruning）：在构建决策树的过程中设置一些限制条件（上一节中罗列了常见停止条件）提前停止树的生长，避免生成过于复杂的树，但是可能存在欠拟合的风险，因为过早停止分裂可能会遗漏潜在的重要决策规则。</li>
+<li><strong>后剪枝</strong>（post-pruning）：后剪枝是在决策树构建完成后，通过评估和移除一些不必要的分支来简化树结构。在减少过拟合风险的同时，还能较好的保留对数据的拟合能力，但是计算量较大，而且如果没有合适的验证集，剪枝效果就会受到影响。</li>
+</ul>
+<h1 id="3-API-使用"><a href="#3-API-使用" class="headerlink" title="3 API 使用"></a>3 API 使用</h1><p>sklearn 中的基于 CART 算法分别实现了 <code>DecisionTreeClassifier</code> 和 <code>DecisionTreeRegressor</code> 来分别解决分类和回归问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.tree <span class="hljs-keyword">import</span> DecisionTreeClassifier, DecisionTreeRegressor<br><br>model1 = DecisionTreeClassifier()<br>model2 = DecisionTreeRegressor()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>criterion</code>：特征选择（数据分裂质量评估）的标准，可以选择 <code>&#39;gini&#39;</code>或 <code>&#39;entropy&#39;</code>，前者代表基尼指数，也是默认值，后者代表信息增益。</li>
+<li><code>max_depth</code>：树的最大深度，默认值为 <code>None</code>，如果不设置该参数，会存在过拟合风险。</li>
+<li><code>min_samples_split</code>：一个内部结点再次分裂所需的最小样本数，默认值为 <code>2</code>。这个参数可以设置为整数表示最小样本数，也可以设置为浮点数，表示占总样本数的比例。</li>
+<li><code>min_samples_leaf</code>：叶结点所需的最小样本数，默认值为 <code>1</code>。将该参数设置为较大的值可以平滑模型，降低过拟合风险。这个参数也可以设置为整数或浮点数，道理同上。</li>
+<li><code>max_features</code>：用于最佳分裂的特征数，默认值为 <code>None</code>。这个参数可以设置为整数，表示选择固定数量的特征；可以设置为浮点数，表示选择特征的比例；可以设置为字符串，<code>&#39;auto&#39;</code>和 <code>&#39;sqrt&#39;</code>表示将总的特征数量求平方根，用平方根的值作为选择特征的数量，<code>&#39;log2&#39;</code>表示将总的特征数量求对数，用对数值作为选择特征的数量。</li>
+<li><code>class_weight</code>：指定类别的权重，用于处理类别不平衡问题，默认值为 <code>None</code>。可以用字典的方式手动设置每个类别的权重，也可以使用 <code>&#39;balanced&#39;</code>让模型自动调整。</li>
+<li><code>splitter</code>：选择分裂结点的策略，默认值为 <code>&#39;best&#39;</code>，表示最佳分裂，还有一个取值是 <code>&#39;random&#39;</code>，表示随机分裂。</li>
+<li><code>max_leaf_nodes</code>：限制叶结点的最大数量，可以防止树结构过于复杂。</li>
+<li><code>min_impurity_decrease</code>：结点分裂所需的最小不纯度降低值，任何结点只有在不纯度减少超过此值时才会进行分裂。</li>
+<li><code>ccp_alpha</code>：成本复杂度剪枝中的$\small{\alpha}$参数值。这个参数用于控制后剪枝中成本复杂度计算公式中$\small{\alpha}$的值。较小的$\small{\alpha}$值允许更复杂的树，而较大的$\small{\alpha}$值倾向于选择更简单的树。通过调整$\small{\alpha}$，可以找到一个最佳的复杂度和误差之间的平衡点。</li>
+</ul>
+<p>通过以下代码可以可视化决策树：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.tree <span class="hljs-keyword">import</span> plot_tree<br><br>plot_tree(<br>    decision_tree=model,               <span class="hljs-comment"># 决策树模型</span><br>    feature_names=iris.feature_names,  <span class="hljs-comment"># 特征的名称</span><br>    class_names=iris.target_names,     <span class="hljs-comment"># 标签的名称</span><br>    filled=<span class="hljs-literal">True</span>                        <span class="hljs-comment"># 用颜色填充</span><br>)<br></code></pre></td></tr></table></figure>
+<p><img src="/../../../ai_assets/06_decision_tree_plot.png" srcset="/img/loading.gif" lazyload alt="06_decision_tree_plot"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="print-no-link">#机器学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>06_决策树</div>
+      <div>http://example.com/2025/10/29/大模型开发/04 机器学习/06_决策树/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="05_逻辑回归">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">05_逻辑回归</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" title="08_集成学习">
+                        <span class="hidden-mobile">08_集成学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,778 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 概述集成学习（Ensemble Learning）并不是一种具体的算法，而是一种思想：将多个单模型组合成一个综合模型，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。 1.1 术语说明基学习器 (base learner)、基模型(base model)、基估计器 (base estimator)，指的是集成学习中的单个模型。进一步将基学习器分为弱学习器 (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08_集成学习">
+<meta property="og:url" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 概述集成学习（Ensemble Learning）并不是一种具体的算法，而是一种思想：将多个单模型组合成一个综合模型，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。 1.1 术语说明基学习器 (base learner)、基模型(base model)、基估计器 (base estimator)，指的是集成学习中的单个模型。进一步将基学习器分为弱学习器 (">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/ai_assets/08_parallel_sequential.png">
+<meta property="og:image" content="http://example.com/ai_assets/08_bagging.png">
+<meta property="og:image" content="http://example.com/ai_assets/08_boosting.png">
+<meta property="og:image" content="http://example.com/ai_assets/08_stacking.png">
+<meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-29T05:32:20.643Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/ai_assets/08_parallel_sequential.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>08_集成学习 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="08_集成学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-29 00:00" pubdate>
+          2025年10月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">08_集成学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>集成学习（Ensemble Learning）并不是一种具体的算法，而是一种思想：<strong>将多个单模型组合成一个综合模型</strong>，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。</p>
+<h2 id="1-1-术语说明"><a href="#1-1-术语说明" class="headerlink" title="1.1 术语说明"></a>1.1 术语说明</h2><p>基学习器 (base learner)、基模型(base model)、基估计器 (base estimator)，指的是集成学习中的单个模型。<br>进一步将基学习器分为弱学习器 (weak learner)和强学习器(strong learner) ，弱学习器是表现略优于随机猜测的学习器。对于二元分类问题，弱分类器定义为准确率约为 50% 的分类器；强学习器则是实现了出色的预测性能，在二元分类问题中准确率大于等于 80%。</p>
+<blockquote>
+<p>注意：很多资料将基学习器和弱学习器混为一谈，因为集成学习（尤其是串行方法）可以有效地将弱学习器提升为强学习器。</p>
+</blockquote>
+<h2 id="1-2-Why-集成学习"><a href="#1-2-Why-集成学习" class="headerlink" title="1.2 Why 集成学习"></a>1.2 Why 集成学习</h2><h3 id="1-2-1-偏差-方差均衡"><a href="#1-2-1-偏差-方差均衡" class="headerlink" title="1.2.1 偏差-方差均衡"></a>1.2.1 偏差-方差均衡</h3><p>为了减少测试误差而增加训练误差的做法被称为<strong>偏差-方差权衡</strong>，也是许多正则化技术背后的驱动原则。</p>
+<ul>
+<li><strong>偏差（Bias）</strong> 衡量的是预测值与真实值之间的平均差异。偏差越大，模型在训练集上的预测准确率就越低。高偏差是指训练过程中的误差较大，优化意味着尝试降低偏差。</li>
+<li><strong>方差（Variance）</strong> 衡量的是给定模型在不同实现之间的预测差异。方差越大，模型对未知数据的预测准确率越低。高方差是指测试和验证过程中的误差较大，泛化是指试图降低方差。</li>
+</ul>
+<p>偏差和方差分别反向代表了模型在训练集和测试集上的准确率，我们希望同时降低模型偏差和方差，但同时降低两者并不总是可行的，因此需要进行正则化。正则化会降低模型方差，但代价是增加偏差。</p>
+<p>模型总误差由偏差、方差和数据集随机性导致的不可约误差构成：<br>$$Error&#x3D;Bias^2+Variance+Irreducible;Error$$</p>
+<h3 id="1-2-1-多模型优势"><a href="#1-2-1-多模型优势" class="headerlink" title="1.2.1 多模型优势"></a>1.2.1 多模型优势</h3><p>任何一种模型都包含众多变量，例如训练数据、超参数等，这些变量会影响最终模型的总误差。因此，即使是单一训练算法也可能产生不同的模型，每个模型都有各自的偏差、方差和不可约误差。通过组合多个不同的模型，集成算法可以降低总体误差，保留每个模型自身的复杂性和优势，例如对特定数据子集的低偏差。</p>
+<p>一般来说，组合模型之间的<strong>多样性越大</strong>，最终的集成模型就越准确。由多种欠正则化模型，即与训练数据过拟合的模型，组成的集成模型性能优于单一正则化模型（集成森林中的决策树不需要剪枝）。集成学习还可以帮助解决高维数据引发的问题，有效替代降维方法。</p>
+<h1 id="2-算法分类"><a href="#2-算法分类" class="headerlink" title="2 算法分类"></a>2 算法分类</h1><p>集成学习主要分为并行和串行两种方法：</p>
+<ul>
+<li>并行方法会将每个基学习器与其他基学习器分开单独训练</li>
+<li>串行方法训练一个新的基础学习器，使其能够最小化前一步训练的模型所犯的错误</li>
+</ul>
+<p><img src="/../../../ai_assets/08_parallel_sequential.png" srcset="/img/loading.gif" lazyload></p>
+<p>并行方法进一步分为同质学习器和异质学习器，而串行方法通常使用同质学习器。</p>
+<ul>
+<li>同质（Homogeneous）：使用相同的基础学习算法来生成基学习器</li>
+<li>异质（Heterogeneous）：使用不同的基础学习算法来生成基学习器</li>
+</ul>
+<p>目前最流行的三种集成学习技术是 Bagging、Boosting 和 Stacking。</p>
+<h2 id="2-1-Bagging"><a href="#2-1-Bagging" class="headerlink" title="2.1 Bagging"></a>2.1 Bagging</h2><p>Bagging（Bootstrap Aggregating，自助聚合）通过自助采样（bootstrap）构建多个基学习器，然后将这些基学习器的预测结果进行组合（分类问题采用投票法，回归问题采用平均法）</p>
+<p>特点：Bagging 旨在<strong>减少方差</strong>，尤其在基学习器存在较大方差时效果显著。</p>
+<p>典型算法：</p>
+<ul>
+<li>随机森林（Random Forest）：通过构建大量决策树并进行投票来提高分类性能。</li>
+</ul>
+<p><img src="/../../../ai_assets/08_bagging.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-2-Boosting"><a href="#2-2-Boosting" class="headerlink" title="2.2 Boosting"></a>2.2 Boosting</h2><p>Boosting（提升）是一种迭代方法，模型是按顺序训练的，每个新模型都试图纠正先前模型的错误，最后通过对所有模型的预测进行加权平均。</p>
+<p>特点：Boosting 旨在<strong>减少偏差</strong>，通过逐步改进模型提高预测的准确性，常常应用于简单的基学习器（如决策树桩）。</p>
+<p>典型算法：</p>
+<ul>
+<li>AdaBoost (Adaptive Boosting)：为每个训练样本分配一个权重，并在每次迭代中调整这些权重。</li>
+<li>Gradient Boosting Machine (GBM)：GBM 是一种更通用的 Boosting 算法，它使用梯度下降来优化损失函数。</li>
+<li>XGBoost (Extreme Gradient Boosting)：GBM 的一种优化版本，在效率、精度上都有很大的提升。</li>
+<li>LightGBM (Light Gradient Boosting Machine)：另一种 GBM 的优化版本，它使用基于直方图的算法来加速训练过程，并减少内存使用，特别适用于处理大规模数据集。</li>
+</ul>
+<p><img src="/../../../ai_assets/08_boosting.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-3-Stacking"><a href="#2-3-Stacking" class="headerlink" title="2.3 Stacking"></a>2.3 Stacking</h2><p>Stacking（堆叠）是将多个基模型的预测结果作为新的特征输入到元学习器（Meta Learner）中进行训练，元学习器的目标是学习如何最好地组合基学习器的预测结果。</p>
+<p>特点：利用不同模型的优势，获得比单个模型更好的性能。</p>
+<p><img src="/../../../ai_assets/08_stacking.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="3-随机森林"><a href="#3-随机森林" class="headerlink" title="3 随机森林"></a>3 随机森林</h1><p>随机森林是 Bagging 的一个变体，在以决策树为基学习器构建 Bagging 集成的基础上，进一步在决策树训练过程中引入了<strong>随机特征选择</strong>，更加增强了模型的多样性。</p>
+<ol>
+<li>Bootstrap采样： 从原始数据集中使用 Bootstrap 有放回抽样，形成多个子集，每个子集用于训练一颗决策树</li>
+<li>构建决策树：每棵树进行节点分裂时，不必考虑所有特征，而是随机选取一部分特征进行分裂</li>
+<li>集成学习：分类任务采用投票法，回归任务采用平均法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><br>model = RandomForestClassifier()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>n_estimators</code>： 决策树数量，（default &#x3D; 10）</li>
+<li><code>Criterion</code>： entropy、 或者 gini, (default &#x3D; gini)</li>
+<li><code>max_depth</code>：指定树的最大深度， （default &#x3D; None 表示树会尽可能的生长）</li>
+<li><code>max_features</code>&#x3D;”auto”，决策树构建时使用的最大特征数量<ul>
+<li>“auto”：<code>max _ features=sqrt(n _ features)</code> </li>
+<li>“sqrt”： <code>max _ features=sqrt (n_ features)</code> (same as “auto”)</li>
+<li>“log2”：<code>max _features=log2(n_features) </code></li>
+<li>None：<code>max _ features=n_features</code></li>
+</ul>
+</li>
+<li><code>bootstrap</code>：是否采用有放回抽样，如果为 False 将会使用全部训练样本，（default &#x3D; True）</li>
+</ul>
+<p>随机森林通过集成多个决策树提高了泛化能力且对噪声数据不敏感，适合解决复杂问题。</p>
+<h1 id="4-Boosting"><a href="#4-Boosting" class="headerlink" title="4 Boosting"></a>4 Boosting</h1><h2 id="4-1-Adaboost"><a href="#4-1-Adaboost" class="headerlink" title="4.1 Adaboost"></a>4.1 Adaboost</h2><p>Adaptive Boosting（自适应提升）是基于 Boosting 思想实现集成学习算法。主要有两个特点：</p>
+<ol>
+<li>提高上一轮被弱学习器分类错误的样本权重</li>
+<li>对弱学习器进行线性组合，提高分类效果好的弱学习器权重</li>
+</ol>
+<p>Adaboost 训练过程：</p>
+<ol>
+<li><strong>初始化样本权重</strong>：给每个样本分配一个相等的初始权重，对于 $N$ 个样本，初始权重为：<br>$$w_i^{(1)}&#x3D;\frac{1}{N}$$</li>
+<li><strong>训练弱学习器</strong>：根据当前样本权重训练一个弱学习器，目标是最小化加权误差，第 $t$ 轮得到的弱学习器加权误差为：<br>$$\varepsilon_{t} &#x3D; \sum_{i&#x3D;1}^{N} w_{i}^{(t)} \cdot I(y_{i} \neq h_{t}(x_{i}))$$</li>
+</ol>
+<ul>
+<li>$\varepsilon_{t}$: 第 $t$ 轮弱分类器的加权错误率。</li>
+<li>$N$: 训练样本的总数。</li>
+<li>$w_{i}^{(t)}$: 第 $t$ 轮中第 $i$ 个样本的权重。权重在每轮迭代中都会根据前一轮的表现进行调整（分错的样本权重增加，分对的样本权重减少）。</li>
+<li>$I(\cdot)$: 指示函数 (Indicator Function)。<ul>
+<li>如果括号内的条件 ($y_{i} \neq h_{t}(x_{i})$) 为真（即弱分类器 $h_{t}$ 分错了样本 $x_{i}$），则函数值为 $1$。</li>
+<li>如果条件为假（即弱分类器 $h_{t}$ 分对了样本 $x_{i}$），则函数值为 $0$。</li>
+</ul>
+</li>
+<li>$y_{i}$: 第 $i$ 个样本的真实标签。</li>
+<li>$h_{t}(x_{i})$: 第 $t$ 轮弱分类器对第 $i$ 个样本的预测结果。</li>
+</ul>
+<ol start="3">
+<li><strong>更新学习器权重</strong>：计算第 $t$ 轮弱学习器的权重，该弱学习器误差越小，权重越大，第 $t$ 轮的弱学习器 $\alpha_t$ 的权重为：<br>$$\alpha_{t} &#x3D; \frac{1}{2} ln \left( \frac{1 - \varepsilon_{t}}{\varepsilon_{t}} \right)$$</li>
+<li><strong>更新样本权重</strong>：根据当前学习器的表现，更新样本权重，误分类样本的权重会增加，正确分类样本的权重会降低，权重更新公式为：<br>$$w_{i}^{(t + 1)} &#x3D; w_{i}^{(t)} \cdot e^{-\alpha_{t} y_{i} h_{t}(x_{i})}$$</li>
+<li><strong>归一化权重</strong>：对所有样本的权重进行归一化，使所有样本权重和为 1。</li>
+<li><strong>构建强学习器</strong>：对所有弱学习器进行加权组合。</li>
+</ol>
+<h2 id="4-2-GBDT"><a href="#4-2-GBDT" class="headerlink" title="4.2 GBDT"></a>4.2 GBDT</h2><h2 id="4-3-XGBoost"><a href="#4-3-XGBoost" class="headerlink" title="4.3 XGBoost"></a>4.3 XGBoost</h2><h2 id="4-4-LightBGM"><a href="#4-4-LightBGM" class="headerlink" title="4.4 LightBGM"></a>4.4 LightBGM</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="print-no-link">#机器学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>08_集成学习</div>
+      <div>http://example.com/2025/10/29/大模型开发/04 机器学习/08_集成学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/06_%E5%86%B3%E7%AD%96%E6%A0%91/" title="06_决策树">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">06_决策树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/09_K-means%E8%81%9A%E7%B1%BB/" title="09_K-means聚类">
+                        <span class="hidden-mobile">09_K-means聚类</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
