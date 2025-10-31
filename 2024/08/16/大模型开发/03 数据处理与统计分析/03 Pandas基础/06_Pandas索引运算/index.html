@@ -26,13 +26,13 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="Pandas索引操作有两种常见类型：  基于位置的索引（Position-based Indexing） 基于标签的索引（Label-based Indexing）  实际操作中，第二种操作更常用。 123import numpy as npimport pandas as pdimport matplotlib.pyplot as plt  1 DataFrame结构1.1 column&amp;#x2">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/output_5_1.png">
+<meta property="og:image" content="http://example.com/ai_assets/03_data_ana/output_5_1.png">
 <meta property="article:published_time" content="2024-08-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-27T00:30:59.293Z">
+<meta property="article:modified_time" content="2025-10-31T02:10:29.728Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Pandas">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/output_5_1.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/03_data_ana/output_5_1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -295,7 +295,7 @@
 <li><code>value</code>：数据域</li>
 </ul>
 <p>基于标签定位就是靠 <code>Index</code>对象，在此之外还有动态映射出来的虚拟列号和行号，可以直接基于数组下标进行定位，也就是基于位置定位。</p>
-<p><img src="/../../../../ai_assets/output_5_1.png" srcset="/img/loading.gif" lazyload alt="png"></p>
+<p><img src="/../../../../ai_assets/03_data_ana/output_5_1.png" srcset="/img/loading.gif" lazyload alt="png"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">df = pd.read_excel(<span class="hljs-string">&#x27;data/source_data.xlsx&#x27;</span>)<br>df.index = np.arange(<span class="hljs-number">1001</span>, <span class="hljs-number">1008</span>)<br>df<br></code></pre></td></tr></table></figure>
 
 <div>

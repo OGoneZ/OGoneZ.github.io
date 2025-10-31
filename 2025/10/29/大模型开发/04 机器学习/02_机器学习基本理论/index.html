@@ -26,20 +26,20 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="1 机器学习三要素机器学习方法 &#x3D; 模型 + 策略 + 算法  模型(model)：总结数据的内在规律，用数学语言描述的参数系统 策略(strategy)：选取最优模型的评价准则 算法(algorithm)：选取最优模型的具体方法  2 机器学习方法分类 3 建模流程 收集数据：收集用于训练和测试的数据集，确保数据代表实际问题的不同方面 数据清洗：对数据进行清洗，去除掉脏数据和不可用的数">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/02_algorithm_sum.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_heatmap.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_pca.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_fitting_model.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_L1_L2.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_kfold.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_roc.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_roc_curve.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_algorithm_sum.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_heatmap.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_pca.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_fitting_model.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_L1_L2.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_kfold.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_roc.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/02_roc_curve.png">
 <meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-29T05:32:03.163Z">
+<meta property="article:modified_time" content="2025-10-31T02:16:16.861Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/02_algorithm_sum.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/04_ml/02_algorithm_sum.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -293,7 +293,7 @@
 <li>策略(strategy)：选取最优模型的评价准则</li>
 <li>算法(algorithm)：选取最优模型的具体方法</li>
 </ul>
-<h1 id="2-机器学习方法分类"><a href="#2-机器学习方法分类" class="headerlink" title="2 机器学习方法分类"></a>2 机器学习方法分类</h1><p><img src="/../../../ai_assets/02_algorithm_sum.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="2-机器学习方法分类"><a href="#2-机器学习方法分类" class="headerlink" title="2 机器学习方法分类"></a>2 机器学习方法分类</h1><p><img src="/../../../ai_assets/04_ml/02_algorithm_sum.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="3-建模流程"><a href="#3-建模流程" class="headerlink" title="3 建模流程"></a>3 建模流程</h1><ol>
 <li><strong>收集数据</strong>：收集用于训练和测试的数据集，确保数据代表实际问题的不同方面</li>
 <li><strong>数据清洗</strong>：对数据进行清洗，去除掉脏数据和不可用的数据</li>
@@ -418,7 +418,7 @@
 <p>使用热力图将皮尔逊矩阵可视化。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sns.heatmap(corr_matrix, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;.2f)</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/../../../ai_assets/02_heatmap.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/04_ml/02_heatmap.png" srcset="/img/loading.gif" lazyload></p>
 <ol start="2">
 <li><strong>斯皮尔曼相关系数(Spearman’s Rank Correlation Coefficient)<strong>：用于衡量两个变量之间的</strong>单调关系</strong>，考察的是一个变量增加时，另一个变量也倾向于增加或减少的程度，不一定是线性关系。其中 $d_i$ 是两个变量在排名时的差异，$n$ 是样本大小。<br>$$<br>ρ&#x3D;1−\frac{6\sum_{i&#x3D;1}^n​d_i^2​}{n(n^2−1)}​<br>$$</li>
 </ol>
@@ -443,7 +443,7 @@
 
 <p>可视化：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">fig = plt.figure(figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">4</span>))<br><br><span class="hljs-comment"># 转换前的三维可视化</span><br>ax1 = fig.add_subplot(<span class="hljs-number">121</span>, projection=<span class="hljs-string">&#x27;3d&#x27;</span>)<br>ax1.scatter(X[:, <span class="hljs-number">0</span>], X[:, <span class="hljs-number">1</span>], X[:, <span class="hljs-number">2</span>])<br>ax1.set_title(<span class="hljs-string">&#x27;Before PCA(3D)&#x27;</span>)<br>ax1.set_xlabel(<span class="hljs-string">&quot;Feature 1&quot;</span>)<br>ax1.set_ylabel(<span class="hljs-string">&quot;Feature 2&quot;</span>)<br>ax1.set_zlabel(<span class="hljs-string">&quot;Feature 3&quot;</span>)<br><br><span class="hljs-comment"># 转换后的二维可视化</span><br>ax2 = fig.add_subplot(<span class="hljs-number">122</span>)<br>ax2.scatter(X_pca[:, <span class="hljs-number">0</span>], X_pca[:, <span class="hljs-number">1</span>])<br>ax2.set_title(<span class="hljs-string">&#x27;After PCA(2D)&#x27;</span>)<br>ax2.set_xlabel(<span class="hljs-string">&quot;Principal Component 1&quot;</span>)<br>ax2.set_ylabel(<span class="hljs-string">&quot;Principal Component 2&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/../../../ai_assets/02_pca.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/04_ml/02_pca.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="5-模型评估和选择"><a href="#5-模型评估和选择" class="headerlink" title="5 模型评估和选择"></a>5 模型评估和选择</h1><h2 id="5-1-损失函数"><a href="#5-1-损失函数" class="headerlink" title="5.1 损失函数"></a>5.1 损失函数</h2><p>预测结果 $f(X)$ 和真实值 $y$ 之间的存在偏差，我们使用损失函数(loss function)来度量预测偏差的程度，记作 $L(y,f(X))$，损失函数是非负实值函数，损失函数值越小，模型越好。</p>
 <p>常见损失函数：</p>
 <ul>
@@ -458,7 +458,7 @@
 </ul>
 <h2 id="5-2-经验误差"><a href="#5-2-经验误差" class="headerlink" title="5.2 经验误差"></a>5.2 经验误差</h2><p>根据选取的损失函数，就可以计算出模型 $f(X)$ 在训练集上的平均误差，称为训练误差，也被称作 <strong>经验误差(empirical error)</strong> 或 经验风险(empirical risk)。<br>$$<br>R_{emp}&#x3D; \frac{1}{n}\sum _{i&#x3D;1}^nL(y_i, f(x_i))<br>$$<br>类似地，在测试集上的平均误差，被称为测试误差或者 **泛化误差 (generalization error)**。</p>
 <p>一般情况下对模型评估的策略，就是考察经验误差；当经验风险最小时，就认为取到了最优的模型。这种策略被称为 **经验风险最小化(empirical risk minimization，ERM)**。</p>
-<h2 id="5-3-欠拟合和过拟合"><a href="#5-3-欠拟合和过拟合" class="headerlink" title="5.3 欠拟合和过拟合"></a>5.3 欠拟合和过拟合</h2><p>拟合(Fitting)是指机器学习模型在训练数据上学习到规律并生成预测结果的过程。<br><img src="/../../../ai_assets/02_fitting_model.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-3-欠拟合和过拟合"><a href="#5-3-欠拟合和过拟合" class="headerlink" title="5.3 欠拟合和过拟合"></a>5.3 欠拟合和过拟合</h2><p>拟合(Fitting)是指机器学习模型在训练数据上学习到规律并生成预测结果的过程。<br><img src="/../../../ai_assets/04_ml/02_fitting_model.png" srcset="/img/loading.gif" lazyload></p>
 <p>**过拟合(overfitting)**：模型在训练集上学得太好，甚至记住了噪声或偶然特征，导致在训练集表现好、测试集表现差。<br>**欠拟合(underfitting)**：模型对训练数据学习不足，连训练集都拟合不好，模型太简单、能力不够，无法捕捉数据中的真实规律。</p>
 <p>欠拟合通过增加模型复杂度、增加特征或改进特征工程、增加训练时间、减少正则化强度即可，一般来说更容易遇到、并且不易解决的问题是过拟合。</p>
 <ul>
@@ -494,14 +494,14 @@
 <p>在解决回归问题时，使用 L1 正则化也被称为“Lasso 回归”。</p>
 </blockquote>
 <h3 id="5-4-2-L2-正则化-Ridge回归"><a href="#5-4-2-L2-正则化-Ridge回归" class="headerlink" title="5.4.2 L2 正则化(Ridge回归)"></a>5.4.2 L2 正则化(Ridge回归)</h3><p>L2 正则化在损失函数中加入参数的平方之和：<br>$$Loss_{L2}&#x3D;\text{原}Loss+\lambda\sum_{i&#x3D;1}^kw_i{}^2$$<br>L2 正则化通过惩罚模型参数的平方，使得所有参数都变得更小，但不会将参数强行压<br>缩为 0。它会使得模型<strong>尽量平滑</strong>，从而防止过拟合。</p>
-<p>由于 L2 正则化平方的存在，虽然在 $w_i$ 绝对值大于 1 时，惩罚力度更大，但是当 $w_i$ 绝对值小于 1 时，惩罚力度变小，所以即使某个特征对模型影响很小，也不会将其权重压缩为 0。<br><img src="/../../../ai_assets/02_L1_L2.png" srcset="/img/loading.gif" lazyload></p>
+<p>由于 L2 正则化平方的存在，虽然在 $w_i$ 绝对值大于 1 时，惩罚力度更大，但是当 $w_i$ 绝对值小于 1 时，惩罚力度变小，所以即使某个特征对模型影响很小，也不会将其权重压缩为 0。<br><img src="/../../../ai_assets/04_ml/02_L1_L2.png" srcset="/img/loading.gif" lazyload></p>
 <blockquote>
 <p>在解决回归问题时，使用 L2 正则化也被称为“岭回归”。</p>
 </blockquote>
 <h3 id="5-4-3-ElasticNet-正则化-弹性网格回归"><a href="#5-4-3-ElasticNet-正则化-弹性网格回归" class="headerlink" title="5.4.3 ElasticNet 正则化(弹性网格回归)"></a>5.4.3 ElasticNet 正则化(弹性网格回归)</h3><p>ElasticNet 正则化结合了 L1 和 L2 正则化，通过调整两个正则化项的比例来取得平衡，从而同时具备稀疏性和稳定性的优点。<br>$$<br>Loss_{ElasticNet}&#x3D;\text{原}Loss+\lambda\left(\alpha\sum_{i&#x3D;1}^n|\omega_i|+(1-\alpha)\sum_{i&#x3D;1}^n\omega_i^2\right)<br>$$<br>其中 $\alpha$ 是控制 L1 和 L2 正则化的比例。</p>
 <h2 id="5-5-评估方法"><a href="#5-5-评估方法" class="headerlink" title="5.5 评估方法"></a>5.5 评估方法</h2><h3 id="5-5-1-留出法-Hold-Out"><a href="#5-5-1-留出法-Hold-Out" class="headerlink" title="5.5.1 留出法(Hold-Out)"></a>5.5.1 留出法(Hold-Out)</h3><p>留出法(Hold-Out Validation)将数据划分为训练集、验证集和测试集(如 70%训练，30%测试)。结果受单次划分影响较大，可能高估或低估模型性能。</p>
 <h3 id="5-5-2-k-折交叉验证-k-Fold-CV"><a href="#5-5-2-k-折交叉验证-k-Fold-CV" class="headerlink" title="5.5.2 k 折交叉验证(k-Fold CV)"></a>5.5.2 k 折交叉验证(k-Fold CV)</h3><p>交叉验证(Cross-Validation)是一种评估模型泛化能力的方法，通过将数据集划分为多个子集，反复进行训练和验证，以减少因单次数据划分带来的随机性误差。 </p>
-<p>k 折交叉验证(k-Fold Cross-Validation)将数据均匀分为 k 个子集(称为“折”)，每次用 k−1 折训练，剩余 1 折验证，重复 k 次后取平均性能。充分利用数据，结果更稳定。k 一般取 10、5。<br><img src="/../../../ai_assets/02_kfold.png" srcset="/img/loading.gif" lazyload></p>
+<p>k 折交叉验证(k-Fold Cross-Validation)将数据均匀分为 k 个子集(称为“折”)，每次用 k−1 折训练，剩余 1 折验证，重复 k 次后取平均性能。充分利用数据，结果更稳定。k 一般取 10、5。<br><img src="/../../../ai_assets/04_ml/02_kfold.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="5-5-3-留一法-Leave-One-Out"><a href="#5-5-3-留一法-Leave-One-Out" class="headerlink" title="5.5.3 留一法(Leave-One-Out)"></a>5.5.3 留一法(Leave-One-Out)</h3><p>留一法(Leave-One-Out, LOO) 是 k-Fold 的特殊形式，每次仅留一个样本作为验证集，其余全部用于训练，重复直到所有样本都被验证一次。适用于小数据集，计算成本极高。</p>
 <h1 id="6-模型求解算法"><a href="#6-模型求解算法" class="headerlink" title="6 模型求解算法"></a>6 模型求解算法</h1><p>模型求解其实就是寻找最优参数，让增加了正则化之后的损失函数最小化，称为结构风险最小化(Structural Risk Minimization，SRM)。<br>$$\min\frac{1}{n}(\sum_{i&#x3D;1}^nL(y_i,f(x_i))+\lambda J(\theta))$$<br>这其实就是求解一个 <strong>最优化问题</strong>。代入训练集所有数据 (𝑥𝑖,𝑦𝑖)，要求最小值的目标函数就是模型中参数 𝜃 的函数。</p>
 <p>具体求解的算法，可以利用数学公式直接计算解析解，也可以使用<strong>迭代算法</strong>。</p>
@@ -723,7 +723,7 @@
   </tbody>
 </table>
 
-<p>ROC 曲线（Receiver Operating Characteristic Curve，受试者工作特征）是评估二分类模型性能的工具，以假正例率（FPR）为横轴，以真正例率（TPR）为纵轴，展示不同阈值下模型的表现。绘制 ROC 曲线时，从高到低调整阈值，计算每个阈值的 TPR 和 FPR 并绘制所有阈值的点，形成 ROC 曲线。<br><img src="/../../../ai_assets/02_roc.png" srcset="/img/loading.gif" lazyload></p>
+<p>ROC 曲线（Receiver Operating Characteristic Curve，受试者工作特征）是评估二分类模型性能的工具，以假正例率（FPR）为横轴，以真正例率（TPR）为纵轴，展示不同阈值下模型的表现。绘制 ROC 曲线时，从高到低调整阈值，计算每个阈值的 TPR 和 FPR 并绘制所有阈值的点，形成 ROC 曲线。<br><img src="/../../../ai_assets/04_ml/02_roc.png" srcset="/img/loading.gif" lazyload></p>
 <p>中间的红色虚线是随机猜测概率，只要 ROC 曲线在虚线上方就有预测价值，当然如果在虚线下方说明能够反向预测正确，反转输出也有预测价值。</p>
 <blockquote>
 <p>在左下角时，阈值被设定的很高（比如 0.999才预测为正例），那么模型将所有样本都预测为负例，不预测为正例就不会出错，所以 TPR 和 FPR 都很低。<br>阈值稍微降低，由于此时正例概率很大，TPR 提升很快，有预测就有失误，FPR 随之提升，但没有 TPR 提升快，曲线向上凸起。<br>当阈值继续降低，正例概率变低，将会导致更多的预测失误，FPR 增长速度超越 TPR，曲线开始向下弯曲。<br>右上角是另一种极端，阈值设定很低，所有样本都预测为正例，TPR 和 FPR 都很高。</p>
@@ -733,7 +733,7 @@
 
 <p>绘制 ROC 曲线：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> roc_curve, roc_auc_score<br><span class="hljs-keyword">import</span> matplotplib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 获取正类预测概率值</span><br>y_proba = model.predict_proba(X_test)[:, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 返回 FPR, TPR, 阈值 数组</span><br>fpr, tpr, threshold = roc_curve(y_test, y_proba)<br><br><span class="hljs-comment"># 计算 AUC 值</span><br>roc_auc = roc_auc_score(y_test, y_proba)<br><br><span class="hljs-comment"># 绘制 ROC 曲线</span><br>plt.plot(fpr, tpr, label=<span class="hljs-string">f&#x27;ROC curve(roc_auc=<span class="hljs-subst">&#123;roc_auc:<span class="hljs-number">.2</span>f&#125;</span>)&#x27;</span>)<br>plt.plot([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], linestyle=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.xlim(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br>plt.ylim(<span class="hljs-number">0</span>, <span class="hljs-number">1.05</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;False Positive Rate&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;True Positive Rate&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;ROC Curve&#x27;</span>)<br>plt.legend(loc=<span class="hljs-string">&#x27;lower right&#x27;</span>)<br></code></pre></td></tr></table></figure>
-<p><img src="/../../../ai_assets/02_roc_curve.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/04_ml/02_roc_curve.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
@@ -823,6 +823,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/" title="01_机器学习概览">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">01_机器学习概览</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">

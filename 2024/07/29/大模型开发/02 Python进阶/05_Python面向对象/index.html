@@ -26,13 +26,13 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="面向对象就是老板思想，需要什么工作就派给什么职位（类）的员工，对于相同的职位都有相同的特征，每一种职位都有很多不同的人（对象）在岗位上，而每一个人又有自己的特点（属性）和技能（方法）。 1 类和对象 类：抽象的模板，是对一群有相同特征或行为的事物的统称，不能直接使用。（比如学生类） 属性：这类事物具有什么样的特征 方法：这类事物具有什么样的行为   对象：具体的实体，是由类创建出来的一个具体存在，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250904191238.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250904191238.png">
 <meta property="article:published_time" content="2024-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T12:19:30.748Z">
+<meta property="article:modified_time" content="2025-10-31T02:14:41.086Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/Pasted%20image%2020250904191238.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250904191238.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -469,7 +469,7 @@
 <blockquote>
 <p>类方法第一个参数必须为类对象，通常用 <code>cls</code>表示，类似实例方法中的 <code>self</code>，不需要传值。<br>在类方法中，哪个类调用的方法，<code>cls</code>就是哪个类的引用，可以通过 <code>cls.</code>访问类属性或调用类方法。</p>
 </blockquote>
-<p><img src="/../../../ai_assets/Pasted%20image%2020250904191238.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250904191238.png" srcset="/img/loading.gif" lazyload></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 访问类属性</span><br>类名.类属性  <span class="hljs-comment"># 推荐</span><br>对象名.类属性 <br><br><span class="hljs-comment"># 调用类方法   </span><br>类名.类方法  <span class="hljs-comment"># 推荐</span><br>对象名.类方法<br></code></pre></td></tr></table></figure>
 
 <h2 id="6-3-静态方法"><a href="#6-3-静态方法" class="headerlink" title="6.3 静态方法"></a>6.3 静态方法</h2><p>既不需要访问实例属性和实例方法，又不需要访问类属性和类方法，就可以使用<strong>静态方法</strong>，使用装饰器 <code>@staticmethod</code>来标识。</p>

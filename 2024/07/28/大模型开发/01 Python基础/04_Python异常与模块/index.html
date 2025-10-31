@@ -26,15 +26,15 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="1 异常处理1.1 异常的捕获世界上没有完美的程序，程序运行都可能出现异常，出现异常有下面两种情况：  整个程序因为一个BUG停止运行 对BUG进行提醒，整个程序继续运行  实际开发更多是第2种情况，就需要捕获异常，它的作用在于：提前假设某处会出现异常，提前做好准备，当真的出现异常的时候，可以有后续手段，一般 try 下方只放一行尝试执行的代码。  try：只有在 try 内部的代码，才会被捕获异">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250901212333.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250902103509.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250902110216.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901212333.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250902103509.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250902110216.png">
 <meta property="article:published_time" content="2024-07-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T12:19:30.861Z">
+<meta property="article:modified_time" content="2025-10-31T02:14:41.076Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/Pasted%20image%2020250901212333.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901212333.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -321,7 +321,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyError</span>(<span class="hljs-title class_ inherited__">ValueError</span>):  <br>    <span class="hljs-keyword">pass</span>  <br><br><br>a = <span class="hljs-number">10</span>  <br>b = <span class="hljs-number">0</span>  <br><span class="hljs-keyword">if</span> b == <span class="hljs-number">0</span>:  <br>    <span class="hljs-keyword">raise</span> MyError(<span class="hljs-string">&#x27;分母为0&#x27;</span>)  <br><span class="hljs-built_in">print</span>(a / b)<br></code></pre></td></tr></table></figure>
 
 <h1 id="2-异常的传递"><a href="#2-异常的传递" class="headerlink" title="2  异常的传递"></a>2  异常的传递</h1><p>当函数 <code>func01</code> 中发生异常, 并且没有捕获处理这个异常的时候, 异常会传递到函数 <code>func02</code>, 当 <code>func02</code> 也没有捕获处理这个异常的时候，<code>main</code> 函数会捕获这个异常,  这就是异常的传递性。<br><strong>当所有函数都没有捕获异常的时候, 程序就会报错</strong>。</p>
-<p><img src="/../../../ai_assets/Pasted%20image%2020250901212333.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250901212333.png" srcset="/img/loading.gif" lazyload></p>
 <blockquote>
 <p>利用异常具有传递性的特点，当我们想要保证程序不会因为异常崩溃的时候，就可以在 <code>main</code> 函数中设置异常捕获，由于无论在整个程序哪里发生异常, 最终都会传递到 <code>main</code> 函数中，这样就可以确保所有的异常都会被捕获。</p>
 </blockquote>
@@ -349,7 +349,7 @@
 <li><code>__init__.py</code>的文件（用来控制模块的导入行为）</li>
 <li>其它模块（<code>.py</code>）文件</li>
 </ol>
-<p>包可以帮助我们<strong>管理模块</strong>, 包的作用就是包含多个模块，但包的本质依然是模块。<br><img src="/../../../ai_assets/Pasted%20image%2020250902103509.png" srcset="/img/loading.gif" lazyload></p>
+<p>包可以帮助我们<strong>管理模块</strong>, 包的作用就是包含多个模块，但包的本质依然是模块。<br><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250902103509.png" srcset="/img/loading.gif" lazyload></p>
 <p>实例：<br>文件夹 <code>my_package</code>内有：</p>
 <ul>
 <li><code>__init__.py</code>文件</li>
@@ -367,7 +367,7 @@
 <p>如果网络不好可以用清华镜像，如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple 包名称<br></code></pre></td></tr></table></figure>
 
-<p>在Pycharm直接安装<br><img src="/../../../ai_assets/Pasted%20image%2020250902110216.png" srcset="/img/loading.gif" lazyload></p>
+<p>在Pycharm直接安装<br><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250902110216.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="3-5-Anaconda"><a href="#3-5-Anaconda" class="headerlink" title="3.5 Anaconda"></a>3.5 Anaconda</h2><p>Anaconda内置了非常多的第三方库，可以用来管理Python模块。<br>默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在 <code>sys</code>模块的 <code>path</code>变量中。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sys<br>sys.path<br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">[&#x27;D:\\Develop\\@DevCode\\PyProject\\Python学习\\试学班&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\@DevCode\\PyProject\\Python学习&#x27;, </span><br><span class="hljs-string">&#x27;D:\\PyCharm 2023.2.3\\plugins\\python\\helpers\\pycharm_display&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\Anaconda\\envs\\my_project_env\\python310.zip&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\Anaconda\\envs\\my_project_env\\DLLs&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\Anaconda\\envs\\my_project_env\\lib&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\Anaconda\\envs\\my_project_env&#x27;, </span><br><span class="hljs-string">&#x27;D:\\Develop\\Anaconda\\envs\\my_project_env\\lib\\site-packages&#x27;, </span><br><span class="hljs-string">&#x27;D:\\PyCharm 2023.2.3\\plugins\\python\\helpers\\pycharm_matplotlib_backend&#x27;]</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
 

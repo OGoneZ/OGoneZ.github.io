@@ -26,14 +26,14 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="Numpy非常重要的一个特性就是矢量化，对数组进行运算时，所有运算会自动作用于数组中的每一个成员，而不需要编写循环。 1 数组和标量的运算123import numpy as npimport pandas as pdimport matplotlib.pyplot as plt  数组和数值进行加减乘除、取模求幂等运算，对应的运算会作用到数组的每一个元素上。 1234arr &#x3D; np.arang">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/02_matrix_multi.png">
-<meta property="og:image" content="http://example.com/ai_assets/02_ndarray_broad.png">
+<meta property="og:image" content="http://example.com/ai_assets/03_data_ana/02_matrix_multi.png">
+<meta property="og:image" content="http://example.com/ai_assets/03_data_ana/02_ndarray_broad.png">
 <meta property="article:published_time" content="2024-08-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T12:19:30.973Z">
+<meta property="article:modified_time" content="2025-10-31T02:11:52.243Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Numpy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/02_matrix_multi.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/03_data_ana/02_matrix_multi.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -337,7 +337,7 @@ arr1 &lt; arr2为：
 </ul>
 <p>$$<br>\begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13} \ a_{21} &amp; a_{22} &amp; a_{23} \end{bmatrix} \times \begin{bmatrix} b_{11} &amp; b_{12} \ b_{21} &amp; b_{22} \ b_{31} &amp; b_{32} \end{bmatrix} &#x3D; \begin{bmatrix} (a_{11}b_{11} + a_{12}b_{21} + a_{13}b_{31}) &amp; (a_{11}b_{12} + a_{12}b_{22} + a_{13}b_{32}) \ (a_{21}b_{11} + a_{22}b_{21} + a_{23}b_{31}) &amp; (a_{21}b_{12} + a_{22}b_{22} + a_{23}b_{32}) \end{bmatrix}<br>$$</p>
 <p>矩阵乘法 C&#x3D;A×B 的核心运算就是在对 A 的行向量和 B 的列向量进行点积。</p>
-<p><img src="/../../../../ai_assets/02_matrix_multi.png" srcset="/img/loading.gif" lazyload alt="png"></p>
+<p><img src="/../../../../ai_assets/03_data_ana/02_matrix_multi.png" srcset="/img/loading.gif" lazyload alt="png"></p>
 <p>在Numpy中可以使用矩阵乘法运算符 <code>arr1 @ arr2</code>或函数 <code>np.dot(arr1, arr2)</code>的方式计算矩阵乘法。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2*3矩阵 × 3*2矩阵</span><br>arr1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br>arr2 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br><br><span class="hljs-comment"># 推荐矩阵乘法运算符</span><br><span class="hljs-built_in">print</span>(arr1 @ arr2, end=<span class="hljs-string">&#x27;\n\n&#x27;</span>)<br><br><span class="hljs-comment"># 函数方式</span><br><span class="hljs-built_in">print</span>(np.dot(arr1, arr2))<br></code></pre></td></tr></table></figure>
 
@@ -391,7 +391,7 @@ arr1 + arr2为：
  [2 2 2]
  [2 2 2]]
 </code></pre>
-<p><img src="/../../../../ai_assets/02_ndarray_broad.png" srcset="/img/loading.gif" lazyload alt="png"></p>
+<p><img src="/../../../../ai_assets/03_data_ana/02_ndarray_broad.png" srcset="/img/loading.gif" lazyload alt="png"></p>
 <h1 id="3-通用函数"><a href="#3-通用函数" class="headerlink" title="3 通用函数"></a>3 通用函数</h1><h2 id="3-1-一元函数"><a href="#3-1-一元函数" class="headerlink" title="3.1 一元函数"></a>3.1 一元函数</h2><p>一元函数的参数是一个数组对象，函数会矢量化地对数组每一个元素进行运算。</p>
 <ul>
 <li><code>abs()</code>&#x2F;<code>fabs()</code>：求绝对值</li>

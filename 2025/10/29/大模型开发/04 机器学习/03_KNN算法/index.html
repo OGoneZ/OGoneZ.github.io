@@ -26,17 +26,17 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="1 概述K近邻算法（k-nearest neighbors, KNN）是一种用于分类和回归的非参数统计方法。KNN 算法的原理是从历史数据中找到 $\small{k}$ 个跟新输入的实例最邻近的实例，根据它们中的多数所属的类别来对新实例进行分类或者输出新实例的目标值。K近邻算法没有显式的学习训练过程，它用的是“近朱者赤，近墨者黑”这样一种简单朴素的思想来实现分类或回归。  分类问题：在K个最近邻的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/03_manhattan.png">
-<meta property="og:image" content="http://example.com/ai_assets/03_oujilide.png">
-<meta property="og:image" content="http://example.com/ai_assets/03_chebyshev.png">
-<meta property="og:image" content="http://example.com/ai_assets/03_heatmap.png">
-<meta property="og:image" content="http://example.com/ai_assets/03_kfold.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/03_manhattan.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/03_oujilide.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/03_chebyshev.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/03_heatmap.png">
+<meta property="og:image" content="http://example.com/ai_assets/04_ml/03_kfold.png">
 <meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-29T05:32:06.053Z">
+<meta property="article:modified_time" content="2025-10-31T02:21:16.875Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/03_manhattan.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/04_ml/03_manhattan.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -231,7 +231,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          3.9k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
         
-          30 分钟
+          33 分钟
         
       </span>
     
@@ -294,12 +294,25 @@
 <li>K值过大：在较大范围的训练实例中进行预测，容易受到均衡值的影响，发生<strong>欠拟合</strong></li>
 </ul>
 <h2 id="2-2-距离的度量"><a href="#2-2-距离的度量" class="headerlink" title="2.2 距离的度量"></a>2.2 距离的度量</h2><h3 id="2-2-1-闵可夫斯基距离"><a href="#2-2-1-闵可夫斯基距离" class="headerlink" title="2.2.1 闵可夫斯基距离"></a>2.2.1 闵可夫斯基距离</h3><p>我们可以用距离（distance）来衡量特征空间中两个实例之间的相似度，闵氏距离全称闵可夫斯基距离（Minkowski Distance），对于两个 $\small{n}$ 维向量 $\small{\mathbf{x}&#x3D;(x_{1}, x_{2}, \cdots, x_{n})}$ 和 $\small{\mathbf{y}&#x3D;(y_{1}, y_{2}, \cdots, y_{n})}$ ，它们之间的距离可以定义为：<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; (\sum_{i&#x3D;1}^{n}{\vert x_{i} - y_{i} \rvert}^{p})^{\frac{1}{p}}<br>$$</p>
-<h3 id="2-2-2-曼哈顿距离"><a href="#2-2-2-曼哈顿距离" class="headerlink" title="2.2.2 曼哈顿距离"></a>2.2.2 曼哈顿距离</h3><p>当 $p &#x3D; 1$ 时，闵式距离即曼哈顿距离（Manhattan distance），也就是线段对轴产生的投影的距离总和，特点是横平竖直。<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; \sum_{i&#x3D;1}^{n} \lvert x_{i} - y_{i} \rvert<br>$$<br><img src="/../../../ai_assets/03_manhattan.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="2-2-3-欧几里得距离"><a href="#2-2-3-欧几里得距离" class="headerlink" title="2.2.3 欧几里得距离"></a>2.2.3 欧几里得距离</h3><p>当 $p &#x3D; 2$ 时，闵式距离即欧几里得距离（Euclidean distance），也就是现实意义上两点之间的距离。<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; \sqrt{\sum_{i&#x3D;1}^{n}(x_{i} - y_{i})^{2}}<br>$$<br><img src="/../../../ai_assets/03_oujilide.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-2-2-曼哈顿距离"><a href="#2-2-2-曼哈顿距离" class="headerlink" title="2.2.2 曼哈顿距离"></a>2.2.2 曼哈顿距离</h3><p>当 $p &#x3D; 1$ 时，闵式距离即曼哈顿距离（Manhattan distance），也就是线段对轴产生的投影的距离总和，特点是横平竖直。<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; \sum_{i&#x3D;1}^{n} \lvert x_{i} - y_{i} \rvert<br>$$<br><img src="/../../../ai_assets/04_ml/03_manhattan.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-2-3-欧几里得距离"><a href="#2-2-3-欧几里得距离" class="headerlink" title="2.2.3 欧几里得距离"></a>2.2.3 欧几里得距离</h3><p>当 $p &#x3D; 2$ 时，闵式距离即欧几里得距离（Euclidean distance），也就是现实意义上两点之间的距离。<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; \sqrt{\sum_{i&#x3D;1}^{n}(x_{i} - y_{i})^{2}}<br>$$<br><img src="/../../../ai_assets/04_ml/03_oujilide.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="2-2-4-切比雪夫距离"><a href="#2-2-4-切比雪夫距离" class="headerlink" title="2.2.4 切比雪夫距离"></a>2.2.4 切比雪夫距离</h3><p>当 $p\to\infty$ 时，闵式距离即切比雪夫距离，即每个轴上投影的最大值。<br>$$<br>d(\mathbf{x}, \mathbf{y}) &#x3D; \underset{i}{max}(\lvert x_{i} - y_{i} \rvert)<br>$$</p>
-<p><img src="/../../../ai_assets/03_chebyshev.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/04_ml/03_chebyshev.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="3-特征预处理"><a href="#3-特征预处理" class="headerlink" title="3 特征预处理"></a>3 特征预处理</h1><p>特征的单位或者大小相差较大，或者某特征的方差相比其他的特征要大出几个数量级，容易影响（支配）目标结果，使得一些模型（算法）无法学习到其它的特征。</p>
-<h2 id="3-1-归一化"><a href="#3-1-归一化" class="headerlink" title="3.1 归一化"></a>3.1 归一化</h2><p><strong>归一化 (Normalization)</strong> 将数据缩放到一个固定的范围<code>[mi, mx]</code>，最常见的是 <strong>[0, 1]</strong> 之间。<br>常用方法：Min-Max Scaling (最小-最大缩放)</p>
+<h2 id="3-1-SMOTE-过采样"><a href="#3-1-SMOTE-过采样" class="headerlink" title="3.1 SMOTE 过采样"></a>3.1 SMOTE 过采样</h2><p>在垃圾邮件过滤时，正常邮件远多于垃圾邮件。如果直接用这种不平衡的数据去训练模型，模型会倾向于偷懒，因为它只要把所有样本都预测为多数类，就能获得很高的准确率。</p>
+<p><strong>SMOTE</strong> 就是为了解决分类任务中<strong>数据类别不平衡</strong>问题的算法，通过人工合成新的少数类样本来平衡数据集，从而帮助机器学习模型更好地学习少数类的特征。</p>
+<p>SMOTE 工作原理：</p>
+<ol>
+<li>选择少数样本：随机选择一个少数样本 A</li>
+<li>找到 K 近邻：在所有少数样本中，找到 K 个 A 的最近邻，假设 K&#x3D;3，找到了 B,C,D</li>
+<li>选择近邻：从 K 个最近邻中随机选择一个，比如选到了 C</li>
+<li>生成新样本：在 A 和 C 的连线上随机选择一个点作为新样本</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">pip install imbalanced-learn<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> imblearn.over_sampling <span class="hljs-keyword">import</span> SMOTE<br><br>smote = SMOTE(random_state=<span class="hljs-number">42</span>)<br>X_resampled, y_resampled = smote.fit_resample(X, y)<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-2-归一化"><a href="#3-2-归一化" class="headerlink" title="3.2 归一化"></a>3.2 归一化</h2><p><strong>归一化 (Normalization)</strong> 将数据缩放到一个固定的范围<code>[mi, mx]</code>，最常见的是 <strong>[0, 1]</strong> 之间。<br>常用方法：Min-Max Scaling (最小-最大缩放)</p>
 <ol>
 <li>缩放到<code>[0, 1]</code>（把$x$到$min$的距离映射到整个范围$max-min$内）<br>$$<br>X’&#x3D;\frac{x-min}{max-min}<br>$$</li>
 <li>映射到<code>[mi, mx]</code>范围内（把$X’$放缩$mx-mi$倍，再偏移$mi$）<br>$$<br>X’’&#x3D;X’·(mx-mi)+mi<br>$$</li>
@@ -311,7 +324,7 @@
 <li>优点：保留了数据的原始分布</li>
 <li>缺点：对异常值非常敏感，如果存在极端值，会使大部分数据压缩到很小的范围内</li>
 </ul>
-<h2 id="3-2-标准化"><a href="#3-2-标准化" class="headerlink" title="3.2 标准化"></a>3.2 标准化</h2><p><strong>标准化 (Standardization)</strong> 是将数据缩放成<strong>均值为 0，标准差为 1</strong>的分布。<br>$$<br>X’&#x3D;\frac{X-μ}{σ}<br>$$</p>
+<h2 id="3-3-标准化"><a href="#3-3-标准化" class="headerlink" title="3.3 标准化"></a>3.3 标准化</h2><p><strong>标准化 (Standardization)</strong> 是将数据缩放成<strong>均值为 0，标准差为 1</strong>的分布。<br>$$<br>X’&#x3D;\frac{X-μ}{σ}<br>$$</p>
 <p>其中$μ$为均值(mean)，$σ$为标准差(std)，先减掉均值变为均值为0，再除掉标准差放缩到标准差为1。</p>
 <p>API实现：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-comment"># 创建标准化对象</span><br>ss = StandardScaler()<br><br><span class="hljs-comment"># 对数据进行标准化</span><br><span class="hljs-comment"># fit_transform: 通常用于训练集，同时完成transform()和fit()</span><br><span class="hljs-comment"># transform: 通常用于测试集或新数据，使用之前训练集的参数直接transform()</span><br>X_train  = ss.fit_transform(X_train)<br>X_test = ss.transform(X_test)<br><br><span class="hljs-comment"># 查看原始数据均值、标准差和方差</span><br><span class="hljs-built_in">print</span>(ss.mean_)<br><span class="hljs-built_in">print</span>(ss.scale_)<br><span class="hljs-built_in">print</span>(ss.var_)<br></code></pre></td></tr></table></figure>
@@ -320,7 +333,7 @@
 <li>优点：对异常值没那么敏感</li>
 <li>缺点：标准化假设数据服从或近似服从正态分布。如果数据分布与正态分布相差较大，标准化后的效果可能不理想，甚至会适得其反，改变了数据的原始分布</li>
 </ul>
-<h2 id="3-3-独热编码"><a href="#3-3-独热编码" class="headerlink" title="3.3 独热编码"></a>3.3 独热编码</h2><p>对于类别型（category）特征，整数编码会被视为有序数值，导致距离的错误计算，比如红色&#x3D;1，黄色&#x3D;2，绿色&#x3D;3，红色和绿色直接的距离并不比红色和黄色之间远，它们之间都是平等的类别。<br>使用<strong>独热编码（One-Hot Encoding）</strong> 可将类别特征转换为二元向量，消除虚假的顺序关系。</p>
+<h2 id="3-4-独热编码"><a href="#3-4-独热编码" class="headerlink" title="3.4 独热编码"></a>3.4 独热编码</h2><p>对于类别型（category）特征，整数编码会被视为有序数值，导致距离的错误计算，比如红色&#x3D;1，黄色&#x3D;2，绿色&#x3D;3，红色和绿色直接的距离并不比红色和黄色之间远，它们之间都是平等的类别。<br>使用<strong>独热编码（One-Hot Encoding）</strong> 可将类别特征转换为二元向量，消除虚假的顺序关系。</p>
 <table>
 <thead>
 <tr>
@@ -352,10 +365,10 @@
 <p>也可以使用 <code>pd.get_dummies(df)</code> 实现独热编码，返回 DataFrame，可读性更强。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pd.get_dummies(df, drop_first=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 
-<h2 id="3-4-标签编码"><a href="#3-4-标签编码" class="headerlink" title="3.4 标签编码"></a>3.4 标签编码</h2><p><strong>标签编码器（LabelEncoder）</strong> 将类别特征中的每个类别映射为一个唯一数字，比如将 “红色”、”绿色”、”蓝色” 分别编码为 0、1、2。</p>
+<h2 id="3-5-标签编码"><a href="#3-5-标签编码" class="headerlink" title="3.5 标签编码"></a>3.5 标签编码</h2><p><strong>标签编码器（LabelEncoder）</strong> 将类别特征中的每个类别映射为一个唯一数字，比如将 “红色”、”绿色”、”蓝色” 分别编码为 0、1、2。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> LabelEncoder<br><br>X_train = [<span class="hljs-string">&#x27;蓝色&#x27;</span>, <span class="hljs-string">&#x27;红色&#x27;</span>, <span class="hljs-string">&#x27;黄色&#x27;</span>, <span class="hljs-string">&#x27;红色&#x27;</span>, <span class="hljs-string">&#x27;蓝色&#x27;</span>]<br><br>le = LabelEncoder()<br>X_train = le.fit_transform(X_train)<br>X_test = le.transform(X_test)<br><br>X_train<br><span class="hljs-comment"># array([1, 0, 2, 0, 1])</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="3-5-列转换器"><a href="#3-5-列转换器" class="headerlink" title="3.5 列转换器"></a>3.5 列转换器</h2><p><strong>列转换器 (ColumnTransformer)</strong> 可以在同一个数据集中，对不同类型的列（例如数值型、类别型、文本型）应用不同的预处理方法。</p>
+<h2 id="3-6-列转换器"><a href="#3-6-列转换器" class="headerlink" title="3.6 列转换器"></a>3.6 列转换器</h2><p><strong>列转换器 (ColumnTransformer)</strong> 可以在同一个数据集中，对不同类型的列（例如数值型、类别型、文本型）应用不同的预处理方法。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.compose <span class="hljs-keyword">import</span> ColumnTransformer<br><br>numerical_features = [<span class="hljs-string">&#x27;年龄&#x27;</span>, <span class="hljs-string">&#x27;收入&#x27;</span>]<br>categorical_features = [<span class="hljs-string">&#x27;职业&#x27;</span>, <span class="hljs-string">&#x27;婚姻状况&#x27;</span>]<br><br><span class="hljs-comment"># 创建列转换器</span><br>ct = ColumnTransformer(<br>    transformers=[<br>        <span class="hljs-comment"># 对数值型列进行标准化</span><br>        (<span class="hljs-string">&#x27;num&#x27;</span>, StandardScaler(), numerical_features),  <br>        <span class="hljs-comment"># 对类别型列进行独热编码</span><br>        (<span class="hljs-string">&#x27;cat&#x27;</span>, OneHotEncoder(drop_first=<span class="hljs-literal">True</span>), categorical_features) <br>    ],<br>    remainder=<span class="hljs-string">&#x27;passthrough&#x27;</span>  <span class="hljs-comment"># 其余列不进行处理</span><br>)<br><br>X_train = ct.fit_transform(X_train)<br>X_test = ct.transform(X_test)<br></code></pre></td></tr></table></figure>
 
 <h1 id="4-模型训练"><a href="#4-模型训练" class="headerlink" title="4 模型训练"></a>4 模型训练</h1><h2 id="4-1-数据集的加载"><a href="#4-1-数据集的加载" class="headerlink" title="4.1 数据集的加载"></a>4.1 数据集的加载</h2><p>首先从<code>scikit-learn</code>加载鸢尾花数据集。</p>
@@ -400,11 +413,11 @@
 <li><code>annot</code>：每个单元格显示数值</li>
 <li><code>cmap</code>：热力图颜色</li>
 <li><code>xticklabels</code>&#x2F;<code>yticklabels</code>：坐标轴标签<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> confusion_matrix<br>plt.rcParams[<span class="hljs-string">&#x27;font.family&#x27;</span>] = [<span class="hljs-string">&#x27;Microsoft YaHei&#x27;</span>]<br><br>cm = confusion_matrix(y_test, y_pred)<br><br>sns.heatmap(cm, annot=<span class="hljs-literal">True</span>, cmap=<span class="hljs-string">&#x27;Blues&#x27;</span>,<br>            xticklabels=iris[<span class="hljs-string">&#x27;target_names&#x27;</span>], <br>            yticklabels=iris[<span class="hljs-string">&#x27;target_names&#x27;</span>])<br>            <br>plt.title(<span class="hljs-string">&#x27;混淆矩阵热力图&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;预测标签&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;实际标签&#x27;</span>)<br></code></pre></td></tr></table></figure>
-<img src="/../../../ai_assets/03_heatmap.png" srcset="/img/loading.gif" lazyload></li>
+<img src="/../../../ai_assets/04_ml/03_heatmap.png" srcset="/img/loading.gif" lazyload></li>
 </ul>
 </li>
 </ul>
-<h1 id="6-参数调优和网格搜索"><a href="#6-参数调优和网格搜索" class="headerlink" title="6 参数调优和网格搜索"></a>6 参数调优和网格搜索</h1><p>使用<code>scikit-learn</code>的<code>KNeighborsClassfier</code>创建分类器模型时，可以对模型的超参数进行设定，主要有以下几个参数：</p>
+<h1 id="6-参数调优"><a href="#6-参数调优" class="headerlink" title="6 参数调优"></a>6 参数调优</h1><p>使用<code>scikit-learn</code>的<code>KNeighborsClassfier</code>创建分类器模型时，可以对模型的超参数进行设定，主要有以下几个参数：</p>
 <ol>
 <li><code>n_neighbors</code>：近邻的数量，就是 KNN 算法中 K 的值。</li>
 <li><code>weights</code>：可以选择 <code>uniform</code>或 <code>distance</code>，前者表示所有样本的权重相同，后者表示距离越近权重越高，默认值是 <code>uniform</code>。当然，我们也可以通过传入自定义的函数来确定每个样本的权重。</li>
@@ -412,12 +425,12 @@
 <li><code>leaf_size</code>：使用 <code>ball_tree</code>或 <code>kd_tree</code>算法时，该参数用于限制树结构叶子节点最大样本数量，默认值为 <code>30</code>，该参数会影响树的构建和节点查找的性能。</li>
 <li><code>p</code>：闵可夫斯基距离公式中的 <code>p</code>，默认值为2，计算欧氏距离。</li>
 </ol>
-<p>手动调整费时费力，可以使用 <strong>网格搜索(Grid Search) 和 交叉验证(Cross Validation)</strong> 对模型的超参数进行调整。</p>
+<h2 id="6-1-网格搜索"><a href="#6-1-网格搜索" class="headerlink" title="6.1 网格搜索"></a>6.1 网格搜索</h2><p>手动调整费时费力，可以使用 <strong>网格搜索(Grid Search) 和 交叉验证(Cross Validation)</strong> 对模型的超参数进行调整。</p>
 <ul>
 <li>网格搜索：通过穷举法遍历给定的超参数空间</li>
 <li>交叉验证：通常使用K-fold CV，划分K折，每次使用1折做测试集，重复K次</li>
 </ul>
-<p><img src="/../../../ai_assets/03_kfold.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/04_ml/03_kfold.png" srcset="/img/loading.gif" lazyload></p>
 <p>API实现：</p>
 <ul>
 <li><code>GridSearchCV</code>：<ul>
@@ -427,6 +440,9 @@
 </ul>
 </li>
 </ul>
+<h2 id="6-2-Optuna"><a href="#6-2-Optuna" class="headerlink" title="6.2 Optuna"></a>6.2 Optuna</h2><p>Optuna 是一个自动化超参数优化框架，设计用于简化超参数调优过程并提高模型性能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> optuna<br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><br><span class="hljs-comment"># 定义目标函数</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">objective</span>(<span class="hljs-params">trial</span>):<br>    <span class="hljs-comment"># 在目标函数中定义超参数的搜索范围</span><br>    n_estimators = trial.suggest_int(<span class="hljs-string">&quot;n_estimators&quot;</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>)  <span class="hljs-comment"># 树的数量</span><br>    max_depth = trial.suggest_int(<span class="hljs-string">&quot;max_depth&quot;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>)  <span class="hljs-comment"># 树的最大深度</span><br><br>    <span class="hljs-comment"># 创建并训练模型</span><br>    model = RandomForestClassifier(n_estimators=n_estimators, <br>                                   max_depth=max_depth,<br>                                   random_state=<span class="hljs-number">42</span>)<br>    model.fit(X_train, y_train)<br>    <br>    <span class="hljs-comment"># 进行预测</span><br>    preds = model.predict(X_test)<br>    <br>    <span class="hljs-comment"># 计算准确率</span><br>    accuracy = accuracy_score(y_test, preds)<br>    <span class="hljs-keyword">return</span> accuracy  <span class="hljs-comment"># 返回目标函数值</span><br><br><span class="hljs-comment"># 创建一个 Study 对象并进行优化</span><br>study = optuna.create_study(direction=<span class="hljs-string">&quot;maximize&quot;</span>)  <span class="hljs-comment"># 目标是最大化准确率</span><br>study.optimize(objective, n_trials=<span class="hljs-number">50</span>)  <span class="hljs-comment"># 进行 50 次优化</span><br><br><span class="hljs-comment"># 打印最优结果</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Best accuracy: &quot;</span>, study.best_value)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Best parameters: &quot;</span>, study.best_params)<br></code></pre></td></tr></table></figure>
+
 <h1 id="7-模型保存和加载"><a href="#7-模型保存和加载" class="headerlink" title="7 模型保存和加载"></a>7 模型保存和加载</h1><p>保存：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> joblib<br><br>joblib.dump(model, <span class="hljs-string">&#x27;model/model_name.pkl&#x27;</span>)<br></code></pre></td></tr></table></figure>
 

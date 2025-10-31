@@ -26,20 +26,20 @@
 <meta property="og:site_name" content="朱宝铎的技术专栏">
 <meta property="og:description" content="1 列表(list)1.1 列表的创建与访问列表类似C++的数组，不过列表中的数据可以为不同的数据类型，并且可以嵌套，嵌套时类似C++的多维数组。列表定义用 []包围，以 ,分割，正向下标从0开始，有反向索引，从-1开始，从后往前，依次递减。 12345678ls &#x3D; []   # 空列表demo_list &#x3D; [11, &#x27;哈哈&#x27;, 3.14, [1, -2]]# 正向索引">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250904170517.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250909114917.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250831194646.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250831200302.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250901085204.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250901084030.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250901090126.png">
-<meta property="og:image" content="http://example.com/ai_assets/Pasted%20image%2020250901090833.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250904170517.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250909114917.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250831194646.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250831200302.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901085204.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901084030.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901090126.png">
+<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250901090833.png">
 <meta property="article:published_time" content="2024-07-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T12:19:30.837Z">
+<meta property="article:modified_time" content="2025-10-31T02:14:41.046Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/Pasted%20image%2020250904170517.png">
+<meta name="twitter:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250904170517.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -303,14 +303,14 @@
 
 <h2 id="1-3-列表的遍历"><a href="#1-3-列表的遍历" class="headerlink" title="1.3 列表的遍历"></a>1.3 列表的遍历</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># while方式</span><br>i = <span class="hljs-number">0</span><br><span class="hljs-keyword">while</span> i &lt; <span class="hljs-built_in">len</span>(my_list):<br>	<span class="hljs-built_in">print</span>(my_list[i])<br>	i++<br><br><span class="hljs-comment"># for方式</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> my_list:<br>	<span class="hljs-built_in">print</span>(i)<br></code></pre></td></tr></table></figure>
 
-<h2 id="1-4-常用方法"><a href="#1-4-常用方法" class="headerlink" title="1.4 常用方法"></a>1.4 常用方法</h2><p><img src="/../../../ai_assets/Pasted%20image%2020250904170517.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="1-4-常用方法"><a href="#1-4-常用方法" class="headerlink" title="1.4 常用方法"></a>1.4 常用方法</h2><p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250904170517.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="2-元组-tuple"><a href="#2-元组-tuple" class="headerlink" title="2 元组(tuple)"></a>2 元组(tuple)</h1><h2 id="2-1-元组的创建与访问"><a href="#2-1-元组的创建与访问" class="headerlink" title="2.1 元组的创建与访问"></a>2.1 元组的创建与访问</h2><p>元组与列表类似，不同之处在于元组的元素<strong>不能修改</strong>，元组使用 <code>()</code>，列表使用 <code>[]</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">tp = ()    <span class="hljs-comment"># 空元组</span><br><br>nums = (<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>)<br><br><span class="hljs-comment"># 元组内只有一个元素时，需要有逗号在内，否则小括号会识别为运算符</span><br>nums = (<span class="hljs-number">1</span>,)  √<br>nums = (<span class="hljs-number">1</span>)   ×<br><br><span class="hljs-comment"># 元组的访问和列表完全一样，通过下标访问，支持反向下标</span><br>nums[<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
 
 <h2 id="2-2-元组的“可变”"><a href="#2-2-元组的“可变”" class="headerlink" title="2.2 元组的“可变”"></a>2.2 元组的“可变”</h2><p>元组内有 <code>list</code>的时候，元组依然遵循元素不可变，但 <code>list</code>内的元素可以修改。这是因为元组存储的时候本质上存的是 <code>list</code>的地址，只要地址不变，元组元素就没有修改，而所指内容是否变化和元组无关。正因为如此，替换为别的 <code>list</code>也是不被允许的，因为地址发生了改变。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nums = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br>nums = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, 地址)<br></code></pre></td></tr></table></figure>
 
-<p><img src="/../../../ai_assets/Pasted%20image%2020250909114917.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250909114917.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="2-3-打包和解包"><a href="#2-3-打包和解包" class="headerlink" title="2.3 打包和解包"></a>2.3 打包和解包</h2><p>当我们把多个用逗号分隔的值赋给一个变量时，多个值会打包成一个元组类型；当我们把一个元组赋值给多个变量时，元组会解包成多个值然后分别赋给对应的变量。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 打包操作</span><br>a = <span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(a))  <span class="hljs-comment"># &lt;class &#x27;tuple&#x27;&gt;</span><br><br><span class="hljs-comment"># 解包操作</span><br>i, j, k = a<br><span class="hljs-built_in">print</span>(i, j, k)  <span class="hljs-comment"># 1 10 100</span><br></code></pre></td></tr></table></figure>
 
@@ -327,7 +327,7 @@
 <blockquote>
 <p><code>a, b = b, a</code>和 <code>a, b, c = b, c, a</code>实际并没有用到打包解包语法，而是有特定的字节码指令实现这两个操作，效率非常高，在三个以上的变量交换时需要使用打包解包。</p>
 </blockquote>
-<h2 id="2-4-常用方法"><a href="#2-4-常用方法" class="headerlink" title="2.4 常用方法"></a>2.4 常用方法</h2><p><img src="/../../../ai_assets/Pasted%20image%2020250831194646.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="2-4-常用方法"><a href="#2-4-常用方法" class="headerlink" title="2.4 常用方法"></a>2.4 常用方法</h2><p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250831194646.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="3-字符串-str"><a href="#3-字符串-str" class="headerlink" title="3 字符串(str)"></a>3 字符串(str)</h1><h2 id="3-1-字符串的创建和访问"><a href="#3-1-字符串的创建和访问" class="headerlink" title="3.1 字符串的创建和访问"></a>3.1 字符串的创建和访问</h2><p>字符串同列表、元组一样，可以通过下标和反向下标进行访问。不过和C++非常不同的一点是，字符串是<strong>无法修改</strong>的容器。也就是说如果要完成修改操作，只能得到一个新的字符串，旧的字符串是无法修改的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 字符串可以使用单引号、双引号、三引号进行定义，使用三引号时可以跨行。</span><br><br>s = <span class="hljs-string">&quot;&quot;</span>   <span class="hljs-comment"># 空字符串</span><br><br>s = <span class="hljs-string">&#x27;hhh&#x27;</span><br>s = <span class="hljs-string">&quot;hhh&quot;</span><br>s = <span class="hljs-string">&quot;&quot;&quot;hhh</span><br><span class="hljs-string">hhhh</span><br><span class="hljs-string">hh</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 单引号里面可以包双引号，双引号里面可以包单引号</span><br>s = <span class="hljs-string">&quot;人工&#x27;智&#x27;能&quot;</span><br>s = <span class="hljs-string">&#x27;人工&quot;智&quot;能&#x27;</span><br><br><span class="hljs-built_in">print</span>(s[<span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
 
@@ -349,7 +349,7 @@
 <h2 id="3-4-常用方法"><a href="#3-4-常用方法" class="headerlink" title="3.4 常用方法"></a>3.4 常用方法</h2><p>由于字符串<strong>不可变</strong>，所以使用字符串的方法并不会改变原来的字符串，而是产生新的字符串。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 转大写</span><br>su = s.upper()<br><br><span class="hljs-comment"># 转小写</span><br>sl = s.lower()<br><br><span class="hljs-comment"># replace用法，生成新的字符串，原字符串不变</span><br>s = <span class="hljs-string">&quot;Python好玩真好玩&quot;</span><br>new_s = s.replace(<span class="hljs-string">&quot;好玩&quot;</span>, <span class="hljs-string">&quot;有趣&quot;</span>)<br><span class="hljs-built_in">print</span>(s)      <span class="hljs-comment"># 结果还是  Python好玩真好玩</span><br><span class="hljs-built_in">print</span>(new_s)  <span class="hljs-comment"># 修改后的  Python有趣真有趣</span><br><br><span class="hljs-comment"># split用法，原字符串不变，生成一个新列表</span><br>name = <span class="hljs-string">&quot;Python-Java-C++&quot;</span><br>name_list = name.split(<span class="hljs-string">&#x27;-&#x27;</span>)<br><span class="hljs-built_in">print</span>(name)        <span class="hljs-comment"># Python-Java-C++</span><br><span class="hljs-built_in">print</span>(name_list)   <span class="hljs-comment"># [&#x27;Python&#x27;, &#x27;Java&#x27;, &#x27;C++&#x27;]</span><br><br><span class="hljs-comment"># strip用法，去除前后指定字符串</span><br>demo = <span class="hljs-string">&quot;   hhhh  &quot;</span><br>new1 = demo.strip()       <span class="hljs-comment"># 默认去除前后空格和换行符</span><br>demo = <span class="hljs-string">&quot;1211哈哈哈21121&quot;</span><br>new2 = demo.strip(<span class="hljs-string">&quot;12&quot;</span>)   <span class="hljs-comment"># 按照单个字符，&#x27;1&#x27;和&#x27;2&#x27;都会删除</span><br><span class="hljs-built_in">print</span>(new2)    <span class="hljs-comment"># 哈哈哈</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="/../../../ai_assets/Pasted%20image%2020250831200302.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250831200302.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="4-序列的切片"><a href="#4-序列的切片" class="headerlink" title="4 序列的切片"></a>4 序列的切片</h1><p>序列是指：<strong>内容连续、有序，可使用下标索引</strong>的一类数据容器。<br>上述的列表、元组、字符串都是序列。序列支持切片操作，切片就是从原序列中取出一个子序列。</p>
 <p>语法：<code>序列[起始下标:结束下标:步长]</code>（类似 <code>range</code>序列，<code>[起始,结束)</code>范围内指定步长）<br>表示从序列中，从指定位置开始，依次取出元素，到指定位置结束，得到一个新序列。</p>
 <ul>
@@ -373,7 +373,7 @@
 </blockquote>
 <h2 id="5-2-字典的遍历"><a href="#5-2-字典的遍历" class="headerlink" title="5.2 字典的遍历"></a>5.2 字典的遍历</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 迭代字典的键</span><br><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> d.keys():  <span class="hljs-comment"># 等同于 for i in d:</span><br>	<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;名字：<span class="hljs-subst">&#123;k&#125;</span> 分数：<span class="hljs-subst">&#123;d[k]&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 迭代字典的值</span><br><span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> d.values():<br>	<span class="hljs-built_in">print</span>(v)<br><br><span class="hljs-comment"># 迭代字典的键值对</span><br><span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> d.items():  <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;k&#125;</span>: <span class="hljs-subst">&#123;v&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
 
-<h2 id="5-3-常用方法"><a href="#5-3-常用方法" class="headerlink" title="5.3 常用方法"></a>5.3 常用方法</h2><p><img src="/../../../ai_assets/Pasted%20image%2020250901085204.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-3-常用方法"><a href="#5-3-常用方法" class="headerlink" title="5.3 常用方法"></a>5.3 常用方法</h2><p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250901085204.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="6-集合-set"><a href="#6-集合-set" class="headerlink" title="6 集合(set)"></a>6 集合(set)</h1><h2 id="6-1-集合的创建"><a href="#6-1-集合的创建" class="headerlink" title="6.1 集合的创建"></a>6.1 集合的创建</h2><p><code>set</code>和 <code>dict</code>类似也是一组 <code>key</code>的集合，但不存储 <code>value</code>，由于 <code>key</code>不能重复，所以在 <code>set</code>中没有重复的 <code>key</code>。集合内部是<strong>去重并且无序</strong>的，使用 <code>&#123;&#125;</code>包围。因为无序，所以集合不可用下标进行访问。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">s = <span class="hljs-built_in">set</span>()  <span class="hljs-comment"># 空集合，s = &#123;&#125; 不是空集合，而是空字典</span><br><br>s = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125; <br></code></pre></td></tr></table></figure>
 
@@ -387,7 +387,7 @@
 <h2 id="6-3-集合的遍历"><a href="#6-3-集合的遍历" class="headerlink" title="6.3 集合的遍历"></a>6.3 集合的遍历</h2><p>由于集合不支持下标访问，所以不能使用 <code>while</code>循环。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> s:<br>	<span class="hljs-built_in">print</span>(i)<br></code></pre></td></tr></table></figure>
 
-<h2 id="6-4-常用操作"><a href="#6-4-常用操作" class="headerlink" title="6.4 常用操作"></a>6.4 常用操作</h2><p><img src="/../../../ai_assets/Pasted%20image%2020250901084030.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-4-常用操作"><a href="#6-4-常用操作" class="headerlink" title="6.4 常用操作"></a>6.4 常用操作</h2><p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250901084030.png" srcset="/img/loading.gif" lazyload></p>
 <h1 id="7-容器对比"><a href="#7-容器对比" class="headerlink" title="7 容器对比"></a>7 容器对比</h1><p>列表、元组字符串为序列类型，集合、字典为非序列类型。</p>
 <ul>
 <li>是否支持下标索引<ul>
@@ -406,8 +406,8 @@
 </ul>
 </li>
 </ul>
-<p><img src="/../../../ai_assets/Pasted%20image%2020250901090126.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="8-容器通用操作"><a href="#8-容器通用操作" class="headerlink" title="8 容器通用操作"></a>8 容器通用操作</h1><p><img src="/../../../ai_assets/Pasted%20image%2020250901090833.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250901090126.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="8-容器通用操作"><a href="#8-容器通用操作" class="headerlink" title="8 容器通用操作"></a>8 容器通用操作</h1><p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250901090833.png" srcset="/img/loading.gif" lazyload></p>
 <ul>
 <li><code>sorted</code>：接收任意可迭代对象（<code>list、tuple、set、dict、str</code>等），返回一个<strong>新的列表</strong>（不修改原对象）。</li>
 <li><code>.sort()</code>：<code>list</code>专属方法，<strong>直接在原列表上排序</strong>，不会返回新列表（返回 <code>None</code>）。</li>
