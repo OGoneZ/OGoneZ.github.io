@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 概述1.1 贝叶斯定理贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为：$$P(A \mid B) &#x3D; \frac{P(B \mid A)}{P(B)} \cdot P(A)$$  ${P(A)}$ 是事件 ${A}$ 发生的先验概率，我们可以理解为已知事实或主观经验（主">
+    <meta name="description" content="1 概述 1.1 贝叶斯定理 贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为： $$P(A \mid B) &#x3D; \frac{P(B \mid A)}{P(B)} \cdot P(A)$$ - P(A) 是事件 A 发生的先验概率，我们可以理解为已知事实或主观经验（主观概率）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="07_朴素贝叶斯">
 <meta property="og:url" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 概述1.1 贝叶斯定理贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为：$$P(A \mid B) &#x3D; \frac{P(B \mid A)}{P(B)} \cdot P(A)$$  ${P(A)}$ 是事件 ${A}$ 发生的先验概率，我们可以理解为已知事实或主观经验（主">
+<meta property="og:description" content="1 概述 1.1 贝叶斯定理 贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为： $$P(A \mid B) &#x3D; \frac{P(B \mid A)}{P(B)} \cdot P(A)$$ - P(A) 是事件 A 发生的先验概率，我们可以理解为已知事实或主观经验（主观概率）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-29T05:32:17.852Z">
@@ -236,7 +236,7 @@
         
         
         
-          11 分钟
+          10 分钟
         
       </span>
     
@@ -278,24 +278,69 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><h2 id="1-1-贝叶斯定理"><a href="#1-1-贝叶斯定理" class="headerlink" title="1.1 贝叶斯定理"></a>1.1 贝叶斯定理</h2><p>贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为：<br>$$P(A \mid B) &#x3D; \frac{P(B \mid A)}{P(B)} \cdot P(A)$$</p>
-<ul>
-<li>${P(A)}$ 是事件 ${A}$ 发生的<strong>先验概率</strong>，我们可以理解为已知事实或主观经验（<strong>主观概率</strong>）</li>
-<li>${P(B \mid A)}$ 是在事件 ${A}$ 发生的条件下事件 ${B}$ 发生的<strong>条件概率</strong>，通常也称之为<strong>似然性</strong>（likelihood）</li>
-<li>${P(B)}$ 是事件 ${B}$ 发生的（全）概率，和 ${P(B \mid A)}$ 可以通过收集到的样本数据（证据）获取</li>
-<li>${P(A \mid B)}$ 是在事件 ${B}$ 发生的条件下事件 ${A}$ 发生的条件概率，即收集到样本数据后对事件 ${A}$ 发生概率的重新认知，称之为<strong>后验概率</strong>。</li>
-</ul>
+                <h1 id="概述">1 概述</h1>
+<h2 id="贝叶斯定理">1.1 贝叶斯定理</h2>
+<p>贝叶斯定理是概率论中的一个重要定理，它描述了如何从主观经验或已知事实出发，通过收集到的样本数据（证据）来更新对事件发生概率的认知（信念）。贝叶斯定理的数学表达式为：
+<span class="math display">$$P(A \mid B) = \frac{P(B \mid A)}{P(B)}
+\cdot P(A)$$</span> - <span
+class="math inline"><em>P</em>(<em>A</em>)</span> 是事件 <span
+class="math inline"><em>A</em></span>
+发生的<strong>先验概率</strong>，我们可以理解为已知事实或主观经验（<strong>主观概率</strong>）
+- <span class="math inline"><em>P</em>(<em>B</em> ∣ <em>A</em>)</span>
+是在事件 <span class="math inline"><em>A</em></span> 发生的条件下事件
+<span class="math inline"><em>B</em></span>
+发生的<strong>条件概率</strong>，通常也称之为<strong>似然性</strong>（likelihood）
+- <span class="math inline"><em>P</em>(<em>B</em>)</span> 是事件 <span
+class="math inline"><em>B</em></span> 发生的（全）概率，和 <span
+class="math inline"><em>P</em>(<em>B</em> ∣ <em>A</em>)</span>
+可以通过收集到的样本数据（证据）获取 - <span
+class="math inline"><em>P</em>(<em>A</em> ∣ <em>B</em>)</span> 是在事件
+<span class="math inline"><em>B</em></span> 发生的条件下事件 <span
+class="math inline"><em>A</em></span>
+发生的条件概率，即收集到样本数据后对事件 <span
+class="math inline"><em>A</em></span>
+发生概率的重新认知，称之为<strong>后验概率</strong>。</p>
 <p>贝叶斯定理告诉我们一个重要的事实：可以从已知的事实或主观经验出发，通过收集到的证据来更新我们对某个事件发生概率的认知，也就是<strong>可以通过已知的事实和收集的证据来推断出未知的真相</strong>。</p>
-<h2 id="1-2-朴素贝叶斯"><a href="#1-2-朴素贝叶斯" class="headerlink" title="1.2 朴素贝叶斯"></a>1.2 朴素贝叶斯</h2><p>朴素贝叶斯算法是基于贝叶斯定理和特征条件独立性假设的分类算法，因其简单高效而受到广泛应用。朴素贝叶斯算法的关键在于“<strong>朴素</strong>”二字，也就是刚才所说的<strong>特征条件独立性</strong>假设，即用于分类的特征在类确定的条件下都是独立的，该假设使得朴素贝叶斯的学习成为可能。</p>
-<p>假设我们有一个特征集合 ${X &#x3D; {x_1, x_2, \ldots, x_n}}$ 和一个类别 ${C}$ ，朴素贝叶斯算法假设：<br>$$P(X \vert C) &#x3D; P(x_1 \vert C) \cdot P(x_2 \vert C) \cdot \ldots \cdot P(x_n \vert C)$$<br>这个假设使得我们无需考虑特征之间复杂的依赖关系，极大简化了条件概率的计算。</p>
-<h1 id="2-算法流程"><a href="#2-算法流程" class="headerlink" title="2 算法流程"></a>2 算法流程</h1><h2 id="2-1-训练阶段"><a href="#2-1-训练阶段" class="headerlink" title="2.1 训练阶段"></a>2.1 训练阶段</h2><p>首先计算每个类别的先验概率和每个特征在各个类别下的条件概率。</p>
-<ol>
-<li>计算先验概率：<br>$$<br>P(C_{i}) &#x3D; \frac{n_{i}}{n}<br>$$<br> ${C_{i}}$ 表示类别， ${n_{i}}$ 是类别 ${C_{i}}$ 的样本数量， ${n}$ 是总的样本容量。</li>
-<li>计算条件概率：<br>$$<br>P(x_{j} \vert C_{i}) &#x3D; \frac{n_{i,j}}{n_{i}}<br>$$<br> ${n_{i,j}}$ 是在类别 ${C_{i}}$ 中，特征 ${x_{j}}$ 出现的次数。</li>
-</ol>
-<h2 id="2-2-预测阶段"><a href="#2-2-预测阶段" class="headerlink" title="2.2 预测阶段"></a>2.2 预测阶段</h2><p>给定一个待分类样本 $\small{X}$ ，朴素贝叶斯算法通过以下步骤来计算其属于每个类别的后验概率：<br>$$<br>P(C_{i} \vert X) &#x3D; \frac{P(X \vert C_{i})}{P(X)} \cdot P(C_{i})<br>$$<br>上面的公式中， $\small{P(X)}$ 对应到每个类别都是一个常量，可以忽略掉它，再结合独立性假设有：<br>$$<br>P(C_{i} \vert X) \propto P(C_{i}) \cdot P(x_1 \vert C_{i}) \cdot P(x_2 \vert C_{i}) \cdot \ldots \cdot P(x_n \vert C_{i})<br>$$<br>然后选择具有最高后验概率的类别作为预测结果。</p>
-<h1 id="3-API-使用"><a href="#3-API-使用" class="headerlink" title="3 API 使用"></a>3 API 使用</h1><p>在 <code>sklearn.navie_bayes</code> 模块下有五个朴素贝叶斯算法的变体，每种变体针对不同类型的数据和特征分。</p>
+<h2 id="朴素贝叶斯">1.2 朴素贝叶斯</h2>
+<p>朴素贝叶斯算法是基于贝叶斯定理和特征条件独立性假设的分类算法，因其简单高效而受到广泛应用。朴素贝叶斯算法的关键在于“<strong>朴素</strong>”二字，也就是刚才所说的<strong>特征条件独立性</strong>假设，即用于分类的特征在类确定的条件下都是独立的，该假设使得朴素贝叶斯的学习成为可能。</p>
+<p>假设我们有一个特征集合 <span
+class="math inline"><em>X</em> = {<em>x</em><sub>1</sub>, <em>x</em><sub>2</sub>, …, <em>x</em><sub><em>n</em></sub>}</span>
+和一个类别 <span class="math inline"><em>C</em></span>
+，朴素贝叶斯算法假设： <span
+class="math display"><em>P</em>(<em>X</em>|<em>C</em>) = <em>P</em>(<em>x</em><sub>1</sub>|<em>C</em>) ⋅ <em>P</em>(<em>x</em><sub>2</sub>|<em>C</em>) ⋅ … ⋅ <em>P</em>(<em>x</em><sub><em>n</em></sub>|<em>C</em>)</span>
+这个假设使得我们无需考虑特征之间复杂的依赖关系，极大简化了条件概率的计算。</p>
+<h1 id="算法流程">2 算法流程</h1>
+<h2 id="训练阶段">2.1 训练阶段</h2>
+<p>首先计算每个类别的先验概率和每个特征在各个类别下的条件概率。 1.
+计算先验概率： <span class="math display">$$
+P(C_{i}) = \frac{n_{i}}{n}
+$$</span> <span
+class="math inline"><em>C</em><sub><em>i</em></sub></span> 表示类别，
+<span class="math inline"><em>n</em><sub><em>i</em></sub></span> 是类别
+<span class="math inline"><em>C</em><sub><em>i</em></sub></span>
+的样本数量， <span class="math inline"><em>n</em></span>
+是总的样本容量。 2. 计算条件概率： <span class="math display">$$
+P(x_{j} \vert C_{i}) = \frac{n_{i,j}}{n_{i}}
+$$</span> <span
+class="math inline"><em>n</em><sub><em>i</em>, <em>j</em></sub></span>
+是在类别 <span
+class="math inline"><em>C</em><sub><em>i</em></sub></span> 中，特征
+<span class="math inline"><em>x</em><sub><em>j</em></sub></span>
+出现的次数。</p>
+<h2 id="预测阶段">2.2 预测阶段</h2>
+<p>给定一个待分类样本 <span class="math inline">$\small{X}$</span>
+，朴素贝叶斯算法通过以下步骤来计算其属于每个类别的后验概率： <span
+class="math display">$$
+P(C_{i} \vert X) = \frac{P(X \vert C_{i})}{P(X)} \cdot P(C_{i})
+$$</span> 上面的公式中， <span class="math inline">$\small{P(X)}$</span>
+对应到每个类别都是一个常量，可以忽略掉它，再结合独立性假设有： <span
+class="math display"><em>P</em>(<em>C</em><sub><em>i</em></sub>|<em>X</em>) ∝ <em>P</em>(<em>C</em><sub><em>i</em></sub>) ⋅ <em>P</em>(<em>x</em><sub>1</sub>|<em>C</em><sub><em>i</em></sub>) ⋅ <em>P</em>(<em>x</em><sub>2</sub>|<em>C</em><sub><em>i</em></sub>) ⋅ … ⋅ <em>P</em>(<em>x</em><sub><em>n</em></sub>|<em>C</em><sub><em>i</em></sub>)</span>
+然后选择具有最高后验概率的类别作为预测结果。</p>
+<h1 id="api-使用">3 API 使用</h1>
+<p>在 <code>sklearn.navie_bayes</code>
+模块下有五个朴素贝叶斯算法的变体，每种变体针对不同类型的数据和特征分。</p>
 <table>
+
 <thead>
 <tr>
 <th>分类器</th>
@@ -303,7 +348,8 @@
 <th>主要假设</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>BernoulliNB</code></td>
 <td>二元特征</td>
 <td>特征服从 Bernoulli 分布</td>
@@ -328,17 +374,17 @@
 <td>计数特征</td>
 <td>特征服从多项式分布，常用于文本分类</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> GaussianNB<br><br>model = GaussianNB()<br>model.fit(X_train, y_train)<br><br><span class="hljs-comment"># 分类结果</span><br>y_pred = model.predict(X_test)<br><br><span class="hljs-comment"># 分类概率，为了方便观看，保留两位小数</span><br>y_proba = model.predict_proba(X_test).<span class="hljs-built_in">round</span>(<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
-
-<h1 id="4-算法优缺点"><a href="#4-算法优缺点" class="headerlink" title="4 算法优缺点"></a>4 算法优缺点</h1><p>优点：</p>
-<ol>
-<li>逻辑简单容易实现，适合大规模数据集。</li>
-<li>运算开销较小。预测需要用到的概率在训练阶段都已经准好了，当新数据来了之后，只需要获取对应的概率值并进行简单的运算就能获得预测的结果。</li>
-<li>受噪声和无关属性影响小。</li>
-</ol>
+<h1 id="算法优缺点">4 算法优缺点</h1>
+<p>优点： 1. 逻辑简单容易实现，适合大规模数据集。 2.
+运算开销较小。预测需要用到的概率在训练阶段都已经准好了，当新数据来了之后，只需要获取对应的概率值并进行简单的运算就能获得预测的结果。
+3. 受噪声和无关属性影响小。</p>
 <p>缺点：由于引入了“特征相互独立”这个假设，缺点也相当明显，因为在实际应用中，特征之间很难做到完全独立，尤其是维度很高的数据，如果特征之间的相关性较大，那么分类的效果就会变得很差。</p>
-<p>为了解决朴素贝叶斯的缺点，在其基础上又衍生出了一些新的方法，包括：半朴素贝叶斯（One Dependent Estimator）、AODE（Averaged One Dependent Estimator）、K 依赖朴素贝叶斯、朴素贝叶斯网络、高斯混合朴素贝叶斯等。</p>
+<p>为了解决朴素贝叶斯的缺点，在其基础上又衍生出了一些新的方法，包括：半朴素贝叶斯（One
+Dependent Estimator）、AODE（Averaged One Dependent Estimator）、K
+依赖朴素贝叶斯、朴素贝叶斯网络、高斯混合朴素贝叶斯等。</p>
 
                 
               </div>
@@ -497,6 +543,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -715,6 +767,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

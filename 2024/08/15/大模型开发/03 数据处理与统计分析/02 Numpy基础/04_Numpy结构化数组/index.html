@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 创建结构化数组1import numpy as np  类似C++的结构体，但更加强大，数组的每个元素可以包含多个字段，可以单独处理数组的每一个字段。 1.1 字典方式dtype的参数是一个字典：  names：指定字段名称 formats：指定数据类型，可以使用Python类型或Numpy类型  123456my_dtype &#x3D; &#123;    &#x27;names&#x27;: (&amp;">
+    <meta name="description" content="1 创建结构化数组 1import numpy as np 类似C++的结构体，但更加强大，数组的每个元素可以包含多个字段，可以单独处理数组的每一个字段。 1.1 字典方式 dtype的参数是一个字典：  names：指定字段名称 formats：指定数据类型，可以使用Python类型或Numpy类型  123456my_dtype &#x3D; &#123;    &#x27;names">
 <meta property="og:type" content="article">
 <meta property="og:title" content="04_Numpy结构化数组">
 <meta property="og:url" content="http://example.com/2024/08/15/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/02%20Numpy%E5%9F%BA%E7%A1%80/04_Numpy%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 创建结构化数组1import numpy as np  类似C++的结构体，但更加强大，数组的每个元素可以包含多个字段，可以单独处理数组的每一个字段。 1.1 字典方式dtype的参数是一个字典：  names：指定字段名称 formats：指定数据类型，可以使用Python类型或Numpy类型  123456my_dtype &#x3D; &#123;    &#x27;names&#x27;: (&amp;">
+<meta property="og:description" content="1 创建结构化数组 1import numpy as np 类似C++的结构体，但更加强大，数组的每个元素可以包含多个字段，可以单独处理数组的每一个字段。 1.1 字典方式 dtype的参数是一个字典：  names：指定字段名称 formats：指定数据类型，可以使用Python类型或Numpy类型  123456my_dtype &#x3D; &#123;    &#x27;names">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-14T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T12:14:56.677Z">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          832 字
+          816 字
         
       </span>
     
@@ -278,101 +278,97 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-创建结构化数组"><a href="#1-创建结构化数组" class="headerlink" title="1 创建结构化数组"></a>1 创建结构化数组</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br></code></pre></td></tr></table></figure>
-
+                <h1 id="创建结构化数组">1 创建结构化数组</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br></code></pre></td></tr></table></figure>
 <p>类似C++的结构体，但更加强大，数组的每个元素可以包含多个字段，可以单独处理数组的每一个字段。</p>
-<h2 id="1-1-字典方式"><a href="#1-1-字典方式" class="headerlink" title="1.1 字典方式"></a>1.1 字典方式</h2><p><code>dtype</code>的参数是一个字典：</p>
+<h2 id="字典方式">1.1 字典方式</h2>
+<p><code>dtype</code>的参数是一个字典：</p>
 <ul>
 <li><code>names</code>：指定字段名称</li>
 <li><code>formats</code>：指定数据类型，可以使用Python类型或Numpy类型</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">my_dtype = &#123;<br>    <span class="hljs-string">&#x27;names&#x27;</span>: (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-string">&#x27;weight&#x27;</span>),<br>    <span class="hljs-string">&#x27;formats&#x27;</span>: (<span class="hljs-string">&#x27;U10&#x27;</span>, <span class="hljs-built_in">int</span>, <span class="hljs-string">&#x27;f8&#x27;</span>)<br>&#125;<br>arr = np.zeros(<span class="hljs-number">4</span>, dtype=my_dtype)<br>arr.dtype<br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">dtype([(&#39;name&#39;, &#39;&lt;U10&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f8&#39;)])
-</code></pre>
-<h2 id="1-2-列表元组方式"><a href="#1-2-列表元组方式" class="headerlink" title="1.2 列表元组方式"></a>1.2 列表元组方式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">np.dtype([<br>    (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;U10&#x27;</span>),<br>    (<span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-built_in">int</span>),<br>    (<span class="hljs-string">&#x27;weight&#x27;</span>, <span class="hljs-string">&#x27;f8&#x27;</span>),<br>])<br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">dtype([(&#39;name&#39;, &#39;&lt;U10&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f8&#39;)])
-</code></pre>
+<pre><code class="hljs">dtype([(&#39;name&#39;, &#39;&lt;U10&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f8&#39;)])</code></pre>
+<h2 id="列表元组方式">1.2 列表元组方式</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">np.dtype([<br>    (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;U10&#x27;</span>),<br>    (<span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-built_in">int</span>),<br>    (<span class="hljs-string">&#x27;weight&#x27;</span>, <span class="hljs-string">&#x27;f8&#x27;</span>),<br>])<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">dtype([(&#39;name&#39;, &#39;&lt;U10&#39;), (&#39;age&#39;, &#39;&lt;i4&#39;), (&#39;weight&#39;, &#39;&lt;f8&#39;)])</code></pre>
 <p>如果类型名称不重要可以省略，仅仅指定数据类型。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">np.dtype(<span class="hljs-string">&#x27;U10, i8, f8&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">dtype([(&#39;f0&#39;, &#39;&lt;U10&#39;), (&#39;f1&#39;, &#39;&lt;i8&#39;), (&#39;f2&#39;, &#39;&lt;f8&#39;)])
-</code></pre>
+<pre><code class="hljs">dtype([(&#39;f0&#39;, &#39;&lt;U10&#39;), (&#39;f1&#39;, &#39;&lt;i8&#39;), (&#39;f2&#39;, &#39;&lt;f8&#39;)])</code></pre>
 <p>Numpy数据类型符号表：</p>
 <table>
+
 <thead>
 <tr>
-<th align="center">符号</th>
-<th align="center">描述</th>
-<th align="left">示例</th>
+<th style="text-align: center;">符号</th>
+<th style="text-align: center;">描述</th>
+<th style="text-align: left;">示例</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center"><strong>‘b’</strong></td>
-<td align="center">字节型 (Boolean or raw bytes)</td>
-<td align="left"><code>np.dtype(&#39;b&#39;)</code></td>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>‘b’</strong></td>
+<td style="text-align: center;">字节型 (Boolean or raw bytes)</td>
+<td style="text-align: left;"><code>np.dtype('b')</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘i’</strong></td>
-<td align="center">有符号整型 (Signed integer)</td>
-<td align="left"><code>np.dtype(&#39;i4&#39;) == np.int32</code></td>
+<td style="text-align: center;"><strong>‘i’</strong></td>
+<td style="text-align: center;">有符号整型 (Signed integer)</td>
+<td
+style="text-align: left;"><code>np.dtype('i4') == np.int32</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘u’</strong></td>
-<td align="center">无符号整型 (Unsigned integer)</td>
-<td align="left"><code>np.dtype(&#39;u1&#39;) == np.uint8</code></td>
+<td style="text-align: center;"><strong>‘u’</strong></td>
+<td style="text-align: center;">无符号整型 (Unsigned integer)</td>
+<td
+style="text-align: left;"><code>np.dtype('u1') == np.uint8</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘f’</strong></td>
-<td align="center">浮点型 (Floating-point)</td>
-<td align="left"><code>np.dtype(&#39;f8&#39;) == np.float64</code></td>
+<td style="text-align: center;"><strong>‘f’</strong></td>
+<td style="text-align: center;">浮点型 (Floating-point)</td>
+<td
+style="text-align: left;"><code>np.dtype('f8') == np.float64</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘c’</strong></td>
-<td align="center">复数浮点型 (Complex floating-point)</td>
-<td align="left"><code>np.dtype(&#39;c16&#39;) == np.complex128</code></td>
+<td style="text-align: center;"><strong>‘c’</strong></td>
+<td style="text-align: center;">复数浮点型 (Complex floating-point)</td>
+<td
+style="text-align: left;"><code>np.dtype('c16') == np.complex128</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘S’, ‘a’</strong></td>
-<td align="center">字节字符串 (Byte string)</td>
-<td align="left"><code>np.dtype(&#39;S5&#39;)</code></td>
+<td style="text-align: center;"><strong>‘S’, ‘a’</strong></td>
+<td style="text-align: center;">字节字符串 (Byte string)</td>
+<td style="text-align: left;"><code>np.dtype('S5')</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘U’</strong></td>
-<td align="center">Unicode编码字符串 (Unicode string)</td>
-<td align="left"><code>np.dtype(&#39;U&#39;) == np.str_</code></td>
+<td style="text-align: center;"><strong>‘U’</strong></td>
+<td style="text-align: center;">Unicode编码字符串 (Unicode string)</td>
+<td style="text-align: left;"><code>np.dtype('U') == np.str_</code></td>
 </tr>
 <tr>
-<td align="center"><strong>‘V’</strong></td>
-<td align="center">原生数据 (Raw data, void)</td>
-<td align="left"><code>np.dtype(&#39;V&#39;) == np.void</code></td>
+<td style="text-align: center;"><strong>‘V’</strong></td>
+<td style="text-align: center;">原生数据 (Raw data, void)</td>
+<td style="text-align: left;"><code>np.dtype('V') == np.void</code></td>
 </tr>
-</tbody></table>
-<h1 id="2-访问结构化数组"><a href="#2-访问结构化数组" class="headerlink" title="2 访问结构化数组"></a>2 访问结构化数组</h1><p>数组的每一个字段依然是一个数组，可以用索引、聚合等操作。这里的操作有点像SQL，字段名像列，索引号像行。</p>
+</tbody>
+</table>
+<h1 id="访问结构化数组">2 访问结构化数组</h1>
+<p>数组的每一个字段依然是一个数组，可以用索引、聚合等操作。这里的操作有点像SQL，字段名像列，索引号像行。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建结构化数组</span><br>arr = np.zeros(<span class="hljs-number">4</span>, dtype=&#123;<br>    <span class="hljs-string">&#x27;names&#x27;</span>: (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>, <span class="hljs-string">&#x27;weight&#x27;</span>),<br>    <span class="hljs-string">&#x27;formats&#x27;</span>: (<span class="hljs-string">&#x27;U10&#x27;</span>, <span class="hljs-built_in">int</span>, <span class="hljs-string">&#x27;f8&#x27;</span>)<br>&#125;)<br><br>arr[<span class="hljs-string">&#x27;name&#x27;</span>] = [<span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-string">&#x27;李四&#x27;</span>, <span class="hljs-string">&#x27;王五&#x27;</span>, <span class="hljs-string">&#x27;赵六&#x27;</span>]<br>arr[<span class="hljs-string">&#x27;age&#x27;</span>] = [<span class="hljs-number">18</span>, <span class="hljs-number">28</span>, <span class="hljs-number">20</span>, <span class="hljs-number">35</span>]<br>arr[<span class="hljs-string">&#x27;weight&#x27;</span>] = [<span class="hljs-number">110.2</span>, <span class="hljs-number">125.3</span>, <span class="hljs-number">103.1</span>, <span class="hljs-number">159.6</span>]<br>arr[<span class="hljs-string">&#x27;name&#x27;</span>]<br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">array([&#39;张三&#39;, &#39;李四&#39;, &#39;王五&#39;, &#39;赵六&#39;], dtype=&#39;&lt;U10&#39;)
-</code></pre>
+<pre><code class="hljs">array([&#39;张三&#39;, &#39;李四&#39;, &#39;王五&#39;, &#39;赵六&#39;], dtype=&#39;&lt;U10&#39;)</code></pre>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 访问操作</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;arr：&#x27;</span>, arr)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n通过字段名访问age列表：&#x27;</span>, arr[<span class="hljs-string">&#x27;age&#x27;</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;通过索引访问第一个元素：&#x27;</span>, arr[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;组合字段和索引访问第一个人的名字：&#x27;</span>, arr[<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;name&#x27;</span>], arr[<span class="hljs-string">&#x27;name&#x27;</span>][<span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
-
 <pre><code class="hljs">arr： [(&#39;张三&#39;, 18, 110.2) (&#39;李四&#39;, 28, 125.3) (&#39;王五&#39;, 20, 103.1) (&#39;赵六&#39;, 35, 159.6)]
 
 通过字段名访问age列表： [18 28 20 35]
 通过索引访问第一个元素： (&#39;张三&#39;, 18, 110.2)
-组合字段和索引访问第一个人的名字： 张三 张三
-</code></pre>
+组合字段和索引访问第一个人的名字： 张三 张三</code></pre>
 <p>结合布尔索引可以对元素进行筛选。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 年龄小于25岁的人</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;年龄小于25岁的人的信息&#x27;</span>, arr[arr[<span class="hljs-string">&#x27;age&#x27;</span>] &lt; <span class="hljs-number">25</span>])<br><br><span class="hljs-comment"># 年龄小于25岁的人的姓名和年龄</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;年龄小于25岁的人的信息&#x27;</span>, arr[arr[<span class="hljs-string">&#x27;age&#x27;</span>] &lt; <span class="hljs-number">25</span>][[<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>]])<br></code></pre></td></tr></table></figure>
-
 <pre><code class="hljs">年龄小于25岁的人的信息 [(&#39;张三&#39;, 18, 110.2) (&#39;王五&#39;, 20, 103.1)]
-年龄小于25岁的人的信息 [(&#39;张三&#39;, 18) (&#39;王五&#39;, 20)]
-</code></pre>
+年龄小于25岁的人的信息 [(&#39;张三&#39;, 18) (&#39;王五&#39;, 20)]</code></pre>
 <p>结合描述统计方法对字段进行聚合。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 计算平均年龄</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;平均年龄：&#x27;</span>, arr[<span class="hljs-string">&#x27;age&#x27;</span>].mean())<br></code></pre></td></tr></table></figure>
-
-<pre><code class="hljs">平均年龄： 25.25
-</code></pre>
+<pre><code class="hljs">平均年龄： 25.25</code></pre>
 
                 
               </div>
@@ -531,6 +527,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -749,6 +751,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

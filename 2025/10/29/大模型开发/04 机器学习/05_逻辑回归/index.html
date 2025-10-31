@@ -19,21 +19,21 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 概述逻辑回归（Logistic Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过将线性回归的输出作为输入，映射到[0,1]区间，来表示某个类别的概率。 常用的映射函数是 sigmoid 函数：$𝑓(𝑥)&#x3D;\frac{1}{1+𝑒^{−𝑥}}$，将线性回归的输出作为输入会得到 {0, 1} 的输出。$$𝑃(𝑦&amp;#">
+    <meta name="description" content="1 概述 逻辑回归（Logistic Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过将线性回归的输出作为输入，映射到[0,1]区间，来表示某个类别的概率。 常用的映射函数是 sigmoid 函数：$𝑓(𝑥)&#x3D;\frac{1}{1+𝑒^{−𝑥}}$，将线性回归的输出作为输入会得到 {0, 1} 的输出。 $$ 𝑃(�">
 <meta property="og:type" content="article">
 <meta property="og:title" content="05_逻辑回归">
 <meta property="og:url" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 概述逻辑回归（Logistic Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过将线性回归的输出作为输入，映射到[0,1]区间，来表示某个类别的概率。 常用的映射函数是 sigmoid 函数：$𝑓(𝑥)&#x3D;\frac{1}{1+𝑒^{−𝑥}}$，将线性回归的输出作为输入会得到 {0, 1} 的输出。$$𝑃(𝑦&amp;#">
+<meta property="og:description" content="1 概述 逻辑回归（Logistic Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过将线性回归的输出作为输入，映射到[0,1]区间，来表示某个类别的概率。 常用的映射函数是 sigmoid 函数：$𝑓(𝑥)&#x3D;\frac{1}{1+𝑒^{−𝑥}}$，将线性回归的输出作为输入会得到 {0, 1} 的输出。 $$ 𝑃(�">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/01_sigmoid.png">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/01_ovo_ovr.png">
+<meta property="og:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/05_sigmoid.png">
+<meta property="og:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/05_ovo_ovr.png">
 <meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-31T02:16:16.890Z">
+<meta property="article:modified_time" content="2025-10-31T09:20:25.476Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/04_ml/01_sigmoid.png">
+<meta name="twitter:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/05_sigmoid.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -281,48 +281,141 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>逻辑回归（Logistic Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过<strong>将线性回归的输出作为输入，映射到[0,1]区间</strong>，来表示某个类别的概率。</p>
-<p>常用的映射函数是 sigmoid 函数：$𝑓(𝑥)&#x3D;\frac{1}{1+𝑒^{−𝑥}}$，将线性回归的输出作为输入会得到 {0, 1} 的输出。<br>$$<br>𝑃(𝑦&#x3D;1∣x)&#x3D;\frac{1}{1+e^{-(w^Tx+b)}}<br>$$<br>$𝑃(𝑦&#x3D;1∣x)$表示输出为 1 类的概率，根据逻辑回归结果和阈值来确认最终预测结果，若逻辑回归结果大于阈值则输出为 1类，反之输出为 0 类。<br>$$<br>\begin{aligned}<br> &amp;<br>\begin{bmatrix}<br>0.5 &amp; 0 &amp; 0.7 \<br>0.5 &amp; 0.5 &amp; 0.9 \<br>0.1 &amp; 1 &amp; 0.6 \<br>0.6 &amp; 0.1 &amp; 0<br>\end{bmatrix}<br>\begin{bmatrix}<br>-1 \<br>2 \<br>0.5<br>\end{bmatrix}&#x3D;\quad<br>\begin{bmatrix}<br>-0.15 \<br>0.95 \<br>2.2 \<br>-0.4<br>\end{bmatrix}\quad\xrightarrow{\mathrm{sigmoid}}<br>\begin{bmatrix}<br>0.46257015 \<br>0.72111518 \<br>0.90024951 \<br>0.40131234<br>\end{bmatrix}\xrightarrow{\text{与阈值 }0.5\text{ 比较}}\quad<br>\begin{bmatrix}<br>0 \<br>1 \<br>1 \<br>0<br>\end{bmatrix}<br>\end{aligned}<br>$$<br><img src="/../../../ai_assets/04_ml/01_sigmoid.png" srcset="/img/loading.gif" lazyload></p>
+                <h1 id="概述">1 概述</h1>
+<p>逻辑回归（Logistic
+Regression）尽管名字中含有“回归”，但逻辑回归实际上是一种分类算法，用于处理二分类问题。逻辑回归通过<strong>将线性回归的输出作为输入，映射到[0,1]区间</strong>，来表示某个类别的概率。</p>
+<p>常用的映射函数是 sigmoid 函数：<span
+class="math inline">$𝑓(𝑥)=\frac{1}{1+𝑒^{−𝑥}}$</span>，将线性回归的输出作为输入会得到
+{0, 1} 的输出。 <span class="math display">$$
+𝑃(𝑦=1∣x)=\frac{1}{1+e^{-(w^Tx+b)}}
+$$</span> <span
+class="math inline"><em>𝑃</em>(<em>𝑦</em> = 1 ∣ <em>x</em>)</span>表示输出为
+1
+类的概率，根据逻辑回归结果和阈值来确认最终预测结果，若逻辑回归结果大于阈值则输出为
+1类，反之输出为 0 类。 <span class="math display">$$
+\begin{aligned}
+&amp;
+\begin{bmatrix}
+0.5 &amp; 0 &amp; 0.7 \\
+0.5 &amp; 0.5 &amp; 0.9 \\
+0.1 &amp; 1 &amp; 0.6 \\
+0.6 &amp; 0.1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+-1 \\
+2 \\
+0.5
+\end{bmatrix}=\quad
+\begin{bmatrix}
+-0.15 \\
+0.95 \\
+2.2 \\
+-0.4
+\end{bmatrix}\quad\xrightarrow{\mathrm{sigmoid}}
+\begin{bmatrix}
+0.46257015 \\
+0.72111518 \\
+0.90024951 \\
+0.40131234
+\end{bmatrix}\xrightarrow{\text{与阈值 }0.5\text{ 比较}}\quad
+\begin{bmatrix}
+0 \\
+1 \\
+1 \\
+0
+\end{bmatrix}
+\end{aligned}
+$$</span> <img src="05_sigmoid.png" srcset="/img/loading.gif" lazyload /></p>
 <blockquote>
-<p>实际逻辑回归是一个翻译错误，Logistic 并没有回归的意思，而是来自统计学中的 log odds（对数几率），后来发明了一个词 Logit 来描述，实际应为对数几率回归，或对率回归。</p>
+<p>实际逻辑回归是一个翻译错误，Logistic
+并没有回归的意思，而是来自统计学中的 log
+odds（对数几率），后来发明了一个词 Logit
+来描述，实际应为对数几率回归，或对率回归。</p>
 </blockquote>
-<h1 id="2-损失函数"><a href="#2-损失函数" class="headerlink" title="2 损失函数"></a>2 损失函数</h1><p>逻辑回归的损失函数通常使用对数损失（Log Loss），也称为二元交叉熵损失（Binary Cross-Entropy Loss） ， 用于衡量模型输出的概率分布与真实标签之间的差距。 逻辑回归的损失函数来源于最大似然估计（MLE）。<br>对数似然：<br>$$\log L({y,F(X)})&#x3D;\sum_{i&#x3D;1}^ny_i\mathrm{log},p_{x_i}+(1-y_i)\mathrm{log},(1-p_{x_i})$$<br>$y_i$ 是第 $i$ 个样本的真实值(0 或 1)，$p_{x_i}$ 是第 $i$ 个样本属于类别 1 的概率。当 $y_i$ 为 1 时，右边消掉，当 $y_i$ 为 0 时，左边消掉，概率越低，把握越小，则 log 值越小，当似然函数最大时，损失最小。</p>
-<p>拟合就是求似然函数的最大值，为了方便优化，令损失函数为：<br>$$Loss&#x3D;-\frac{1}{n}\sum_{i&#x3D;1}^ny_i\mathrm{log},p_{x_i}+(1-y_i)\mathrm{log},(1-p_{x_i})$$<br>加上负号，求解损失函数的最小值即可，$\frac{1}{n}$ 则类似均方误差中的平均。</p>
-<h1 id="3-API-使用"><a href="#3-API-使用" class="headerlink" title="3 API 使用"></a>3 API 使用</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br><br>model = LogisticRegression()<br><br>model.fit(X_train, X_test)<br></code></pre></td></tr></table></figure>
+<h1 id="损失函数">2 损失函数</h1>
+<p>逻辑回归的损失函数通常使用对数损失（Log
+Loss），也称为二元交叉熵损失（Binary Cross-Entropy Loss） ，
+用于衡量模型输出的概率分布与真实标签之间的差距。
+逻辑回归的损失函数来源于最大似然估计（MLE）。 对数似然： <span
+class="math display">$$\log
+L({y,F(X)})=\sum_{i=1}^ny_i\mathrm{log}\,p_{x_i}+(1-y_i)\mathrm{log}\,(1-p_{x_i})$$</span>
+<span class="math inline"><em>y</em><sub><em>i</em></sub></span> 是第
+<span class="math inline"><em>i</em></span> 个样本的真实值(0 或
+1)，<span
+class="math inline"><em>p</em><sub><em>x</em><sub><em>i</em></sub></sub></span>
+是第 <span class="math inline"><em>i</em></span> 个样本属于类别 1
+的概率。当 <span
+class="math inline"><em>y</em><sub><em>i</em></sub></span> 为 1
+时，右边消掉，当 <span
+class="math inline"><em>y</em><sub><em>i</em></sub></span> 为 0
+时，左边消掉，概率越低，把握越小，则 log
+值越小，当似然函数最大时，损失最小。</p>
+<p>拟合就是求似然函数的最大值，为了方便优化，令损失函数为： <span
+class="math display">$$Loss=-\frac{1}{n}\sum_{i=1}^ny_i\mathrm{log}\,p_{x_i}+(1-y_i)\mathrm{log}\,(1-p_{x_i})$$</span>
+加上负号，求解损失函数的最小值即可，<span
+class="math inline">$\frac{1}{n}$</span> 则类似均方误差中的平均。</p>
+<h1 id="api-使用">3 API 使用</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br><br>model = LogisticRegression()<br><br>model.fit(X_train, X_test)<br></code></pre></td></tr></table></figure>
 <ul>
-<li><code>penalty</code>：指定正则化类型，用于控制模型复杂度，防止过拟合，默认值为 <code>l2</code>。</li>
-<li><code>C</code>：正则化强度的倒数，默认值为 <code>1.0</code>。较小的 <code>C</code> 值会加强正则化（更多限制模型复杂度），较大的 <code>C</code> 值会减弱正则化（更注重拟合训练数据）。</li>
-<li><code>solver</code>：指定优化算法，默认值为 <code>lbfgs</code>，可选值包括：<ul>
-<li><code>&#39;lbfgs&#39;</code>: 拟牛顿法（默认），仅支持 L2正则化</li>
-<li><code>&#39;newton-cg&#39;</code>: 牛顿法，仅支持 L2正则化</li>
-<li><code>&#39;liblinear&#39;</code>: 坐标下降法，适用于小数据集，支持 L1和 L2正则化</li>
-<li><code>&#39;sag&#39;</code>: 随机平均梯度下降，适用于大规模数据集，仅支持 L2正则化</li>
-<li><code>&#39;saga&#39;</code>: 改进的随机梯度下降，适用于大规模数据，支持 L1、L2和 ElasticNet正则化</li>
+<li><code>penalty</code>：指定正则化类型，用于控制模型复杂度，防止过拟合，默认值为
+<code>l2</code>。</li>
+<li><code>C</code>：正则化强度的倒数，默认值为 <code>1.0</code>。较小的
+<code>C</code> 值会加强正则化（更多限制模型复杂度），较大的
+<code>C</code> 值会减弱正则化（更注重拟合训练数据）。</li>
+<li><code>solver</code>：指定优化算法，默认值为
+<code>lbfgs</code>，可选值包括：
+<ul>
+<li><code>'lbfgs'</code>: 拟牛顿法（默认），仅支持 L2正则化</li>
+<li><code>'newton-cg'</code>: 牛顿法，仅支持 L2正则化</li>
+<li><code>'liblinear'</code>: 坐标下降法，适用于小数据集，支持 L1和
+L2正则化</li>
+<li><code>'sag'</code>: 随机平均梯度下降，适用于大规模数据集，仅支持
+L2正则化</li>
+<li><code>'saga'</code>: 改进的随机梯度下降，适用于大规模数据，支持
+L1、L2和 ElasticNet正则化</li>
+</ul></li>
+<li><code>multi_class</code>：指定多分类问题的处理方式，默认值为
+<code>'auto'</code>，根据数据选择 <code>'ovr'</code> 或
+<code>'multinomial'</code>，前者表示一对多策略，适合二分类或多分类的基础情况，后者表示多项式回归策略，适用于多分类问题，需与
+<code>'lbfgs'</code>、<code>'sag'</code> 或 <code>'saga'</code>
+搭配使用。</li>
+<li><code>fit_intercept</code>：是否计算截距（偏置项），默认值为
+<code>True</code>。</li>
+<li><code>class_weight</code>：类别权重，处理类别不平衡问题，默认值为
+<code>None</code>，设置为
+<code>'balanced'</code>可以根据类别频率自动调整权重。</li>
 </ul>
-</li>
-<li><code>multi_class</code>：指定多分类问题的处理方式，默认值为 <code>&#39;auto&#39;</code>，根据数据选择 <code>&#39;ovr&#39;</code> 或 <code>&#39;multinomial&#39;</code>，前者表示一对多策略，适合二分类或多分类的基础情况，后者表示多项式回归策略，适用于多分类问题，需与 <code>&#39;lbfgs&#39;</code>、<code>&#39;sag&#39;</code> 或 <code>&#39;saga&#39;</code> 搭配使用。</li>
-<li><code>fit_intercept</code>：是否计算截距（偏置项），默认值为 <code>True</code>。</li>
-<li><code>class_weight</code>：类别权重，处理类别不平衡问题，默认值为 <code>None</code>，设置为 <code>&#39;balanced&#39;</code>可以根据类别频率自动调整权重。</li>
-</ul>
-<h1 id="4-多分类"><a href="#4-多分类" class="headerlink" title="4 多分类"></a>4 多分类</h1><p>逻辑回归通常用于二分类问题，但可以通过一对多（One-vs-Rest，OvR）、一对一（One-vs-One, OvO）以及 Softmax 回归（Multinomial Logistic Regression，多项逻辑回归）来扩展到多分类任务。</p>
-<h2 id="4-1-OvO-OvR"><a href="#4-1-OvO-OvR" class="headerlink" title="4.1 OvO OvR"></a>4.1 OvO OvR</h2><ul>
+<h1 id="多分类">4 多分类</h1>
+<p>逻辑回归通常用于二分类问题，但可以通过一对多（One-vs-Rest，OvR）、一对一（One-vs-One,
+OvO）以及 Softmax 回归（Multinomial Logistic
+Regression，多项逻辑回归）来扩展到多分类任务。</p>
+<h2 id="ovo-ovr">4.1 OvO OvR</h2>
+<ul>
 <li>OvO 存储开销和测试时间大，训练时间短</li>
 <li>OvR 存储开销和测试时间小，训练时间长</li>
 </ul>
-<p><img src="/../../../ai_assets/04_ml/01_ovo_ovr.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="05_ovo_ovr.png" srcset="/img/loading.gif" lazyload /></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br><br>model = LogisticRegression(<br>    multi_class=<span class="hljs-string">&#x27;ovr&#x27;</span>  <span class="hljs-comment"># 设置 ovr 或者 ovo</span><br>)<br></code></pre></td></tr></table></figure>
-
-<p><code>multi_class</code>在后续版本中将会被废弃，取而代之的是一个新的类来实现 OvO、OvR。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.multiclass <span class="hljs-keyword">import</span> OneVsOneClassifier, OneVsRestClassifier<br><br>model1 = OneVsOneClassifier(estimator=LogisticRegression())<br>model2 = OneVsRestClassifier(estimator=LogisticRegression())<br></code></pre></td></tr></table></figure>
-
-<h2 id="4-2-Softmax-回归"><a href="#4-2-Softmax-回归" class="headerlink" title="4.2 Softmax 回归"></a>4.2 Softmax 回归</h2><p>Softmax 回归（多项逻辑回归）直接扩展逻辑回归到多分类问题，使用 Softmax 函数将模型输出转化为概率分布。<br>对于类别 c：<br>$$P(y&#x3D;c|x)&#x3D;\frac{e^{\beta_{c}^{T}x}}{\sum_{j&#x3D;1}^{C}e^{\beta_{j}^{T}x}}$$<br>损失函数：<br>$$Loss&#x3D;-\frac{1}{n}\sum_{i&#x3D;1}^{n}\sum_{c&#x3D;1}^{C}I(y_{i}&#x3D;c)\mathrm{log}P(y_{i}&#x3D;c|x_{i})$$<br>其中 $𝐼(𝑦_𝑖 &#x3D;c)$ 为示性函数，当 $𝑦_𝑖 &#x3D;c$ 时值为 1，反之值为 0。</p>
-<ul>
-<li>优点：只训练 1 个模型，计算高效，分类一致性更好。</li>
-<li>缺点：计算 Softmax 需要对所有类别求指数，计算量较高。</li>
-</ul>
+<p><code>multi_class</code>在后续版本中将会被废弃，取而代之的是一个新的类来实现
+OvO、OvR。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.multiclass <span class="hljs-keyword">import</span> OneVsOneClassifier, OneVsRestClassifier<br><br>model1 = OneVsOneClassifier(estimator=LogisticRegression())<br>model2 = OneVsRestClassifier(estimator=LogisticRegression())<br></code></pre></td></tr></table></figure></p>
+<h2 id="softmax-回归">4.2 Softmax 回归</h2>
+<p>Softmax 回归（多项逻辑回归）直接扩展逻辑回归到多分类问题，使用
+Softmax 函数将模型输出转化为概率分布。 对于类别 c： <span
+class="math display">$$P(y=c|x)=\frac{e^{\beta_{c}^{T}x}}{\sum_{j=1}^{C}e^{\beta_{j}^{T}x}}$$</span>
+损失函数： <span
+class="math display">$$Loss=-\frac{1}{n}\sum_{i=1}^{n}\sum_{c=1}^{C}I(y_{i}=c)\mathrm{log}P(y_{i}=c|x_{i})$$</span>
+其中 <span
+class="math inline"><em>𝐼</em>(<em>𝑦</em><sub><em>𝑖</em></sub> = <em>c</em>)</span>
+为示性函数，当 <span
+class="math inline"><em>𝑦</em><sub><em>𝑖</em></sub> = <em>c</em></span>
+时值为 1，反之值为 0。 - 优点：只训练 1
+个模型，计算高效，分类一致性更好。 - 缺点：计算 Softmax
+需要对所有类别求指数，计算量较高。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression<br><br>model = LogisticRegression(multi_class=<span class="hljs-string">&quot;multinomial&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<p>对于多分类问题，LogisticRegression 会自动使用 <code>multinomial</code>，因此 <code>multi_class</code> 参数可省略。整体来看，大多数情况 Softmax 更加优秀，这也是为什么要把 <code>multi_class</code> 移除。</p>
+<p>对于多分类问题，LogisticRegression 会自动使用
+<code>multinomial</code>，因此 <code>multi_class</code>
+参数可省略。整体来看，大多数情况 Softmax 更加优秀，这也是为什么要把
+<code>multi_class</code> 移除。</p>
 
                 
               </div>
@@ -481,6 +574,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -699,6 +798,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 匹配规则1. 普通字符大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。  abc 匹配字符串中的 &quot;abc&quot; 你好 匹配字符串中的 &quot;你好&quot;  2. 元字符 . (点号)：匹配任意一个字符（除了换行符 \n）。 a.c 匹配 &quot;abc&quot;, &quot;a@c&quot;, &quot;a c&quot;   \d：匹配任意一">
+    <meta name="description" content="1 匹配规则 1. 普通字符 大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。  abc 匹配字符串中的 &quot;abc&quot; 你好 匹配字符串中的 &quot;你好&quot;  2. 元字符  . (点号)：匹配任意一个字符（除了换行符 \n）。  a.c 匹配 &quot;abc&quot;, &quot;a@c&quot;, &quot;a c&quot;  \d：匹配任意一个数字。等价于 [0-9]。  \d\d 匹配 &quot;12&quot;, &quot;0">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10_Python正则表达式">
 <meta property="og:url" content="http://example.com/2024/08/04/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/10_Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 匹配规则1. 普通字符大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。  abc 匹配字符串中的 &quot;abc&quot; 你好 匹配字符串中的 &quot;你好&quot;  2. 元字符 . (点号)：匹配任意一个字符（除了换行符 \n）。 a.c 匹配 &quot;abc&quot;, &quot;a@c&quot;, &quot;a c&quot;   \d：匹配任意一">
+<meta property="og:description" content="1 匹配规则 1. 普通字符 大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。  abc 匹配字符串中的 &quot;abc&quot; 你好 匹配字符串中的 &quot;你好&quot;  2. 元字符  . (点号)：匹配任意一个字符（除了换行符 \n）。  a.c 匹配 &quot;abc&quot;, &quot;a@c&quot;, &quot;a c&quot;  \d：匹配任意一个数字。等价于 [0-9]。  \d\d 匹配 &quot;12&quot;, &quot;0">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-03T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T11:46:30.710Z">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.3k 字
+          1.2k 字
         
       </span>
     
@@ -278,113 +278,135 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-匹配规则"><a href="#1-匹配规则" class="headerlink" title="1 匹配规则"></a>1 匹配规则</h1><h2 id="1-普通字符"><a href="#1-普通字符" class="headerlink" title="1. 普通字符"></a>1. 普通字符</h2><p>大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。</p>
+                <h1 id="匹配规则">1 匹配规则</h1>
+<h2 id="普通字符">1. 普通字符</h2>
+<p>大多数字符（字母、数字、汉字）就是普通字符，它们匹配自己。</p>
 <ul>
-<li><code>abc</code> 匹配字符串中的 <code>&quot;abc&quot;</code></li>
-<li><code>你好</code> 匹配字符串中的 <code>&quot;你好&quot;</code></li>
+<li><code>abc</code> 匹配字符串中的 <code>"abc"</code></li>
+<li><code>你好</code> 匹配字符串中的 <code>"你好"</code></li>
 </ul>
-<h2 id="2-元字符"><a href="#2-元字符" class="headerlink" title="2. 元字符"></a>2. 元字符</h2><ul>
-<li><strong><code>.</code> (点号)<strong>：匹配</strong>任意一个</strong>字符（除了换行符 <code>\n</code>）。<ul>
-<li><code>a.c</code> 匹配 <code>&quot;abc&quot;</code>, <code>&quot;a@c&quot;</code>, <code>&quot;a c&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>\d</code><strong>：匹配任意一个</strong>数字</strong>。等价于 <code>[0-9]</code>。<ul>
-<li><code>\d\d</code> 匹配 <code>&quot;12&quot;</code>, <code>&quot;05&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>\w</code><strong>：匹配任意一个</strong>字母、数字或下划线</strong>。等价于 <code>[A-Za-z0-9_]</code>。<ul>
-<li><code>\w\w</code> 匹配 <code>&quot;Ab&quot;</code>, <code>&quot;a1&quot;</code>, <code>&quot;_x&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>\s</code><strong>：匹配任意一个</strong>空白字符</strong>（包括空格、制表符 <code>\t</code>、换行符 <code>\n</code> 等）。</li>
-<li><strong><code>\D</code>, <code>\W</code>, <code>\S</code><strong>：分别是 <code>\d</code>, <code>\w</code>, <code>\s</code> 的</strong>反面</strong>。<ul>
+<h2 id="元字符">2. 元字符</h2>
+<ul>
+<li><strong><code>.</code> (点号)</strong>：匹配<strong>任意一个</strong>字符（除了换行符 <code>\n</code>）。
+<ul>
+<li><code>a.c</code> 匹配 <code>"abc"</code>, <code>"a@c"</code>, <code>"a c"</code></li>
+</ul></li>
+<li><strong><code>\d</code></strong>：匹配任意一个<strong>数字</strong>。等价于 <code>[0-9]</code>。
+<ul>
+<li><code>\d\d</code> 匹配 <code>"12"</code>, <code>"05"</code></li>
+</ul></li>
+<li><strong><code>\w</code></strong>：匹配任意一个<strong>字母、数字或下划线</strong>。等价于 <code>[A-Za-z0-9_]</code>。
+<ul>
+<li><code>\w\w</code> 匹配 <code>"Ab"</code>, <code>"a1"</code>, <code>"_x"</code></li>
+</ul></li>
+<li><strong><code>\s</code></strong>：匹配任意一个<strong>空白字符</strong>（包括空格、制表符 <code>\t</code>、换行符 <code>\n</code> 等）。</li>
+<li><strong><code>\D</code>, <code>\W</code>, <code>\S</code></strong>：分别是 <code>\d</code>, <code>\w</code>, <code>\s</code> 的<strong>反面</strong>。
+<ul>
 <li><code>\D</code> 匹配<strong>非数字</strong>的任意字符。</li>
-</ul>
-</li>
-<li><strong><code>[...]</code> (字符组)<strong>：匹配方括号内的</strong>任意一个</strong>字符。<ul>
+</ul></li>
+<li><strong><code>[...]</code> (字符组)</strong>：匹配方括号内的<strong>任意一个</strong>字符。
+<ul>
 <li><code>[aeiou]</code> 匹配任意一个元音字母。</li>
 <li><code>[a-z]</code> 匹配任意一个小写字母（<code>-</code> 表示范围）。</li>
 <li><code>[0-9a-fA-F]</code> 匹配一个十六进制数字。</li>
-</ul>
-</li>
-<li><strong><code>[^...]</code> (否定字符组)<strong>：匹配</strong>不在</strong>方括号内的任意一个字符。<ul>
+</ul></li>
+<li><strong><code>[^...]</code> (否定字符组)</strong>：匹配<strong>不在</strong>方括号内的任意一个字符。
+<ul>
 <li><code>[^0-9]</code> 匹配任意一个非数字字符。</li>
+</ul></li>
 </ul>
-</li>
+<h2 id="量词---控制字符出现的次数">3. 量词 - 控制字符出现的次数</h2>
+<ul>
+<li><strong><code>*</code></strong>：匹配<strong>零次或多次</strong>。
+<ul>
+<li><code>ab*c</code> 匹配 <code>"ac"</code> (0次b), <code>"abc"</code> (1次b), <code>"abbc"</code> (多次b)</li>
+</ul></li>
+<li><strong><code>+</code></strong>：匹配<strong>一次或多次</strong>。
+<ul>
+<li><code>ab+c</code> 匹配 <code>"abc"</code>, <code>"abbc"</code>，但不匹配 <code>"ac"</code></li>
+</ul></li>
+<li><strong><code>?</code></strong>：匹配<strong>零次或一次</strong>（即可选的）。
+<ul>
+<li><code>colou?r</code> 匹配 <code>"color"</code> 和 <code>"colour"</code> (u出现0次或1次)</li>
+</ul></li>
+<li><strong><code>&#123;n&#125;</code></strong>：匹配确定的 <strong>n
+次</strong>。
+<ul>
+<li><code>\d&#123;4&#125;</code> 匹配恰好4个数字，如 <code>"2024"</code></li>
+</ul></li>
+<li><strong><code>&#123;n,&#125;</code></strong>：匹配<strong>至少 n 次</strong>。
+<ul>
+<li><code>\d&#123;2,&#125;</code> 匹配至少2个数字，如 <code>"12"</code>, <code>"123"</code></li>
+</ul></li>
+<li><strong><code>&#123;n,m&#125;</code></strong>：匹配<strong>至少 n 次，最多 m
+次</strong>。
+<ul>
+<li><code>\d&#123;2,4&#125;</code> 匹配2到4个数字，如 <code>"12"</code>, <code>"123"</code>, <code>"2024"</code></li>
+</ul></li>
 </ul>
-<h2 id="3-量词-控制字符出现的次数"><a href="#3-量词-控制字符出现的次数" class="headerlink" title="3. 量词 - 控制字符出现的次数"></a>3. 量词 - 控制字符出现的次数</h2><ul>
-<li><strong><code>*</code><strong>：匹配</strong>零次或多次</strong>。<ul>
-<li><code>ab*c</code> 匹配 <code>&quot;ac&quot;</code> (0次b), <code>&quot;abc&quot;</code> (1次b), <code>&quot;abbc&quot;</code> (多次b)</li>
+<h2 id="位置锚点---匹配位置而不是字符">4. 位置锚点 -
+匹配位置，而不是字符</h2>
+<ul>
+<li><strong><code>^</code></strong>：匹配字符串的<strong>开始</strong>位置。
+<ul>
+<li><code>^Hello</code> 匹配以 <code>"Hello"</code> 开头的字符串。</li>
+</ul></li>
+<li><strong><code>$</code></strong>：匹配字符串的<strong>结束</strong>位置。
+<ul>
+<li><code>world!$</code> 匹配以 <code>"world!"</code> 结尾的字符串。</li>
+</ul></li>
+<li><strong><code>\b</code></strong>：匹配一个<strong>单词的边界</strong>（即单词开头或结尾的空隙）。
+<ul>
+<li><code>\bcat\b</code> 匹配单词 <code>"cat"</code>，但不匹配 <code>"category"</code> 或 <code>"scatter"</code> 中的 <code>"cat"</code>。</li>
+</ul></li>
 </ul>
-</li>
-<li><strong><code>+</code><strong>：匹配</strong>一次或多次</strong>。<ul>
-<li><code>ab+c</code> 匹配 <code>&quot;abc&quot;</code>, <code>&quot;abbc&quot;</code>，但不匹配 <code>&quot;ac&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>?</code><strong>：匹配</strong>零次或一次</strong>（即可选的）。<ul>
-<li><code>colou?r</code> 匹配 <code>&quot;color&quot;</code> 和 <code>&quot;colour&quot;</code> (u出现0次或1次)</li>
-</ul>
-</li>
-<li>**<code>&#123;n&#125;</code>**：匹配确定的 <strong>n 次</strong>。<ul>
-<li><code>\d&#123;4&#125;</code> 匹配恰好4个数字，如 <code>&quot;2024&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>&#123;n,&#125;</code><strong>：匹配</strong>至少 n 次</strong>。<ul>
-<li><code>\d&#123;2,&#125;</code> 匹配至少2个数字，如 <code>&quot;12&quot;</code>, <code>&quot;123&quot;</code></li>
-</ul>
-</li>
-<li><strong><code>&#123;n,m&#125;</code><strong>：匹配</strong>至少 n 次，最多 m 次</strong>。<ul>
-<li><code>\d&#123;2,4&#125;</code> 匹配2到4个数字，如 <code>&quot;12&quot;</code>, <code>&quot;123&quot;</code>, <code>&quot;2024&quot;</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="4-位置锚点-匹配位置，而不是字符"><a href="#4-位置锚点-匹配位置，而不是字符" class="headerlink" title="4. 位置锚点 - 匹配位置，而不是字符"></a>4. 位置锚点 - 匹配位置，而不是字符</h2><ul>
-<li><strong><code>^</code><strong>：匹配字符串的</strong>开始</strong>位置。<ul>
-<li><code>^Hello</code> 匹配以 <code>&quot;Hello&quot;</code> 开头的字符串。</li>
-</ul>
-</li>
-<li><strong><code>$</code><strong>：匹配字符串的</strong>结束</strong>位置。<ul>
-<li><code>world!$</code> 匹配以 <code>&quot;world!&quot;</code> 结尾的字符串。</li>
-</ul>
-</li>
-<li><strong><code>\b</code><strong>：匹配一个</strong>单词的边界</strong>（即单词开头或结尾的空隙）。<ul>
-<li><code>\bcat\b</code> 匹配单词 <code>&quot;cat&quot;</code>，但不匹配 <code>&quot;category&quot;</code> 或 <code>&quot;scatter&quot;</code> 中的 <code>&quot;cat&quot;</code>。</li>
-</ul>
-</li>
-</ul>
-<h2 id="5-分组与捕获"><a href="#5-分组与捕获" class="headerlink" title="5. 分组与捕获"></a>5. 分组与捕获</h2><ul>
-<li>**<code>(...)</code>**：<ol>
-<li><strong>分组</strong>：将多个字符组合成一个整体，以便对其使用量词。<ul>
-<li><code>(abc)+</code> 匹配 <code>&quot;abc&quot;</code>, <code>&quot;abcabc&quot;</code>。</li>
-</ul>
-</li>
-<li><strong>捕获</strong>：提取匹配到的内容，供后续使用或替换。<ul>
+<h2 id="分组与捕获">5. 分组与捕获</h2>
+<ul>
+<li><strong><code>(...)</code></strong>：
+<ol type="1">
+<li><strong>分组</strong>：将多个字符组合成一个整体，以便对其使用量词。
+<ul>
+<li><code>(abc)+</code> 匹配 <code>"abc"</code>, <code>"abcabc"</code>。</li>
+</ul></li>
+<li><strong>捕获</strong>：提取匹配到的内容，供后续使用或替换。
+<ul>
 <li>在替换操作中，可以用 <code>$1</code>, <code>$2</code> 来引用被括号捕获的内容。</li>
+</ul></li>
+</ol></li>
+<li><strong><code>(?:...)</code></strong>：<strong>非捕获分组</strong>。只分组，不捕获，提高效率。</li>
 </ul>
-</li>
-</ol>
-</li>
-<li><strong><code>(?:...)</code><strong>：</strong>非捕获分组</strong>。只分组，不捕获，提高效率。</li>
-</ul>
-<h2 id="6-选择符"><a href="#6-选择符" class="headerlink" title="6. 选择符"></a>6. 选择符</h2><ul>
-<li>**<code>|</code>**：表示“或”关系。<ul>
-<li><code>cat|dog</code> 匹配 <code>&quot;cat&quot;</code> 或 <code>&quot;dog&quot;</code>。</li>
-<li><code>gr(a|e)y</code> 匹配 <code>&quot;gray&quot;</code> 或 <code>&quot;grey&quot;</code>。</li>
-</ul>
-</li>
+<h2 id="选择符">6. 选择符</h2>
+<ul>
+<li><strong><code>|</code></strong>：表示“或”关系。
+<ul>
+<li><code>cat|dog</code> 匹配 <code>"cat"</code> 或 <code>"dog"</code>。</li>
+<li><code>gr(a|e)y</code> 匹配 <code>"gray"</code> 或 <code>"grey"</code>。</li>
+</ul></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><br><span class="hljs-comment"># []表示范围，只匹配一个字符</span><br>[abc]           只能是 a b c 其中之一<br>[a-zA-Z]        a到z 或 A到Z<br><br><br><span class="hljs-comment"># ^ 表示 非</span><br>[^abc]          除 a b c 之外的任何字符<br><br><br><span class="hljs-comment"># &amp;&amp; 表示 且</span><br>[a-z&amp;&amp;[^e-g]]   a 到 z 且 除了 e 到 g（等同于[a-dh-z]）<br><br><br><span class="hljs-comment"># | 表示 或</span><br>[a-z|A-Z]       小写字母或大写字母<br><br><br><span class="hljs-comment"># 预定义字符</span><br>.    任何字符<br>\d   数字<br>\s   空白字符<br>\w   英文字母、数字、下划线<br><br>\D   非数字<br>\S   非空白字符<br>\W   非英文字母、数字、下划线<br><br><br><span class="hljs-comment"># 数量词</span><br>x?       <span class="hljs-number">0</span>个或<span class="hljs-number">1</span>个x<br>x*       <span class="hljs-number">0</span>个或多个x<br>x+       <span class="hljs-number">1</span>个或多个x<br>x&#123;n&#125;     正好n个x<br>x&#123;n,&#125;    至少n个x<br>x&#123;n, m&#125;  n到m个x<br><br><br><span class="hljs-comment"># \ 转义字符</span><br>[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]\-[<span class="hljs-number">0</span>-<span class="hljs-number">9</span>]   数字-数字<br><br><span class="hljs-comment"># ^ 必须是开头  $ 必须是结尾</span><br>^hello    可以匹配 hello world  不能匹配 say hello<br>world$    可以匹配 hello world  不能匹配 world peace<br></code></pre></td></tr></table></figure>
-
-<h1 id="2-Python应用"><a href="#2-Python应用" class="headerlink" title="2 Python应用"></a>2 Python应用</h1><h2 id="2-1-re模块"><a href="#2-1-re模块" class="headerlink" title="2.1 re模块"></a>2.1 re模块</h2><p><code>re</code>模块中包含正则表达式的所有功能，因为Python本来也有转义字符 <code>\</code>，所以 <code>\\</code>才能表示 <code>\</code>，为了方便，我们可以直接使用 <code>r&#39;&#39;</code>去除转义功能。<br>使用 <code>re.match()</code>方法判断是否匹配，如果匹配成功，返回一个 <code>Match</code>对象，否则返回 <code>None</code>。常见的判断方法就是：</p>
+<h1 id="python应用">2 Python应用</h1>
+<h2 id="re模块">2.1 re模块</h2>
+<p><code>re</code>模块中包含正则表达式的所有功能，因为Python本来也有转义字符
+<code>\</code>，所以 <code>\\</code>才能表示
+<code>\</code>，为了方便，我们可以直接使用
+<code>r''</code>去除转义功能。 使用
+<code>re.match()</code>方法判断是否匹配，如果匹配成功，返回一个
+<code>Match</code>对象，否则返回
+<code>None</code>。常见的判断方法就是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">if</span> re.<span class="hljs-keyword">match</span>(<span class="hljs-string">r&#x27;正则表达式&#x27;</span>, <span class="hljs-built_in">str</span>):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;ok&#x27;</span>)<br><span class="hljs-keyword">else</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;failed&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
-<h2 id="2-2-字符串分割"><a href="#2-2-字符串分割" class="headerlink" title="2.2 字符串分割"></a>2.2 字符串分割</h2><p>使用正则表达式分割字符串比常规的 <code>split()</code>方法更加强大。</p>
+<h2 id="字符串分割">2.2 字符串分割</h2>
+<p>使用正则表达式分割字符串比常规的
+<code>split()</code>方法更加强大。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 普通split()</span><br><span class="hljs-string">&#x27;1   2 3  4&#x27;</span>.split(<span class="hljs-string">&#x27; &#x27;</span>)   <span class="hljs-comment"># [&#x27;1&#x27;, &#x27;&#x27;, &#x27;&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;&#x27;, &#x27;4&#x27;]</span><br><br><span class="hljs-comment"># 正则split()</span><br>re.split(<span class="hljs-string">r&#x27;正则表达式&#x27;</span>, <span class="hljs-built_in">str</span>)<br><br>re.split(<span class="hljs-string">r&#x27;\s+&#x27;</span>, <span class="hljs-string">&#x27;1   2 3   4&#x27;</span>)  <span class="hljs-comment"># [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;]</span><br><br>re.split(<span class="hljs-string">r&#x27;[\s,;]+&#x27;</span>, <span class="hljs-string">&#x27;1  , 2,;, 3 ,4&#x27;</span>)  <span class="hljs-comment"># [&#x27;1&#x27;, &#x27;2&#x27;, &#x27;3&#x27;, &#x27;4&#x27;]</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-3-分组"><a href="#2-3-分组" class="headerlink" title="2.3 分组"></a>2.3 分组</h2><p><code>()</code>表示要提取的分组，如果正则表达式中定义了组，就可以在 <code>Match</code>对象上用 <code>group()</code>方法提取出子串来。<br><code>group()</code>和 <code>group(0)</code>表示匹配的完整字符串，<code>group(1)</code>和 <code>group(2)</code>依次代表第1、第2个子串，以此类推。</p>
+<h2 id="分组">2.3 分组</h2>
+<p><code>()</code>表示要提取的分组，如果正则表达式中定义了组，就可以在
+<code>Match</code>对象上用 <code>group()</code>方法提取出子串来。
+<code>group()</code>和
+<code>group(0)</code>表示匹配的完整字符串，<code>group(1)</code>和
+<code>group(2)</code>依次代表第1、第2个子串，以此类推。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re  <br>  <br>qq = <span class="hljs-string">&#x27;qq:12345678&#x27;</span>  <br>reg = <span class="hljs-string">r&#x27;^(qq):([1-9]\d&#123;4,9&#125;)$&#x27;</span>  <br>m = re.<span class="hljs-keyword">match</span>(reg, qq)  <br><span class="hljs-built_in">print</span>(m)  <br><span class="hljs-built_in">print</span>(m.group())  <span class="hljs-comment"># qq:12345678</span><br><span class="hljs-built_in">print</span>(m.group(<span class="hljs-number">0</span>))  <span class="hljs-comment"># qq:12345678</span><br><span class="hljs-built_in">print</span>(m.group(<span class="hljs-number">1</span>))  <span class="hljs-comment"># qq</span><br><span class="hljs-built_in">print</span>(m.group(<span class="hljs-number">2</span>))  <span class="hljs-comment"># 12345678</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-4-预编译"><a href="#2-4-预编译" class="headerlink" title="2.4 预编译"></a>2.4 预编译</h2><p>如果一个正则表达式要用很多次，可以使用预编译。</p>
+<h2 id="预编译">2.4 预编译</h2>
+<p>如果一个正则表达式要用很多次，可以使用预编译。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> re<br><br><span class="hljs-comment"># 预编译</span><br>re_qq = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">r&#x27;^(qq):([1-9]\d&#123;4,9&#125;)$&#x27;</span>)<br><br><span class="hljs-comment"># 使用</span><br><span class="hljs-built_in">print</span>(re_qq.<span class="hljs-keyword">match</span>(<span class="hljs-string">&#x27;qq:41532531&#x27;</span>).group(<span class="hljs-number">2</span>))<br></code></pre></td></tr></table></figure>
 
                 
@@ -544,6 +566,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -762,6 +790,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

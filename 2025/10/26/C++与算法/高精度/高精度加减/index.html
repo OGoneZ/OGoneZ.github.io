@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 高精度加法主要有以下几步：  输入处理：使用字符串来存储大整数，避免数值范围限制。 对齐数字：确保两个数字的数位对齐（前面补零）。 逐位相加：从最低位开始，逐位相加并处理进位。 最高进位：在最后检查是否有剩余进位。 结果反转：因为是从低位开始计算，所以最后需要反转字符串。  1234567891011121314151617181920int a[N], b[N], c[N];  &#x2F;&#x2F; 方便进">
+    <meta name="description" content="1 高精度加法 主要有以下几步： 1. 输入处理：使用字符串来存储大整数，避免数值范围限制。 2. 对齐数字：确保两个数字的数位对齐（前面补零）。 3. 逐位相加：从最低位开始，逐位相加并处理进位。 4. 最高进位：在最后检查是否有剩余进位。 5. 结果反转：因为是从低位开始计算，所以最后需要反转字符串。 1234567891011121314151617181920int a[N]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高精度加减">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 高精度加法主要有以下几步：  输入处理：使用字符串来存储大整数，避免数值范围限制。 对齐数字：确保两个数字的数位对齐（前面补零）。 逐位相加：从最低位开始，逐位相加并处理进位。 最高进位：在最后检查是否有剩余进位。 结果反转：因为是从低位开始计算，所以最后需要反转字符串。  1234567891011121314151617181920int a[N], b[N], c[N];  &#x2F;&#x2F; 方便进">
+<meta property="og:description" content="1 高精度加法 主要有以下几步： 1. 输入处理：使用字符串来存储大整数，避免数值范围限制。 2. 对齐数字：确保两个数字的数位对齐（前面补零）。 3. 逐位相加：从最低位开始，逐位相加并处理进位。 4. 最高进位：在最后检查是否有剩余进位。 5. 结果反转：因为是从低位开始计算，所以最后需要反转字符串。 1234567891011121314151617181920int a[N]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T12:35:49.311Z">
@@ -278,29 +278,25 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-高精度加法"><a href="#1-高精度加法" class="headerlink" title="1 高精度加法"></a>1 高精度加法</h1><p>主要有以下几步：</p>
-<ol>
-<li><strong>输入处理</strong>：使用字符串来存储大整数，避免数值范围限制。</li>
-<li><strong>对齐数字</strong>：确保两个数字的数位对齐（前面补零）。</li>
-<li><strong>逐位相加</strong>：从最低位开始，逐位相加并处理进位。</li>
-<li><strong>最高进位</strong>：在最后检查是否有剩余进位。</li>
-<li><strong>结果反转</strong>：因为是从低位开始计算，所以最后需要反转字符串。</li>
-</ol>
+                <h1 id="高精度加法">1 高精度加法</h1>
+<p>主要有以下几步： 1.
+<strong>输入处理</strong>：使用字符串来存储大整数，避免数值范围限制。 2.
+<strong>对齐数字</strong>：确保两个数字的数位对齐（前面补零）。 3.
+<strong>逐位相加</strong>：从最低位开始，逐位相加并处理进位。 4.
+<strong>最高进位</strong>：在最后检查是否有剩余进位。 5.
+<strong>结果反转</strong>：因为是从低位开始计算，所以最后需要反转字符串。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> a[N], b[N], c[N];  <span class="hljs-comment">// 方便进位和数位对齐的逆序整型数组</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addBigNumber</span><span class="hljs-params">(string num1, string num2)</span> </span>&#123;<br>	<span class="hljs-comment">// 计算长度</span><br>	<span class="hljs-type">int</span> len1 = num<span class="hljs-number">1.l</span>ength(), len2 = num<span class="hljs-number">2.l</span>ength();<br>	<span class="hljs-comment">// 逆序存储到整型数组</span><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len1; i++) a[i] = num1[len1 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len2; i++) b[i] = num2[len2 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span>;<br><br>	<span class="hljs-comment">// 循环较长数字的位数</span><br>	<span class="hljs-type">int</span> len = <span class="hljs-built_in">max</span>(len1, len2);<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;<br>		c[i] += a[i] + b[i];  <span class="hljs-comment">// 这一位加上两个数的和</span><br>		c[i + <span class="hljs-number">1</span>] += c[i] / <span class="hljs-number">10</span>;  <span class="hljs-comment">// 这一位超过10进位到下一位</span><br>		c[i] %= <span class="hljs-number">10</span>;  <span class="hljs-comment">// 这一位超过10要取余</span><br>	&#125; <br><br>	<span class="hljs-keyword">if</span>(c[len]) len++;  <span class="hljs-comment">// 如果最高位有进位，长度加1</span><br><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = len - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) cout &lt;&lt; c[i];  <span class="hljs-comment">// 逆序输出</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">string <span class="hljs-title">addBigNumber</span><span class="hljs-params">(string num1, string num2)</span> </span>&#123;<br>	<span class="hljs-comment">// 分别计算两数的最后一位数下标，并初始化进位</span><br>    <span class="hljs-type">int</span> i = num<span class="hljs-number">1.</span><span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, j = num<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>, carry = <span class="hljs-number">0</span>;<br><br>    string res;<br>    <span class="hljs-comment">// 只要有数字没加完 或 有进位没处理就继续运算</span><br>    <span class="hljs-keyword">while</span>(i &gt;= <span class="hljs-number">0</span> || j &gt;= <span class="hljs-number">0</span> || carry) &#123;<br>        <span class="hljs-type">int</span> sum = carry;  <span class="hljs-comment">// 这一位的结果先赋为进位值</span><br>        <span class="hljs-keyword">if</span>(i &gt;= <span class="hljs-number">0</span>) sum += num1[i--] - <span class="hljs-string">&#x27;0&#x27;</span>;  <span class="hljs-comment">// 第一个数没加完就加</span><br>        <span class="hljs-keyword">if</span>(j &gt;= <span class="hljs-number">0</span>) sum += num2[j--] - <span class="hljs-string">&#x27;0&#x27;</span>;  <span class="hljs-comment">// 第二个数没加完就加</span><br><br>        carry = sum / <span class="hljs-number">10</span>;  <span class="hljs-comment">// 计算是否有进位</span><br>        res += sum % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>;  <span class="hljs-comment">// 对10取余处理进位</span><br>    &#125;<br>    <span class="hljs-built_in">reverse</span>(res.<span class="hljs-built_in">begin</span>(), res.<span class="hljs-built_in">end</span>());  <span class="hljs-comment">// 翻转答案</span><br><br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">string <span class="hljs-title">addBigNumber</span><span class="hljs-params">(string num1, string num2)</span> </span>&#123;<br>	<span class="hljs-comment">// 确保 num1 是较长的数字</span><br>	<span class="hljs-keyword">if</span>(num<span class="hljs-number">1.l</span>ength() &lt; num<span class="hljs-number">2.l</span>ength()) <span class="hljs-built_in">swap</span>(num1, num2);<br><br>	string res;  <span class="hljs-comment">// 最终答案</span><br>	<span class="hljs-type">int</span> carry = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 进位，初始为0</span><br>	<span class="hljs-type">int</span> len1 = num<span class="hljs-number">1.l</span>ength(), len2 = num<span class="hljs-number">2.l</span>ength();  <span class="hljs-comment">// 长度</span><br><br>	<span class="hljs-comment">// 从最低位开始相加，加到较长数字的位数</span><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len1; i++) &#123; <br>		<span class="hljs-comment">// 较长数字正常 -&#x27;0&#x27; 转化为 int 即可</span><br>		<span class="hljs-type">int</span> digit1 = num1[len1 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span>;<br>		<span class="hljs-comment">// 如果超出了较短数字的位数，默认补0即可</span><br>		<span class="hljs-type">int</span> digit2 = i &lt; len2 ? num2[len2 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span> : <span class="hljs-number">0</span>;<br><br>		<span class="hljs-comment">// 这一位的总和等于：两数相加并加上进位</span><br>		<span class="hljs-type">int</span> sum = digit1 + digit2 + carry;<br>		carry = sum / <span class="hljs-number">10</span>;  <span class="hljs-comment">// 下一位的进位等于这一位总和对10整除</span><br>		res += sum % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>;  <span class="hljs-comment">// 最终这一位的结果要对10取余，并且恢复为字符串</span><br>	&#125;<br><br>	<span class="hljs-comment">// 如果还有进位，说明最高位也发生了进位，超出了原有最长位数，要单独处理</span><br>	<span class="hljs-keyword">if</span>(carry) res += carry + <span class="hljs-string">&#x27;0&#x27;</span>; <br><br>	<span class="hljs-comment">// 由于前面是从最低位开始加的，这里要对结果进行翻转</span><br>	<span class="hljs-built_in">reverse</span>(res.<span class="hljs-built_in">begin</span>(), res.<span class="hljs-built_in">end</span>());<br><br>	<span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="2-高精度减法"><a href="#2-高精度减法" class="headerlink" title="2 高精度减法"></a>2 高精度减法</h1><p>主要有以下几步</p>
-<ol>
-<li><strong>比较大小</strong>：比较两个数字字符串的大小，确定减数和被减数，并标记负号。</li>
-<li><strong>对齐数字</strong>：确保两个数字的数位对齐（前面补零）。</li>
-<li><strong>逐位相减</strong>：从最低位开始，逐位相减并处理借位。</li>
-<li><strong>结果处理</strong>：移除结果中的前导零，判断是否添加负号。</li>
-<li><strong>结果反转</strong>：因为是从低位开始计算，所以最后需要反转字符串。</li>
-</ol>
+<h1 id="高精度减法">2 高精度减法</h1>
+<p>主要有以下几步 1.
+<strong>比较大小</strong>：比较两个数字字符串的大小，确定减数和被减数，并标记负号。
+2. <strong>对齐数字</strong>：确保两个数字的数位对齐（前面补零）。 3.
+<strong>逐位相减</strong>：从最低位开始，逐位相减并处理借位。 4.
+<strong>结果处理</strong>：移除结果中的前导零，判断是否添加负号。 5.
+<strong>结果反转</strong>：因为是从低位开始计算，所以最后需要反转字符串。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">string <span class="hljs-title">subBigNumber</span><span class="hljs-params">(string num1, string num2)</span> </span>&#123;<br>	<span class="hljs-type">char</span> op = <span class="hljs-string">&#x27; &#x27;</span>;  <span class="hljs-comment">// 记录符号</span><br>	<span class="hljs-comment">// 确保 num1 &gt; num2，否则记录负号并交换</span><br>	<span class="hljs-keyword">if</span>(num<span class="hljs-number">1.</span><span class="hljs-built_in">size</span>() &lt; num<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>() || num<span class="hljs-number">1.</span><span class="hljs-built_in">size</span>() == num<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>() &amp;&amp; num1 &lt; num2) &#123;<br>		op = <span class="hljs-string">&#x27;-&#x27;</span>;<br>		<span class="hljs-built_in">swap</span>(num1, num2);<br>	&#125;<br><br>	string res;  <span class="hljs-comment">// 最终答案</span><br>    <span class="hljs-type">int</span> borrow = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 借位，初始为0</span><br>	<span class="hljs-type">int</span> len1 = num<span class="hljs-number">1.</span><span class="hljs-built_in">size</span>(), len2 = num<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>();  <span class="hljs-comment">// 长度</span><br><br>	<span class="hljs-comment">// 运算按较长数字的长度</span><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; len1; i++) &#123;<br>		<span class="hljs-comment">// 较长数字正常 -&#x27;0&#x27; 转化为 int 即可</span><br>		<span class="hljs-type">int</span> digit1 = num1[len1 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span>;<br>		<span class="hljs-comment">// 如果超出了较短数字的位数，默认补0即可</span><br>		<span class="hljs-type">int</span> digit2 = i &lt; len2 ? num2[len2 - <span class="hljs-number">1</span> - i] - <span class="hljs-string">&#x27;0&#x27;</span> : <span class="hljs-number">0</span>;<br><br>		<span class="hljs-comment">// 这一位的结果等于：两数相减并减去借位</span><br>		<span class="hljs-type">int</span> dif = digit1 - digit2 - borrow;<br>		<span class="hljs-comment">// 判断是否需要借位</span><br>		<span class="hljs-keyword">if</span>(dif &lt; <span class="hljs-number">0</span>) borrow = <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">else</span> borrow = <span class="hljs-number">0</span>;<br>		<span class="hljs-comment">// 这一位的结果先加10再取余，可以处理需要借位的负数，并 + &#x27;0&#x27; 转字符</span><br>		res += (dif + <span class="hljs-number">10</span>) % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>;<br>	&#125;<br><br>	<span class="hljs-comment">// 处理前导0，但注意保留一个，因为结果可能为0</span><br>	<span class="hljs-keyword">while</span>(res.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">1</span> &amp;&amp; res.<span class="hljs-built_in">back</span>() == <span class="hljs-string">&#x27;0&#x27;</span>) res.<span class="hljs-built_in">pop_back</span>();<br><br>	<span class="hljs-comment">// 处理负号</span><br>	<span class="hljs-keyword">if</span>(op == <span class="hljs-string">&#x27;-&#x27;</span>) res += <span class="hljs-string">&#x27;-&#x27;</span>;<br><br>	<span class="hljs-comment">// 翻转字符串</span><br>	<span class="hljs-built_in">reverse</span>(res.<span class="hljs-built_in">begin</span>(), res.<span class="hljs-built_in">end</span>());<br><br>	<span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
@@ -390,9 +386,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径">
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="深度优先搜索">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最短路径</span>
+                        <span class="hidden-mobile">深度优先搜索</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -400,8 +396,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/Linux%E7%B3%BB%E7%BB%9F/Linux%E5%9F%BA%E7%A1%80/" title="Linux基础">
-                        <span class="hidden-mobile">Linux基础</span>
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径">
+                        <span class="hidden-mobile">最短路径</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -458,6 +454,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -676,6 +678,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

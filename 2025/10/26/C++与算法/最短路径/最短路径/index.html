@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 Dijkstra 算法Dijkstra（迪杰斯特拉）算法适用于单源最短路径问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于边权非负的图（所有边的权重 ≥ 0），无法解決带负权的图的最短路问题。 Dijkstra 算法的核心思想是贪心算法，将所有节点分为已确定最短路径的节点和未确定最短路径的节点:  初始时，将所有顶点的最短距离设为∞，源点的距离设为0 每次从未确定节点中选择距离最">
+    <meta name="description" content="1 Dijkstra 算法 Dijkstra（迪杰斯特拉）算法适用于单源最短路径问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于边权非负的图（所有边的权重 ≥ 0），无法解決带负权的图的最短路问题。 Dijkstra 算法的核心思想是贪心算法，将所有节点分为已确定最短路径的节点和未确定最短路径的节点: 1. 初始时，将所有顶点的最短距离设为∞，源点的距离设为0 2. 每次">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最短路径">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 Dijkstra 算法Dijkstra（迪杰斯特拉）算法适用于单源最短路径问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于边权非负的图（所有边的权重 ≥ 0），无法解決带负权的图的最短路问题。 Dijkstra 算法的核心思想是贪心算法，将所有节点分为已确定最短路径的节点和未确定最短路径的节点:  初始时，将所有顶点的最短距离设为∞，源点的距离设为0 每次从未确定节点中选择距离最">
+<meta property="og:description" content="1 Dijkstra 算法 Dijkstra（迪杰斯特拉）算法适用于单源最短路径问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于边权非负的图（所有边的权重 ≥ 0），无法解決带负权的图的最短路问题。 Dijkstra 算法的核心思想是贪心算法，将所有节点分为已确定最短路径的节点和未确定最短路径的节点: 1. 初始时，将所有顶点的最短距离设为∞，源点的距离设为0 2. 每次">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T13:18:50.989Z">
@@ -278,14 +278,15 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-Dijkstra-算法"><a href="#1-Dijkstra-算法" class="headerlink" title="1 Dijkstra 算法"></a>1 Dijkstra 算法</h1><p>Dijkstra（迪杰斯特拉）算法适用于<strong>单源最短路径</strong>问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于<strong>边权非负</strong>的图（所有边的权重 ≥ 0），无法解決<strong>带负权的图</strong>的最短路问题。</p>
-<p>Dijkstra 算法的核心思想是<strong>贪心算法</strong>，将所有节点分为<strong>已确定</strong>最短路径的节点和<strong>未确定</strong>最短路径的节点:</p>
-<ol>
-<li>初始时，将所有顶点的最短距离设为∞，源点的距离设为0</li>
-<li>每次从未确定节点中选择距离最小的节点，作为当前节点，将其标记为已确定</li>
-<li>遍历当前节点的所有邻居，更新该节点的所有邻居节点的距离（<strong>松弛</strong>操作）</li>
-<li>重复上述过程，直到所有节点都被加入已确定集合</li>
-</ol>
+                <h1 id="dijkstra-算法">1 Dijkstra 算法</h1>
+<p>Dijkstra（迪杰斯特拉）算法适用于<strong>单源最短路径</strong>问题，即从一个起点出发，计算到所有其他点的最短路径。它只能用于<strong>边权非负</strong>的图（所有边的权重
+≥ 0），无法解決<strong>带负权的图</strong>的最短路问题。</p>
+<p>Dijkstra
+算法的核心思想是<strong>贪心算法</strong>，将所有节点分为<strong>已确定</strong>最短路径的节点和<strong>未确定</strong>最短路径的节点:
+1. 初始时，将所有顶点的最短距离设为∞，源点的距离设为0 2.
+每次从未确定节点中选择距离最小的节点，作为当前节点，将其标记为已确定 3.
+遍历当前节点的所有邻居，更新该节点的所有邻居节点的距离（<strong>松弛</strong>操作）
+4. 重复上述过程，直到所有节点都被加入已确定集合</p>
 <blockquote>
 <p>“松弛”就是检查当前路径是否更短，如果是，就更新最短距离。</p>
 </blockquote>
@@ -293,43 +294,43 @@
 <li>邻接矩阵+迭代</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1010</span>;  <br><span class="hljs-type">int</span> n, m, s, mp[N][N], dis[N];  <span class="hljs-comment">// 节点 边 起始点 图 距离</span><br><span class="hljs-type">bool</span> vis[N];  <span class="hljs-comment">// 已确定节点</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dij</span><span class="hljs-params">()</span> </span>&#123;  <br>    <span class="hljs-built_in">fill</span>(dis, dis + N, INT_MAX);  <span class="hljs-comment">// 未确定节点的距离设为无穷大</span><br>    dis[s] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 起始节点距离设为0</span><br><br>	<span class="hljs-comment">// 一次确定一个节点的最短路，n个节点需要n次循环</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;  <br>        <span class="hljs-type">int</span> id = <span class="hljs-number">0</span>;  <span class="hljs-comment">// id标记当前节点，初始化为0，距离为无穷大</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)  <span class="hljs-comment">// 在未确定节点中寻找距离最小的节点</span><br>            <span class="hljs-keyword">if</span> (!vis[j] &amp;&amp; dis[j] &lt; dis[id]) id = j;  <br>  <br>        vis[id] = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 将当前节点标记为已确定</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= n; j++)  <br>	        <span class="hljs-comment">// 松弛，当前节点的邻居，从当前节点出发路径更短</span><br>            <span class="hljs-keyword">if</span> (mp[id][j] != INT_MAX &amp;&amp; dis[id] + mp[id][j] &lt; dis[j])  <br>                dis[j] = dis[id] + mp[id][j];  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>递归实现（数据稍大会栈溢出）</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1010</span>;  <br><span class="hljs-type">int</span> n, m, s, mp[N][N], dis[N];  <span class="hljs-comment">// 节点  边  起始点  图  距离</span><br><span class="hljs-type">bool</span> vis[N];  <span class="hljs-comment">// 已确定节点</span><br>  <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dij</span><span class="hljs-params">(<span class="hljs-type">int</span> id)</span> </span>&#123;  <span class="hljs-comment">// 当前节点</span><br>    <span class="hljs-type">int</span> mini = INT_MAX, ni = <span class="hljs-number">-1</span>;  <span class="hljs-comment">// 未确定节点中的最短距离和节点编号</span><br>    vis[id] = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 标记为已确定</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;  <br>        <span class="hljs-keyword">if</span>(!vis[i]) &#123;  <span class="hljs-comment">// 遍历还未确定的节点</span><br>	        <span class="hljs-comment">// 当前节点能访问到的邻居 并且 从当前节点出发的路径更短</span><br>            <span class="hljs-keyword">if</span>(mp[id][i] != INT_MAX &amp;&amp; dis[id] + mp[id][i] &lt; dis[i])  <br>                dis[i] = dis[id] + mp[id][i];  <span class="hljs-comment">// 松弛</span><br>            <span class="hljs-comment">// 在所有还未确定的节点中寻距离最短的</span><br>            <span class="hljs-keyword">if</span>(dis[i] &lt; mini) &#123; <br>                mini = dis[i];  <span class="hljs-comment">// 更新最短距离</span><br>                ni = i;  <span class="hljs-comment">// 更新节点编号</span><br>            &#125;  <br>        &#125;    <br>	&#125;  <br>	<span class="hljs-comment">// 如果找到了未确定节点中的最短距离节点，作为当前节点传入dij</span><br>	<span class="hljs-keyword">if</span>(ni != <span class="hljs-number">-1</span>) <span class="hljs-built_in">dij</span>(ni);  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;  <br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s;  <br>    <span class="hljs-built_in">fill</span>(mp[<span class="hljs-number">0</span>], mp[<span class="hljs-number">0</span>] + N * N, INT_MAX);  <span class="hljs-comment">// 边初始化为无穷大</span><br>    <span class="hljs-keyword">while</span>(m--) &#123;  <br>        <span class="hljs-type">int</span> u, v, w;  <br>        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;  <br>        mp[u][v] = <span class="hljs-built_in">min</span>(mp[u][v], w);  <span class="hljs-comment">// 处理重边  </span><br>    &#125;  <br>  <br>    <span class="hljs-built_in">fill</span>(dis, dis + N, INT_MAX);  <span class="hljs-comment">//  距离初始化为无穷大</span><br>    dis[s] = <span class="hljs-number">0</span>;  <span class="hljs-comment">//  起始点距离初始化为0</span><br>    <span class="hljs-built_in">dij</span>(s);  <br>  <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)  <br>        <span class="hljs-keyword">if</span>(dis[i] != INT_MAX) cout &lt;&lt; dis[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <br>        <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-number">-1</span> &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="2-Bellman-Ford-算法"><a href="#2-Bellman-Ford-算法" class="headerlink" title="2 Bellman-Ford 算法"></a>2 Bellman-Ford 算法</h1><p>Bellman-Ford（贝尔曼-福特）算法是用于解决<strong>单源最短路径</strong>问题的经典算法，它可以处理图中包含负权边的情况，并能检测出图中是否存在负环。</p>
-<p>Bellman-Ford算法的核心是“<strong>不断松弛边</strong>”。对所有边进行 <code>n - 1</code> 次松弛（n为顶点个数），之后再跑一次检测负环。</p>
-<ol>
-<li>初始化：将所有顶点的最短距离估计值设为∞，源点的距离设为0</li>
-<li>松弛操作：重复 n-1 次松弛，每次遍历所有边，对每条边进行松弛操作</li>
-<li>检查负环：再进行一次松弛操作，如果还能更新则说明存在负环</li>
-</ol>
+<h1 id="bellman-ford-算法">2 Bellman-Ford 算法</h1>
+<p>Bellman-Ford（贝尔曼-福特）算法是用于解决<strong>单源最短路径</strong>问题的经典算法，它可以处理图中包含负权边的情况，并能检测出图中是否存在负环。</p>
+<p>Bellman-Ford算法的核心是“<strong>不断松弛边</strong>”。对所有边进行
+<code>n - 1</code> 次松弛（n为顶点个数），之后再跑一次检测负环。 1.
+初始化：将所有顶点的最短距离估计值设为∞，源点的距离设为0 2.
+松弛操作：重复 n-1 次松弛，每次遍历所有边，对每条边进行松弛操作 3.
+检查负环：再进行一次松弛操作，如果还能更新则说明存在负环</p>
 <blockquote>
-<p>为什么进行 n-1 次松弛，因为进行一次 Bellman-Ford，距离起点一条边的点的最短路确定， 进行两次，距离起点两条边的点的最短路确定， 总共n个点，最短路最多经过 n-1 条边，所以进行 n-1 次松弛即可。</p>
+<p>为什么进行 n-1 次松弛，因为进行一次
+Bellman-Ford，距离起点一条边的点的最短路确定，
+进行两次，距离起点两条边的点的最短路确定， 总共n个点，最短路最多经过 n-1
+条边，所以进行 n-1 次松弛即可。</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e5</span> + <span class="hljs-number">10</span>;  <br><span class="hljs-type">int</span> n, m, s, t, dis[N];  <span class="hljs-comment">// 节点数 边数 起始点 目标点 距离</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;  <br>    <span class="hljs-type">int</span> u;  <br>    <span class="hljs-type">int</span> v;  <br>    <span class="hljs-type">int</span> w;  <br>    <span class="hljs-built_in">Edge</span>(<span class="hljs-type">int</span> from, <span class="hljs-type">int</span> to, <span class="hljs-type">int</span> weight) : <span class="hljs-built_in">u</span>(from), <span class="hljs-built_in">v</span>(to), <span class="hljs-built_in">w</span>(weight) &#123;&#125;  <br>&#125;;  <br>vector&lt;Edge&gt; egs;   <span class="hljs-comment">// 使用边集数组进行存储，方便对每一条</span><br>  <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bf</span><span class="hljs-params">()</span> </span>&#123;  <br>	<span class="hljs-comment">// 除起始点之外的距离设为无穷大</span><br>    <span class="hljs-built_in">fill</span>(dis, dis + N, <span class="hljs-number">1e9</span>);  <br>    dis[s] = <span class="hljs-number">0</span>;  <br>  <br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;  <span class="hljs-comment">// n-1 次操作，每次确定距离为 i 的节点最短路</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= m; j++) &#123;  <span class="hljs-comment">// 每次操作对所有边进行</span><br>	        <span class="hljs-comment">// 当前边的起始点 当前边的到达点 当前边的权值</span><br>            <span class="hljs-type">int</span> from = egs[j].u, to = egs[j].v, weight = egs[j].w;  <br>            <span class="hljs-keyword">if</span>(dis[from] + weight &lt; dis[to])  <span class="hljs-comment">// 松弛操作</span><br>                dis[to] = dis[from] + weight;  <br>        &#125;  <br>    &#125;&#125;  <br>  <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;  <br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; t;  <br>    egs.<span class="hljs-built_in">emplace_back</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);  <span class="hljs-comment">// 占位 vector 的 0 号位</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) &#123;  <br>        <span class="hljs-type">int</span> x, y, z;  <br>        cin &gt;&gt; x &gt;&gt; y &gt;&gt; z;  <br>        <span class="hljs-comment">// 直接将 Edge(x,y,z) push_back 进 vector</span><br>        egs.<span class="hljs-built_in">emplace_back</span>(x, y, z);  <br>    &#125;  <br>  <br>    <span class="hljs-built_in">bf</span>();  <br>  <br>    cout &lt;&lt; dis[t];  <br>  <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;  <br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h1 id="3-SPFA-算法"><a href="#3-SPFA-算法" class="headerlink" title="3 SPFA 算法"></a>3 SPFA 算法</h1><p>SPFA（Shortest Path Faster Algorithm）是 Bellman-Ford 算法的队列优化版本，用于求<strong>单源最短路径</strong>，减少了不必要的冗余运算，同样可以处理存在负权边的情况。</p>
-<p>与 Bellman-Ford 每次都遍历所有边不同，SPFA 利用队列优化了 Bellman-Ford 算法中不必要的松弛操作，只对发生了松弛操作的结点的邻接结点进行松弛。</p>
-<ol>
-<li>初始化所有节点到起始点的距离为 ∞，源点为 0</li>
-<li>将源点入队，并标记为在队列中</li>
-<li>当队列不为空时：<ul>
-<li>取出队首节点作为当前节点，弹出并标记为不在队列中</li>
-<li>遍历从当前节点的所有临接边，尝试松弛操作</li>
-<li>如果松弛成功，判断这个邻居节点是否在队列中，如果不在则入队</li>
-</ul>
-</li>
-<li>重复以上操作直到队列为空</li>
-</ol>
+<h1 id="spfa-算法">3 SPFA 算法</h1>
+<p>SPFA（Shortest Path Faster Algorithm）是 Bellman-Ford
+算法的队列优化版本，用于求<strong>单源最短路径</strong>，减少了不必要的冗余运算，同样可以处理存在负权边的情况。</p>
+<p>与 Bellman-Ford 每次都遍历所有边不同，SPFA 利用队列优化了
+Bellman-Ford
+算法中不必要的松弛操作，只对发生了松弛操作的结点的邻接结点进行松弛。 1.
+初始化所有节点到起始点的距离为 ∞，源点为 0 2.
+将源点入队，并标记为在队列中 3. 当队列不为空时： -
+取出队首节点作为当前节点，弹出并标记为不在队列中 -
+遍历从当前节点的所有临接边，尝试松弛操作 -
+如果松弛成功，判断这个邻居节点是否在队列中，如果不在则入队 4.
+重复以上操作直到队列为空</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">5010</span>;  <br><span class="hljs-type">int</span> n, m, s, t, dis[N], mp[N][N];  <span class="hljs-comment">// 节点 边 源点 终点 距离 图 </span><br>queue&lt;<span class="hljs-type">int</span>&gt; q;  <span class="hljs-comment">// 辅助队列</span><br><span class="hljs-type">bool</span> vis[N];  <span class="hljs-comment">// 标记节点是否在队列</span><br>  <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">spfa</span><span class="hljs-params">()</span> </span>&#123;  <br>	<span class="hljs-comment">// 除源点外的其他节点距离初始化为无穷大</span><br>    <span class="hljs-built_in">fill</span>(dis, dis + N, <span class="hljs-number">1e9</span>);  <br>    dis[s] = <span class="hljs-number">0</span>;  <br>  <br>    q.<span class="hljs-built_in">push</span>(s);  <span class="hljs-comment">// 源点入队</span><br>    vis[s] = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 并把源点标记为在队列</span><br>    <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>()) &#123; <br>        <span class="hljs-type">int</span> id = q.<span class="hljs-built_in">front</span>(); <span class="hljs-comment">// 取出队首元素</span><br>        q.<span class="hljs-built_in">pop</span>();  <br>        vis[id] = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 标记为不在队列</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>	        <span class="hljs-comment">// 遍历所有邻居节点</span><br>            <span class="hljs-keyword">if</span>(mp[id][i] != <span class="hljs-number">1e9</span> &amp;&amp; dis[id] + mp[id][i] &lt; dis[i]) &#123;  <br>                dis[i] = dis[id] + mp[id][i];  <span class="hljs-comment">// 松弛</span><br>                <span class="hljs-comment">// 如果不在队列则入队，并标记为在队列</span><br>                <span class="hljs-keyword">if</span>(!vis[i]) &#123; <br>                    q.<span class="hljs-built_in">push</span>(i);  <br>                    vis[i] = <span class="hljs-literal">true</span>;  <br>                &#125;  <br>            &#125;       <br>        &#125;    <br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <blockquote>
-<p>SPFA 每轮更新中将“更近一层”的节点的最短路径传递出去，这个过程和 BFS 逐层访问节点的方式有点相似。</p>
+<p>SPFA 每轮更新中将“更近一层”的节点的最短路径传递出去，这个过程和 BFS
+逐层访问节点的方式有点相似。</p>
 </blockquote>
-<h1 id="4-Floyd-算法"><a href="#4-Floyd-算法" class="headerlink" title="4 Floyd 算法"></a>4 Floyd 算法</h1>
+<h1 id="floyd-算法">4 Floyd 算法</h1>
+
                 
               </div>
             
@@ -419,9 +420,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="标准输入输出">
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/" title="高精度加减">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">标准输入输出</span>
+                        <span class="hidden-mobile">高精度加减</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -429,8 +430,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/" title="高精度加减">
-                        <span class="hidden-mobile">高精度加减</span>
+                      <a href="/2025/10/26/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/Linux%E7%B3%BB%E7%BB%9F/Linux%E5%9F%BA%E7%A1%80/" title="Linux基础">
+                        <span class="hidden-mobile">Linux基础</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -487,6 +488,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -705,6 +712,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

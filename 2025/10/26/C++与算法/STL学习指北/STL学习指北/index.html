@@ -19,28 +19,25 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 STL 概述1.1 简介STL是Standard Template Library的简称，中文名标准模板库，惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。从根本上说，STL是一些“容器”的集合，这些“容器”有list,vector,set,map等，STL也是算法和其他一些组件的集合。">
+    <meta name="description" content="1 STL 概述 1.1 简介 STL是Standard Template Library的简称，中文名标准模板库，惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。从根本上说，STL是一些“容器”的集合，这些“容器”有list,vector,set,map等，STL也是算法和其他一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STL学习指北">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 STL 概述1.1 简介STL是Standard Template Library的简称，中文名标准模板库，惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。从根本上说，STL是一些“容器”的集合，这些“容器”有list,vector,set,map等，STL也是算法和其他一些组件的集合。">
+<meta property="og:description" content="1 STL 概述 1.1 简介 STL是Standard Template Library的简称，中文名标准模板库，惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。从根本上说，STL是一些“容器”的集合，这些“容器”有list,vector,set,map等，STL也是算法和其他一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/cpp_assets/c_vector.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_vector_expand.gif">
-<meta property="og:image" content="http://example.com/cpp_assets/c_vector_fun.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_vector_array.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_stack.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_queue.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_deque.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_deque_mem.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_deque_fun.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_vector.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_vector_array.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_stack.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_queue.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_deque.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_deque_mem.png">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T13:13:41.147Z">
+<meta property="article:modified_time" content="2025-10-31T11:43:19.839Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/cpp_assets/c_vector.png">
+<meta name="twitter:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/c_vector.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -288,394 +285,601 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-STL-概述"><a href="#1-STL-概述" class="headerlink" title="1 STL 概述"></a>1 STL 概述</h1><h2 id="1-1-简介"><a href="#1-1-简介" class="headerlink" title="1.1 简介"></a>1.1 简介</h2><p><strong>STL</strong>是Standard Template Library的简称，中文名<strong>标准模板库</strong>，惠普实验室开发的一系列软件的统称。它是由Alexander Stepanov、Meng Lee和David R Musser在惠普实验室工作时所开发出来的。从根本上说，<strong>STL</strong>是一些“<strong>容器</strong>”的集合，这些“<strong>容器</strong>”有<code>list</code>,<code>vector</code>,<code>set</code>,<code>map</code>等，<strong>STL</strong>也是<strong>算法</strong>和其他一些组件的集合。这里的“容器”和算法的集合指的是世界上很多聪明人很多年的杰作。<strong>STL</strong>的目的是<strong>标准化组件</strong>，这样就不用重新开发，可以使用现成的组件。STL是C++的一部分，因此不用安装额外的库文件。<br>在C++标准中，<strong>STL</strong>被组织为下面的13个<strong>头文件</strong>：<code>&lt;algorithm&gt;</code>、<code>&lt;deque&gt;</code>、<code>&lt;functional&gt;</code>、<code>&lt;iterator &gt;</code> 、<code>&lt;vector&gt;</code>、<code>&lt;list&gt;</code>、<code>&lt;map&gt;</code>、<code>&lt;memory.h&gt;</code>、<code>&lt;numeric&gt;</code>、<code>&lt;queue&gt;</code>、<code>&lt;set&gt;</code>、<code>&lt; stack&gt;</code>和</p>
-<hr>
-<p>STL 容器包括<strong>顺序式容器</strong>和<strong>关联式容器</strong>。</p>
-<ul>
-<li>关联容器中的元素按关键字保存和访问；顺序容器中的元素按它们在容器中的位置和顺序保存和访问</li>
-<li>关联容器不支持顺序容器位置相关的操作，因为关联容器中元素是根据关键字存储的，这些操作对关联容器没有意义；关联容器也不支持构造函数或插入操作这些接收一个元素值和一个数量值的操作。</li>
-<li>关联容器支持高效的关键字查找和访问，两个主要的关联容器类型是 <code>map</code> 和 <code>set</code>：<ul>
-<li><code>map</code> 中的元素是键值对（key–value）：关键字起到索引的作用，值则表示与索引相关联的数据。</li>
-<li><code>set</code> 中的元素只包含关键字：<code>set</code> 支持高效的关键字查询操作，检查给定关键字是否在 <code>set</code> 中。</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-2-顺序式容器"><a href="#1-2-顺序式容器" class="headerlink" title="1.2 顺序式容器"></a>1.2 顺序式容器</h2><p><code>vector</code>：动态数组，从末尾能快速插入与删除，直接访问任何元素。<br><code>list</code>：双链表，从任何地方快速插入与删除。<br><code>queue</code>：队列，先进先出。<br><code>deque</code>：双向队列，从前面或后面快速插入与删除，直接访问任何元素。<br><code>priority_queue</code>：优先队列，最高优先级元素总是第一个出列。<br><code>stack</code>：栈，先进后出。</p>
+                <h1 id="stl-概述">1 STL 概述</h1>
+<h2 id="简介">1.1 简介</h2>
+<p><strong>STL</strong>是Standard Template
+Library的简称，中文名<strong>标准模板库</strong>，惠普实验室开发的一系列软件的统称。它是由Alexander
+Stepanov、Meng Lee和David R
+Musser在惠普实验室工作时所开发出来的。从根本上说，<strong>STL</strong>是一些“<strong>容器</strong>”的集合，这些“<strong>容器</strong>”有<code>list</code>,<code>vector</code>,<code>set</code>,<code>map</code>等，<strong>STL</strong>也是<strong>算法</strong>和其他一些组件的集合。这里的“容器”和算法的集合指的是世界上很多聪明人很多年的杰作。<strong>STL</strong>的目的是<strong>标准化组件</strong>，这样就不用重新开发，可以使用现成的组件。STL是C++的一部分，因此不用安装额外的库文件。
+在C++标准中，<strong>STL</strong>被组织为下面的13个<strong>头文件</strong>：<code>&lt;algorithm&gt;</code>、<code>&lt;deque&gt;</code>、<code>&lt;functional&gt;</code>、<code>&lt;iterator &gt;</code>
+、<code>&lt;vector&gt;</code>、<code>&lt;list&gt;</code>、<code>&lt;map&gt;</code>、<code>&lt;memory.h&gt;</code>、<code>&lt;numeric&gt;</code>、<code>&lt;queue&gt;</code>、<code>&lt;set&gt;</code>、<code>&lt; stack&gt;</code>和</p>
+<hr />
+<p>STL
+容器包括<strong>顺序式容器</strong>和<strong>关联式容器</strong>。 -
+关联容器中的元素按关键字保存和访问；顺序容器中的元素按它们在容器中的位置和顺序保存和访问
+-
+关联容器不支持顺序容器位置相关的操作，因为关联容器中元素是根据关键字存储的，这些操作对关联容器没有意义；关联容器也不支持构造函数或插入操作这些接收一个元素值和一个数量值的操作。
+- 关联容器支持高效的关键字查找和访问，两个主要的关联容器类型是
+<code>map</code> 和 <code>set</code>： - <code>map</code>
+中的元素是键值对（key–value）：关键字起到索引的作用，值则表示与索引相关联的数据。
+- <code>set</code> 中的元素只包含关键字：<code>set</code>
+支持高效的关键字查询操作，检查给定关键字是否在 <code>set</code> 中。</p>
+<h2 id="顺序式容器">1.2 顺序式容器</h2>
+<p><code>vector</code>：动态数组，从末尾能快速插入与删除，直接访问任何元素。
+<code>list</code>：双链表，从任何地方快速插入与删除。
+<code>queue</code>：队列，先进先出。
+<code>deque</code>：双向队列，从前面或后面快速插入与删除，直接访问任何元素。
+<code>priority_queue</code>：优先队列，最高优先级元素总是第一个出列。
+<code>stack</code>：栈，先进后出。</p>
 <p>它们之所以被称为<strong>顺序容器</strong>，是因为元素在容器中的位置同元素的值无关，即容器不是排序的。将元素插入容器时，指定在什么位置（尾部、头部或中间某处）插入，元素就会位于什么位置。</p>
-<h2 id="1-3-关联式容器"><a href="#1-3-关联式容器" class="headerlink" title="1.3 关联式容器"></a>1.3 关联式容器</h2><p>元素位置取决于特定的排序准则，和插入顺序无关。<br><code>set</code>：集合，快速查找，不允许重复值。<br><code>multiset</code>：允许有两个次序相同的元素的集合。<br><code>map</code>：由键值对组成。<br><code>multimap</code>：允许键对有相等次序的映射。</p>
-<h2 id="1-4-容器特点"><a href="#1-4-容器特点" class="headerlink" title="1.4 容器特点"></a>1.4 容器特点</h2><blockquote>
-<p>任何两个容器对象，只要它们的类型相同，就可以用 <strong>&gt; &gt;&#x3D; &lt; &lt;&#x3D; &#x3D;&#x3D; !&#x3D;</strong> 进行比较运算。 </p>
+<h2 id="关联式容器">1.3 关联式容器</h2>
+<p>元素位置取决于特定的排序准则，和插入顺序无关。
+<code>set</code>：集合，快速查找，不允许重复值。
+<code>multiset</code>：允许有两个次序相同的元素的集合。
+<code>map</code>：由键值对组成。
+<code>multimap</code>：允许键对有相等次序的映射。</p>
+<h2 id="容器特点">1.4 容器特点</h2>
+<blockquote>
+<p>任何两个容器对象，只要它们的类型相同，就可以用 <strong>&gt; &gt;=
+&lt; &lt;= == !=</strong> 进行比较运算。</p>
 </blockquote>
-<p>假设a、b是两个类型相同的容器对象，其规则如下：<br><strong>a &#x3D;&#x3D; b</strong>：若 a 和 b 中的元素个数相同，且对应元素均相等，则a &#x3D;&#x3D; b的值为 true，否则值为 false。元素是否相等是用<code>==</code>运算符进行判断的。<br><strong>a &lt; b**：依次比较，若a中元素少于b则判断成立，或者a中每个元素都大于b中对应的元素成立，为true，否则为false。<br>**a !&#x3D; b**：等价于 !(a &#x3D;&#x3D; b)。<br>**a &gt; b</strong>：等价于 b &lt; a。<br><strong>a &lt;&#x3D; b**：等价于 !(b &lt; a)。<br>**a &gt;&#x3D; b</strong>：等价于 !(a &lt; b)。</p>
-<p><strong>所有容器</strong>都有以下两个成员函数：<br><code>size()</code>：返回容器对象中元素的个数。<br><code>empty()</code>：判断容器对象是否为空。</p>
-<p><strong>顺序容器</strong>和<strong>关联容器</strong>都有以下成员函数：<br><code>begin()</code>：返回指向容器中第一个元素的迭代器。<br><code>end()</code>：返回指向容器中最后一个元素后面的位置的迭代器。<br><code>rbegin()</code>：返回指向容器中最后一个元素的反向迭代器（reverse_iterator）。<br><code>rend()</code>：返回指向容器中第一个元素前面的位置的反向迭代器。<br><code>erase()</code>：从容器中删除一个或几个元素。该函数参数较复杂，此处省略。<br><code>clear()</code>：从容器中删除所有元素。<br>如果一个容器是空的，则 <code>begin()</code> 和 <code>end()</code> 的返回值相等，<code>rbegin()</code> 和 <code>rend()</code> 的返回值也相等。</p>
-<p><strong>顺序容器</strong>还有以下常用成员函数：<br><code>front()</code>：返回容器中第一个元素的引用。<br><code>back()</code>：返回容器中最后一个元素的引用。<br><code>push_back()</code>：在容器末尾增加新元素。<br><code>pop_back()</code>：删除容器末尾的元素。<br><code>insert()</code>：插入一个或多个元素。 </p>
+<p>假设a、b是两个类型相同的容器对象，其规则如下： <strong>a ==
+b</strong>：若 a 和 b 中的元素个数相同，且对应元素均相等，则a == b的值为
+true，否则值为 false。元素是否相等是用<code>==</code>运算符进行判断的。
+<strong>a &lt;
+b</strong>：依次比较，若a中元素少于b则判断成立，或者a中每个元素都大于b中对应的元素成立，为true，否则为false。
+<strong>a != b</strong>：等价于 !(a == b)。 <strong>a &gt;
+b</strong>：等价于 b &lt; a。 <strong>a &lt;= b</strong>：等价于 !(b
+&lt; a)。 <strong>a &gt;= b</strong>：等价于 !(a &lt; b)。</p>
+<p><strong>所有容器</strong>都有以下两个成员函数：
+<code>size()</code>：返回容器对象中元素的个数。
+<code>empty()</code>：判断容器对象是否为空。</p>
+<p><strong>顺序容器</strong>和<strong>关联容器</strong>都有以下成员函数：
+<code>begin()</code>：返回指向容器中第一个元素的迭代器。
+<code>end()</code>：返回指向容器中最后一个元素后面的位置的迭代器。
+<code>rbegin()</code>：返回指向容器中最后一个元素的反向迭代器（reverse_iterator）。
+<code>rend()</code>：返回指向容器中第一个元素前面的位置的反向迭代器。
+<code>erase()</code>：从容器中删除一个或几个元素。该函数参数较复杂，此处省略。
+<code>clear()</code>：从容器中删除所有元素。 如果一个容器是空的，则
+<code>begin()</code> 和 <code>end()</code>
+的返回值相等，<code>rbegin()</code> 和 <code>rend()</code>
+的返回值也相等。</p>
+<p><strong>顺序容器</strong>还有以下常用成员函数：
+<code>front()</code>：返回容器中第一个元素的引用。
+<code>back()</code>：返回容器中最后一个元素的引用。
+<code>push_back()</code>：在容器末尾增加新元素。
+<code>pop_back()</code>：删除容器末尾的元素。
+<code>insert()</code>：插入一个或多个元素。</p>
 <p>对于所有容器基本都有的<code>size()</code>、<code>empty()</code>、<code>clear()</code>，下面不再赘述</p>
-<h1 id="2-vector"><a href="#2-vector" class="headerlink" title="2 vector"></a>2 vector</h1><h2 id="2-1-基础概念"><a href="#2-1-基础概念" class="headerlink" title="2.1 基础概念"></a>2.1 基础概念</h2><p>在 <code>#include &lt;vector&gt;</code> 中使用</p>
+<h1 id="vector">2 vector</h1>
+<h2 id="基础概念">2.1 基础概念</h2>
+<p>在 <code>#include &lt;vector&gt;</code> 中使用</p>
 <blockquote>
 <p><code>vector</code>是STL的<strong>动态数组</strong>，在运行时能根据情况改变数组的大小。由于它是以<strong>数组</strong>形式存储，也就是说它的<strong>内存空间是连续的</strong>，所以索引可以在常数时间内完成，但是在中间进行<strong>插入</strong>和<strong>删除</strong>会造成内存块的复制。另外，如果数组后面的内存空间不够，需要申请一块足够大的内存，会影响<code>vector</code>的效率,同时使迭代器失效。</p>
 </blockquote>
-<p><img src="/../../../cpp_assets/c_vector.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>vector扩容</strong>示意图:<br><img src="/../../../cpp_assets/c_vector_expand.gif" srcset="/img/loading.gif" lazyload></p>
-<p><strong>函数</strong>基本功能目录如下!<br><img src="/../../../cpp_assets/c_vector_fun.png" srcset="/img/loading.gif" lazyload></p>
-<hr>
-<h2 id="2-2-声明"><a href="#2-2-声明" class="headerlink" title="2.2 声明"></a>2.2 声明</h2><table>
+<p><img src="c_vector.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>vector扩容</strong>示意图: <img
+src="c_vector_expand.gif" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>函数</strong>基本功能目录如下! <img
+src="c_vector_fun.png" srcset="/img/loading.gif" lazyload /></p>
+<hr />
+<h2 id="声明">2.2 声明</h2>
+<table>
+
 <thead>
 <tr>
 <th>功能</th>
-<th align="left">例子</th>
+<th style="text-align: left;">例子</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>定义<strong>int</strong>型数组</td>
-<td align="left">vecotr&lt;int&gt; a;</td>
+<td style="text-align: left;">vecotr&lt;int&gt; a;</td>
 <td>默认初始化,a为空</td>
 </tr>
 <tr>
 <td></td>
-<td align="left">vector&lt;int&gt; b(a);</td>
+<td style="text-align: left;">vector&lt;int&gt; b(a);</td>
 <td>用a定义b</td>
 </tr>
 <tr>
 <td></td>
-<td align="left">vector&lt;int&gt; a(100);</td>
+<td style="text-align: left;">vector&lt;int&gt; a(100);</td>
 <td>a有100个值为0的元素</td>
 </tr>
 <tr>
 <td></td>
-<td align="left">vector&lt;int&gt; a(100, 6);</td>
+<td style="text-align: left;">vector&lt;int&gt; a(100, 6);</td>
 <td>100个值为6的元素</td>
 </tr>
 <tr>
 <td>定义<strong>string</strong>型数组</td>
-<td align="left">vetor&lt;string&gt; a(10, “null”);</td>
+<td style="text-align: left;">vetor&lt;string&gt; a(10, “null”);</td>
 <td>10个值为null的元素</td>
 </tr>
 <tr>
 <td></td>
-<td align="left">vector&lt;string&gt; vec(10, “hello”);</td>
+<td style="text-align: left;">vector&lt;string&gt; vec(10,
+“hello”);</td>
 <td>10个值为hello的元素</td>
 </tr>
 <tr>
 <td></td>
-<td align="left">vector&lt;string&gt; b(a.begin(), a.end());</td>
+<td style="text-align: left;">vector&lt;string&gt; b(a.begin(),
+a.end());</td>
 <td>b是a的复制</td>
 </tr>
 <tr>
 <td>定义<strong>结构体</strong>型数组</td>
-<td align="left">struct point { int x, y;}; vector&lt;point&gt; a;</td>
+<td style="text-align: left;">struct point { int x, y;};
+vector&lt;point&gt; a;</td>
 <td>a用来存坐标</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
 <li>定义<strong>int</strong>型</li>
 <li>定义<strong>string</strong>型</li>
 <li>定义<strong>结构体</strong>型</li>
-<li>定义<strong>多维数组</strong>,例如定义一个二维数组: <code>vector&lt;int&gt; a[233];</code><br>第一维是固定的长度为233,第二维是动态的</li>
+<li>定义<strong>多维数组</strong>,例如定义一个二维数组:
+<code>vector&lt;int&gt; a[233];</code>
+第一维是固定的长度为233,第二维是动态的</li>
 </ul>
-<p>要注意，它和数组类似但不同一旦声明出来后，<code>vector</code> 容器还是空的没有下标，因此无法直接 <code>cin</code>，需要借助<code>push_back()</code>，访问数据和普通数组一样通过下标访问。</p>
+<p>要注意，它和数组类似但不同一旦声明出来后，<code>vector</code>
+容器还是空的没有下标，因此无法直接
+<code>cin</code>，需要借助<code>push_back()</code>，访问数据和普通数组一样通过下标访问。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt; vec;   <span class="hljs-comment">// 空的vector 不能输入输出 </span><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vec1</span><span class="hljs-params">(<span class="hljs-number">3</span>)</span></span>;<span class="hljs-comment">// 三个元素均为 0 </span><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vec2</span><span class="hljs-params">(<span class="hljs-number">3</span>, <span class="hljs-number">1</span>)</span></span>;<span class="hljs-comment">// 三个元素均为1 </span><br><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vec3</span><span class="hljs-params">(vec2)</span></span>;<span class="hljs-comment">// 将vec2的元素初始化给vec3</span><br><span class="hljs-comment">// 参数类型要相同 </span><br><br><span class="hljs-comment">// 用迭代器初始化 </span><br>vector&lt;<span class="hljs-type">int</span>&gt;::iterator ite = vec<span class="hljs-number">2.</span><span class="hljs-built_in">begin</span>();<span class="hljs-comment">// 指向vec2的头 </span><br>vector&lt;<span class="hljs-type">int</span>&gt;::iterator ite1 = vec<span class="hljs-number">2.</span><span class="hljs-built_in">end</span>(); <span class="hljs-comment">// 指向vec2的尾 </span><br><span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vec4</span><span class="hljs-params">(ite, ite1)</span></span>;<br></code></pre></td></tr></table></figure>
-
-<p>虽然 <code>vector</code> 可以动态扩展，但需要确保在使用下标访问时， <code>vector</code> 已经<strong>分配足够的空间</strong>，否则会出现段错误，如果 <code>vector</code> 还没有分配空间，可以使用 <code>push_back()</code> 插入元素。</p>
-<h2 id="2-3-迭代器"><a href="#2-3-迭代器" class="headerlink" title="2.3 迭代器"></a>2.3 迭代器</h2><p>迭代器就像<strong>STL</strong>容器的“指针”，可以用星号”<code>*</code>“操作符解除引用。<br>一个保存<strong>int</strong>的<strong>vector</strong>的迭代器声明方法为：<code>vector&lt;int&gt;::iterator it;</code><br><strong>vector</strong>的迭代器是“随机访问迭代器”，可以把<strong>vector</strong>的迭代器与一个整数相加减，其行为和<strong>指针</strong>的移动类似。可以把<strong>vector</strong>的两个迭代器相减，其结果也和<strong>指针</strong>相减类似，得到两个迭代器对应下标之间的距离。</p>
-<h2 id="2-4-遍历"><a href="#2-4-遍历" class="headerlink" title="2.4 遍历"></a>2.4 遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; vec.<span class="hljs-built_in">size</span>(); i++) cout &lt;&lt; vec[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
-
+<p>虽然 <code>vector</code> 可以动态扩展，但需要确保在使用下标访问时，
+<code>vector</code>
+已经<strong>分配足够的空间</strong>，否则会出现段错误，如果
+<code>vector</code> 还没有分配空间，可以使用 <code>push_back()</code>
+插入元素。</p>
+<h2 id="迭代器">2.3 迭代器</h2>
+<p>迭代器就像<strong>STL</strong>容器的“指针”，可以用星号”<code>*</code>“操作符解除引用。
+一个保存<strong>int</strong>的<strong>vector</strong>的迭代器声明方法为：<code>vector&lt;int&gt;::iterator it;</code>
+<strong>vector</strong>的迭代器是“随机访问迭代器”，可以把<strong>vector</strong>的迭代器与一个整数相加减，其行为和<strong>指针</strong>的移动类似。可以把<strong>vector</strong>的两个迭代器相减，其结果也和<strong>指针</strong>相减类似，得到两个迭代器对应下标之间的距离。</p>
+<h2 id="遍历">2.4 遍历</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; vec.<span class="hljs-built_in">size</span>(); i++) cout &lt;&lt; vec[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(vecor&lt;<span class="hljs-type">int</span>&gt;::iterator it = vec.<span class="hljs-built_in">begin</span>(); it != vec.<span class="hljs-built_in">end</span>(); it++) <br>	cout &lt;&lt; *it &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br><span class="hljs-comment">// auto 代替 vecor&lt;int&gt;::iterator</span><br><br><span class="hljs-comment">// 逆序遍历</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it = vec.<span class="hljs-built_in">rbegin</span>(); it != vec.<span class="hljs-built_in">rend</span>(); it++)<br>	cout &lt;&lt; *it &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it = vec.<span class="hljs-built_in">end</span>() - <span class="hljs-number">1</span>; it != vec.begin - <span class="hljs-number">1</span>; it--)<br>	cout &lt;&lt; *it &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> c : vec) cout &lt;&lt; c &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
-
-<h2 id="2-5-常用函数"><a href="#2-5-常用函数" class="headerlink" title="2.5 常用函数"></a>2.5 常用函数</h2><h3 id="push-back-在尾部添加一个元素"><a href="#push-back-在尾部添加一个元素" class="headerlink" title="push_back()  在尾部添加一个元素"></a><code>push_back()</code>  <strong>在尾部添加一个元素</strong></h3><blockquote>
-<p><strong>vec.push_back(value);</strong><br><strong>添加</strong>值为value的元素到当前vector的末尾。</p>
-</blockquote>
-<hr>
-<h3 id="pop-back-删除最后一个元素"><a href="#pop-back-删除最后一个元素" class="headerlink" title="pop_back()  删除最后一个元素"></a><code>pop_back()</code>  <strong>删除最后一个元素</strong></h3><blockquote>
-<p><strong>vec.pop_back();</strong><br><strong>删除</strong>当前vector最后一个元素。</p>
-</blockquote>
-<hr>
-<h3 id="begin-返回起始位置的迭代器"><a href="#begin-返回起始位置的迭代器" class="headerlink" title="begin()  返回起始位置的迭代器"></a><code>begin()</code>  <strong>返回起始位置的迭代器</strong></h3><blockquote>
-<p><strong>vec.begin();</strong><br>返回指向当前vector<strong>起始元素的迭代器</strong>。</p>
-</blockquote>
-<hr>
-<h3 id="end-返回末尾元素下一位置的迭代器"><a href="#end-返回末尾元素下一位置的迭代器" class="headerlink" title="end()  返回末尾元素下一位置的迭代器"></a><code>end()</code>  <strong>返回末尾元素下一位置的迭代器</strong></h3><blockquote>
-<p><strong>vec.end();</strong><br>返回指向当前vector<strong>末尾元素的下一位置的迭代器</strong>。</p>
-</blockquote>
-<hr>
-<h3 id="front-返回起始元素"><a href="#front-返回起始元素" class="headerlink" title="front()  返回起始元素"></a><code>front()</code>  <strong>返回起始元素</strong></h3><blockquote>
-<p><strong>vec.front();</strong><br>返回当前vector<strong>起始元素</strong>。<br>等同于 <code>vec[0]</code> 和 <code>*vec.begin()</code></p>
-</blockquote>
-<hr>
-<h3 id="back-返回末尾元素"><a href="#back-返回末尾元素" class="headerlink" title="back()  返回末尾元素"></a><code>back()</code>  <strong>返回末尾元素</strong></h3><blockquote>
-<p><strong>vec.back();</strong><br>返回当前vector<strong>末尾元素</strong>。<br>等同于 <code>vec[vec.size() - 1]</code> 和 <code>*(vec.end() - 1)</code></p>
-</blockquote>
-<h2 id="2-6-二维vector"><a href="#2-6-二维vector" class="headerlink" title="2.6 二维vector"></a>2.6 二维vector</h2><p><code>vector</code> 可以替代一维数组，并且还可以灵活的自动扩充，当然也可以替代二维数组！，如下声明中的 v 准确来说是变量的声明格式，只不过这个容器神通广大类似于数组，因此叫“一维数组”，但本质是变量。这个变量里面可以塞很多东西，模样像个数组。<br>既然是一个变量，我们可以把它变成一维数组，但很像“二维”，不过每一行都不一定一样长。添加数据的时候要注意，必须找到某一行，然后它是一个变量v[？],通过方法 <code>push_back</code> 将数据保存到这一行的末尾就可以了。访问数据和二维数组一样通过行下标和列下标。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt; v;<br><span class="hljs-comment">// vector 的“二维”</span><br>vector&lt;<span class="hljs-type">int</span>&gt; vec[<span class="hljs-number">100</span>];<br><span class="hljs-comment">//添加元素到第0行</span><br>vec[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(<span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
-
-<p><img src="/../../../cpp_assets/c_vector_array.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="3-stack"><a href="#3-stack" class="headerlink" title="3 stack"></a>3 stack</h1><h2 id="3-1-基础概念"><a href="#3-1-基础概念" class="headerlink" title="3.1 基础概念"></a>3.1 基础概念</h2><p>在 <code>#include &lt;stack&gt;</code> 中使用</p>
+<h2 id="常用函数">2.5 常用函数</h2>
+<h3 id="push_back-在尾部添加一个元素"><code>push_back()</code>
+<strong>在尾部添加一个元素</strong></h3>
 <blockquote>
-<p>栈(<code>stack</code>)是一种<strong>先进后出</strong>的数据结构,栈中只能通过<code>top()</code>来访问<strong>栈顶元素</strong>, 元素的<strong>插入</strong>和<strong>删除</strong>都只能<strong>栈顶</strong>进行。</p>
+<p><strong>vec.push_back(value);</strong>
+<strong>添加</strong>值为value的元素到当前vector的末尾。</p>
 </blockquote>
-<p><img src="/../../../cpp_assets/c_stack.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="3-2-声明"><a href="#3-2-声明" class="headerlink" title="3.2 声明"></a>3.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">stack&lt;<span class="hljs-type">int</span>&gt; st1;<br>stack&lt;<span class="hljs-type">double</span>&gt; st2;<br>stack&lt;<span class="hljs-type">char</span>&gt; st3;<br></code></pre></td></tr></table></figure>
-
-<h2 id="3-3-遍历"><a href="#3-3-遍历" class="headerlink" title="3.3 遍历"></a>3.3 遍历</h2><p><strong>堆栈中的数据是不允许随机访问的，也就是说不能通过下标访问，且堆栈内的元素是无法遍历的。</strong></p>
+<hr />
+<h3 id="pop_back-删除最后一个元素"><code>pop_back()</code>
+<strong>删除最后一个元素</strong></h3>
+<blockquote>
+<p><strong>vec.pop_back();</strong>
+<strong>删除</strong>当前vector最后一个元素。</p>
+</blockquote>
+<hr />
+<h3 id="begin-返回起始位置的迭代器"><code>begin()</code>
+<strong>返回起始位置的迭代器</strong></h3>
+<blockquote>
+<p><strong>vec.begin();</strong>
+返回指向当前vector<strong>起始元素的迭代器</strong>。</p>
+</blockquote>
+<hr />
+<h3 id="end-返回末尾元素下一位置的迭代器"><code>end()</code>
+<strong>返回末尾元素下一位置的迭代器</strong></h3>
+<blockquote>
+<p><strong>vec.end();</strong>
+返回指向当前vector<strong>末尾元素的下一位置的迭代器</strong>。</p>
+</blockquote>
+<hr />
+<h3 id="front-返回起始元素"><code>front()</code>
+<strong>返回起始元素</strong></h3>
+<blockquote>
+<p><strong>vec.front();</strong>
+返回当前vector<strong>起始元素</strong>。 等同于 <code>vec[0]</code> 和
+<code>*vec.begin()</code></p>
+</blockquote>
+<hr />
+<h3 id="back-返回末尾元素"><code>back()</code>
+<strong>返回末尾元素</strong></h3>
+<blockquote>
+<p><strong>vec.back();</strong>
+返回当前vector<strong>末尾元素</strong>。 等同于
+<code>vec[vec.size() - 1]</code> 和 <code>*(vec.end() - 1)</code></p>
+</blockquote>
+<h2 id="二维vector">2.6 二维vector</h2>
+<p><code>vector</code>
+可以替代一维数组，并且还可以灵活的自动扩充，当然也可以替代二维数组！，如下声明中的
+v
+准确来说是变量的声明格式，只不过这个容器神通广大类似于数组，因此叫“一维数组”，但本质是变量。这个变量里面可以塞很多东西，模样像个数组。
+既然是一个变量，我们可以把它变成一维数组，但很像“二维”，不过每一行都不一定一样长。添加数据的时候要注意，必须找到某一行，然后它是一个变量v[？],通过方法
+<code>push_back</code>
+将数据保存到这一行的末尾就可以了。访问数据和二维数组一样通过行下标和列下标。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">vector&lt;<span class="hljs-type">int</span>&gt; v;<br><span class="hljs-comment">// vector 的“二维”</span><br>vector&lt;<span class="hljs-type">int</span>&gt; vec[<span class="hljs-number">100</span>];<br><span class="hljs-comment">//添加元素到第0行</span><br>vec[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(<span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
+<p><img src="c_vector_array.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="stack">3 stack</h1>
+<h2 id="基础概念-1">3.1 基础概念</h2>
+<p>在 <code>#include &lt;stack&gt;</code> 中使用</p>
+<blockquote>
+<p>栈(<code>stack</code>)是一种<strong>先进后出</strong>的数据结构,栈中只能通过<code>top()</code>来访问<strong>栈顶元素</strong>,
+元素的<strong>插入</strong>和<strong>删除</strong>都只能<strong>栈顶</strong>进行。</p>
+</blockquote>
+<p><img src="c_stack.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="声明-1">3.2 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">stack&lt;<span class="hljs-type">int</span>&gt; st1;<br>stack&lt;<span class="hljs-type">double</span>&gt; st2;<br>stack&lt;<span class="hljs-type">char</span>&gt; st3;<br></code></pre></td></tr></table></figure>
+<h2 id="遍历-1">3.3 遍历</h2>
+<p><strong>堆栈中的数据是不允许随机访问的，也就是说不能通过下标访问，且堆栈内的元素是无法遍历的。</strong></p>
 <blockquote>
 <p>我们可以通过while循环的方法将stack中的元素读取一遍，但是这种方法非常局限，因为我们每读取一个元素就需要弹出这个元素，因此该方法只能读取一遍stack中的元素。</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(!st.<span class="hljs-built_in">empty</span>()) &#123;<br>    cout &lt;&lt; st.<span class="hljs-built_in">top</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    st.<span class="hljs-built_in">pop</span>();<br>&#125;	<br></code></pre></td></tr></table></figure>
-
-<h2 id="3-4-常用函数"><a href="#3-4-常用函数" class="headerlink" title="3.4 常用函数"></a>3.4 常用函数</h2><h3 id="push-栈顶插入元素"><a href="#push-栈顶插入元素" class="headerlink" title="push()  栈顶插入元素"></a><code>push()</code>  <strong>栈顶插入元素</strong></h3><blockquote>
-<p><strong>st.push(value);</strong><br>在<strong>栈顶</strong>插入一个元素value。</p>
-</blockquote>
-<hr>
-<h3 id="pop-删除栈顶元素"><a href="#pop-删除栈顶元素" class="headerlink" title="pop()  删除栈顶元素"></a><code>pop()</code>  <strong>删除栈顶元素</strong></h3><blockquote>
-<p><strong>st.pop();</strong><br>在<strong>栈顶</strong>删除一个元素。</p>
-</blockquote>
-<hr>
-<h3 id="top-返回栈顶元素"><a href="#top-返回栈顶元素" class="headerlink" title="top()  返回栈顶元素"></a><code>top()</code>  <strong>返回栈顶元素</strong></h3><blockquote>
-<p><strong>st.top()</strong><br>访问<strong>栈顶</strong>元素。</p>
-</blockquote>
-<p><strong>注意</strong>：使用 <code>top()</code> 和 <code>pop()</code> 函数之前，必须用 <code>empty()</code> 判断是否为空。</p>
-<h1 id="4-queue"><a href="#4-queue" class="headerlink" title="4 queue"></a>4 queue</h1><h2 id="4-1-基础概念"><a href="#4-1-基础概念" class="headerlink" title="4.1 基础概念"></a>4.1 基础概念</h2><p>在 <code>#include &lt;queue&gt;</code> 中使用</p>
+<h2 id="常用函数-1">3.4 常用函数</h2>
+<h3 id="push-栈顶插入元素"><code>push()</code>
+<strong>栈顶插入元素</strong></h3>
 <blockquote>
-<p>队列(<code>queue</code>)是一种<strong>先进先出</strong>的限制性数据结构，对数据的<strong>存</strong>和<strong>取</strong>有严格要求。它只能通过<code>front()</code>进行访问<strong>队首</strong>元素，通过<code>back()</code>访问<strong>队尾</strong>元素。队列中只有<strong>队头</strong>和<strong>队尾</strong>才可以被外界使用，因此队列<strong>不允许</strong>有<strong>遍历</strong>行为。<br>与<strong>栈</strong>结构不同的是，<strong>队列</strong>的<strong>两端</strong>都”开口”，要求数据只能从<strong>一端进</strong>，从<strong>另一端出</strong>，通常，称进数据的一端为<strong>队尾</strong>，出数据的一端为<strong>队头</strong>，数据元素进队列的过程称为<strong>入队</strong>，出队列的过程称为<strong>出队</strong>。</p>
+<p><strong>st.push(value);</strong>
+在<strong>栈顶</strong>插入一个元素value。</p>
 </blockquote>
-<p><img src="/../../../cpp_assets/c_queue.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="4-2-声明"><a href="#4-2-声明" class="headerlink" title="4.2 声明"></a>4.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">queue&lt;<span class="hljs-type">int</span>&gt; q1;<br>queue&lt;<span class="hljs-type">double</span>&gt; q2;<br>queue&lt;<span class="hljs-type">char</span>&gt; q3;<br></code></pre></td></tr></table></figure>
-
-<h2 id="4-3-遍历"><a href="#4-3-遍历" class="headerlink" title="4.3 遍历"></a>4.3 遍历</h2><p><strong>和<code>stack</code>类似，不能通过下标访问，是无法遍历的。</strong></p>
+<hr />
+<h3 id="pop-删除栈顶元素"><code>pop()</code>
+<strong>删除栈顶元素</strong></h3>
+<blockquote>
+<p><strong>st.pop();</strong> 在<strong>栈顶</strong>删除一个元素。</p>
+</blockquote>
+<hr />
+<h3 id="top-返回栈顶元素"><code>top()</code>
+<strong>返回栈顶元素</strong></h3>
+<blockquote>
+<p><strong>st.top()</strong> 访问<strong>栈顶</strong>元素。</p>
+</blockquote>
+<p><strong>注意</strong>：使用 <code>top()</code> 和 <code>pop()</code>
+函数之前，必须用 <code>empty()</code> 判断是否为空。</p>
+<h1 id="queue">4 queue</h1>
+<h2 id="基础概念-2">4.1 基础概念</h2>
+<p>在 <code>#include &lt;queue&gt;</code> 中使用</p>
+<blockquote>
+<p>队列(<code>queue</code>)是一种<strong>先进先出</strong>的限制性数据结构，对数据的<strong>存</strong>和<strong>取</strong>有严格要求。它只能通过<code>front()</code>进行访问<strong>队首</strong>元素，通过<code>back()</code>访问<strong>队尾</strong>元素。队列中只有<strong>队头</strong>和<strong>队尾</strong>才可以被外界使用，因此队列<strong>不允许</strong>有<strong>遍历</strong>行为。
+与<strong>栈</strong>结构不同的是，<strong>队列</strong>的<strong>两端</strong>都”开口”，要求数据只能从<strong>一端进</strong>，从<strong>另一端出</strong>，通常，称进数据的一端为<strong>队尾</strong>，出数据的一端为<strong>队头</strong>，数据元素进队列的过程称为<strong>入队</strong>，出队列的过程称为<strong>出队</strong>。</p>
+</blockquote>
+<p><img src="c_queue.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="声明-2">4.2 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">queue&lt;<span class="hljs-type">int</span>&gt; q1;<br>queue&lt;<span class="hljs-type">double</span>&gt; q2;<br>queue&lt;<span class="hljs-type">char</span>&gt; q3;<br></code></pre></td></tr></table></figure>
+<h2 id="遍历-2">4.3 遍历</h2>
+<p><strong>和<code>stack</code>类似，不能通过下标访问，是无法遍历的。</strong></p>
 <blockquote>
 <p>我们可以通过while循环的方法将queue中的元素读取一遍，但是这种方法非常局限，因为我们每读取一个元素就要让该元素出队，因此该方法只能读取一遍queue中的元素。</p>
 </blockquote>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>()) &#123;<br>    cout &lt;&lt; q.<span class="hljs-built_in">front</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">// 输出队首</span><br>    q.<span class="hljs-built_in">pop</span>();  <span class="hljs-comment">// 队首出队</span><br>&#125;	<br></code></pre></td></tr></table></figure>
-
-<h2 id="4-4-常用函数"><a href="#4-4-常用函数" class="headerlink" title="4.4 常用函数"></a>4.4 常用函数</h2><h3 id="push-队尾插入元素"><a href="#push-队尾插入元素" class="headerlink" title="push()  队尾插入元素"></a><code>push()</code>  <strong>队尾插入元素</strong></h3><blockquote>
-<p><strong>q.push(value)</strong><br>在<strong>队尾</strong>插入一个元素value。</p>
-</blockquote>
-<hr>
-<h3 id="pop-删除队头元素"><a href="#pop-删除队头元素" class="headerlink" title="pop()  删除队头元素"></a><code>pop()</code>  <strong>删除队头元素</strong></h3><blockquote>
-<p><strong>q.pop()</strong><br>在<strong>队头</strong>删除一个元素。</p>
-</blockquote>
-<hr>
-<h3 id="front-返回队头元素"><a href="#front-返回队头元素" class="headerlink" title="front()  返回队头元素"></a><code>front()</code>  <strong>返回队头元素</strong></h3><blockquote>
-<p><strong>q.front()</strong><br>返回<strong>队头</strong>元素。</p>
-</blockquote>
-<hr>
-<h3 id="back-返回队尾元素"><a href="#back-返回队尾元素" class="headerlink" title="back()  返回队尾元素"></a><code>back()</code>  <strong>返回队尾元素</strong></h3><blockquote>
-<p><strong>q.back()</strong><br>返回<strong>队尾</strong>元素。</p>
-</blockquote>
-<p><strong>注意</strong>：使用 <code>front()</code> 和 <code>pop()</code> 函数之前，必须用 <code>empty()</code> 判断是否为空。</p>
-<h1 id="5-priority-queue"><a href="#5-priority-queue" class="headerlink" title="5 priority_queue"></a>5 priority_queue</h1><h2 id="5-1-基础概念"><a href="#5-1-基础概念" class="headerlink" title="5.1 基础概念"></a>5.1 基础概念</h2><p>在 <code>#inlcude &lt;queue&gt;</code> 中使用</p>
+<h2 id="常用函数-2">4.4 常用函数</h2>
+<h3 id="push-队尾插入元素"><code>push()</code>
+<strong>队尾插入元素</strong></h3>
 <blockquote>
-<p>优先队列(priority_queue)，<strong>底层通常使用堆（heap）</strong> 实现。元素被赋予优先级，最高优先级的元素会作为队首元素，有<strong>最高优先级先出</strong>的特征，当访问元素时，只能访问具有最高优先级的元素，可以在任何时候往优先队列里面加入元素，而优先队列底层的数据结构堆（heap）会随时调整结构，使得每次的队首元素都是优先级最高的。priority_queue 可以解决一些贪心问题，也可以对 Dijkstra 算法进行优化。</p>
+<p><strong>q.push(value)</strong>
+在<strong>队尾</strong>插入一个元素value。</p>
 </blockquote>
-<h2 id="5-2-声明"><a href="#5-2-声明" class="headerlink" title="5.2 声明"></a>5.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 默认把最大的元素放在队首的位置</span><br>priority_queue&lt;<span class="hljs-type">int</span>&gt; pq1;<br>priority_queue&lt;<span class="hljs-type">double</span>&gt; pq2;<br>priority_queue&lt;<span class="hljs-type">char</span>&gt; pq3;<br><span class="hljs-comment">// 把最小的元素放在队首的位置</span><br>priority_queue&lt;<span class="hljs-type">int</span>，vector&lt;<span class="hljs-type">int</span>&gt;，greater&lt;<span class="hljs-type">int</span>&gt;&gt; pq4;<br></code></pre></td></tr></table></figure>
-
-<h2 id="5-3-优先级设置"><a href="#5-3-优先级设置" class="headerlink" title="5.3 优先级设置"></a>5.3 优先级设置</h2><h3 id="5-3-1-基本数据类型"><a href="#5-3-1-基本数据类型" class="headerlink" title="5.3.1 基本数据类型"></a>5.3.1 基本数据类型</h3><p>优先队列对基本数据类型的优先级设置一般是数字越大的优先级越高，如果是 char 类型，则是字典序最大的。</p>
+<hr />
+<h3 id="pop-删除队头元素"><code>pop()</code>
+<strong>删除队头元素</strong></h3>
+<blockquote>
+<p><strong>q.pop()</strong> 在<strong>队头</strong>删除一个元素。</p>
+</blockquote>
+<hr />
+<h3 id="front-返回队头元素"><code>front()</code>
+<strong>返回队头元素</strong></h3>
+<blockquote>
+<p><strong>q.front()</strong> 返回<strong>队头</strong>元素。</p>
+</blockquote>
+<hr />
+<h3 id="back-返回队尾元素"><code>back()</code>
+<strong>返回队尾元素</strong></h3>
+<blockquote>
+<p><strong>q.back()</strong> 返回<strong>队尾</strong>元素。</p>
+</blockquote>
+<p><strong>注意</strong>：使用 <code>front()</code> 和
+<code>pop()</code> 函数之前，必须用 <code>empty()</code>
+判断是否为空。</p>
+<h1 id="priority_queue">5 priority_queue</h1>
+<h2 id="基础概念-3">5.1 基础概念</h2>
+<p>在 <code>#inlcude &lt;queue&gt;</code> 中使用</p>
+<blockquote>
+<p>优先队列(priority_queue)，<strong>底层通常使用堆（heap）</strong>
+实现。元素被赋予优先级，最高优先级的元素会作为队首元素，有<strong>最高优先级先出</strong>的特征，当访问元素时，只能访问具有最高优先级的元素，可以在任何时候往优先队列里面加入元素，而优先队列底层的数据结构堆（heap）会随时调整结构，使得每次的队首元素都是优先级最高的。priority_queue
+可以解决一些贪心问题，也可以对 Dijkstra 算法进行优化。</p>
+</blockquote>
+<h2 id="声明-3">5.2 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 默认把最大的元素放在队首的位置</span><br>priority_queue&lt;<span class="hljs-type">int</span>&gt; pq1;<br>priority_queue&lt;<span class="hljs-type">double</span>&gt; pq2;<br>priority_queue&lt;<span class="hljs-type">char</span>&gt; pq3;<br><span class="hljs-comment">// 把最小的元素放在队首的位置</span><br>priority_queue&lt;<span class="hljs-type">int</span>，vector&lt;<span class="hljs-type">int</span>&gt;，greater&lt;<span class="hljs-type">int</span>&gt;&gt; pq4;<br></code></pre></td></tr></table></figure>
+<h2 id="优先级设置">5.3 优先级设置</h2>
+<h3 id="基本数据类型">5.3.1 基本数据类型</h3>
+<p>优先队列对基本数据类型的优先级设置一般是数字越大的优先级越高，如果是
+char 类型，则是字典序最大的。</p>
 <p>以 <code>int</code> 型为例下面两种是等价的：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">priority_queue&lt;<span class="hljs-type">int</span>&gt; pq1;<br><br>priority_queue&lt;<span class="hljs-type">int</span>, vector&lt;<span class="hljs-type">int</span>&gt;, less&lt;<span class="hljs-type">int</span>&gt; &gt; pq2;<br></code></pre></td></tr></table></figure>
-
 <ul>
-<li><p>第二个参数<code>vector&lt;int&gt;</code>填写的是承载底层数据结构堆 （heap）的容器，如果是其他类型可写为 <code>vector&lt;char&gt;</code>或<code>vector&lt;double&gt;</code></p>
-</li>
-<li><p>第三个参数 <code>less&lt;int&gt;</code> 则是对第一个参数的比较类，<strong>控制优先级</strong>是大是小，<code>less&lt;int&gt;</code> 表示数字大的优先级越大，而 <code>greater&lt;int&gt;</code> 表示数字小的优先级越大。</p>
-</li>
+<li><p>第二个参数<code>vector&lt;int&gt;</code>填写的是承载底层数据结构堆
+（heap）的容器，如果是其他类型可写为
+<code>vector&lt;char&gt;</code>或<code>vector&lt;double&gt;</code></p></li>
+<li><p>第三个参数 <code>less&lt;int&gt;</code>
+则是对第一个参数的比较类，<strong>控制优先级</strong>是大是小，<code>less&lt;int&gt;</code>
+表示数字大的优先级越大，而 <code>greater&lt;int&gt;</code>
+表示数字小的优先级越大。</p></li>
 </ul>
-<h3 id="5-3-2-结构体类型"><a href="#5-3-2-结构体类型" class="headerlink" title="5.3.2 结构体类型"></a>5.3.2 结构体类型</h3><p><strong>方法一</strong>：重载 <code>operator&lt;</code><br>重载（overload）小于号“&lt;”，重载是指对已有的运算符进行重新定义。</p>
+<h3 id="结构体类型">5.3.2 结构体类型</h3>
+<p><strong>方法一</strong>：重载 <code>operator&lt;</code>
+重载（overload）小于号“&lt;”，重载是指对已有的运算符进行重新定义。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span> &#123;<br>    string name;<br>    <span class="hljs-type">int</span> age;<br><br>    <span class="hljs-comment">// 重载小于运算符，定义优先级</span><br>    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> node&amp; other) <span class="hljs-type">const</span> &#123;<br>        <span class="hljs-comment">// 优先级由 age 实现大堆优先</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.age &lt; other.age;<br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">// 使用默认的比较器，重载 operator&lt; 运算符实现自定义排序</span><br>priority_queue&lt;node&gt; pq;<br></code></pre></td></tr></table></figure>
-
 <p><strong>方法二</strong>：使用友元<code>friend</code></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span> &#123;<br>    string name;<br>    <span class="hljs-type">int</span> age;<br>    <br>    <span class="hljs-comment">// 建议使用引用提高效率</span><br>    <span class="hljs-comment">// friend bool operator()(node const&amp; a, node const&amp; b) &#123;</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(node a, node b)</span> </span>&#123; <br>        <span class="hljs-keyword">return</span> a.age &lt; b.age;  <br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">// 使用默认的比较器，重载 operator&lt; 实现自定义排序</span><br>priority_queue&lt;node&gt; pq;<br></code></pre></td></tr></table></figure>
-
 <p><strong>方法三</strong>：使用 cmp 仿函数</p>
-<p><code>priority_queue</code> 不直接支持使用普通函数（如 <code>cmp</code>）作为比较器，因为 <code>priority_queue</code> 需要一个<strong>类型</strong>而不是一个普通函数。</p>
+<p><code>priority_queue</code> 不直接支持使用普通函数（如
+<code>cmp</code>）作为比较器，因为 <code>priority_queue</code>
+需要一个<strong>类型</strong>而不是一个普通函数。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span> &#123;<br>    string name;<br>    <span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-comment">// 自定义比较器仿函数</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">cmp</span> &#123;<br>    <span class="hljs-comment">// 建议使用引用提高效率</span><br>    <span class="hljs-comment">// bool operator()(node const&amp; a, node const&amp; b) &#123;</span><br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(node a, node b)</span> </span>&#123;<br>        <span class="hljs-comment">// 优先级由 age 的大小决定</span><br>        <span class="hljs-keyword">return</span> a.age &lt; b.age;  <br>    &#125;<br>&#125;;<br><br><span class="hljs-comment">// 使用自定义仿函数 cmp 作为比较器</span><br>priority_queue&lt;node, vector&lt;node&gt;, cmp&gt; pq;<br></code></pre></td></tr></table></figure>
-
 <blockquote>
-<p>只能对小于号进行重载，重载大于号会编译错误，因为从数学上来讲只需要重载小于号即 f1&gt;f2&lt;&#x3D;&#x3D;&gt;f2&lt;f1。</p>
+<p>只能对小于号进行重载，重载大于号会编译错误，因为从数学上来讲只需要重载小于号即
+f1&gt;f2&lt;==&gt;f2&lt;f1。</p>
 </blockquote>
-<h2 id="5-4-遍历"><a href="#5-4-遍历" class="headerlink" title="5.4 遍历"></a>5.4 遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>()) &#123;<br>    cout &lt;&lt; pq.<span class="hljs-built_in">top</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">//输出队首</span><br>    pq.<span class="hljs-built_in">pop</span>();  <span class="hljs-comment">//队首出队</span><br>&#125;	<br></code></pre></td></tr></table></figure>
-
-<h2 id="5-5-常用函数"><a href="#5-5-常用函数" class="headerlink" title="5.5 常用函数"></a>5.5 常用函数</h2><h3 id="push-插入元素"><a href="#push-插入元素" class="headerlink" title="push()  插入元素"></a><code>push()</code>  <strong>插入元素</strong></h3><blockquote>
-<p><strong>pq.push(value)</strong><br>将元素value入队，每次调用排序算法按照优先级排序。</p>
-</blockquote>
-<hr>
-<h3 id="pop-删除队首元素"><a href="#pop-删除队首元素" class="headerlink" title="pop()  删除队首元素"></a><code>pop()</code>  <strong>删除队首元素</strong></h3><blockquote>
-<p><strong>q.pop()</strong><br>删除<strong>队首元素</strong>，即最高优先级的元素。</p>
-</blockquote>
-<hr>
-<h3 id="top-返回队首元素"><a href="#top-返回队首元素" class="headerlink" title="top()  返回队首元素"></a><code>top()</code>  <strong>返回队首元素</strong></h3><blockquote>
-<p><strong>pq.top()</strong><br>访问<strong>队首元素</strong>，即最高优先级的元素。</p>
-</blockquote>
-<p><strong>注意</strong>：使用 <code>top()</code> 和 <code>pop()</code> 函数之前，必须用 <code>empty()</code> 判断是否为空。</p>
-<h1 id="6-deque"><a href="#6-deque" class="headerlink" title="6 deque"></a>6 deque</h1><h2 id="6-1-基础概念"><a href="#6-1-基础概念" class="headerlink" title="6.1 基础概念"></a>6.1 基础概念</h2><p>在 <code>#inlcude &lt;deque&gt;</code> 中使用</p>
+<h2 id="遍历-3">5.4 遍历</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>()) &#123;<br>    cout &lt;&lt; pq.<span class="hljs-built_in">top</span>() &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">//输出队首</span><br>    pq.<span class="hljs-built_in">pop</span>();  <span class="hljs-comment">//队首出队</span><br>&#125;	<br></code></pre></td></tr></table></figure>
+<h2 id="常用函数-3">5.5 常用函数</h2>
+<h3 id="push-插入元素"><code>push()</code>
+<strong>插入元素</strong></h3>
 <blockquote>
-<p>双端队列(<code>deque</code>)，全名double-ended queue是一种具有<strong>队列</strong>和<strong>栈</strong>的性质的数据结构，它就像是vector和queue的结合。与vector相比，<code>deque</code>在头部增删元素仅需要O(1)的时间；与queue相比，<code>deque</code>像数组一样支持随机访问。双端队列中的元素可以从<strong>两端弹出</strong>，其限定<strong>插入</strong>和<strong>删除</strong>操作在<strong>两端</strong>进行，是一个支持在<strong>两端高效插入或删除元素</strong>的<strong>连续线性存储空间</strong>。 </p>
+<p><strong>pq.push(value)</strong>
+将元素value入队，每次调用排序算法按照优先级排序。</p>
 </blockquote>
-<p><img src="/../../../cpp_assets/c_deque.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="6-2-deque与vector、list"><a href="#6-2-deque与vector、list" class="headerlink" title="6.2 deque与vector、list"></a>6.2 <code>deque</code>与<code>vector</code>、<code>list</code></h2><p><code>deque</code>的结构是一段一段的空间，每段空间都是一样大的，通过一个中控数组（指针数组）进行连接起来。想要扩容就在连接一块空间即可。当指针数组满了，就中控数组扩容即可。这样以来扩容的代价就很低。不需要拷贝原来的数组。对于头插尾插也很简单，就用专门的两个空间进行头插尾插即可，相比<code>vector</code>极大的缓解了扩容、头插头删问题。但是它的[]运算符不够极致。它的[]需要计算在哪个buff数组，在哪个buff数组的第几个。</p>
-<ol>
-<li><strong>内存比较</strong><ul>
+<hr />
+<h3 id="pop-删除队首元素"><code>pop()</code>
+<strong>删除队首元素</strong></h3>
+<blockquote>
+<p><strong>q.pop()</strong>
+删除<strong>队首元素</strong>，即最高优先级的元素。</p>
+</blockquote>
+<hr />
+<h3 id="top-返回队首元素"><code>top()</code>
+<strong>返回队首元素</strong></h3>
+<blockquote>
+<p><strong>pq.top()</strong>
+访问<strong>队首元素</strong>，即最高优先级的元素。</p>
+</blockquote>
+<p><strong>注意</strong>：使用 <code>top()</code> 和 <code>pop()</code>
+函数之前，必须用 <code>empty()</code> 判断是否为空。</p>
+<h1 id="deque">6 deque</h1>
+<h2 id="基础概念-4">6.1 基础概念</h2>
+<p>在 <code>#inlcude &lt;deque&gt;</code> 中使用</p>
+<blockquote>
+<p>双端队列(<code>deque</code>)，全名double-ended
+queue是一种具有<strong>队列</strong>和<strong>栈</strong>的性质的数据结构，它就像是vector和queue的结合。与vector相比，<code>deque</code>在头部增删元素仅需要O(1)的时间；与queue相比，<code>deque</code>像数组一样支持随机访问。双端队列中的元素可以从<strong>两端弹出</strong>，其限定<strong>插入</strong>和<strong>删除</strong>操作在<strong>两端</strong>进行，是一个支持在<strong>两端高效插入或删除元素</strong>的<strong>连续线性存储空间</strong>。</p>
+</blockquote>
+<p><img src="c_deque.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="deque与vectorlist">6.2
+<code>deque</code>与<code>vector</code>、<code>list</code></h2>
+<p><code>deque</code>的结构是一段一段的空间，每段空间都是一样大的，通过一个中控数组（指针数组）进行连接起来。想要扩容就在连接一块空间即可。当指针数组满了，就中控数组扩容即可。这样以来扩容的代价就很低。不需要拷贝原来的数组。对于头插尾插也很简单，就用专门的两个空间进行头插尾插即可，相比<code>vector</code>极大的缓解了扩容、头插头删问题。但是它的[]运算符不够极致。它的[]需要计算在哪个buff数组，在哪个buff数组的第几个。</p>
+<ol type="1">
+<li><strong>内存比较</strong>
+<ul>
 <li><code>vector</code>：连续空间</li>
 <li><code>list</code>：不连续空间</li>
 <li><code>deque</code>：段连续空间</li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<p><img src="/../../../cpp_assets/c_deque_mem.png" srcset="/img/loading.gif" lazyload></p>
-<ol start="2">
-<li>功能比较<ul>
-<li><code>vector</code><ul>
+<p><img src="c_deque_mem.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="2" type="1">
+<li>功能比较
+<ul>
+<li><code>vector</code>
+<ul>
 <li>随机位置的插入和删除效率比较低</li>
 <li>随机访问的效率高（下标运算）</li>
 <li>不支持头添加，支持尾添加</li>
-</ul>
-</li>
-<li><code>list</code><ul>
+</ul></li>
+<li><code>list</code>
+<ul>
 <li>随机位置的插入和删除效率高</li>
 <li>不支持随机访问</li>
 <li>支持头添加，支持尾添加</li>
-</ul>
-</li>
-<li><code>deque</code><ul>
+</ul></li>
+<li><code>deque</code>
+<ul>
 <li>随机位置的插入和删除效率不高（以512个字节为一个单位量）</li>
 <li>支持随机访问（比<code>vector</code>慢，因为要做堆跳转），迭代器的结构较为复杂，会降低访问效率</li>
 <li>支持头添加，支持尾添加</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>使用选择</strong><ul>
+</ul></li>
+</ul></li>
+<li><strong>使用选择</strong>
+<ul>
 <li>随机访问操作频率高，就选用<code>vector</code></li>
 <li>插入删除频率高，头尾添加，就选用<code>list</code></li>
 <li>随机访问+头添加，就选<code>deque</code></li>
-</ul>
-</li>
+</ul></li>
 </ol>
-<p><strong>函数</strong>基本功能目录如下<br><img src="/../../../cpp_assets/c_deque_fun.png" srcset="/img/loading.gif" lazyload></p>
-<hr>
-<h2 id="6-3-声明"><a href="#6-3-声明" class="headerlink" title="6.3 声明"></a>6.3 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">deque&lt;<span class="hljs-type">int</span>&gt; dq;       <span class="hljs-comment">// 空的队列，不能输出 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq1</span><span class="hljs-params">(<span class="hljs-number">3</span>)</span></span>;   <span class="hljs-comment">// 大小为 3 的空队列 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq2</span><span class="hljs-params">(<span class="hljs-number">3</span>,<span class="hljs-number">12</span>)</span></span>;<span class="hljs-comment">// 三个元素均为12 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq3</span><span class="hljs-params">(dq2)</span></span>; <span class="hljs-comment">// 复制dq2//参数类型要相同 </span><br></code></pre></td></tr></table></figure>
-
-<h2 id="6-4-常用函数"><a href="#6-4-常用函数" class="headerlink" title="6.4 常用函数"></a>6.4 常用函数</h2><h3 id="front-返回头部元素"><a href="#front-返回头部元素" class="headerlink" title="front()  返回头部元素"></a><code>front()</code>  <strong>返回头部元素</strong></h3><blockquote>
-<p><strong>dq.front()</strong><br>返回第一个元素的引用。</p>
+<p><strong>函数</strong>基本功能目录如下 <img
+src="c_deque_fun.png" srcset="/img/loading.gif" lazyload /></p>
+<hr />
+<h2 id="声明-4">6.3 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">deque&lt;<span class="hljs-type">int</span>&gt; dq;       <span class="hljs-comment">// 空的队列，不能输出 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq1</span><span class="hljs-params">(<span class="hljs-number">3</span>)</span></span>;   <span class="hljs-comment">// 大小为 3 的空队列 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq2</span><span class="hljs-params">(<span class="hljs-number">3</span>,<span class="hljs-number">12</span>)</span></span>;<span class="hljs-comment">// 三个元素均为12 </span><br><span class="hljs-function">deque&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dq3</span><span class="hljs-params">(dq2)</span></span>; <span class="hljs-comment">// 复制dq2//参数类型要相同 </span><br></code></pre></td></tr></table></figure>
+<h2 id="常用函数-4">6.4 常用函数</h2>
+<h3 id="front-返回头部元素"><code>front()</code>
+<strong>返回头部元素</strong></h3>
+<blockquote>
+<p><strong>dq.front()</strong> 返回第一个元素的引用。</p>
 </blockquote>
-<hr>
-<h3 id="back-返回尾部元素"><a href="#back-返回尾部元素" class="headerlink" title="back()  返回尾部元素"></a><code>back()</code>  <strong>返回尾部元素</strong></h3><blockquote>
-<p><strong>dq.back()</strong><br>返回最后一个元素的引用。</p>
+<hr />
+<h3 id="back-返回尾部元素"><code>back()</code>
+<strong>返回尾部元素</strong></h3>
+<blockquote>
+<p><strong>dq.back()</strong> 返回最后一个元素的引用。</p>
 </blockquote>
-<hr>
-<h3 id="push-back-在尾部添加一个元素-1"><a href="#push-back-在尾部添加一个元素-1" class="headerlink" title="push_back()  在尾部添加一个元素"></a><code>push_back()</code>  <strong>在尾部添加一个元素</strong></h3><blockquote>
-<p><strong>dq.push_back(value)</strong><br><strong>添加</strong>值为value的元素到末尾。</p>
+<hr />
+<h3 id="push_back-在尾部添加一个元素-1"><code>push_back()</code>
+<strong>在尾部添加一个元素</strong></h3>
+<blockquote>
+<p><strong>dq.push_back(value)</strong>
+<strong>添加</strong>值为value的元素到末尾。</p>
 </blockquote>
-<hr>
-<h3 id="pop-back-在尾部删除一个元素"><a href="#pop-back-在尾部删除一个元素" class="headerlink" title="pop_back()  在尾部删除一个元素"></a><code>pop_back()</code>  <strong>在尾部删除一个元素</strong></h3><blockquote>
-<p><strong>dq.pop_back();</strong><br><strong>删除</strong>尾部第一个元素。</p>
+<hr />
+<h3 id="pop_back-在尾部删除一个元素"><code>pop_back()</code>
+<strong>在尾部删除一个元素</strong></h3>
+<blockquote>
+<p><strong>dq.pop_back();</strong>
+<strong>删除</strong>尾部第一个元素。</p>
 </blockquote>
-<hr>
-<h3 id="push-front-在头部添加一个元素"><a href="#push-front-在头部添加一个元素" class="headerlink" title="push_front()  在头部添加一个元素"></a><code>push_front()</code>  <strong>在头部添加一个元素</strong></h3><blockquote>
-<p><strong>dq.push_front(value);</strong><br><strong>添加</strong>值为value的元素到头部。</p>
+<hr />
+<h3 id="push_front-在头部添加一个元素"><code>push_front()</code>
+<strong>在头部添加一个元素</strong></h3>
+<blockquote>
+<p><strong>dq.push_front(value);</strong>
+<strong>添加</strong>值为value的元素到头部。</p>
 </blockquote>
-<hr>
-<h3 id="pop-front-在头部删除一个元素"><a href="#pop-front-在头部删除一个元素" class="headerlink" title="pop_front()  在头部删除一个元素"></a><code>pop_front()</code>  <strong>在头部删除一个元素</strong></h3><blockquote>
-<p><strong>dq.pop_back();</strong><br><strong>删除</strong>头部第一个元素。</p>
+<hr />
+<h3 id="pop_front-在头部删除一个元素"><code>pop_front()</code>
+<strong>在头部删除一个元素</strong></h3>
+<blockquote>
+<p><strong>dq.pop_back();</strong>
+<strong>删除</strong>头部第一个元素。</p>
 </blockquote>
-<hr>
-<h3 id="insert-插入元素"><a href="#insert-插入元素" class="headerlink" title="insert() 插入元素"></a><code>insert()</code> <strong>插入元素</strong></h3><blockquote>
-<p><strong>dq.insert(iterator, value)</strong>;<br>向iterator迭代器指向元素的前边添加一个元素value，并返回一个迭代器指向新插入的元素。</p>
+<hr />
+<h3 id="insert-插入元素"><code>insert()</code>
+<strong>插入元素</strong></h3>
+<blockquote>
+<p><strong>dq.insert(iterator, value)</strong>;
+向iterator迭代器指向元素的前边添加一个元素value，并返回一个迭代器指向新插入的元素。</p>
 </blockquote>
-<hr>
-<h3 id="erase-删除元素"><a href="#erase-删除元素" class="headerlink" title="erase()  删除元素"></a><code>erase()</code>  <strong>删除元素</strong></h3><blockquote>
+<hr />
+<h3 id="erase-删除元素"><code>erase()</code>
+<strong>删除元素</strong></h3>
+<blockquote>
 <p><strong>dq.erase(iterator);</strong></p>
 <p><strong>dq.erase(iterator1, iterator2)</strong></p>
 <p>参数为一个迭代器，只删除迭代器指向的元素；参数为两个迭代器，删除两个迭代器之间的元素。</p>
 </blockquote>
-<h1 id="7-set"><a href="#7-set" class="headerlink" title="7 set"></a>7 set</h1><h2 id="7-1-基础概念"><a href="#7-1-基础概念" class="headerlink" title="7.1 基础概念"></a>7.1 基础概念</h2><p>在 <code>#include &lt;set&gt;</code> 中使用</p>
+<h1 id="set">7 set</h1>
+<h2 id="基础概念-5">7.1 基础概念</h2>
+<p>在 <code>#include &lt;set&gt;</code> 中使用</p>
 <blockquote>
-<p>集合(<code>set</code>) 用于存储<strong>不重复</strong>的元素，并且会自动根据元素的值进行<strong>排序</strong>。</p>
+<p>集合(<code>set</code>)
+用于存储<strong>不重复</strong>的元素，并且会自动根据元素的值进行<strong>排序</strong>。</p>
 </blockquote>
 <ul>
-<li><strong>不重复元素</strong>：<code>set</code> 中的元素不能重复。如果尝试插入相同的元素，它会被忽略。</li>
-<li><strong>自动排序</strong>：<code>set</code> 会根据元素的大小自动进行排序，默认是按升序排序。如果想使用自定义的排序规则，也可以提供比较函数。</li>
-<li><strong>高效的查找、插入和删除</strong>：<code>set</code> 通常使用红黑树或类似的平衡树结构实现，所以查找、插入和删除操作的时间复杂度是 O(log N)，其中 N 是集合中的元素个数。</li>
+<li><strong>不重复元素</strong>：<code>set</code>
+中的元素不能重复。如果尝试插入相同的元素，它会被忽略。</li>
+<li><strong>自动排序</strong>：<code>set</code>
+会根据元素的大小自动进行排序，默认是按升序排序。如果想使用自定义的排序规则，也可以提供比较函数。</li>
+<li><strong>高效的查找、插入和删除</strong>：<code>set</code>
+通常使用红黑树或类似的平衡树结构实现，所以查找、插入和删除操作的时间复杂度是
+O(log N)，其中 N 是集合中的元素个数。</li>
 </ul>
-<h2 id="7-2-声明"><a href="#7-2-声明" class="headerlink" title="7.2 声明"></a>7.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">set&lt;<span class="hljs-type">int</span>&gt; s;    <br>set&lt;<span class="hljs-type">double</span>&gt; s;    <br>set&lt;<span class="hljs-type">char</span>&gt; s;    <br>set&lt;<span class="hljs-keyword">struct</span> node&gt; s;    <br>set&lt;set&lt;<span class="hljs-type">int</span>&gt; &gt; s;<br></code></pre></td></tr></table></figure>
-
-<h2 id="7-3-遍历"><a href="#7-3-遍历" class="headerlink" title="7.3 遍历"></a>7.3 遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(set&lt;<span class="hljs-type">int</span>&gt;::iterator it = s.<span class="hljs-built_in">begin</span>(); it != s.<span class="hljs-built_in">end</span>(); it++)<br>	cout &lt;&lt; *it &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br><span class="hljs-comment">//  auto 可以代替 set&lt;int&gt;::iterator</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="7-4-set-排序"><a href="#7-4-set-排序" class="headerlink" title="7.4 set 排序"></a>7.4 set 排序</h2><p>对于基本数据类型可以直接使用 <code>greater&lt;&gt;</code> 实现降序排列。</p>
+<h2 id="声明-5">7.2 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">set&lt;<span class="hljs-type">int</span>&gt; s;    <br>set&lt;<span class="hljs-type">double</span>&gt; s;    <br>set&lt;<span class="hljs-type">char</span>&gt; s;    <br>set&lt;<span class="hljs-keyword">struct</span> node&gt; s;    <br>set&lt;set&lt;<span class="hljs-type">int</span>&gt; &gt; s;<br></code></pre></td></tr></table></figure>
+<h2 id="遍历-4">7.3 遍历</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(set&lt;<span class="hljs-type">int</span>&gt;::iterator it = s.<span class="hljs-built_in">begin</span>(); it != s.<span class="hljs-built_in">end</span>(); it++)<br>	cout &lt;&lt; *it &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br><span class="hljs-comment">//  auto 可以代替 set&lt;int&gt;::iterator</span><br></code></pre></td></tr></table></figure>
+<h2 id="set-排序">7.4 set 排序</h2>
+<p>对于基本数据类型可以直接使用 <code>greater&lt;&gt;</code>
+实现降序排列。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp">set&lt;<span class="hljs-type">int</span>, greater&lt;<span class="hljs-type">int</span>&gt; &gt; s; <span class="hljs-comment">// &gt;&gt; 可能会被识别为流运算符，中间可以加一个空格&gt; &gt;</span><br></code></pre></td></tr></table></figure>
-
-<p>结构体类型的自定义排序可以使用如下方法：<br><strong>方法一：</strong> 重载 <code>operator&lt;</code></p>
+<p>结构体类型的自定义排序可以使用如下方法： <strong>方法一：</strong>
+重载 <code>operator&lt;</code></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Person</span> &#123;<br>	string name;<br>	<span class="hljs-type">int</span> age;<br><br>	<span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-type">const</span> Person&amp; p) <span class="hljs-type">const</span> &#123;<br>		<span class="hljs-keyword">return</span> age &lt; p.age;<br>	&#125;<br>&#125;;<br><span class="hljs-comment">// 使用默认的比较器，重载 operator&lt; 运算符实现自定义排序</span><br>set&lt;Person&gt; person;<br></code></pre></td></tr></table></figure>
-
 <p><strong>方法二：</strong> 使用 cmp 仿函数</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Person</span> &#123;<br>	string name;<br>	<span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-comment">// 自定义比较器仿函数</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">cmp</span> &#123;<br>	<span class="hljs-comment">// 建议使用引用提高效率</span><br>	<span class="hljs-comment">// bool operator()(Person const&amp; a, Person const&amp; b)&#123;</span><br>	<span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(Person a, Person b)</span></span>&#123;<br>		<span class="hljs-keyword">return</span> a.age &lt; b.age;<br>	&#125;<br>&#125;;<br><br><span class="hljs-comment">// 使用自定义比较器来排序 </span><br>set&lt;Person, cmp&gt; s;<br></code></pre></td></tr></table></figure>
-
-<h2 id="7-5-常用函数"><a href="#7-5-常用函数" class="headerlink" title="7.5 常用函数"></a>7.5 常用函数</h2><h3 id="insert-插入"><a href="#insert-插入" class="headerlink" title="insert() 插入"></a><code>insert()</code> <strong>插入</strong></h3><blockquote>
-<p><strong>s.insert(value)</strong><br>插入元素到集合中，插入之后集合会自动排序。</p>
-</blockquote>
-<hr>
-<h3 id="find-查找"><a href="#find-查找" class="headerlink" title="find() 查找"></a><code>find()</code> <strong>查找</strong></h3><blockquote>
-<p><strong>s.find(value)</strong><br>查找元素返回一个迭代器，如果元素存在则指向该元素；如果不存在，则指向 <code>set.end()</code>。</p>
-</blockquote>
-<hr>
-<h3 id="count-计数"><a href="#count-计数" class="headerlink" title="count() 计数"></a><code>count()</code> <strong>计数</strong></h3><blockquote>
-<p><strong>s.count(value)</strong><br>返回指定元素的数量，set中元素是唯一的，如果存在则返回1，不存在则返回0。</p>
-</blockquote>
-<hr>
-<h3 id="erase-删除"><a href="#erase-删除" class="headerlink" title="erase() 删除"></a><code>erase()</code> <strong>删除</strong></h3><blockquote>
-<p><strong>s.erase(value)</strong><br>删除指定的元素；也可以传递一个迭代器来删除特定位置的元素。成功删除返回1，否则返回0。</p>
-</blockquote>
-<h1 id="8-map"><a href="#8-map" class="headerlink" title="8 map"></a>8 map</h1><h2 id="8-1-基础概念"><a href="#8-1-基础概念" class="headerlink" title="8.1 基础概念"></a>8.1 基础概念</h2><p>在 <code>#inlcude &lt;map&gt;</code> 中使用<br><code>map</code> 就是一种存储<strong>键值对</strong>的数据结构，由键和值构成，一个键对应一个值，我们可以通过键获取到该键所对应的值。</p>
-<ul>
-<li>第一个可以称为关键字(<code>key</code>)，每个关键字只能在 <code>map</code> 中出现一次；</li>
-<li>第二个可能称为该关键字的值(<code>value</code>)；</li>
-</ul>
+<h2 id="常用函数-5">7.5 常用函数</h2>
+<h3 id="insert-插入"><code>insert()</code> <strong>插入</strong></h3>
 <blockquote>
-<p><code>map</code> 相当于一个通讯录，<code>map</code> 中记录的每一个昵称和对应的号码，就好比是一个键值对。<strong>注意每个key只能出现一次</strong>，就像我们的通讯录，如果有了两个小明，那我们就搞不清楚哪个才是小明，所以 <code>key</code> 不能重复。</p>
+<p><strong>s.insert(value)</strong>
+插入元素到集合中，插入之后集合会自动排序。</p>
 </blockquote>
-<p><code>map</code> 主要用于资料一对一映射(one-to-one)的情況，<code>map</code> 內部的实现自建一颗红黑树，这颗树具有对数据<strong>自动排序</strong>的功能，也就是说在 <code>map</code> 内部所有的数据都是有序的。</p>
-<h2 id="8-2-声明"><a href="#8-2-声明" class="headerlink" title="8.2 声明"></a>8.2 声明</h2><p><code>key</code> 和 <code>value</code> 可以是任意你需要的类型，包括自定义类型。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map&lt;<span class="hljs-type">int</span>, string&gt; mp1;<br>map&lt;string, string&gt; mp2;<br></code></pre></td></tr></table></figure>
-
-<h2 id="8-3-遍历"><a href="#8-3-遍历" class="headerlink" title="8.3 遍历"></a>8.3 遍历</h2><p><code>it-&gt;first</code> 和 <code>(*it).first</code> 等价。</p>
+<hr />
+<h3 id="find-查找"><code>find()</code> <strong>查找</strong></h3>
+<blockquote>
+<p><strong>s.find(value)</strong>
+查找元素返回一个迭代器，如果元素存在则指向该元素；如果不存在，则指向
+<code>set.end()</code>。</p>
+</blockquote>
+<hr />
+<h3 id="count-计数"><code>count()</code> <strong>计数</strong></h3>
+<blockquote>
+<p><strong>s.count(value)</strong>
+返回指定元素的数量，set中元素是唯一的，如果存在则返回1，不存在则返回0。</p>
+</blockquote>
+<hr />
+<h3 id="erase-删除"><code>erase()</code> <strong>删除</strong></h3>
+<blockquote>
+<p><strong>s.erase(value)</strong>
+删除指定的元素；也可以传递一个迭代器来删除特定位置的元素。成功删除返回1，否则返回0。</p>
+</blockquote>
+<h1 id="map">8 map</h1>
+<h2 id="基础概念-6">8.1 基础概念</h2>
+<p>在 <code>#inlcude &lt;map&gt;</code> 中使用 <code>map</code>
+就是一种存储<strong>键值对</strong>的数据结构，由键和值构成，一个键对应一个值，我们可以通过键获取到该键所对应的值。
+- 第一个可以称为关键字(<code>key</code>)，每个关键字只能在
+<code>map</code> 中出现一次； -
+第二个可能称为该关键字的值(<code>value</code>)；</p>
+<blockquote>
+<p><code>map</code> 相当于一个通讯录，<code>map</code>
+中记录的每一个昵称和对应的号码，就好比是一个键值对。<strong>注意每个key只能出现一次</strong>，就像我们的通讯录，如果有了两个小明，那我们就搞不清楚哪个才是小明，所以
+<code>key</code> 不能重复。</p>
+</blockquote>
+<p><code>map</code>
+主要用于资料一对一映射(one-to-one)的情況，<code>map</code>
+內部的实现自建一颗红黑树，这颗树具有对数据<strong>自动排序</strong>的功能，也就是说在
+<code>map</code> 内部所有的数据都是有序的。</p>
+<h2 id="声明-6">8.2 声明</h2>
+<p><code>key</code> 和 <code>value</code>
+可以是任意你需要的类型，包括自定义类型。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map&lt;<span class="hljs-type">int</span>, string&gt; mp1;<br>map&lt;string, string&gt; mp2;<br></code></pre></td></tr></table></figure></p>
+<h2 id="遍历-5">8.3 遍历</h2>
+<p><code>it-&gt;first</code> 和 <code>(*it).first</code> 等价。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(map&lt;<span class="hljs-type">int</span>, string&gt;::iterator it = s.<span class="hljs-built_in">begin</span>(); it != s.<span class="hljs-built_in">end</span>(); it++)<br>	cout &lt;&lt; it-&gt;first &lt;&lt; <span class="hljs-string">&quot; &quot;</span> &lt;&lt; it-&gt;second &lt;&lt; endl;<br><span class="hljs-comment">//  auto 可以代替 map&lt;int, string&gt;::iterator</span><br></code></pre></td></tr></table></figure>
-<h2 id="8-4-插入元素的区别"><a href="#8-4-插入元素的区别" class="headerlink" title="8.4 插入元素的区别"></a>8.4 插入元素的区别</h2><p>以下三种方法虽然都可以实现数据的插入，但是它们是有区别的（第一种和第二种在效果上是完成一样的）</p>
-<ul>
-<li>用 <code>insert</code> 函数插入数据，在数据的插入上涉及到集合的唯一性这个概念，即当 <code>map</code> 中有这个关键字时，<code>insert</code> 操作是不能在插入数据的</li>
-<li>数组方式插入时可以覆盖以前该关键字对应的值</li>
-</ul>
+<h2 id="插入元素的区别">8.4 插入元素的区别</h2>
+<p>以下三种方法虽然都可以实现数据的插入，但是它们是有区别的（第一种和第二种在效果上是完成一样的）
+- 用 <code>insert</code>
+函数插入数据，在数据的插入上涉及到集合的唯一性这个概念，即当
+<code>map</code> 中有这个关键字时，<code>insert</code>
+操作是不能在插入数据的 - 数组方式插入时可以覆盖以前该关键字对应的值</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp">map&lt;<span class="hljs-type">int</span>, string&gt; mp;<br> <br><span class="hljs-comment">// 第一种 用insert函數插入pair</span><br>mp.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">pair</span>&lt;<span class="hljs-type">int</span>, string&gt;(<span class="hljs-number">000</span>, <span class="hljs-string">&quot;zhu&quot;</span>));<br> <br><span class="hljs-comment">// 第二种 用insert函数插入value_type数据</span><br>mp.<span class="hljs-built_in">insert</span>(map&lt;<span class="hljs-type">int</span>, string&gt;::<span class="hljs-built_in">value_type</span>(<span class="hljs-number">001</span>, <span class="hljs-string">&quot;zhuzhu&quot;</span>));<br> <br><span class="hljs-comment">// 第三种 用&quot;array&quot;方式插入</span><br>mp[<span class="hljs-number">111</span>] = <span class="hljs-string">&quot;og&quot;</span>;<br>mp[<span class="hljs-number">222</span>] = <span class="hljs-string">&quot;one&quot;</span>;<br></code></pre></td></tr></table></figure>
-
-<h2 id="8-5-常用函数"><a href="#8-5-常用函数" class="headerlink" title="8.5 常用函数"></a>8.5 常用函数</h2><h3 id="insert-插入-1"><a href="#insert-插入-1" class="headerlink" title="insert() 插入"></a><code>insert()</code> <strong>插入</strong></h3><blockquote>
-<p><strong>mp.insert(pair&lt;类型1, 类型2&gt;(key, value))</strong><br>将pair作为整个元素插入</p>
-</blockquote>
-<hr>
-<h3 id="find-查找-1"><a href="#find-查找-1" class="headerlink" title="find() 查找"></a><code>find()</code> <strong>查找</strong></h3><blockquote>
-<p><strong>mp.find(key)</strong><br>查找关键 <code>key</code> 返回一个迭代器，如果元素存在则指向该元素；如果不存在，则指向 <code>map.end()</code>。</p>
-</blockquote>
-<hr>
-<h3 id="count-计数-1"><a href="#count-计数-1" class="headerlink" title="count() 计数"></a><code>count()</code> <strong>计数</strong></h3><blockquote>
-<p><strong>mp.count(key)</strong><br>返回指定元素的数量，因为 <code>key</code>值不会重复，所以只有0和1，如果存在则返回1，不存在则返回0。</p>
-</blockquote>
-<hr>
-<h3 id="erase-删除-1"><a href="#erase-删除-1" class="headerlink" title="erase() 删除"></a><code>erase()</code> <strong>删除</strong></h3><blockquote>
-<p><strong>mp.erase(key)</strong><br>删除指定关键字的元素；也可以传递一个迭代器来删除特定位置的元素。成功删除返回1，否则返回0。</p>
-</blockquote>
-<h1 id="9-pair"><a href="#9-pair" class="headerlink" title="9 pair"></a>9 pair</h1><p><code>pair</code> 本质上就是一个内部有两个名字固定的成员变量的结构体，这两个成员变量为：<code>first</code> 成员和 <code>second</code> 成员。使用之前要添加头文件:<code>#include &lt;utility&gt;</code>。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//两者是等价的</span><br>pair&lt;string, <span class="hljs-type">int</span>&gt; p;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">pair</span> &#123;<br>	string first;<br>	<span class="hljs-type">int</span> second;<br>&#125; p;<br><span class="hljs-comment">//定义的同时初始化</span><br><span class="hljs-function">pair&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;zhuzhu&quot;</span>, <span class="hljs-number">18</span>)</span></span>;<br><span class="hljs-comment">//pair的访问</span><br>p.first = <span class="hljs-string">&quot;hhhhh&#x27;</span><br><span class="hljs-string">p.second = 15;</span><br></code></pre></td></tr></table></figure>
-
-<p>两个 <code>pair</code> 类型数据可以直接使用<code> =、!=、&lt;、&lt;=、&gt;、&gt;=</code>比较</p>
-<ol>
-<li>先以 <code>first</code> 的大小来比较</li>
-<li>当 <code>first</code> 相等时，比较 <code>second</code> 的大小</li>
-</ol>
-<p><code>pair</code> 能够存储两个值，并且值的类型可以不同。可以用在很多标准容器中，特别是需要存储一对<strong>相关联</strong>的值时，比如说x和y坐标，<code>pair</code> 是一种非常好用的模板类。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">set&lt;pair&lt;<span class="hljs-type">int</span>, string&gt; &gt; s;<br>vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; &gt; v;<br><br>set.<span class="hljs-built_in">insert</span>(&#123;x, y&#125;) <span class="hljs-comment">// 使用&#123;&#125;表示元素</span><br></code></pre></td></tr></table></figure>
-
+<h2 id="常用函数-6">8.5 常用函数</h2>
+<h3 id="insert-插入-1"><code>insert()</code> <strong>插入</strong></h3>
 <blockquote>
-<p>其实<code>map</code>中的每个元素就是一个 <code>pair&lt;const Key, T&gt;</code>，其中 <code>Key</code> 是键，<code>T</code> 是值。<code>map</code>像一个对<code>Key</code>值自动排序的<code>pair</code>数组。</p>
+<p><strong>mp.insert(pair&lt;类型1, 类型2&gt;(key, value))</strong>
+将pair作为整个元素插入</p>
+</blockquote>
+<hr />
+<h3 id="find-查找-1"><code>find()</code> <strong>查找</strong></h3>
+<blockquote>
+<p><strong>mp.find(key)</strong> 查找关键 <code>key</code>
+返回一个迭代器，如果元素存在则指向该元素；如果不存在，则指向
+<code>map.end()</code>。</p>
+</blockquote>
+<hr />
+<h3 id="count-计数-1"><code>count()</code> <strong>计数</strong></h3>
+<blockquote>
+<p><strong>mp.count(key)</strong> 返回指定元素的数量，因为
+<code>key</code>值不会重复，所以只有0和1，如果存在则返回1，不存在则返回0。</p>
+</blockquote>
+<hr />
+<h3 id="erase-删除-1"><code>erase()</code> <strong>删除</strong></h3>
+<blockquote>
+<p><strong>mp.erase(key)</strong>
+删除指定关键字的元素；也可以传递一个迭代器来删除特定位置的元素。成功删除返回1，否则返回0。</p>
+</blockquote>
+<h1 id="pair">9 pair</h1>
+<p><code>pair</code>
+本质上就是一个内部有两个名字固定的成员变量的结构体，这两个成员变量为：<code>first</code>
+成员和 <code>second</code>
+成员。使用之前要添加头文件:<code>#include &lt;utility&gt;</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//两者是等价的</span><br>pair&lt;string, <span class="hljs-type">int</span>&gt; p;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">pair</span> &#123;<br>	string first;<br>	<span class="hljs-type">int</span> second;<br>&#125; p;<br><span class="hljs-comment">//定义的同时初始化</span><br><span class="hljs-function">pair&lt;string, <span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;zhuzhu&quot;</span>, <span class="hljs-number">18</span>)</span></span>;<br><span class="hljs-comment">//pair的访问</span><br>p.first = <span class="hljs-string">&quot;hhhhh&#x27;</span><br><span class="hljs-string">p.second = 15;</span><br></code></pre></td></tr></table></figure>
+<p>两个 <code>pair</code>
+类型数据可以直接使用<code>=、!=、&lt;、&lt;=、&gt;、&gt;=</code>比较 1.
+先以 <code>first</code> 的大小来比较 2. 当 <code>first</code>
+相等时，比较 <code>second</code> 的大小</p>
+<p><code>pair</code>
+能够存储两个值，并且值的类型可以不同。可以用在很多标准容器中，特别是需要存储一对<strong>相关联</strong>的值时，比如说x和y坐标，<code>pair</code>
+是一种非常好用的模板类。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp">set&lt;pair&lt;<span class="hljs-type">int</span>, string&gt; &gt; s;<br>vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; &gt; v;<br><br>set.<span class="hljs-built_in">insert</span>(&#123;x, y&#125;) <span class="hljs-comment">// 使用&#123;&#125;表示元素</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>其实<code>map</code>中的每个元素就是一个
+<code>pair&lt;const Key, T&gt;</code>，其中 <code>Key</code>
+是键，<code>T</code>
+是值。<code>map</code>像一个对<code>Key</code>值自动排序的<code>pair</code>数组。</p>
 </blockquote>
 
                 
@@ -835,6 +1039,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -1053,6 +1263,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

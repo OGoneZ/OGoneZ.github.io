@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="cin &gt;&gt; cout &lt;&lt;   scanf()  printf()  getchar(c) 字符输入  putchar(c) 字符输出 gets(str) 读取一整行，回车或EOF停止，不会判断上限，不安全 fgets(str, 100, stdin) 读取一整行，读取最多100个字符存到str中 cin.getline(str, 100)  getline(cin, s">
+    <meta name="description" content="cin &gt;&gt; cout &lt;&lt; scanf() printf() getchar(c) 字符输入 putchar(c) 字符输出 gets(str) 读取一整行，回车或EOF停止，不会判断上限，不安全 fgets(str, 100, stdin) 读取一整行，读取最多100个字符存到str中 cin.getline(str, 100) getline(cin,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="标准输入输出">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="cin &gt;&gt; cout &lt;&lt;   scanf()  printf()  getchar(c) 字符输入  putchar(c) 字符输出 gets(str) 读取一整行，回车或EOF停止，不会判断上限，不安全 fgets(str, 100, stdin) 读取一整行，读取最多100个字符存到str中 cin.getline(str, 100)  getline(cin, s">
+<meta property="og:description" content="cin &gt;&gt; cout &lt;&lt; scanf() printf() getchar(c) 字符输入 putchar(c) 字符输出 gets(str) 读取一整行，回车或EOF停止，不会判断上限，不安全 fgets(str, 100, stdin) 读取一整行，读取最多100个字符存到str中 cin.getline(str, 100) getline(cin,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T12:38:36.670Z">
@@ -278,57 +278,58 @@
             
               <div class="markdown-body">
                 
-                <p><code>cin &gt;&gt;</code> <code>cout &lt;&lt;</code>  </p>
-<p><code>scanf()</code>  <code>printf()</code> </p>
-<p><code>getchar(c)</code> 字符输入  <code>putchar(c)</code> 字符输出</p>
-<p><code>gets(str)</code> 读取一整行，回车或EOF停止，不会判断上限，不安全</p>
-<p><code>fgets(str, 100, stdin)</code> 读取一整行，读取最多100个字符存到str中</p>
-<p><code>cin.getline(str, 100)</code>  <code>getline(cin, str)</code> 读取一整行，读取最多100个字符存到str中</p>
-<p><strong>注意</strong>：当同时使用<code>cin&gt;&gt;</code>, <code>getline()</code>时，在<code>cin&gt;&gt;</code>之后，<code>getline()</code>之前，需要将回车符作为输入流cin以清除缓存，在<code>cin</code>和<code>getline()</code>中间插入以下代码：</p>
+                <p><code>cin &gt;&gt;</code> <code>cout &lt;&lt;</code></p>
+<p><code>scanf()</code> <code>printf()</code></p>
+<p><code>getchar(c)</code> 字符输入 <code>putchar(c)</code> 字符输出</p>
+<p><code>gets(str)</code>
+读取一整行，回车或EOF停止，不会判断上限，不安全</p>
+<p><code>fgets(str, 100, stdin)</code>
+读取一整行，读取最多100个字符存到str中</p>
+<p><code>cin.getline(str, 100)</code> <code>getline(cin, str)</code>
+读取一整行，读取最多100个字符存到str中</p>
+<p><strong>注意</strong>：当同时使用<code>cin&gt;&gt;</code>,
+<code>getline()</code>时，在<code>cin&gt;&gt;</code>之后，<code>getline()</code>之前，需要将回车符作为输入流cin以清除缓存，在<code>cin</code>和<code>getline()</code>中间插入以下代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp">cin &gt;&gt; <br>...<br>str=<span class="hljs-string">&quot;\n&quot;</span>;<br><span class="hljs-built_in">getline</span>(cin,str);<br>...<br><span class="hljs-built_in">getline</span>()<br></code></pre></td></tr></table></figure>
-
 <p>如果不这样做的话，在控制台上就不会出现<code>getline()</code>的输入提示，而是直接跳过，因为程序默认将之前的变量作为输入流。</p>
 <table>
 <thead>
 <tr>
-<th align="center">数据类型</th>
-<th align="center">占位符</th>
+<th style="text-align: center;">数据类型</th>
+<th style="text-align: center;">占位符</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">int</td>
-<td align="center">%d</td>
+<tbody>
+<tr>
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">%d</td>
 </tr>
 <tr>
-<td align="center">long long</td>
-<td align="center">%lld</td>
+<td style="text-align: center;">long long</td>
+<td style="text-align: center;">%lld</td>
 </tr>
 <tr>
-<td align="center">float</td>
-<td align="center">%f</td>
+<td style="text-align: center;">float</td>
+<td style="text-align: center;">%f</td>
 </tr>
 <tr>
-<td align="center">double</td>
-<td align="center">scanf 用 %lf，printf 用 %f</td>
+<td style="text-align: center;">double</td>
+<td style="text-align: center;">scanf 用 %lf，printf 用 %f</td>
 </tr>
 <tr>
-<td align="center">char</td>
-<td align="center">%c</td>
+<td style="text-align: center;">char</td>
+<td style="text-align: center;">%c</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <ul>
-<li><p>无论单双精度，<code>printf</code> 都会将浮点数提升为双精度，所以在输出时不区分单双精度</p>
-</li>
+<li><p>无论单双精度，<code>printf</code>
+都会将浮点数提升为双精度，所以在输出时不区分单双精度</p></li>
 <li><p><code>printf()</code> 特殊输出格式</p>
 <ul>
-<li><p><code>%md</code> 右对齐m位输出，高位用空格补齐</p>
-</li>
-<li><p><code>%0md</code> 右对齐m位输出，高位用0补齐</p>
-</li>
-<li><p><code>%.mf</code> 浮点数保留m位小数</p>
-</li>
-</ul>
-</li>
+<li><p><code>%md</code> 右对齐m位输出，高位用空格补齐</p></li>
+<li><p><code>%0md</code> 右对齐m位输出，高位用0补齐</p></li>
+<li><p><code>%.mf</code> 浮点数保留m位小数</p></li>
+</ul></li>
 </ul>
 
                 
@@ -430,8 +431,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径">
-                        <span class="hidden-mobile">最短路径</span>
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="广度优先搜索">
+                        <span class="hidden-mobile">广度优先搜索</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -488,6 +489,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -706,6 +713,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

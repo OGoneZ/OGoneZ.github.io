@@ -19,12 +19,12 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="广度优先搜索（Breadth First Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。 广度优先搜索的实现：  将起始节点放入队列中，并将其标记为已访问。 从队首取出一个节点作为当前节点。 遍历当前节点的所有邻居节点：如果邻居节点没有被访问过">
+    <meta name="description" content="广度优先搜索（Breadth First Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。 广度优先搜索的实现： 1. 将起始节点放入队列中，并将其标记为已访问。 2. 从队首取出一个节点作为当前节点。 3. 遍历当前节点的所有邻居节点：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="广度优先搜索">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="广度优先搜索（Breadth First Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。 广度优先搜索的实现：  将起始节点放入队列中，并将其标记为已访问。 从队首取出一个节点作为当前节点。 遍历当前节点的所有邻居节点：如果邻居节点没有被访问过">
+<meta property="og:description" content="广度优先搜索（Breadth First Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。 广度优先搜索的实现： 1. 将起始节点放入队列中，并将其标记为已访问。 2. 从队首取出一个节点作为当前节点。 3. 遍历当前节点的所有邻居节点：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
 <meta property="article:modified_time" content="2025-10-26T12:40:25.118Z">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          631 字
+          635 字
         
       </span>
     
@@ -278,17 +278,13 @@
             
               <div class="markdown-body">
                 
-                <p><strong>广度优先搜索</strong>（Breadth First Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。</p>
-<p>广度优先搜索的实现：</p>
-<ol>
-<li>将起始节点放入队列中，并将其标记为已访问。</li>
-<li>从队首取出一个节点作为当前节点。</li>
-<li>遍历当前节点的所有邻居节点：如果邻居节点没有被访问过，则将其放入队列中并标记为已访问。</li>
-<li>重复步骤2和3，直到队列为空或找到目标节点。</li>
-</ol>
+                <p><strong>广度优先搜索</strong>（Breadth First
+Search)：英文缩写为（BFS），是一种用于搜索树或图的算法。从起始节点开始逐层扩展搜索，直到达到目标节点。它以广度的方式探索图中的节点，即先访问离起始节点最近的节点，然后逐渐扩展到距离更远的节点。</p>
+<p>广度优先搜索的实现： 1. 将起始节点放入队列中，并将其标记为已访问。 2.
+从队首取出一个节点作为当前节点。 3.
+遍历当前节点的所有邻居节点：如果邻居节点没有被访问过，则将其放入队列中并标记为已访问。
+4. 重复步骤2和3，直到队列为空或找到目标节点。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> mp[N][N];  <span class="hljs-comment">// 地图</span><br>step step[N][N];  <span class="hljs-comment">// 记录到达某点的最短步数</span><br>queue&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt; &gt; q;  <span class="hljs-comment">// 辅助广搜的队列</span><br><span class="hljs-type">int</span> dir[<span class="hljs-number">4</span>][<span class="hljs-number">2</span>] = &#123;  <span class="hljs-comment">// 方向数组  根据需求确定搜索方向</span><br>	<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<br>	<span class="hljs-number">0</span>, <span class="hljs-number">-1</span>,<br>	<span class="hljs-number">1</span>, <span class="hljs-number">0</span>,<br>	<span class="hljs-number">-1</span>, <span class="hljs-number">0</span><br>&#125;<br><br><span class="hljs-comment">// 步数初始化为-1，在记录步数的同时也可以记录哪些点走过</span><br><span class="hljs-built_in">fill</span>(step[<span class="hljs-number">0</span>], step[<span class="hljs-number">0</span>] + N * N, <span class="hljs-number">-1</span>)<br><br><span class="hljs-type">void</span> <span class="hljs-built_in">bfs</span>(<span class="hljs-type">int</span> sx, <span class="hljs-type">int</span> sy) &#123;<br>	q.<span class="hljs-built_in">push</span>(&#123;sx, sy&#125;);  <span class="hljs-comment">// 起始节点入队</span><br>	step[sx][sy] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 起点设为0步，也可能是1步，并且达到了标记已访问的作用</span><br>	<span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>()) &#123;  <span class="hljs-comment">// 队列不为空，就要继续搜</span><br>		<span class="hljs-type">int</span> x = q.<span class="hljs-built_in">front</span>().first;  <span class="hljs-comment">// 当前节点的x坐标		</span><br>		<span class="hljs-type">int</span> y = q.<span class="hljs-built_in">front</span>().second;  <span class="hljs-comment">// 当前节点的y坐标</span><br>		q.<span class="hljs-built_in">pop</span>();  <span class="hljs-comment">// 取出当前节点</span><br><br>		<span class="hljs-keyword">if</span> (x, y) 是终点 &#123;  <span class="hljs-comment">// 遇到结束条件，如果没有结束条件就把能搜的点都搜完</span><br>			<span class="hljs-comment">// 遇到终点做一些事情，比如最短步数、判断能否到达终点</span><br>			<span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 结束</span><br>		&#125;<br><br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) &#123;<br>			<span class="hljs-type">int</span> nx = x + dir[i][<span class="hljs-number">0</span>];  <span class="hljs-comment">// 下一个点的x坐标</span><br>			<span class="hljs-type">int</span> ny = y + dir[i][<span class="hljs-number">1</span>];  <span class="hljs-comment">// 下一个点的y坐标</span><br>			<span class="hljs-comment">// 如果下一个点越界了 不能走</span><br>			<span class="hljs-comment">// 注意下面两个if要先判断是否越界，才可以访问 </span><br>			<span class="hljs-keyword">if</span>(nx &lt; <span class="hljs-number">0</span> || nx &gt;= n || ny &lt; <span class="hljs-number">0</span> || ny &gt;= m) <span class="hljs-keyword">continue</span>;<br>			<span class="hljs-comment">// 如果下一个点是障碍 或者 下一个点访问过 不能走</span><br>			<span class="hljs-keyword">if</span>(mp[nx][ny] 是障碍 || step[nx][ny] != <span class="hljs-number">-1</span>) <span class="hljs-keyword">continue</span>; <br>			q.<span class="hljs-built_in">push</span>(&#123;nx, ny&#125;);  <span class="hljs-comment">// 能走的点就入队</span><br>			<span class="hljs-comment">// 走到下一个点的步数等于这个点的步数+1</span><br>			step[nx][ny] = step[x][y] + <span class="hljs-number">1</span>;  <br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
 <blockquote>
 <p>特别注意：要在<strong>入队时就对节点进行标记</strong>，如果在出队时标记，两个点都指向某个未访问的节点时，它会被<strong>重复入队</strong>。</p>
 </blockquote>
@@ -382,9 +378,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE/" title="图">
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="标准输入输出">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">图</span>
+                        <span class="hidden-mobile">标准输入输出</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -392,8 +388,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/" title="树">
-                        <span class="hidden-mobile">树</span>
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="深度优先搜索">
+                        <span class="hidden-mobile">深度优先搜索</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -450,6 +446,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -668,6 +670,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

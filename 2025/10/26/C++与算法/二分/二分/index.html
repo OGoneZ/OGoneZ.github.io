@@ -19,23 +19,23 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 整数二分 指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找123456789int binary_sear">
+    <meta name="description" content="1 整数二分  指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找 123456789">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二分">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 整数二分 指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找123456789int binary_sear">
+<meta property="og:description" content="1 整数二分  指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找 123456789">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/cpp_assets/c_binary1.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_binary2.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_binary_fun1.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_binary_fun2.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/c_binary1.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/c_binary2.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/c_binary_fun1.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/c_binary_fun2.png">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T13:16:35.022Z">
+<meta property="article:modified_time" content="2025-10-31T11:33:15.761Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="基本算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/cpp_assets/c_binary1.png">
+<meta name="twitter:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/c_binary1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -230,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          919 字
+          930 字
         
       </span>
     
@@ -283,56 +283,83 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-整数二分"><a href="#1-整数二分" class="headerlink" title="1 整数二分"></a>1 整数二分</h1><ol>
+                <h1 id="整数二分">1 整数二分</h1>
+<ol type="1">
 <li>指针的跳跃次数 <code>logn</code></li>
-<li><code>l + 1 = r</code> 时结束，也就是 <code>l</code> 和 <code>r</code> 紧挨的时候</li>
+<li><code>l + 1 = r</code> 时结束，也就是 <code>l</code> 和
+<code>r</code> 紧挨的时候</li>
 <li>可行区的指针最后一定指向答案</li>
 <li>开区间可以正确处理边界（<code>l</code>和<code>r</code>初始化在数组的两侧）</li>
 </ol>
-<p><strong>注意：</strong> 访问<code>a[l]</code>或<code>a[r]</code>的时候注意边界问题</p>
-<p>例如目标值在左侧，需要判断 <code>a[l] == x</code>，<code>l</code>有可能一直是-1，此时访问<code>a[l]</code>会出现下标越界</p>
-<h2 id="1-1-最大化查找"><a href="#1-1-最大化查找" class="headerlink" title="1.1 最大化查找"></a>1.1 最大化查找</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> q)</span> </span>&#123;<br>	<span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>		<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">if</span>(a[mid] &lt;= q) l = mid;  <span class="hljs-comment">// l 一直在可行区内</span><br>		<span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// r 一直在不可行区内</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/../../../cpp_assets/c_binary1.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503311343047ead4742bd8a0a4a.png"></p>
-<h2 id="1-2-最小化查找"><a href="#1-2-最小化查找" class="headerlink" title="1.2 最小化查找"></a>1.2 最小化查找</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> x)</span> </span>&#123;<br>	<span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>		<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">if</span>(a[mid] &gt;= x) r = mid;  <span class="hljs-comment">// r 一直在可行区内</span><br>		<span class="hljs-keyword">else</span> l = mid;  <span class="hljs-comment">// l 一直在不可行区内</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> r;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/../../../cpp_assets/c_binary2.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503311343047ead4742bd8a0a4a.png"></p>
-<h2 id="1-3-二分函数"><a href="#1-3-二分函数" class="headerlink" title="1.3 二分函数"></a>1.3 二分函数</h2><h3 id="1-3-1-lower-bound-begin-end-x-第一个-x"><a href="#1-3-1-lower-bound-begin-end-x-第一个-x" class="headerlink" title="1.3.1 lower_bound(begin, end, x) 第一个 &gt;&#x3D;x"></a>1.3.1 lower_bound(begin, end, x) 第一个 &gt;&#x3D;x</h3><ul>
+<p><strong>注意：</strong>
+访问<code>a[l]</code>或<code>a[r]</code>的时候注意边界问题</p>
+<p>例如目标值在左侧，需要判断
+<code>a[l] == x</code>，<code>l</code>有可能一直是-1，此时访问<code>a[l]</code>会出现下标越界</p>
+<h2 id="最大化查找">1.1 最大化查找</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> q)</span> </span>&#123;<br>	<span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>		<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">if</span>(a[mid] &lt;= q) l = mid;  <span class="hljs-comment">// l 一直在可行区内</span><br>		<span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// r 一直在不可行区内</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="c_binary1.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<h2 id="最小化查找">1.2 最小化查找</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> x)</span> </span>&#123;<br>	<span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>	<span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>		<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>		<span class="hljs-keyword">if</span>(a[mid] &gt;= x) r = mid;  <span class="hljs-comment">// r 一直在可行区内</span><br>		<span class="hljs-keyword">else</span> l = mid;  <span class="hljs-comment">// l 一直在不可行区内</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> r;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="c_binary2.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<h2 id="二分函数">1.3 二分函数</h2>
+<h3 id="lower_boundbegin-end-x-第一个-x">1.3.1 lower_bound(begin, end,
+x) 第一个 &gt;=x</h3>
+<ul>
 <li><code>begin</code>：待排序数组的起始地址</li>
 <li><code>end</code>：待排序数组结束地址下一个位置的指针</li>
 <li><code>x</code>：要查找的值</li>
 </ul>
-<p><strong>前提是有序的情况下</strong>：</p>
-<ul>
-<li>如果找得到返回指向第一个大于等于x值的位置。</li>
-<li>如果找不到则返回指向尾元素的下一个位置（由于r一直在右边界未发生移动）</li>
-</ul>
-<p><img src="/../../../cpp_assets/c_binary_fun1.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503311343047ead4742bd8a0a4a.png"></p>
+<p><strong>前提是有序的情况下</strong>： -
+如果找得到返回指向第一个大于等于x值的位置。 -
+如果找不到则返回指向尾元素的下一个位置（由于r一直在右边界未发生移动）</p>
+<figure>
+<img src="c_binary_fun1.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 返回值为地址，减去起始地址a为下标值</span><br><span class="hljs-type">int</span> index = <span class="hljs-built_in">lower_bound</span>(a, a + n, x) - a;<br></code></pre></td></tr></table></figure>
-
-<h3 id="1-3-2-upper-bound-begin-end-x-第一个-x"><a href="#1-3-2-upper-bound-begin-end-x-第一个-x" class="headerlink" title="1.3.2 upper_bound(begin, end, x) 第一个 &gt;x"></a>1.3.2 upper_bound(begin, end, x) 第一个 &gt;x</h3><ul>
+<h3 id="upper_boundbegin-end-x-第一个-x">1.3.2 upper_bound(begin, end,
+x) 第一个 &gt;x</h3>
+<ul>
 <li><code>begin</code>：待排序数组的起始地址</li>
 <li><code>end</code>：待排序数组结束地址下一个位置的指针</li>
 <li><code>x</code>：要查找的值</li>
 </ul>
-<p><strong>前提是有序的情况下</strong>：</p>
-<ul>
-<li>如果找得到返回指向第一个大于x值的位置。</li>
-<li>如果找不到则返回指向尾元素的下一个位置</li>
-</ul>
-<p><img src="/../../../cpp_assets/c_binary_fun2.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503311343047ead4742bd8a0a4a.png"></p>
+<p><strong>前提是有序的情况下</strong>： -
+如果找得到返回指向第一个大于x值的位置。 -
+如果找不到则返回指向尾元素的下一个位置</p>
+<figure>
+<img src="c_binary_fun2.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
 <blockquote>
-<p>用<code>upper_bound</code>返回值 - a - 1 就是最后一个小于等于x的下标 </p>
+<p>用<code>upper_bound</code>返回值 - a - 1
+就是最后一个小于等于x的下标</p>
 </blockquote>
-<h1 id="2-浮点数二分"><a href="#2-浮点数二分" class="headerlink" title="2 浮点数二分"></a>2 浮点数二分</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span> </span>&#123;<span class="hljs-comment">/* ... */</span>&#125; <span class="hljs-comment">// 检查x是否满足某种性质</span><br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(<span class="hljs-type">double</span> l, <span class="hljs-type">double</span> r)</span> </span>&#123;<br>	<span class="hljs-type">const</span> <span class="hljs-type">double</span> eps = <span class="hljs-number">1e-6</span>;  <span class="hljs-comment">// eps表示精度，比题目要求小数位多两位即可</span><br>	<span class="hljs-keyword">while</span>(r - l &gt; eps) &#123;<br>		<span class="hljs-type">double</span> mid = (l + r) / <span class="hljs-number">2</span>;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid)) l = mid;<br>		<span class="hljs-keyword">else</span> r = mid;<br>	&#125;<br>	<span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<h1 id="3-二分答案"><a href="#3-二分答案" class="headerlink" title="3 二分答案"></a>3 二分答案</h1><p>二分答案与二分查找类似，要求满足条件的<strong>答案是单调有序的</strong>。<br>原理：在答案可能的范围<code>(L, R)</code>内二分查找答案，不断检查当前答案是否满足题目的要求，根据检查结果更新查找的区间，最终取得最符合题目要求的答案。</p>
-<p>同样可以使用以下板子：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> ans)</span> </span>&#123;<br>	<span class="hljs-comment">// 根据题意，符合条件返回true，否则false</span><br>&#125;<br><br><span class="hljs-comment">// 假设这里分析得出答案最小值为min，最大值为max</span><br><br><span class="hljs-type">int</span> l = min - <span class="hljs-number">1</span>, r = max + <span class="hljs-number">1</span>;  <br><span class="hljs-comment">// 根据题目答案范围设置 l 和 r，注意初始值要在边界两侧，开区间</span><br><span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>	<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>	<span class="hljs-comment">// 下面 l 和 r 的顺序根据题目进行调整</span><br>	<span class="hljs-keyword">if</span>(check[mid]) l = mid;  <span class="hljs-comment">// 满足题意</span><br>	<span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// 不满足题意</span><br>&#125;<br><span class="hljs-keyword">return</span> l;  <span class="hljs-comment">// 根据题意进行调整</span><br></code></pre></td></tr></table></figure>
-
+<h1 id="浮点数二分">2 浮点数二分</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span> </span>&#123;<span class="hljs-comment">/* ... */</span>&#125; <span class="hljs-comment">// 检查x是否满足某种性质</span><br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(<span class="hljs-type">double</span> l, <span class="hljs-type">double</span> r)</span> </span>&#123;<br>	<span class="hljs-type">const</span> <span class="hljs-type">double</span> eps = <span class="hljs-number">1e-6</span>;  <span class="hljs-comment">// eps表示精度，比题目要求小数位多两位即可</span><br>	<span class="hljs-keyword">while</span>(r - l &gt; eps) &#123;<br>		<span class="hljs-type">double</span> mid = (l + r) / <span class="hljs-number">2</span>;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid)) l = mid;<br>		<span class="hljs-keyword">else</span> r = mid;<br>	&#125;<br>	<span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="二分答案">3 二分答案</h1>
+<p>二分答案与二分查找类似，要求满足条件的<strong>答案是单调有序的</strong>。
+原理：在答案可能的范围<code>(L, R)</code>内二分查找答案，不断检查当前答案是否满足题目的要求，根据检查结果更新查找的区间，最终取得最符合题目要求的答案。</p>
+<p>同样可以使用以下板子： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> ans)</span> </span>&#123;<br>	<span class="hljs-comment">// 根据题意，符合条件返回true，否则false</span><br>&#125;<br><br><span class="hljs-comment">// 假设这里分析得出答案最小值为min，最大值为max</span><br><br><span class="hljs-type">int</span> l = min - <span class="hljs-number">1</span>, r = max + <span class="hljs-number">1</span>;  <br><span class="hljs-comment">// 根据题目答案范围设置 l 和 r，注意初始值要在边界两侧，开区间</span><br><span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>	<span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>	<span class="hljs-comment">// 下面 l 和 r 的顺序根据题目进行调整</span><br>	<span class="hljs-keyword">if</span>(check[mid]) l = mid;  <span class="hljs-comment">// 满足题意</span><br>	<span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// 不满足题意</span><br>&#125;<br><span class="hljs-keyword">return</span> l;  <span class="hljs-comment">// 根据题意进行调整</span><br></code></pre></td></tr></table></figure></p>
 <blockquote>
-<p>关于开区间，由于最终<code>l</code>和<code>r</code>一定会停在相邻的位置，左边是<code>l</code>，右边是<code>r</code>。<br>最终返回的答案，不论使用的是<code>l</code>还是<code>r</code>，只要作为答案的指针能够在整个答案的闭区间内移动即可。<br>比如：<br>最终答案返回<code>r</code>，<code>r</code>的初始值可以是<code>max</code>，而不用取外侧的<code>max + 1</code>，因为最终<code>r</code>可以取到<code>max</code>；但<code>l</code>必须取到<code>min - 1</code>，因为最终答案有可能是<code>min</code>，而<code>l</code>如果占到<code>min</code>，则会出现<code>r</code>取不到最终答案的情况。</p>
+<p>关于开区间，由于最终<code>l</code>和<code>r</code>一定会停在相邻的位置，左边是<code>l</code>，右边是<code>r</code>。
+最终返回的答案，不论使用的是<code>l</code>还是<code>r</code>，只要作为答案的指针能够在整个答案的闭区间内移动即可。
+比如：
+最终答案返回<code>r</code>，<code>r</code>的初始值可以是<code>max</code>，而不用取外侧的<code>max + 1</code>，因为最终<code>r</code>可以取到<code>max</code>；但<code>l</code>必须取到<code>min - 1</code>，因为最终答案有可能是<code>min</code>，而<code>l</code>如果占到<code>min</code>，则会出现<code>r</code>取不到最终答案的情况。</p>
 </blockquote>
 
                 
@@ -434,8 +461,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/" title="二分查找（唯一值）">
-                        <span class="hidden-mobile">二分查找（唯一值）</span>
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%83%E6%B0%8F%E7%AD%9B%E8%B4%A8%E6%95%B0%E5%88%A4%E5%AE%9A/" title="埃氏筛质数判定">
+                        <span class="hidden-mobile">埃氏筛质数判定</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -492,6 +519,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -710,6 +743,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

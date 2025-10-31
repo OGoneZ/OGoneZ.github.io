@@ -19,21 +19,21 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 模拟枚举枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：枚举所有的可能。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。 枚举算法的三要素：枚举对象、枚举范围和判定条件  比如密码锁，枚举 000～999 的情况枚举对象：密码枚举范围：000～999判定条件：否密码是否正确(能否打开锁)  2 递归算法 从前有座山，山里有座庙，庙里有个老和尚，正">
+    <meta name="description" content="1 模拟枚举 枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：枚举所有的可能。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。 枚举算法的三要素：枚举对象、枚举范围和判定条件  比如密码锁，枚举 000～999 的情况 枚举对象：密码 枚举范围：000～999 判定条件：否密码是否正确(能否打开锁)  2 递归算法  从前有座山，山">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基础算法">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 模拟枚举枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：枚举所有的可能。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。 枚举算法的三要素：枚举对象、枚举范围和判定条件  比如密码锁，枚举 000～999 的情况枚举对象：密码枚举范围：000～999判定条件：否密码是否正确(能否打开锁)  2 递归算法 从前有座山，山里有座庙，庙里有个老和尚，正">
+<meta property="og:description" content="1 模拟枚举 枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：枚举所有的可能。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。 枚举算法的三要素：枚举对象、枚举范围和判定条件  比如密码锁，枚举 000～999 的情况 枚举对象：密码 枚举范围：000～999 判定条件：否密码是否正确(能否打开锁)  2 递归算法  从前有座山，山">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/cpp_assets/c_recursion.png">
-<meta property="og:image" content="http://example.com/cpp_assets/c_dif.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/c_recursion.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/c_dif.png">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T13:16:12.782Z">
+<meta property="article:modified_time" content="2025-10-31T11:33:58.928Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="基本算法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/cpp_assets/c_recursion.png">
+<meta name="twitter:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/c_recursion.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -281,39 +281,55 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-模拟枚举"><a href="#1-模拟枚举" class="headerlink" title="1 模拟枚举"></a>1 模拟枚举</h1><p>枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：<strong>枚举所有的可能</strong>。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。</p>
+                <h1 id="模拟枚举">1 模拟枚举</h1>
+<p>枚举算法是我们在日常中使用到的最多的一个算法，枚举算法的核心思想就是：<strong>枚举所有的可能</strong>。枚举算法简单粗暴，暴力的枚举所有可能速度可能比较慢，但是总能得出正确答案。</p>
 <p>枚举算法的三要素：<strong>枚举对象</strong>、<strong>枚举范围</strong>和<strong>判定条件</strong></p>
 <blockquote>
-<p>比如密码锁，枚举 000～999 的情况<br>枚举对象：密码<br>枚举范围：000～999<br>判定条件：否密码是否正确(能否打开锁)</p>
+<p>比如密码锁，枚举 000～999 的情况 枚举对象：密码 枚举范围：000～999
+判定条件：否密码是否正确(能否打开锁)</p>
 </blockquote>
-<h1 id="2-递归算法"><a href="#2-递归算法" class="headerlink" title="2 递归算法"></a>2 递归算法</h1><blockquote>
-<p>从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事！故事是…… 从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事！故事是……</p>
+<h1 id="递归算法">2 递归算法</h1>
+<blockquote>
+<p>从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事！故事是……
+从前有座山，山里有座庙，庙里有个老和尚，正在给小和尚讲故事！故事是……</p>
 </blockquote>
-<p>这就是语言上的递归，在程序设计领域，递归是指函数 (或方法)<strong>直接</strong>或<strong>间接</strong>调用自身的一种操作，如下图所示。<br><img src="/../../../cpp_assets/c_recursion.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503062344352c9c59d453412a7c.png"></p>
-<p>递归的两大要素</p>
-<ul>
-<li>具有递归边界条件：所描述问题的最简单情况，它本身不再使用递归的定义。</li>
-<li>递归定义：使问题向边界条件转化的规则！</li>
-</ul>
+<p>这就是语言上的递归，在程序设计领域，递归是指函数
+(或方法)<strong>直接</strong>或<strong>间接</strong>调用自身的一种操作，如下图所示。
+<img src="c_recursion.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503062344352c9c59d453412a7c.png" /></p>
+<p>递归的两大要素 -
+具有递归边界条件：所描述问题的最简单情况，它本身不再使用递归的定义。 -
+递归定义：使问题向边界条件转化的规则！</p>
 <p>递归执行的过程中遇到调用函数，程序就先记住当前执行的位置，然后将值拷贝过去，遇到函数就故技重施重复以上操作，直到到达递归边界，再一层一层的回去。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//在递归函数前面的正序执行</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">funcA</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>	<span class="hljs-keyword">if</span>(n == <span class="hljs-number">5</span>) <span class="hljs-keyword">return</span><br>	cout &lt;&lt; n;<br>	<span class="hljs-built_in">funcA</span>(n + <span class="hljs-number">1</span>);<br>&#125;<br><span class="hljs-comment">//在递归函数后面的逆序执行</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">funcB</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>	<span class="hljs-keyword">if</span>(n == <span class="hljs-number">5</span>) <span class="hljs-keyword">return</span><br>	<span class="hljs-built_in">funcB</span>(n + <span class="hljs-number">1</span>);<br>	cout &lt;&lt; n;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p><strong>明白一个函数的作用并相信它能完成这个任务，千万不要跳进这个函数里面企图探究更多细节，</strong>否则就会陷入无穷的细节无法自拔，人脑能压几个栈啊。</p>
 </blockquote>
-<h1 id="3-递推算法"><a href="#3-递推算法" class="headerlink" title="3 递推算法"></a>3 递推算法</h1><p>递推算法是一种用<strong>若干步可重复运算</strong>来描述复杂问题的方法。通常是通过计算前面的一些<br>项来得出序列中的指定项的值。<br>比如斐波那契数列：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//f[i]记录第i项斐波那契数列是多少</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">3</span>; i &lt;= n; i++） <br>	f[i] = f[i - <span class="hljs-number">2</span>] + f[i - <span class="hljs-number">1</span>];<br></code></pre></td></tr></table></figure>
-
+<h1 id="递推算法">3 递推算法</h1>
+<p>递推算法是一种用<strong>若干步可重复运算</strong>来描述复杂问题的方法。通常是通过计算前面的一些
+项来得出序列中的指定项的值。 比如斐波那契数列： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//f[i]记录第i项斐波那契数列是多少</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">3</span>; i &lt;= n; i++） <br>	f[i] = f[i - <span class="hljs-number">2</span>] + f[i - <span class="hljs-number">1</span>];<br></code></pre></td></tr></table></figure></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//a[i]记录i条直线分割平面有几个部分</span><br>a[<span class="hljs-number">1</span>] = <span class="hljs-number">2</span>; <span class="hljs-comment">// 原有的 ＋ 新的</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++)<br>	a[i] = a[i - <span class="hljs-number">1</span>] + i; <br></code></pre></td></tr></table></figure>
-
-<h1 id="4-贪心算法"><a href="#4-贪心算法" class="headerlink" title="4 贪心算法"></a>4 贪心算法</h1><p>贪心算法（greedy algorithm），又称贪婪算法，在对问题求解时，总是做出在当前看来是<br>最好的选择。<br>不从整体最优上加以考虑，算法得到的是在某种意义上的<strong>局部最优解</strong>。<br>在解决贪心算法的问题时，需要保证每一步所作的贪心选择，能够最终导致问题的整体最优解。</p>
-<h1 id="5-前缀和与差分"><a href="#5-前缀和与差分" class="headerlink" title="5 前缀和与差分"></a>5 前缀和与差分</h1><h2 id="5-1-前缀和"><a href="#5-1-前缀和" class="headerlink" title="5.1 前缀和"></a>5.1 前缀和</h2><p>前缀和是一个常见的算法技巧，用于<strong>快速计算数组中某个区间内元素的和</strong><br>它的基本思想是<strong>预处理</strong>出数组的前缀和数组，然后利用前缀和数组来快速计算任意区间的和</p>
+<h1 id="贪心算法">4 贪心算法</h1>
+<p>贪心算法（greedy
+algorithm），又称贪婪算法，在对问题求解时，总是做出在当前看来是
+最好的选择。
+不从整体最优上加以考虑，算法得到的是在某种意义上的<strong>局部最优解</strong>。
+在解决贪心算法的问题时，需要保证每一步所作的贪心选择，能够最终导致问题的整体最优解。</p>
+<h1 id="前缀和与差分">5 前缀和与差分</h1>
+<h2 id="前缀和">5.1 前缀和</h2>
+<p>前缀和是一个常见的算法技巧，用于<strong>快速计算数组中某个区间内元素的和</strong>
+它的基本思想是<strong>预处理</strong>出数组的前缀和数组，然后利用前缀和数组来快速计算任意区间的和</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s[<span class="hljs-number">0</span>] = a[<span class="hljs-number">0</span>];<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++)<br>	s[i] = s[i - <span class="hljs-number">1</span>] + a[i];<br></code></pre></td></tr></table></figure>
-
-<h2 id="5-2-差分"><a href="#5-2-差分" class="headerlink" title="5.2 差分"></a>5.2 差分</h2><p>差分是一种数学运算方法，一维差分是指数列中<strong>相邻两项之间的差值</strong></p>
-<p>对原数组［l,r］整体增加 c 时，差分数组只需要修改第 l 项和第 r+1 项<br><img src="/../../../cpp_assets/c_dif.png" srcset="/img/loading.gif" lazyload alt="Pasted-image-202503062344352c9c59d453412a7c.png"></p>
-<p>因为差分数组只是与前面项的差值，所以从第一项累加到第 i 项即可得到原数组第 i 项的数值，可以结合前缀和快速计算</p>
-<h1 id="6-其他"><a href="#6-其他" class="headerlink" title="6 其他"></a>6 其他</h1><h2 id="6-1-常用数学函数"><a href="#6-1-常用数学函数" class="headerlink" title="6.1 常用数学函数"></a>6.1 常用数学函数</h2><ul>
+<h2 id="差分">5.2 差分</h2>
+<p>差分是一种数学运算方法，一维差分是指数列中<strong>相邻两项之间的差值</strong></p>
+<p>对原数组［l,r］整体增加 c 时，差分数组只需要修改第 l 项和第 r+1 项
+<img src="c_dif.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503062344352c9c59d453412a7c.png" /></p>
+<p>因为差分数组只是与前面项的差值，所以从第一项累加到第 i
+项即可得到原数组第 i 项的数值，可以结合前缀和快速计算</p>
+<h1 id="其他">6 其他</h1>
+<h2 id="常用数学函数">6.1 常用数学函数</h2>
+<ul>
 <li><code>max(a, b)</code> 求同类型两者的较大者</li>
 <li><code>min(a, b)</code> 求同类型两者的较小者</li>
 <li><code>pow(a, b)</code> 求a的b次方</li>
@@ -324,7 +340,11 @@
 <li><code>floor(x)</code> 向下取整</li>
 <li><code>ceil(x)</code> 向上取整</li>
 </ul>
-<h2 id="6-2-for-each-注意事项"><a href="#6-2-for-each-注意事项" class="headerlink" title="6.2 for each 注意事项"></a>6.2 for each 注意事项</h2><p><code>for(auto i : arr)</code> i是每一个元素的副本，可以用来遍历容器，但不能修改元素<br><code>for(auto &amp; i : arr)</code> i的引用可以直接修改arr中的实际元素     </p>
+<h2 id="for-each-注意事项">6.2 for each 注意事项</h2>
+<p><code>for(auto i : arr)</code>
+i是每一个元素的副本，可以用来遍历容器，但不能修改元素
+<code>for(auto &amp; i : arr)</code>
+i的引用可以直接修改arr中的实际元素</p>
 
                 
               </div>
@@ -415,9 +435,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%83%E6%B0%8F%E7%AD%9B%E8%B4%A8%E6%95%B0%E5%88%A4%E5%AE%9A/" title="埃氏筛质数判定">
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/" title="二分查找（唯一值）">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">埃氏筛质数判定</span>
+                        <span class="hidden-mobile">二分查找（唯一值）</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -425,8 +445,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C++基础语法">
-                        <span class="hidden-mobile">C++基础语法</span>
+                      <a href="/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/" title="容器填充函数">
+                        <span class="hidden-mobile">容器填充函数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -483,6 +503,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -701,6 +727,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

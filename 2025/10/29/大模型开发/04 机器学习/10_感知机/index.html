@@ -19,23 +19,22 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 概述感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。 感知机的信号只有 0、1 两种取值。 $𝑥_1$、$𝑥_2$ 是输入信号，$𝑦$ 是输出信号，$𝑤_1$、$𝑤_2$ 是权重，$○$ 称为神经元或节点。只有当输入信号和权重计算之后超过阈值 $\theta$ 时才会输出 1，也称之为神经元被激活。$$y&#x3D;\begin{cases}0 &amp;">
+    <meta name="description" content="1 概述 感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。 感知机的信号只有 0、1 两种取值。  𝑥1、𝑥2 是输入信号，𝑦 是输出信号，𝑤1、𝑤2 是权重，○ 称为神经元或节点。只有当输入信号和权重计算之后超过阈值 θ 时才会输出 1，也称之为神经元被激活。 $$y&#x3D; \begin{cases} 0 &amp; (w_1x_1+w_2x_2\l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="10_感知机">
 <meta property="og:url" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 概述感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。 感知机的信号只有 0、1 两种取值。 $𝑥_1$、$𝑥_2$ 是输入信号，$𝑦$ 是输出信号，$𝑤_1$、$𝑤_2$ 是权重，$○$ 称为神经元或节点。只有当输入信号和权重计算之后超过阈值 $\theta$ 时才会输出 1，也称之为神经元被激活。$$y&#x3D;\begin{cases}0 &amp;">
+<meta property="og:description" content="1 概述 感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。 感知机的信号只有 0、1 两种取值。  𝑥1、𝑥2 是输入信号，𝑦 是输出信号，𝑤1、𝑤2 是权重，○ 称为神经元或节点。只有当输入信号和权重计算之后超过阈值 θ 时才会输出 1，也称之为神经元被激活。 $$y&#x3D; \begin{cases} 0 &amp; (w_1x_1+w_2x_2\l">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/10_perceptron.png">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/10_split01.png">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/10_XOR.png">
-<meta property="og:image" content="http://example.com/ai_assets/04_ml/10_multi_preceptron.png">
+<meta property="og:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_perceptron.png">
+<meta property="og:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_split01.png">
+<meta property="og:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_XOR.png">
 <meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-31T02:16:16.936Z">
+<meta property="article:modified_time" content="2025-10-31T09:21:29.483Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/04_ml/10_perceptron.png">
+<meta name="twitter:image" content="http://example.com/2025/10/29/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_perceptron.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -230,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          822 字
+          816 字
         
       </span>
     
@@ -283,29 +282,110 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。 感知机的信号只有 0、1 两种取值。<br><img src="/../../../ai_assets/04_ml/10_perceptron.png" srcset="/img/loading.gif" lazyload></p>
-<p>$𝑥_1$、$𝑥_2$ 是输入信号，$𝑦$ 是输出信号，$𝑤_1$、$𝑤_2$ 是权重，$○$ 称为神经元或节点。只有当输入信号和权重计算之后超过阈值 $\theta$ 时才会输出 1，也称之为神经元被激活。<br>$$y&#x3D;<br>\begin{cases}<br>0 &amp; (w_1x_1+w_2x_2\leq\theta) \<br>1 &amp; (w_1x_1+w_2x_2&gt;\theta) &amp;<br>\end{cases}$$</p>
-<h1 id="2-简单逻辑电路"><a href="#2-简单逻辑电路" class="headerlink" title="2 简单逻辑电路"></a>2 简单逻辑电路</h1><h2 id="2-1-与门-AND-gate"><a href="#2-1-与门-AND-gate" class="headerlink" title="2.1 与门(AND gate)"></a>2.1 与门(AND gate)</h2><p>使用感知机实现简单逻辑电路，满足条件的参数有无数个，如 $(w_1, w_2, \theta)&#x3D;(0.5,0.5,0.7)$。<br>$$\begin{array}{|cc|c|}<br>\hline<br>x_{1} &amp; x_{2} &amp; y \<br>\hline<br>0 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 0 \<br>0 &amp; 1 &amp; 0 \<br>1 &amp; 1 &amp; 1 \<br>\hline<br>\end{array}$$</p>
+                <h1 id="概述">1 概述</h1>
+<p>感知机（Perceptron）是二分类模型， 接收多个信号，输出一个信号。
+感知机的信号只有 0、1 两种取值。 <img src="10_perceptron.png" srcset="/img/loading.gif" lazyload /></p>
+<p><span class="math inline"><em>𝑥</em><sub>1</sub></span>、<span
+class="math inline"><em>𝑥</em><sub>2</sub></span> 是输入信号，<span
+class="math inline"><em>𝑦</em></span> 是输出信号，<span
+class="math inline"><em>𝑤</em><sub>1</sub></span>、<span
+class="math inline"><em>𝑤</em><sub>2</sub></span> 是权重，<span
+class="math inline">○</span>
+称为神经元或节点。只有当输入信号和权重计算之后超过阈值 <span
+class="math inline"><em>θ</em></span> 时才会输出
+1，也称之为神经元被激活。 <span class="math display">$$y=
+\begin{cases}
+0 &amp; (w_1x_1+w_2x_2\leq\theta) \\
+1 &amp; (w_1x_1+w_2x_2&gt;\theta) &amp;
+\end{cases}$$</span></p>
+<h1 id="简单逻辑电路">2 简单逻辑电路</h1>
+<h2 id="与门and-gate">2.1 与门(AND gate)</h2>
+<p>使用感知机实现简单逻辑电路，满足条件的参数有无数个，如 <span
+class="math inline">(<em>w</em><sub>1</sub>, <em>w</em><sub>2</sub>, <em>θ</em>) = (0.5, 0.5, 0.7)</span>。
+<span class="math display">$$\begin{array}{|cc|c|}
+\hline
+x_{1} &amp; x_{2} &amp; y \\
+\hline
+0 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+1 &amp; 1 &amp; 1 \\
+\hline
+\end{array}$$</span></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">AND</span>(<span class="hljs-params">x1, x2</span>):<br>    w1, w2, theta = <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.7</span><br>    <span class="hljs-keyword">if</span> w1 * x1 + w2 * x2 &gt; theta:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-2-与非门-NAND-gate"><a href="#2-2-与非门-NAND-gate" class="headerlink" title="2.2 与非门(NAND gate)"></a>2.2 与非门(NAND gate)</h2><p>与非门颠倒了与门的输出，满足条件的参数也有无数个，只要把与门的参数值取反即可，比如 $(w_1, w_2, \theta)&#x3D;(-0.5,-0.5,-0.7)$。<br>$$\begin{array}{|cc|c|}<br>\hline<br>x_{1} &amp; x_{2} &amp; y \<br>\hline<br>0 &amp; 0 &amp; 1 \<br>1 &amp; 0 &amp; 1 \<br>0 &amp; 1 &amp; 1 \<br>1 &amp; 1 &amp; 0 \<br>\hline<br>\end{array}$$</p>
+<h2 id="与非门nand-gate">2.2 与非门(NAND gate)</h2>
+<p>与非门颠倒了与门的输出，满足条件的参数也有无数个，只要把与门的参数值取反即可，比如
+<span
+class="math inline">(<em>w</em><sub>1</sub>, <em>w</em><sub>2</sub>, <em>θ</em>) = (−0.5, −0.5, −0.7)</span>。
+<span class="math display">$$\begin{array}{|cc|c|}
+\hline
+x_{1} &amp; x_{2} &amp; y \\
+\hline
+0 &amp; 0 &amp; 1 \\
+1 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 0 \\
+\hline
+\end{array}$$</span></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">NAND</span>(<span class="hljs-params">x1, x2</span>):<br>    w1, w2, theta = -<span class="hljs-number">0.5</span>, -<span class="hljs-number">0.5</span>, -<span class="hljs-number">0.7</span><br>    <span class="hljs-keyword">if</span> w1 * x1 + w2 * x2 &gt; theta:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-3-或门-OR-gate"><a href="#2-3-或门-OR-gate" class="headerlink" title="2.3 或门(OR gate)"></a>2.3 或门(OR gate)</h2><p>实现或门的参数也有无数种，比如 $(w_1, w_2, \theta)&#x3D;(0.5,0.5,0.4)$。<br>$$\begin{array}{|cc|c|}<br>\hline<br>x_{1} &amp; x_{2} &amp; y \<br>\hline<br>0 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 1 \<br>0 &amp; 1 &amp; 1 \<br>1 &amp; 1 &amp; 1 \<br>\hline<br>\end{array}$$</p>
+<h2 id="或门or-gate">2.3 或门(OR gate)</h2>
+<p>实现或门的参数也有无数种，比如 <span
+class="math inline">(<em>w</em><sub>1</sub>, <em>w</em><sub>2</sub>, <em>θ</em>) = (0.5, 0.5, 0.4)</span>。
+<span class="math display">$$\begin{array}{|cc|c|}
+\hline
+x_{1} &amp; x_{2} &amp; y \\
+\hline
+0 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 \\
+\hline
+\end{array}$$</span></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">OR</span>(<span class="hljs-params">x1, x2</span>):<br>    w1, w2, theta = <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.4</span><br>    <span class="hljs-keyword">if</span> w1 * x1 + w2 * x2 &gt; theta:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-4-扩展形式"><a href="#2-4-扩展形式" class="headerlink" title="2.4 扩展形式"></a>2.4 扩展形式</h2><p>考虑到以后的事情，这里将 $\theta$ 改为 $-b$，其中 $𝑏$ 为偏置，$𝑤1$,$𝑤2$为权重。权重控制输入信号的重要性，偏置调整神经元被激活的容易程度。<br>$$y&#x3D;<br>\begin{cases}<br>0 &amp; (b+w_1x_1+w_2x_2\leq0) \<br>1 &amp; (b+w_1x_1+w_2x_2&gt;0) &amp;<br>\end{cases}$$</p>
-<p>再来使用这种形式实现一个与门：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">AND</span>(<span class="hljs-params">x1, x2</span>):<br>    x = np.array([x1, x2])<br>    w = np.array([<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>])<br>    b = -<span class="hljs-number">0.7</span><br>    <span class="hljs-keyword">if</span> np.<span class="hljs-built_in">sum</span>(w * x) + b &gt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="3-多层感知机"><a href="#3-多层感知机" class="headerlink" title="3 多层感知机"></a>3 多层感知机</h1><p>感知机的局限性在于它只能表示由一条直线划分的空间，使用之前的简单感知机，无法实现异或门（XOR gate）。<br>$$\begin{array}{|cc|c|}<br>\hline<br>x_{1} &amp; x_{2} &amp; y \<br>\hline<br>0 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 1 \<br>0 &amp; 1 &amp; 1 \<br>1 &amp; 1 &amp; 0 \<br>\hline<br>\end{array}$$</p>
-<p>无法使用一条直线将 0 和 1 分开。<br><img src="/../../../ai_assets/04_ml/10_split01.png" srcset="/img/loading.gif" lazyload></p>
-<p>可以考虑使用与门、与非门、或门组合来构成异或门。<br>$$\begin{array}{|cc|cc|c|}<br>\hline<br>x_{1} &amp; x_{2} &amp; s_{1} &amp; s_{2} &amp; y \<br>\hline<br>0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \<br>0 &amp; 1 &amp; 1 &amp; 1 &amp; 1\<br>1 &amp; 1 &amp; 0 &amp; 1 &amp; 0\<br>\hline<br>\end{array}$$</p>
-<p><img src="/../../../ai_assets/04_ml/10_XOR.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="扩展形式">2.4 扩展形式</h2>
+<p>考虑到以后的事情，这里将 <span class="math inline"><em>θ</em></span>
+改为 <span class="math inline">−<em>b</em></span>，其中 <span
+class="math inline"><em>𝑏</em></span> 为偏置，<span
+class="math inline"><em>𝑤</em>1</span>,<span
+class="math inline"><em>𝑤</em>2</span>为权重。权重控制输入信号的重要性，偏置调整神经元被激活的容易程度。
+<span class="math display">$$y=
+\begin{cases}
+0 &amp; (b+w_1x_1+w_2x_2\leq0) \\
+1 &amp; (b+w_1x_1+w_2x_2&gt;0) &amp;
+\end{cases}$$</span></p>
+<p>再来使用这种形式实现一个与门： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">AND</span>(<span class="hljs-params">x1, x2</span>):<br>    x = np.array([x1, x2])<br>    w = np.array([<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>])<br>    b = -<span class="hljs-number">0.7</span><br>    <span class="hljs-keyword">if</span> np.<span class="hljs-built_in">sum</span>(w * x) + b &gt; <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="多层感知机">3 多层感知机</h1>
+<p>感知机的局限性在于它只能表示由一条直线划分的空间，使用之前的简单感知机，无法实现异或门（XOR
+gate）。 <span class="math display">$$\begin{array}{|cc|c|}
+\hline
+x_{1} &amp; x_{2} &amp; y \\
+\hline
+0 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 0 \\
+\hline
+\end{array}$$</span></p>
+<p>无法使用一条直线将 0 和 1 分开。 <img src="10_split01.png" srcset="/img/loading.gif" lazyload /></p>
+<p>可以考虑使用与门、与非门、或门组合来构成异或门。 <span
+class="math display">$$\begin{array}{|cc|cc|c|}
+\hline
+x_{1} &amp; x_{2} &amp; s_{1} &amp; s_{2} &amp; y \\
+\hline
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 1 &amp; 1 &amp; 1\\
+1 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\
+\hline
+\end{array}$$</span></p>
+<p><img src="10_XOR.png" srcset="/img/loading.gif" lazyload /></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">XOR</span>(<span class="hljs-params">x1, x2</span>):<br>    s1 = NAND(x1, x2)<br>    s2 = OR(x1, x2)<br>    <span class="hljs-keyword">return</span> AND(s1, s2)<br></code></pre></td></tr></table></figure>
-
-<p>使用感知机的表示方法来表示这个异或门。<br><img src="/../../../ai_assets/04_ml/10_multi_preceptron.png" srcset="/img/loading.gif" lazyload></p>
-<p>这就是多层感知机结构，第 0 层的两个神经元接收输入信号，并将信号发送给第 1 层的神经元。 第 1 层的神经元将信号发送给第 2 层的神经元。第 2 层的神经元输出结果。通过叠加层，感知机能进行更加灵活的表示。</p>
+<p>使用感知机的表示方法来表示这个异或门。 <img
+src="10_multi_preceptron.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这就是多层感知机结构，第 0
+层的两个神经元接收输入信号，并将信号发送给第 1 层的神经元。 第 1
+层的神经元将信号发送给第 2 层的神经元。第 2
+层的神经元输出结果。通过叠加层，感知机能进行更加灵活的表示。</p>
 <p>这就是神经网络的基础。</p>
 
                 
@@ -465,6 +545,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -683,6 +769,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

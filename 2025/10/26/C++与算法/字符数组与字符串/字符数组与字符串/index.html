@@ -19,20 +19,20 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 字符数组 strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面，返回charr1">
+    <meta name="description" content="1 字符数组  strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面">
 <meta property="og:type" content="article">
 <meta property="og:title" content="字符数组与字符串">
 <meta property="og:url" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 字符数组 strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面，返回charr1">
+<meta property="og:description" content="1 字符数组  strlen(charr) 返回字符串的长度，不包含结束符\0 strcpy(charr1, charr2) 复制字符串，字符串charr2复制给charr1，返回charr1 strncpy(charr1, charr2) 将charr2前n个字符复制给charr1 strcat(charr1, charr2) 拼接字符串，字符串charr2拼接在charr1后面">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/cpp_assets/c_string.png">
+<meta property="og:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/c_string.png">
 <meta property="article:published_time" content="2025-10-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-26T13:14:51.248Z">
+<meta property="article:modified_time" content="2025-10-31T11:43:02.994Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="C基本语法">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/cpp_assets/c_string.png">
+<meta name="twitter:image" content="http://example.com/2025/10/26/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/c_string.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1.3k 字
         
       </span>
     
@@ -280,173 +280,169 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-字符数组"><a href="#1-字符数组" class="headerlink" title="1 字符数组"></a>1 字符数组</h1><ul>
-<li><code>strlen(charr)</code> 返回字符串的长度，不包含结束符\0</li>
-<li><code>strcpy(charr1, charr2)</code> 复制字符串，字符串charr2复制给charr1，返回charr1</li>
-<li><code>strncpy(charr1, charr2)</code> 将charr2前n个字符复制给charr1</li>
-<li><code>strcat(charr1, charr2)</code> 拼接字符串，字符串charr2拼接在charr1后面，返回charr1</li>
-<li><code>strncat(charr1, charr2)</code> 将字符串charr2前n个字符拼接到charr1<ul>
-<li><strong>注</strong>：如果添加或者复制后的charr1数组越界则会报错</li>
-</ul>
-</li>
-<li><code>strcmp(charr1,charr2)</code> 比较字符串，如果charr1&gt;charr2 返回正整数，charr1&#x3D;charr2 返回0，charr1&lt;charr2 返回负整数</li>
-<li><code>strncmp(charr1,charr2)</code> 比较charr1和charr2的前n个字符</li>
-</ul>
-<p>字符数组转 <code>int</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;123456&quot;</span>;<br><span class="hljs-type">int</span> d = <span class="hljs-built_in">atoi</span>(a);<br></code></pre></td></tr></table></figure>
-
-<p>字符数组转 &#96;string</p>
+                <h1 id="字符数组">1 字符数组</h1>
 <ul>
-<li><p>直接赋值</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello&quot;</span>;<br>string s = a;<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>构造函数</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello world&quot;</span>;  <br><span class="hljs-function">string <span class="hljs-title">str1</span><span class="hljs-params">(a)</span></span>;  <span class="hljs-comment">// 全部转换</span><br><span class="hljs-function">string <span class="hljs-title">str2</span><span class="hljs-params">(a, <span class="hljs-number">5</span>)</span></span>;  <span class="hljs-comment">// 指定长度转换</span><br></code></pre></td></tr></table></figure></li>
+<li><code>strlen(charr)</code> 返回字符串的长度，不包含结束符\0</li>
+<li><code>strcpy(charr1, charr2)</code>
+复制字符串，字符串charr2复制给charr1，返回charr1</li>
+<li><code>strncpy(charr1, charr2)</code>
+将charr2前n个字符复制给charr1</li>
+<li><code>strcat(charr1, charr2)</code>
+拼接字符串，字符串charr2拼接在charr1后面，返回charr1</li>
+<li><code>strncat(charr1, charr2)</code>
+将字符串charr2前n个字符拼接到charr1
+<ul>
+<li><strong>注</strong>：如果添加或者复制后的charr1数组越界则会报错</li>
+</ul></li>
+<li><code>strcmp(charr1,charr2)</code> 比较字符串，如果charr1&gt;charr2
+返回正整数，charr1=charr2 返回0，charr1&lt;charr2 返回负整数</li>
+<li><code>strncmp(charr1,charr2)</code>
+比较charr1和charr2的前n个字符</li>
 </ul>
-<h1 id="2-string类"><a href="#2-string类" class="headerlink" title="2 string类"></a>2 string类</h1><h2 id="2-1-基础概念"><a href="#2-1-基础概念" class="headerlink" title="2.1 基础概念"></a>2.1 基础概念</h2><p>在 <code>#inlcude &lt;string&gt;</code> 中使用</p>
+<p>字符数组转 <code>int</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;123456&quot;</span>;<br><span class="hljs-type">int</span> d = <span class="hljs-built_in">atoi</span>(a);<br></code></pre></td></tr></table></figure></p>
+<p>字符数组转 `string - 直接赋值 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello&quot;</span>;<br>string s = a;<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>构造函数 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">100</span>] = <span class="hljs-string">&quot;hello world&quot;</span>;  <br><span class="hljs-function">string <span class="hljs-title">str1</span><span class="hljs-params">(a)</span></span>;  <span class="hljs-comment">// 全部转换</span><br><span class="hljs-function">string <span class="hljs-title">str2</span><span class="hljs-params">(a, <span class="hljs-number">5</span>)</span></span>;  <span class="hljs-comment">// 指定长度转换</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="string类">2 string类</h1>
+<h2 id="基础概念">2.1 基础概念</h2>
+<p>在 <code>#inlcude &lt;string&gt;</code> 中使用</p>
 <blockquote>
 <p><code>string</code>不是<strong>基本数据类型</strong>，是C++中对<strong>char</strong>封装成的<strong>类</strong>。主要用于<strong>字符串</strong>处理，可以使用<strong>输入输出流</strong>方式直接进行<code>string</code>操作，也可以通过<strong>文件</strong>等手段进行<code>string</code>操作。</p>
 </blockquote>
-<p><img src="/../../../cpp_assets/c_string.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="2-2-声明"><a href="#2-2-声明" class="headerlink" title="2.2 声明"></a>2.2 声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">string s; <span class="hljs-comment">//空字符串</span><br><span class="hljs-function">string <span class="hljs-title">s1</span><span class="hljs-params">(<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;a&#x27;</span>)</span></span>; <span class="hljs-comment">//5个a</span><br>string s2 = <span class="hljs-string">&quot;123456&quot;</span>; <span class="hljs-comment">//s2为123456</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="2-3-输入输出"><a href="#2-3-输入输出" class="headerlink" title="2.3 输入输出"></a>2.3 输入输出</h2><ul>
-<li><p><code>cin &gt;&gt; s;</code>   读到空格、回车、文件结束符停止</p>
-</li>
-<li><p><code>getline(cin, s);</code> 读入一整行</p>
-</li>
-<li><p><code>cout &lt;&lt; s;</code> 输出整个字符串</p>
-</li>
-<li><p><code>cout &lt;&lt; s[2];</code> 按下标输出</p>
-</li>
+<p><img src="c_string.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="声明">2.2 声明</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">string s; <span class="hljs-comment">//空字符串</span><br><span class="hljs-function">string <span class="hljs-title">s1</span><span class="hljs-params">(<span class="hljs-number">5</span>, <span class="hljs-string">&#x27;a&#x27;</span>)</span></span>; <span class="hljs-comment">//5个a</span><br>string s2 = <span class="hljs-string">&quot;123456&quot;</span>; <span class="hljs-comment">//s2为123456</span><br></code></pre></td></tr></table></figure>
+<h2 id="输入输出">2.3 输入输出</h2>
+<ul>
+<li><p><code>cin &gt;&gt; s;</code>
+读到空格、回车、文件结束符停止</p></li>
+<li><p><code>getline(cin, s);</code> 读入一整行</p></li>
+<li><p><code>cout &lt;&lt; s;</code> 输出整个字符串</p></li>
+<li><p><code>cout &lt;&lt; s[2];</code> 按下标输出</p></li>
 </ul>
-<h2 id="2-4-遍历"><a href="#2-4-遍历" class="headerlink" title="2.4 遍历"></a>2.4 遍历</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>(); i++) cout &lt;&lt; s[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
-
+<h2 id="遍历">2.4 遍历</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; s<span class="hljs-number">2.</span><span class="hljs-built_in">size</span>(); i++) cout &lt;&lt; s[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> c : s) cout &lt;&lt; c &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br></code></pre></td></tr></table></figure>
-
-<h2 id="2-5-常用函数"><a href="#2-5-常用函数" class="headerlink" title="2.5 常用函数"></a>2.5 常用函数</h2><ul>
-<li><code>str.length()</code>&#x2F;<code>str.size()</code> 返回字符串真实长度，不包含结束符\0</li>
-<li><code>sizeof(type)</code>数据类型用括号  <code>sizeof var_name</code>  变量名可以不用括号 </li>
-<li><code>str.empty()</code> 字符串判空，空串返回<code>true</code>，非空返回<code>false</code></li>
+<h2 id="常用函数">2.5 常用函数</h2>
+<ul>
+<li><code>str.length()</code>/<code>str.size()</code>
+返回字符串真实长度，不包含结束符\0</li>
+<li><code>sizeof(type)</code>数据类型用括号 <code>sizeof var_name</code>
+变量名可以不用括号</li>
+<li><code>str.empty()</code>
+字符串判空，空串返回<code>true</code>，非空返回<code>false</code></li>
 <li><code>str1.insert(pos, str2)</code> 在str1下标pos处插入str2</li>
-<li><code>str.substr(pos,len)</code> 返回一个从下标pos开始截取长度为len的字符串</li>
+<li><code>str.substr(pos,len)</code>
+返回一个从下标pos开始截取长度为len的字符串</li>
 <li><code>str.erase(pos, len)</code> 删除从下标pos开始的len个字符</li>
-<li><code>str1.replace(pos, len, str2) </code> 将str1中下标为pos开始的len个元素替换为str2</li>
-<li><code>str.find(s, pos)</code> 从str中下标为pos的位置开始查找，返回s第一次出现的下标，查找不到返回 <code>string::npos</code></li>
+<li><code>str1.replace(pos, len, str2)</code>
+将str1中下标为pos开始的len个元素替换为str2</li>
+<li><code>str.find(s, pos)</code>
+从str中下标为pos的位置开始查找，返回s第一次出现的下标，查找不到返回
+<code>string::npos</code></li>
 <li><code>str.clear()</code> 清空str中的内容</li>
-<li>string的拼接复制比较可以直接使用<code>+</code> <code>=</code> <code>&gt; &lt; &gt;= &lt;= != ==</code></li>
+<li>string的拼接复制比较可以直接使用<code>+</code> <code>=</code>
+<code>&gt; &lt; &gt;= &lt;= != ==</code></li>
 </ul>
-<h4 id="size-获取大小"><a href="#size-获取大小" class="headerlink" title="size()  获取大小"></a><code>size()</code>  <strong>获取大小</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.size()</strong><br>返回<strong>元素数目</strong></p>
-</blockquote>
-<hr>
-<h4 id="length-获取长度"><a href="#length-获取长度" class="headerlink" title="length() 获取长度"></a><code>length()</code> <strong>获取长度</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.length()</strong><br>返回<strong>字符串长度</strong>, 与**size()**返回的数字相同</p>
-</blockquote>
-<hr>
-<h4 id="empty-判空"><a href="#empty-判空" class="headerlink" title="empty() 判空"></a><code>empty()</code> <strong>判空</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.empty()</strong><br>若为空, 返回<strong>true</strong>, 非空返回<strong>false</strong></p>
-</blockquote>
-<hr>
-<h4 id="clear-清空"><a href="#clear-清空" class="headerlink" title="clear() 清空"></a><code>clear()</code> <strong>清空</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.clear</strong>()<br><strong>清空所有元素</strong></p>
-</blockquote>
-<hr>
-<h4 id="push-back-尾部插入"><a href="#push-back-尾部插入" class="headerlink" title="push_back() 尾部插入"></a><code>push_back()</code> <strong>尾部插入</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.push_back(c)</strong><br><strong>尾部插入一个字符</strong>，可用+&#x3D;代替</p>
-</blockquote>
-<hr>
-<h4 id="pop-back-尾部删除"><a href="#pop-back-尾部删除" class="headerlink" title="pop_back() 尾部删除"></a><code>pop_back()</code> <strong>尾部删除</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.pop_back()</strong><br><strong>尾部删除一个元素</strong></p>
-</blockquote>
-<hr>
-<h4 id="back-访问尾部"><a href="#back-访问尾部" class="headerlink" title="back() 访问尾部"></a><code>back()</code> <strong>访问尾部</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.back()</strong><br><strong>访问尾部元素</strong></p>
-</blockquote>
-<hr>
-<h4 id="front-访问头部"><a href="#front-访问头部" class="headerlink" title="front() 访问头部"></a><code>front()</code> <strong>访问头部</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.front()</strong><br><strong>访问头部第一个元素</strong>，可用s[0]代替</p>
-</blockquote>
-<hr>
-<h4 id="insert-插入"><a href="#insert-插入" class="headerlink" title="insert() 插入"></a><code>insert()</code> <strong>插入</strong></h4><p>语法:</p>
-<blockquote>
-<p> <strong>s1.insert(pos, s2)</strong></p>
-</blockquote>
+<h4 id="size-获取大小"><code>size()</code>
+<strong>获取大小</strong></h4>
+<p>语法: &gt; <strong>s.size()</strong> &gt;
+返回<strong>元素数目</strong></p>
+<hr />
+<h4 id="length-获取长度"><code>length()</code>
+<strong>获取长度</strong></h4>
+<p>语法: &gt; <strong>s.length()</strong> &gt;
+返回<strong>字符串长度</strong>,
+与<strong>size()</strong>返回的数字相同</p>
+<hr />
+<h4 id="empty-判空"><code>empty()</code> <strong>判空</strong></h4>
+<p>语法: &gt; <strong>s.empty()</strong> &gt; 若为空,
+返回<strong>true</strong>, 非空返回<strong>false</strong></p>
+<hr />
+<h4 id="clear-清空"><code>clear()</code> <strong>清空</strong></h4>
+<p>语法: &gt; <strong>s.clear</strong>() &gt;
+<strong>清空所有元素</strong></p>
+<hr />
+<h4 id="push_back-尾部插入"><code>push_back()</code>
+<strong>尾部插入</strong></h4>
+<p>语法: &gt; <strong>s.push_back(c)</strong> &gt;
+<strong>尾部插入一个字符</strong>，可用+=代替</p>
+<hr />
+<h4 id="pop_back-尾部删除"><code>pop_back()</code>
+<strong>尾部删除</strong></h4>
+<p>语法: &gt; <strong>s.pop_back()</strong> &gt;
+<strong>尾部删除一个元素</strong></p>
+<hr />
+<h4 id="back-访问尾部"><code>back()</code>
+<strong>访问尾部</strong></h4>
+<p>语法: &gt; <strong>s.back()</strong> &gt;
+<strong>访问尾部元素</strong></p>
+<hr />
+<h4 id="front-访问头部"><code>front()</code>
+<strong>访问头部</strong></h4>
+<p>语法: &gt; <strong>s.front()</strong> &gt;
+<strong>访问头部第一个元素</strong>，可用s[0]代替</p>
+<hr />
+<h4 id="insert-插入"><code>insert()</code> <strong>插入</strong></h4>
+<p>语法: &gt; <strong>s1.insert(pos, s2)</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.</span><span class="hljs-built_in">insert</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;bd&quot;</span>); <span class="hljs-comment">//在下标2处插入bd</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">insert</span> (<span class="hljs-number">4</span>, s2); <span class="hljs-comment">//在下标4处插入s2</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="erase-删除"><a href="#erase-删除" class="headerlink" title="erase() 删除"></a><code>erase()</code> <strong>删除</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.erase(pos, num)</strong><br><strong>s.erase(pos)</strong></p>
-</blockquote>
+<hr />
+<h4 id="erase-删除"><code>erase()</code> <strong>删除</strong></h4>
+<p>语法: &gt; <strong>s.erase(pos, num)</strong> &gt;
+<strong>s.erase(pos)</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s.<span class="hljs-built_in">erase</span>(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>); <span class="hljs-comment">//从下标2开始删除4个字符</span><br>s.<span class="hljs-built_in">erase</span>(<span class="hljs-number">3</span>) <span class="hljs-comment">//从下标3开始删除后面所有字符</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="substr-截取"><a href="#substr-截取" class="headerlink" title="substr() 截取"></a><code>substr()</code> <strong>截取</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.substr(pos, num)</strong><br><strong>s.substr(pos)</strong></p>
-</blockquote>
+<hr />
+<h4 id="substr-截取"><code>substr()</code> <strong>截取</strong></h4>
+<p>语法: &gt; <strong>s.substr(pos, num)</strong> &gt;
+<strong>s.substr(pos)</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s1 = s<span class="hljs-number">2.</span><span class="hljs-built_in">substr</span>(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标1开始截取3个字符</span><br>s1 = s<span class="hljs-number">2.</span><span class="hljs-built_in">substr</span>(<span class="hljs-number">2</span>); <span class="hljs-comment">//从下标2开始截取整个s2</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="find-查找"><a href="#find-查找" class="headerlink" title="find() 查找"></a><code>find()</code> <strong>查找</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s1.find(s2, pos)</strong><br><strong>s1.find(s2)</strong><br>查到返回<strong>下标</strong>, 查不到返回 <strong>string::npos</strong></p>
-</blockquote>
+<hr />
+<h4 id="find-查找"><code>find()</code> <strong>查找</strong></h4>
+<p>语法: &gt; <strong>s1.find(s2, pos)</strong> &gt;
+<strong>s1.find(s2)</strong> &gt; 查到返回<strong>下标</strong>,
+查不到返回 <strong>string::npos</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.f</span>ind(<span class="hljs-string">&quot;3&quot;</span>); <span class="hljs-comment">//查找整个s1, 返回第一次出现&quot;3&quot;的下标</span><br>s<span class="hljs-number">1.f</span>ind(<span class="hljs-string">&quot;42&quot;</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">//从下标1开始向后查找, 返回第一次出现&quot;42&quot;的下标</span><br>s<span class="hljs-number">1.f</span>ind(s2, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标3开始向后查找, 返回第一次出现s2的下标</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="rfind-逆序查找"><a href="#rfind-逆序查找" class="headerlink" title="rfind 逆序查找"></a><code>rfind</code> <strong>逆序查找</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s1.rfind(s2, pos)</strong><br><strong>s1.rfind(s2)</strong><br>查到返回<strong>下标</strong>, 查不到返回 <strong>string::npos</strong></p>
-</blockquote>
+<hr />
+<h4 id="rfind-逆序查找"><code>rfind</code>
+<strong>逆序查找</strong></h4>
+<p>语法: &gt; <strong>s1.rfind(s2, pos)</strong> &gt;
+<strong>s1.rfind(s2)</strong> &gt; 查到返回<strong>下标</strong>,
+查不到返回 <strong>string::npos</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp">s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(<span class="hljs-string">&quot;3&quot;</span>); <span class="hljs-comment">//逆序查找整个s1, 返回第一次出现&quot;3&quot;的下标</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(<span class="hljs-string">&quot;42&quot;</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">//从下标1开始向前查找, 返回第一次出现&quot;42&quot;的下标</span><br>s<span class="hljs-number">1.</span><span class="hljs-built_in">rfind</span>(s2, <span class="hljs-number">3</span>); <span class="hljs-comment">//从下标3开始向前查找, 返回第一次出现s2的下标</span><br></code></pre></td></tr></table></figure>
-
-<hr>
-<h4 id="reverse-逆置"><a href="#reverse-逆置" class="headerlink" title="reverse() 逆置"></a><code>reverse()</code> <strong>逆置</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>reverse(s.begin, s.end)</strong> &#x2F;&#x2F;包含在&lt;algorithm&gt;中<br><strong>字符串逆置</strong></p>
-</blockquote>
-<hr>
-<h4 id="to-string-int-转-string"><a href="#to-string-int-转-string" class="headerlink" title="to_string() int 转 string"></a><code>to_string()</code> <strong>int 转 string</strong></h4><p>语法</p>
-<blockquote>
-<p> <strong>to_string(int)</strong><br> 返回一个<strong>string</strong></p>
-</blockquote>
-<hr>
-<h4 id="stoi-string-转-int"><a href="#stoi-string-转-int" class="headerlink" title="stoi() string 转 int"></a><code>stoi()</code> <strong>string 转 int</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>stoi(string)</strong><br>返回一个<strong>int</strong></p>
-</blockquote>
-<hr>
-<h4 id="copy-复制"><a href="#copy-复制" class="headerlink" title="copy() 复制"></a><code>copy()</code> <strong>复制</strong></h4><p>语法:</p>
-<blockquote>
-<p><strong>s.copy(a, num, pos)</strong><br><strong>s.copy(a, num)</strong></p>
-</blockquote>
+<hr />
+<h4 id="reverse-逆置"><code>reverse()</code> <strong>逆置</strong></h4>
+<p>语法: &gt; <strong>reverse(s.begin, s.end)</strong>
+//包含在&lt;algorithm&gt;中 &gt; <strong>字符串逆置</strong></p>
+<hr />
+<h4 id="to_string-int-转-string"><code>to_string()</code> <strong>int 转
+string</strong></h4>
+<p>语法 &gt; <strong>to_string(int)</strong> &gt;
+返回一个<strong>string</strong></p>
+<hr />
+<h4 id="stoi-string-转-int"><code>stoi()</code> <strong>string 转
+int</strong></h4>
+<p>语法: &gt; <strong>stoi(string)</strong> &gt;
+返回一个<strong>int</strong></p>
+<hr />
+<h4 id="copy-复制"><code>copy()</code> <strong>复制</strong></h4>
+<p>语法: &gt; <strong>s.copy(a, num, pos)</strong> &gt;
+<strong>s.copy(a, num)</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> a[<span class="hljs-number">10</span>];<br>s.<span class="hljs-built_in">copy</span>(a, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>); <span class="hljs-comment">//从下标2开始复制5个字符到字符数组a</span><br>s.<span class="hljs-built_in">copy</span>(a,<span class="hljs-number">6</span>); <span class="hljs-comment">//从下标0开始复制6个字符到字符数组a</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="3-字符数组和string类的区别"><a href="#3-字符数组和string类的区别" class="headerlink" title="3  字符数组和string类的区别"></a>3  字符数组和string类的区别</h1><ul>
-<li><code>string</code>是一个类，<code>string s=&quot;abcd&quot;;</code>中的s是一个对象</li>
-<li>初始化方式不同<ul>
+<h1 id="字符数组和string类的区别">3 字符数组和string类的区别</h1>
+<ul>
+<li><code>string</code>是一个类，<code>string s="abcd";</code>中的s是一个对象</li>
+<li>初始化方式不同
+<ul>
 <li>字符数组后面有 [] ，string类型后面没有[]</li>
 <li>初始化的关键字一个是<code>char</code> 一个是<code>string</code></li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> charr1[<span class="hljs-number">20</span>];<br><span class="hljs-type">char</span> charr2[] = <span class="hljs-string">&quot;Hello&quot;</span>;<br>string str1;<br>string str2 = <span class="hljs-string">&quot;Hello&quot;</span>;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>都可以使用<code>cin cout</code>的方式进行输入输出，<code>getline</code>使用有区别</li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">char</span> charr1[<span class="hljs-number">20</span>]; <br>cin.<span class="hljs-built_in">getline</span>(charr1,<span class="hljs-number">20</span>);<br>string str;<br><span class="hljs-built_in">getline</span>(cin,str);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>都可以使用下标来访问元素</li>
 </ul>
@@ -608,6 +604,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -826,6 +828,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

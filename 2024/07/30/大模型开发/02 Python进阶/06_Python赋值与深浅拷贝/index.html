@@ -19,24 +19,22 @@
   <meta name="author" content="baoduozhu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1 可变对象和不可变对象可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。  可变对象：该对象所指内存的值可以被改变 列表 list 集合 set 字典 dict 自定义对象   不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址 数字 int float 字符串 str 元组 tuple 布尔 bool">
+    <meta name="description" content="1 可变对象和不可变对象 可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。 - 可变对象：该对象所指内存的值可以被改变 - 列表list - 集合set - 字典dict - 自定义对象 - 不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址 - 数字int float - 字符串str -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="06_Python赋值与深浅拷贝">
 <meta property="og:url" content="http://example.com/2024/07/30/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/index.html">
 <meta property="og:site_name" content="朱宝铎的技术专栏">
-<meta property="og:description" content="1 可变对象和不可变对象可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。  可变对象：该对象所指内存的值可以被改变 列表 list 集合 set 字典 dict 自定义对象   不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址 数字 int float 字符串 str 元组 tuple 布尔 bool">
+<meta property="og:description" content="1 可变对象和不可变对象 可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。 - 可变对象：该对象所指内存的值可以被改变 - 列表list - 集合set - 字典dict - 自定义对象 - 不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址 - 数字int float - 字符串str -">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250909100211.png">
-<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250906180358.png">
-<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250906194615.png">
-<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250906201908.png">
-<meta property="og:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250906202301.png">
+<meta property="og:image" content="http://example.com/2024/07/30/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_assign.png">
+<meta property="og:image" content="http://example.com/2024/07/30/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_variable.png">
+<meta property="og:image" content="http://example.com/2024/07/30/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_copy_deepcopy.png">
 <meta property="article:published_time" content="2024-07-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-10-31T02:14:41.096Z">
+<meta property="article:modified_time" content="2025-10-31T11:17:27.227Z">
 <meta property="article:author" content="baoduozhu">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/ai_assets/01_Python/Pasted%20image%2020250909100211.png">
+<meta name="twitter:image" content="http://example.com/2024/07/30/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_assign.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -231,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          985 字
+          991 字
         
       </span>
     
@@ -284,67 +282,50 @@
             
               <div class="markdown-body">
                 
-                <h1 id="1-可变对象和不可变对象"><a href="#1-可变对象和不可变对象" class="headerlink" title="1 可变对象和不可变对象"></a>1 可变对象和不可变对象</h1><p>可变对象和不可变对象的划分依据：<strong>在不改变地址的前提下，元素值能否修改</strong>。</p>
-<ul>
-<li>可变对象：该对象所指内存的值可以被改变<ul>
-<li>列表 <code>list</code></li>
-<li>集合 <code>set</code></li>
-<li>字典 <code>dict</code></li>
-<li>自定义对象</li>
-</ul>
-</li>
-<li>不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就<strong>不可修改</strong>，想要修改对象的值，需要复制一份后再改变，会返回一个新地址<ul>
-<li>数字 <code>int</code> <code>float</code></li>
-<li>字符串 <code>str</code></li>
-<li>元组 <code>tuple</code></li>
-<li>布尔 <code>bool</code></li>
-</ul>
-</li>
-</ul>
-<p>可以通过 <code>id()</code>查看对象的地址。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 不可变对象：改变元素值本质是创建了一个新的对象，指向了新的对象</span><br>a = <span class="hljs-number">10</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202913808</span><br>a = <span class="hljs-number">20</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202914128，内容修改，地址也变了</span><br><br><span class="hljs-comment"># 可变对象：</span><br>ls = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536</span><br>ls[<span class="hljs-number">1</span>] = <span class="hljs-number">6</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536，内容修改，地址不变</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="2-赋值"><a href="#2-赋值" class="headerlink" title="2 赋值"></a>2 赋值</h1><p>与C++不同，Python的赋值 <code>=</code>属于<strong>引用赋值</strong>，只是了创建对象的另一个<strong>引用（别名）</strong>，新旧变量指向同一个内存对象，通过任一引用修改对象（需要可变），其他引用都会发生变化。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 引用赋值，a和b都指向同一内存空间</span><br>a = <span class="hljs-number">10</span><br>b = a<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(<span class="hljs-number">10</span>))  <span class="hljs-comment"># 1437435953680</span><br><br><span class="hljs-comment"># c和d也指向同一内存空间</span><br>c = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>]<br>d = c<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 2028769177536</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(d))  <span class="hljs-comment"># 2028769177536</span><br></code></pre></td></tr></table></figure>
-
-<p>Python解释器在执行 <code>a = 10</code>赋值时做以下操作：</p>
-<ol>
-<li>创建变量 a</li>
-<li>创建一个对象(分配一块内存)，来存储值10</li>
-<li>将变量与对象，通过指针连接起来，从变量到对象的连接称之为引用(变量引用对象)</li>
-</ol>
-<p>把一个变量 <code>a</code>赋值给另一个变量 <code>b</code>，这个操作实际上是把变量 <code>b</code>指向变量 <code>a</code>所指向的数据。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">10</span><br>b = a<br>a = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># 10</span><br></code></pre></td></tr></table></figure>
-
-<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250909100211.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="3-浅拷贝"><a href="#3-浅拷贝" class="headerlink" title="3 浅拷贝"></a>3 浅拷贝</h1><p>浅拷贝和深拷贝使用需要导入 <code>import copy</code>模块，它们的区别是拷贝层级不同，都可以操作可变对象和不可变对象，但是一般不会操作不可变对象。</p>
+                <h1 id="可变对象和不可变对象">1 可变对象和不可变对象</h1>
+<p>可变对象和不可变对象的划分依据：<strong>在不改变地址的前提下，元素值能否修改</strong>。
+- 可变对象：该对象所指内存的值可以被改变 - 列表<code>list</code> -
+集合<code>set</code> - 字典<code>dict</code> - 自定义对象 -
+不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就<strong>不可修改</strong>，想要修改对象的值，需要复制一份后再改变，会返回一个新地址
+- 数字<code>int</code> <code>float</code> - 字符串<code>str</code> -
+元组<code>tuple</code> - 布尔<code>bool</code></p>
+<p>可以通过<code>id()</code>查看对象的地址。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 不可变对象：改变元素值本质是创建了一个新的对象，指向了新的对象</span><br>a = <span class="hljs-number">10</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202913808</span><br>a = <span class="hljs-number">20</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202914128，内容修改，地址也变了</span><br><br><span class="hljs-comment"># 可变对象：</span><br>ls = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536</span><br>ls[<span class="hljs-number">1</span>] = <span class="hljs-number">6</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536，内容修改，地址不变</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="赋值">2 赋值</h1>
+<p>与C++不同，Python的赋值<code>=</code>属于<strong>引用赋值</strong>，只是了创建对象的另一个<strong>引用（别名）</strong>，新旧变量指向同一个内存对象，通过任一引用修改对象（需要可变），其他引用都会发生变化。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 引用赋值，a和b都指向同一内存空间</span><br>a = <span class="hljs-number">10</span><br>b = a<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(<span class="hljs-number">10</span>))  <span class="hljs-comment"># 1437435953680</span><br><br><span class="hljs-comment"># c和d也指向同一内存空间</span><br>c = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>]<br>d = c<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 2028769177536</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(d))  <span class="hljs-comment"># 2028769177536</span><br></code></pre></td></tr></table></figure></p>
+<p>Python解释器在执行<code>a = 10</code>赋值时做以下操作： 1. 创建变量 a
+2. 创建一个对象(分配一块内存)，来存储值10 3.
+将变量与对象，通过指针连接起来，从变量到对象的连接称之为引用(变量引用对象)</p>
+<p>把一个变量<code>a</code>赋值给另一个变量<code>b</code>，这个操作实际上是把变量<code>b</code>指向变量<code>a</code>所指向的数据。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">10</span><br>b = a<br>a = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># 10</span><br></code></pre></td></tr></table></figure></p>
+<p><img src="06_assign.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="浅拷贝">3 浅拷贝</h1>
+<p>浅拷贝和深拷贝使用需要导入<code>import copy</code>模块，它们的区别是拷贝层级不同，都可以操作可变对象和不可变对象，但是一般不会操作不可变对象。</p>
 <blockquote>
-<p>不论是深拷贝还是浅拷贝，针对不可变类型的拷贝，都不会开辟新的空间，而是拷贝对象的引用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy<br>a = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br>b = copy.copy(a)<br>c = copy.deepcopy(a)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 1553475958912</span><br></code></pre></td></tr></table></figure>
+<p>不论是深拷贝还是浅拷贝，针对不可变类型的拷贝，都不会开辟新的空间，而是拷贝对象的引用。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy<br>a = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br>b = copy.copy(a)<br>c = copy.deepcopy(a)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 1553475958912</span><br></code></pre></td></tr></table></figure></p>
 </blockquote>
-<p>浅拷贝 <code>copy.copy()</code>会创建新对象，<strong>复制最外层的数据</strong>，但内部容器仍然是引用。</p>
-<ul>
-<li>外层独立：外层修改互不影响</li>
-<li>共享内层：嵌套对象的修改会影响所有拷贝</li>
-</ul>
+<p>浅拷贝<code>copy.copy()</code>会创建新对象，<strong>复制最外层的数据</strong>，但内部容器仍然是引用。
+- 外层独立：外层修改互不影响 -
+共享内层：嵌套对象的修改会影响所有拷贝</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy<br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]<br>b = copy.copy(a)  <span class="hljs-comment"># 实际拷贝了 [1, 2, 3, 地址]</span><br><br><span class="hljs-comment"># 外层在新的对象中</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 2785582893824</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 2785582894016</span><br><br><span class="hljs-comment"># 内层还是原来的引用</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 2785582896960</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 2785582896960</span><br><br>a[<span class="hljs-number">0</span>] = <span class="hljs-number">66</span><br>a[<span class="hljs-number">3</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">66</span><br><br><span class="hljs-built_in">print</span>(a)  <span class="hljs-comment"># [66, 2, 3, [66, 5, 6]]</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># [1, 2, 3, [66, 5, 6]]，外层独立，内层仍然是旧引用</span><br></code></pre></td></tr></table></figure>
-
-<p>在最外层只暴露了深层的引用，浅拷贝只会拷贝这个地址，而不会拷贝深层数据。<br><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250906180358.png" srcset="/img/loading.gif" lazyload></p>
-<h1 id="4-深拷贝"><a href="#4-深拷贝" class="headerlink" title="4 深拷贝"></a>4 深拷贝</h1><p>深拷贝 <code>copy.deepcopy()</code>会创建新的对象，并且<strong>完全独立</strong>的，会递归复制所有嵌套对象。</p>
-<ul>
-<li>完全隔离：任何修改都不会影响其他拷贝</li>
-<li>内存开销：需要更多内存，因为创建所有对象的副本</li>
-</ul>
+<p>在最外层只暴露了深层的引用，浅拷贝只会拷贝这个地址，而不会拷贝深层数据。
+<img src="06_variable.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="深拷贝">4 深拷贝</h1>
+<p>深拷贝<code>copy.deepcopy()</code>会创建新的对象，并且<strong>完全独立</strong>的，会递归复制所有嵌套对象。
+- 完全隔离：任何修改都不会影响其他拷贝 -
+内存开销：需要更多内存，因为创建所有对象的副本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy  <br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]  <br>b = copy.deepcopy(a)  <br><br><span class="hljs-comment"># 外层是独立的</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1823162354432</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1823162354624</span><br><br><span class="hljs-comment"># 内层也是独立的</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 1823162357568</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 1823162357952</span><br>  <br>a[<span class="hljs-number">0</span>] = <span class="hljs-number">66</span>  <br>a[<span class="hljs-number">3</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">66</span>  <br>  <br><span class="hljs-built_in">print</span>(a)  <span class="hljs-comment"># [66, 2, 3, [66, 5, 6]]</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># [1, 2, 3, [4, 5, 6]]，完全独立，不受影响</span><br></code></pre></td></tr></table></figure>
-
-<h1 id="5-总结区分"><a href="#5-总结区分" class="headerlink" title="5 总结区分"></a>5 总结区分</h1><p><strong>普通赋值和浅拷贝：</strong><br><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250906194615.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>浅拷贝和深拷贝：</strong></p>
-<ul>
-<li>浅拷贝只拷贝第一层中的数据并开辟空间存储</li>
-<li>深拷贝拷贝所有的数据并开辟对应的空间存储</li>
-</ul>
-<p><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250906201908.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>拷贝不可变类型：</strong><br>深浅拷贝对于不可变类型来说，非常类似普通的赋值，只是复制了引用。<br><img src="/../../../ai_assets/01_Python/Pasted%20image%2020250906202301.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="总结区分">5 总结区分</h1>
+<p><strong>普通赋值和浅拷贝：</strong> <img
+src="06_assign_copy.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>浅拷贝和深拷贝：</strong> -
+浅拷贝只拷贝第一层中的数据并开辟空间存储 -
+深拷贝拷贝所有的数据并开辟对应的空间存储</p>
+<p><img src="06_copy_deepcopy.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>拷贝不可变类型：</strong>
+深浅拷贝对于不可变类型来说，非常类似普通的赋值，只是复制了引用。 <img
+src="06_unvariable.png" srcset="/img/loading.gif" lazyload /></p>
 
                 
               </div>
@@ -503,6 +484,12 @@
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -721,6 +708,49 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
