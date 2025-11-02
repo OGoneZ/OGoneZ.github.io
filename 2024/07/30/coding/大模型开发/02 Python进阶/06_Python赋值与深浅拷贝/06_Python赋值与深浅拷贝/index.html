@@ -1,0 +1,952 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 可变对象和不可变对象 可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。  可变对象：该对象所指内存的值可以被改变  列表list 集合set 字典dict 自定义对象  不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址  数字int float 字符串str 元组tup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_Python赋值与深浅拷贝">
+<meta property="og:url" content="http://example.com/2024/07/30/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 可变对象和不可变对象 可变对象和不可变对象的划分依据：在不改变地址的前提下，元素值能否修改。  可变对象：该对象所指内存的值可以被改变  列表list 集合set 字典dict 自定义对象  不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就不可修改，想要修改对象的值，需要复制一份后再改变，会返回一个新地址  数字int float 字符串str 元组tup">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/python.png">
+<meta property="article:published_time" content="2024-07-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-02T09:28:32.954Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/python.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>06_Python赋值与深浅拷贝 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="06_Python赋值与深浅拷贝"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-30 00:00" pubdate>
+          2024年7月30日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          985 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Python语言"
+        id="heading-c6292ecbf61349629c82423d10141d25" role="tab" data-toggle="collapse" href="#collapse-c6292ecbf61349629c82423d10141d25"
+        aria-expanded="true"
+      >
+        Python语言
+        <span class="list-group-count">(13)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-c6292ecbf61349629c82423d10141d25"
+           role="tabpanel" aria-labelledby="heading-c6292ecbf61349629c82423d10141d25">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/07/26/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/01%20Python%E5%9F%BA%E7%A1%80/01_Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/01_Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="01_Python基础语法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_Python基础语法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/26/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/01%20Python%E5%9F%BA%E7%A1%80/02_Python%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8/02_Python%E6%95%B0%E6%8D%AE%E5%AE%B9%E5%99%A8/" title="02_Python数据容器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_Python数据容器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/27/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/01%20Python%E5%9F%BA%E7%A1%80/03_Python%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/03_Python%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" title="03_Python文件操作"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_Python文件操作</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/28/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/01%20Python%E5%9F%BA%E7%A1%80/04_Python%E5%BC%82%E5%B8%B8%E4%B8%8E%E6%A8%A1%E5%9D%97/04_Python%E5%BC%82%E5%B8%B8%E4%B8%8E%E6%A8%A1%E5%9D%97/" title="04_Python异常与模块"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Python异常与模块</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/29/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/05_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/05_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="05_Python面向对象"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_Python面向对象</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/30/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/06_Python%E8%B5%8B%E5%80%BC%E4%B8%8E%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" title="06_Python赋值与深浅拷贝"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">06_Python赋值与深浅拷贝</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/31/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/07_Python%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E8%BF%AD%E4%BB%A3%E5%99%A8/07_Python%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E8%BF%AD%E4%BB%A3%E5%99%A8/" title="07_Python生成器和迭代器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_Python生成器和迭代器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/01/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/08_Python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/08_Python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="08_Python函数式编程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">08_Python函数式编程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/03/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/09_Python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B/09_Python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B/" title="09_Python多进程和多线程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">09_Python多进程和多线程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/04/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/10_Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/10_Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="10_Python正则表达式"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">10_Python正则表达式</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/06/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/11_Python%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/11_Python%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" title="11_Python网络编程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">11_Python网络编程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/07/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/12_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7/12_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E9%AB%98%E7%BA%A7/" title="12_Python面向对象高级"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">12_Python面向对象高级</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/08/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/13_Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/13_Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="13_Python数据结构与算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">13_Python数据结构与算法</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">06_Python赋值与深浅拷贝</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="可变对象和不可变对象">1 可变对象和不可变对象</h1>
+<p>可变对象和不可变对象的划分依据：<strong>在不改变地址的前提下，元素值能否修改</strong>。</p>
+<ul>
+<li>可变对象：该对象所指内存的值可以被改变
+<ul>
+<li>列表<code>list</code></li>
+<li>集合<code>set</code></li>
+<li>字典<code>dict</code></li>
+<li>自定义对象</li>
+</ul></li>
+<li>不可变对象：该对象所指向的内存中的值不能被改变，一旦创建就<strong>不可修改</strong>，想要修改对象的值，需要复制一份后再改变，会返回一个新地址
+<ul>
+<li>数字<code>int</code> <code>float</code></li>
+<li>字符串<code>str</code></li>
+<li>元组<code>tuple</code></li>
+<li>布尔<code>bool</code></li>
+</ul></li>
+</ul>
+<p>可以通过<code>id()</code>查看对象的地址。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 不可变对象：改变元素值本质是创建了一个新的对象，指向了新的对象</span><br>a = <span class="hljs-number">10</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202913808</span><br>a = <span class="hljs-number">20</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1537202914128，内容修改，地址也变了</span><br><br><span class="hljs-comment"># 可变对象：</span><br>ls = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536</span><br>ls[<span class="hljs-number">1</span>] = <span class="hljs-number">6</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(ls))  <span class="hljs-comment"># 1995083673536，内容修改，地址不变</span><br></code></pre></td></tr></table></figure></p>
+<h1 id="赋值">2 赋值</h1>
+<p>与C++不同，Python的赋值<code>=</code>属于<strong>引用赋值</strong>，只是了创建对象的另一个<strong>引用（别名）</strong>，新旧变量指向同一个内存对象，通过任一引用修改对象（需要可变），其他引用都会发生变化。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 引用赋值，a和b都指向同一内存空间</span><br>a = <span class="hljs-number">10</span><br>b = a<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1437435953680</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(<span class="hljs-number">10</span>))  <span class="hljs-comment"># 1437435953680</span><br><br><span class="hljs-comment"># c和d也指向同一内存空间</span><br>c = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>]<br>d = c<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 2028769177536</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(d))  <span class="hljs-comment"># 2028769177536</span><br></code></pre></td></tr></table></figure></p>
+<p>Python解释器在执行<code>a = 10</code>赋值时做以下操作：</p>
+<ol type="1">
+<li>创建变量 a</li>
+<li>创建一个对象(分配一块内存)，来存储值10</li>
+<li>将变量与对象，通过指针连接起来，从变量到对象的连接称之为引用(变量引用对象)</li>
+</ol>
+<p>把一个变量<code>a</code>赋值给另一个变量<code>b</code>，这个操作实际上是把变量<code>b</code>指向变量<code>a</code>所指向的数据。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">a = <span class="hljs-number">10</span><br>b = a<br>a = <span class="hljs-number">5</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># 10</span><br></code></pre></td></tr></table></figure></p>
+<p><img src="06_assign.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="浅拷贝">3 浅拷贝</h1>
+<p>浅拷贝和深拷贝使用需要导入<code>import copy</code>模块，它们的区别是拷贝层级不同，都可以操作可变对象和不可变对象，但是一般不会操作不可变对象。</p>
+<blockquote>
+<p>不论是深拷贝还是浅拷贝，针对不可变类型的拷贝，都不会开辟新的空间，而是拷贝对象的引用。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy<br>a = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br>b = copy.copy(a)<br>c = copy.deepcopy(a)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1553475958912</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(c))  <span class="hljs-comment"># 1553475958912</span><br></code></pre></td></tr></table></figure></p>
+</blockquote>
+<p>浅拷贝<code>copy.copy()</code>会创建新对象，<strong>复制最外层的数据</strong>，但内部容器仍然是引用。</p>
+<ul>
+<li>外层独立：外层修改互不影响</li>
+<li>共享内层：嵌套对象的修改会影响所有拷贝</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy<br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]<br>b = copy.copy(a)  <span class="hljs-comment"># 实际拷贝了 [1, 2, 3, 地址]</span><br><br><span class="hljs-comment"># 外层在新的对象中</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 2785582893824</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 2785582894016</span><br><br><span class="hljs-comment"># 内层还是原来的引用</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 2785582896960</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 2785582896960</span><br><br>a[<span class="hljs-number">0</span>] = <span class="hljs-number">66</span><br>a[<span class="hljs-number">3</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">66</span><br><br><span class="hljs-built_in">print</span>(a)  <span class="hljs-comment"># [66, 2, 3, [66, 5, 6]]</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># [1, 2, 3, [66, 5, 6]]，外层独立，内层仍然是旧引用</span><br></code></pre></td></tr></table></figure>
+<p>在最外层只暴露了深层的引用，浅拷贝只会拷贝这个地址，而不会拷贝深层数据。
+<img src="06_variable.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="深拷贝">4 深拷贝</h1>
+<p>深拷贝<code>copy.deepcopy()</code>会创建新的对象，并且<strong>完全独立</strong>的，会递归复制所有嵌套对象。</p>
+<ul>
+<li>完全隔离：任何修改都不会影响其他拷贝</li>
+<li>内存开销：需要更多内存，因为创建所有对象的副本</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> copy  <br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]  <br>b = copy.deepcopy(a)  <br><br><span class="hljs-comment"># 外层是独立的</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a))  <span class="hljs-comment"># 1823162354432</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b))  <span class="hljs-comment"># 1823162354624</span><br><br><span class="hljs-comment"># 内层也是独立的</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(a[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 1823162357568</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">id</span>(b[<span class="hljs-number">3</span>]))  <span class="hljs-comment"># 1823162357952</span><br>  <br>a[<span class="hljs-number">0</span>] = <span class="hljs-number">66</span>  <br>a[<span class="hljs-number">3</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">66</span>  <br>  <br><span class="hljs-built_in">print</span>(a)  <span class="hljs-comment"># [66, 2, 3, [66, 5, 6]]</span><br><span class="hljs-built_in">print</span>(b)  <span class="hljs-comment"># [1, 2, 3, [4, 5, 6]]，完全独立，不受影响</span><br></code></pre></td></tr></table></figure>
+<h1 id="总结区分">5 总结区分</h1>
+<p><strong>普通赋值和浅拷贝：</strong> <img
+src="06_assign_copy.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>浅拷贝和深拷贝：</strong></p>
+<ul>
+<li>浅拷贝只拷贝第一层中的数据并开辟空间存储</li>
+<li>深拷贝拷贝所有的数据并开辟对应的空间存储</li>
+</ul>
+<p><img src="06_copy_deepcopy.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>拷贝不可变类型：</strong>
+深浅拷贝对于不可变类型来说，非常类似普通的赋值，只是复制了引用。 <img
+src="06_unvariable.png" srcset="/img/loading.gif" lazyload /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Python%E8%AF%AD%E8%A8%80/" class="category-chain-item">Python语言</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Python/" class="print-no-link">#Python</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>06_Python赋值与深浅拷贝</div>
+      <div>http://example.com/2024/07/30/coding/大模型开发/02 Python进阶/06_Python赋值与深浅拷贝/06_Python赋值与深浅拷贝/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/31/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/07_Python%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E8%BF%AD%E4%BB%A3%E5%99%A8/07_Python%E7%94%9F%E6%88%90%E5%99%A8%E5%92%8C%E8%BF%AD%E4%BB%A3%E5%99%A8/" title="07_Python生成器和迭代器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07_Python生成器和迭代器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/29/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/02%20Python%E8%BF%9B%E9%98%B6/05_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/05_Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" title="05_Python面向对象">
+                        <span class="hidden-mobile">05_Python面向对象</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

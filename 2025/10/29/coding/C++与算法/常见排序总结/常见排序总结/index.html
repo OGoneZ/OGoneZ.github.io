@@ -1,0 +1,1230 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 冒泡排序 从左往右相邻的数两两比较，如果左边大于右边则交换，每一轮冒泡会选出一个未排序数字中的最大值放到最后，每一轮确定一个数字的最终位置，排序完n个数字需要n-1轮。  外层循环通过 i 控制遍历次数，最大到 n-1。每轮比较中最大的元素都会被“冒泡”到数组的末尾，因此内层循环的范围是 n - i - 1。 swapped 用于记录当前轮次是否有元素交换。如果某轮中没有发生交换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见排序总结">
+<meta property="og:url" content="http://example.com/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 冒泡排序 从左往右相邻的数两两比较，如果左边大于右边则交换，每一轮冒泡会选出一个未排序数字中的最大值放到最后，每一轮确定一个数字的最终位置，排序完n个数字需要n-1轮。  外层循环通过 i 控制遍历次数，最大到 n-1。每轮比较中最大的元素都会被“冒泡”到数组的末尾，因此内层循环的范围是 n - i - 1。 swapped 用于记录当前轮次是否有元素交换。如果某轮中没有发生交换">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/cpp.png">
+<meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-02T09:28:32.007Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="cpp">
+<meta property="article:tag" content="排序">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/cpp.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>常见排序总结 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="常见排序总结"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-29 00:00" pubdate>
+          2025年10月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="C++算法"
+        id="heading-2bae0fd5a9e6f9898d39596521be441d" role="tab" data-toggle="collapse" href="#collapse-2bae0fd5a9e6f9898d39596521be441d"
+        aria-expanded="true"
+      >
+        C++算法
+        <span class="list-group-count">(19)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-2bae0fd5a9e6f9898d39596521be441d"
+           role="tabpanel" aria-labelledby="heading-2bae0fd5a9e6f9898d39596521be441d">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/" title="C++基础算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++基础算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C++基础语法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++基础语法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/C++%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" title="C++文件读取"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++文件读取</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/Clion%E5%88%B7%E9%A2%98%E6%94%BB%E7%95%A5-%E9%85%8D%E7%BD%AECmake/" title="Clion刷题攻略-配置Cmake"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Clion刷题攻略-配置Cmake</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/" title="STL学习指北"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">STL学习指北</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E9%80%9A%E7%94%A8%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/" title="二分"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">二分</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/" title="二分查找（唯一值）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">二分查找（唯一值）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/26/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE/%E5%9B%BE/" title="图"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">图</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%83%E6%B0%8F%E7%AD%9B%E6%8C%87%E6%95%B0%E5%88%A4%E5%AE%9A/%E5%9F%83%E6%B0%8F%E7%AD%9B%E8%B4%A8%E6%95%B0%E5%88%A4%E5%AE%9A/" title="埃氏筛质数判定"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">埃氏筛质数判定</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符数组与字符串"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">字符数组与字符串</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/" title="容器填充函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">容器填充函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/" title="常见排序总结"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">常见排序总结</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="广度优先搜索"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">广度优先搜索</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">最短路径</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="标准输入输出"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">标准输入输出</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/26/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/%E6%A0%91/" title="树"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="深度优先搜索"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深度优先搜索</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/26/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8/" title="链表"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">链表</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/" title="高精度加减"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">高精度加减</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">常见排序总结</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="冒泡排序">1 冒泡排序</h1>
+<p>从左往右相邻的数两两比较，如果左边大于右边则交换，每一轮冒泡会选出一个未排序数字中的最大值放到最后，每一轮确定一个数字的最终位置，排序完n个数字需要n-1轮。</p>
+<ul>
+<li><p>外层循环通过 <code>i</code> 控制遍历次数，最大到
+<code>n-1</code>。每轮比较中最大的元素都会被“冒泡”到数组的末尾，因此内层循环的范围是
+<code>n - i - 1</code>。</p></li>
+<li><p><code>swapped</code>
+用于记录当前轮次是否有元素交换。如果某轮中没有发生交换，意味着数组已经有序，可以提前退出循环，避免不必要的比较。</p></li>
+<li><p>冒泡排序在最差情况下的时间复杂度是
+O(n²)，但在最佳情况下（数组已经有序时），通过 <code>swapped</code>
+变量，时间复杂度可以优化为 O(n)。</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bubble_sort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; i++) &#123;  <span class="hljs-comment">// 每轮排好一个数字，排n-1轮</span><br>        <span class="hljs-type">bool</span> swapped = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 每次循环开始时重置标志位</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n - i - <span class="hljs-number">1</span>; j++) &#123;  <span class="hljs-comment">//排好的放在后面，未排序的数字减少一个</span><br>            <span class="hljs-keyword">if</span> (a[j] &gt; a[j + <span class="hljs-number">1</span>]) &#123;  <span class="hljs-comment">// 比较相邻元素</span><br>                <span class="hljs-built_in">swap</span>(a[j], a[j + <span class="hljs-number">1</span>]);  <span class="hljs-comment">// 交换元素</span><br>                swapped = <span class="hljs-literal">true</span>;  <span class="hljs-comment">// 记录交换发生</span><br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!swapped) <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 如果没有发生交换，数组已经有序，提前退出</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="选择排序">2 选择排序</h1>
+<p>从左往右扫描，每一轮选出一个当前未排序数字中的最小值，放到前面，每一轮确定一个数字的最终位置，排完n个数字需要n-1轮。</p>
+<ul>
+<li><p><strong>外层循环</strong>通过 <code>i</code> 控制遍历次数，最大到
+<code>n-1</code>，每次遍历选择数组中未排序部分的第一个元素。</p></li>
+<li><p><strong>内层循环</strong>通过 <code>j</code> 遍历未排序的部分，从
+<code>i + 1</code> 开始到
+<code>n</code>。内层循环的目的是找到当前未排序部分的最小元素，并记录其索引
+<code>minIndex</code>。</p></li>
+<li><p>在每轮结束时，将当前元素 <code>a[i]</code> 与找到的最小元素
+<code>a[minIndex]</code> 进行交换。</p></li>
+<li><p>即使数组已经有序，选择排序也仍然需要 O(n²)
+的比较次数，因为每次都需要遍历未排序部分。</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">select_sort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n - <span class="hljs-number">1</span>; i++) &#123;  <span class="hljs-comment">// 每轮排好一个数字，排n-1轮</span><br>        <span class="hljs-type">int</span> minIndex = i;  <span class="hljs-comment">// 假设当前元素为最小值</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = i + <span class="hljs-number">1</span>; j &lt; n; j++)  <span class="hljs-comment">// 排好的放在前面，未排序的数字减少一个</span><br>            <span class="hljs-keyword">if</span> (a[j] &lt; a[minIndex]) minIndex = j;  <span class="hljs-comment">// 找到更小的元素，更新最小值索引</span><br>        <span class="hljs-built_in">swap</span>(a[i], a[minIndex]);  <span class="hljs-comment">// 交换最小值到当前排序位置</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="插入排序">3 插入排序</h1>
+<p><strong>外层循环</strong>
+(<code>for (int i = 1; i &lt; n; i++)</code>)：从第二个元素开始遍历，作为当前要插入的元素
+<code>x</code>。</p>
+<p><strong><code>x</code>
+变量</strong>：存储当前要插入的元素，以便在内层循环中进行比较和插入操作。</p>
+<p><strong>已排序部分的下标 <code>j</code></strong>：<code>j</code>
+初始化为 <code>i - 1</code>，表示已排序部分的最后一个元素。</p>
+<p><strong>内层循环</strong>
+(<code>while (j &gt;= 0 &amp;&amp; x &lt; a[j])</code>)：</p>
+<ul>
+<li>在已排序部分中查找 <code>x</code> 的插入位置。</li>
+<li><strong>越界检查</strong>：首先判断 <code>j &gt;= 0</code>，确保访问
+<code>a[j]</code> 不会越界。</li>
+<li>如果 <code>a[j]</code> 大于 <code>x</code>，则将 <code>a[j]</code>
+向右移动，腾出 <code>j + 1</code> 的位置来插入 <code>x</code>。</li>
+</ul>
+<p><strong>插入操作</strong>
+(<code>a[j + 1] = x</code>)：当找到合适位置后，将 <code>x</code> 插入到
+<code>j + 1</code> 的位置。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert_sort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) &#123;  <span class="hljs-comment">// 从第二个元素遍历要插入的元素</span><br>        <span class="hljs-type">int</span> x = a[i];  <span class="hljs-comment">// 当前要插入的元素</span><br>        <span class="hljs-type">int</span> j = i - <span class="hljs-number">1</span>;  <span class="hljs-comment">// 已排序的最后一个元素下标</span><br>        <span class="hljs-comment">// 在已排序部分中找到 x 的插入位置</span><br>        <span class="hljs-keyword">while</span> (j &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt; a[j]) &#123;  <span class="hljs-comment">// 先判断j&gt;=0，防止越界错误</span><br>            a[j + <span class="hljs-number">1</span>] = a[j];  <span class="hljs-comment">// 元素向右移动，为x空出位置</span><br>            j--;  <span class="hljs-comment">// 移动到前一个元素</span><br>        &#125;<br>        a[j + <span class="hljs-number">1</span>] = x;  <span class="hljs-comment">// 将 x 插入到找到的位置</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="桶排序">4 桶排序</h1>
+<p><strong><code>cnt[N] = &#123;0&#125;</code></strong>：定义一个大小为
+<code>N</code> 的数组
+<code>cnt</code>，用于统计每个元素的出现次数，初始化为 0。</p>
+<p><strong>输入读取和计数</strong>：使用 <code>for</code> 循环读取
+<code>n</code> 个整数输入，检查 <code>x</code> 是否在合法范围内
+<code>[0, N)</code>，并通过 <code>cnt[x]++</code> 对每个 <code>x</code>
+的出现次数进行统计。</p>
+<p><strong>输出</strong>：第二个 <code>for</code> 循环遍历
+<code>cnt</code> 数组，通过嵌套循环输出每个数 <code>i</code>
+的值，输出的次数取决于 <code>cnt[i]</code> 的值。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">10000</span>;<br><span class="hljs-type">int</span> cnt[N] = &#123;<span class="hljs-number">0</span>&#125;, n;<br>cin &gt;&gt; n;  <span class="hljs-comment">// 读取元素个数</span><br><span class="hljs-comment">// 读取每个元素并进行计数</span><br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>    <span class="hljs-type">int</span> x;<br>    cin &gt;&gt; x;<br>    <span class="hljs-keyword">if</span> (x &gt;= <span class="hljs-number">0</span> &amp;&amp; x &lt; N) cnt[x]++;<br>&#125;<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++)<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; cnt[i]; ++j)<br>        cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;  <span class="hljs-comment">// 按照计数输出数字 i</span><br></code></pre></td></tr></table></figure>
+<h1 id="快速排序">5 快速排序</h1>
+<ol type="1">
+<li>选取一个数作为<strong>基准数</strong></li>
+<li>小于基准数的值放左半区，大于基准数的值放右半区</li>
+<li>再对左右区间重复1、2步，直到各区间只剩一个数</li>
+</ol>
+<p>通过<strong>分治法</strong>，每次递归时选取一个基准值，然后通过双指针将数组划分成两部分，使得左边部分的值小于等于基准值，右边部分的值大于等于基准值。然后递归地对两部分进行排序，直到数组被完全排序。</p>
+<ul>
+<li><code>a[]</code> 是要排序的数组。</li>
+<li><code>l</code> 是当前处理的数组区间的左边界（闭区间）。</li>
+<li><code>r</code> 是当前处理的数组区间的右边界（闭区间）。</li>
+</ul>
+<p>递归终止的条件是 <code>l &gt;= r</code>，也就是说当前区间长度为 0 或
+1 时，不需要继续排序。</p>
+<p><strong>基准值</strong>：<code>x = a[(l + r) &gt;&gt; 1]</code> 通过
+<code>(l + r) &gt;&gt; 1</code> 计算出中间元素的下标，并将它作为基准值
+<code>x</code>。</p>
+<p><strong>双指针初始化</strong>：</p>
+<ul>
+<li><code>i = l - 1</code>，指向比基准值小的区域。</li>
+<li><code>j = r + 1</code>，指向比基准值大的区域。</li>
+</ul>
+<p><strong>主循环条件</strong>：<code>while (i &lt; j)</code>，保证左右指针在数组内并且没有交错。</p>
+<p><strong>内循环（左指针
+<code>i</code>）</strong>：<code>do i++; while (a[i] &lt; x);</code>
+从左向右找到第一个大于等于基准值的元素。</p>
+<p><strong>内循环（右指针
+<code>j</code>）</strong>：<code>do j--; while (a[j] &gt; x);</code>
+从右向左找到第一个小于等于基准值的元素。</p>
+<blockquote>
+<p>此处必须使用严格的<code>&gt;</code>
+<code>&lt;</code>，如果使用<code>&gt;=</code>
+<code>&lt;=</code>选取的基准值是最大值，指针<code>i</code>不会停止，会一直<code>++</code>直到越界</p>
+</blockquote>
+<p><strong>元素交换</strong>：当 <code>i &lt; j</code> 时，交换
+<code>a[i]</code> 和
+<code>a[j]</code>，确保基准值左边的元素都小于等于它，右边的元素都大于等于它。</p>
+<p><strong>左半部分递归</strong>：对 <code>l</code> 到 <code>j</code>
+的部分继续执行快速排序。此时 <code>j</code>
+是划分完成后，左半部分的最大值位置。</p>
+<p><strong>右半部分递归</strong>：对 <code>j + 1</code> 到
+<code>r</code> 的部分继续执行快速排序。</p>
+<p><strong>注意：</strong> 因为<code>do-while</code>的存在，退出
+<code>while</code> 时，j 最终会停在 <strong>（1+r）/2</strong>
+的位置，也就是 <strong>i = j 或 i = j + 1</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">quick_sort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>&#123;<br>    <span class="hljs-comment">// 递归结束条件：当区间元素只有1个元素或者没有元素时</span><br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span>;  <br>    <br>    <span class="hljs-comment">// 初始化双指针i和j，</span><br>    <span class="hljs-type">int</span> i = l - <span class="hljs-number">1</span>, j = r + <span class="hljs-number">1</span>;  <span class="hljs-comment">//后面会先++或--，所以指向边界的前一个或后一个元素</span><br>    <span class="hljs-type">int</span> pivot = a[l + r &gt;&gt; <span class="hljs-number">1</span>]; <span class="hljs-comment">// 选择中间位置的值作为基准值</span><br>    <br>    <span class="hljs-comment">// 双指针划分过程</span><br>    <span class="hljs-keyword">while</span> (i &lt; j) &#123;<br>        <span class="hljs-comment">// 左指针向右移动，指针左侧都是小于基准值的，找到第一个大于等于基准值的元素</span><br>        <span class="hljs-keyword">do</span> i++; <span class="hljs-keyword">while</span> (a[i] &lt; pivot);<br>        <span class="hljs-comment">// 右指针向左移动，指针右侧都是大于基准值的，找到第一个小于等于基准值的元素</span><br>        <span class="hljs-keyword">do</span> j--; <span class="hljs-keyword">while</span> (a[j] &gt; pivot);<br>        <span class="hljs-comment">// 如果i和j两个指针还没有相遇，交换a[i]和a[j]</span><br>        <span class="hljs-keyword">if</span> (i &lt; j) <span class="hljs-built_in">swap</span>(a[i], a[j]);<br>    &#125;<br>    <br>    <span class="hljs-comment">// 不重不漏</span><br>    <span class="hljs-built_in">quick_sort</span>(a, l, j);  <span class="hljs-comment">// 递归调用，对左半部分（l到j）进行快速排序</span><br>    <span class="hljs-built_in">quick_sort</span>(a, j + <span class="hljs-number">1</span>, r);  <span class="hljs-comment">// 递归调用，对右半部分（j+1到r）进行快速排序</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>如果每次选的<code>pivot</code>能让左右两段近似等分，会生成一颗有 logn
+层的均衡的二叉树，每层 i, j两指针将会遍历所有 n 个元素，时间复杂度为
+O(nlogn)。 如果每次选的<code>pivot</code>只能分离出一个元素，会退化成有
+n 层的链，i, j两指针走的总步数= n+(n－1)+…+1，时间复杂度退化为 O(n²)。
+<img src="c_quick_sort.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-20250310154403c0d33279d726e024.png" /></p>
+<p>在快速排序和快速选择算法中，<strong>分区方法</strong> 是最核心的步骤。它们的核心目标都是将数组划分为两个部分，但实现方式和性能特点不同。</p>
+<h2 id="hoare-分区法">5.1 Hoare 分区法</h2>
+<p>由快速排序的发明者 Tony Hoare 提出，是最原始的分区方案。</p>
+<ul>
+<li><strong>双向指针扫描</strong>
+<ul>
+<li>左指针 <code>i</code> 从数组左端向右移动</li>
+<li>右指针 <code>j</code> 从数组右端向左移动</li>
+<li>直到找到需要交换的元素对</li>
+</ul></li>
+<li><strong>分区结果</strong>
+<ul>
+<li>最终数组被划分为：<code>[ &lt;= pivot ]</code> + <code>[ &gt;= pivot ]</code></li>
+<li>注意：<strong>不保证枢轴值在最终位置</strong></li>
+</ul></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">hoare_partition</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>&#123;<br>    <span class="hljs-type">int</span> pivot = a[l + (r - l) / <span class="hljs-number">2</span>]; <span class="hljs-comment">// 选择中间元素作为枢轴</span><br>    <span class="hljs-type">int</span> i = l - <span class="hljs-number">1</span>, j = r + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-comment">// 因为可能把两个和 pivot 相等的值交换，所以不稳定</span><br>        <span class="hljs-keyword">do</span> i++; <span class="hljs-keyword">while</span> (a[i] &lt; pivot); <span class="hljs-comment">// 找左边第一个 &gt;= pivot 的元素</span><br>        <span class="hljs-keyword">do</span> j--; <span class="hljs-keyword">while</span> (a[j] &gt; pivot); <span class="hljs-comment">// 找右边第一个 &lt;= pivot 的元素</span><br>        <span class="hljs-keyword">if</span> (i &gt;= j) <span class="hljs-keyword">return</span> j;         <span class="hljs-comment">// 返回分界点</span><br>        <span class="hljs-built_in">swap</span>(a[i], a[j]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>假设数组为 <code>[3, 1, 4, 2, 5]</code>，选择中间元素 <code>4</code> 为枢轴：</p>
+<ol type="1">
+<li><code>i</code> 找到 <code>4</code>（位置2），<code>j</code> 找到 <code>2</code>（位置3）
+→ 交换 → <code>[3,1,2,4,5]</code></li>
+<li><code>i</code> 移动到 <code>4</code>（位置3），<code>j</code> 移动到 <code>2</code>（位置2）
+→ <code>i &gt;= j</code> → 返回 <code>j=2</code></li>
+</ol>
+<h2 id="填坑法">5.2 填坑法</h2>
+<p> 填坑法，左右指针交替覆盖，是快速排序中一种常见的分区实现方式，可以看作是 Lomuto
+分区法的变体。</p>
+<ul>
+<li><strong>枢轴选择</strong>：固定选择左端点 <code>a[l]</code> 作为枢轴值 <code>pivot</code>。</li>
+<li><strong>填坑操作</strong>：
+<ul>
+<li><strong>右指针扫描</strong>：从右向左找到第一个 <code>&lt; pivot</code> 的元素，将其值覆盖到左指针位置（填左坑）。</li>
+<li><strong>左指针扫描</strong>：从左向右找到第一个 <code>&gt; pivot</code> 的元素，将其值覆盖到右指针位置（填右坑）。</li>
+<li>循环直到左右指针相遇，最后将枢轴值 <code>pivot</code> 放入相遇点。</li>
+</ul></li>
+<li><strong>分区结果</strong>
+<ul>
+<li>最终数组结构：<code>[ &lt;= pivot ]</code> + <code>pivot</code> + <code>[ &gt;= pivot ]</code></li>
+<li><strong>枢轴值一定在最终位置</strong></li>
+</ul></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">partition</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>&#123; <br>    <span class="hljs-type">int</span> pivot = a[l]; <span class="hljs-comment">//枢轴 </span><br>    <span class="hljs-keyword">while</span> (l &lt; r) &#123; <br>        <span class="hljs-keyword">while</span> (l &lt; r &amp;&amp; a[r] &gt;= pivot) r--; <br>        a[l] = a[r]; <br>        <span class="hljs-keyword">while</span> (l &lt; r &amp;&amp; a[l] &lt;= pivot) l++; <br>        a[r] = a[l]; <br>    &#125; <br>    a[l] = pivot; <br>    <span class="hljs-keyword">return</span> l; <span class="hljs-comment">//返回枢轴位置 </span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="归并排序">6 归并排序</h1>
+<p>归并排序主要使用了分治思想，字面上的解释是“<strong>分而治之</strong>”，就是把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。</p>
+<p>“分”而“治”之，先“分”后“治”</p>
+<ul>
+<li>“分”：将问题划分成若干子问题然后递归求解</li>
+<li>“治”：将子问题的答案整合在一起</li>
+</ul>
+<figure>
+<img src="c_merge_sort.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503071129090c2390f01aa20eb3.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503071129090c2390f01aa20eb3.png</figcaption>
+</figure>
+<p>归并排序将待排序序列划分成若干个子序列，将子序列合并为一个有序序列。具体来说通过递归将数组分成两半，分别排序，递归到最后，实际是把单个元素看作一个有序序列，开始<strong>两两归并</strong>，形成一个两个元素的有序序列，再两两归并，形成一个四个元素的有序序列，不断合并两个有序的子数组来达到排序的效果。
+<img src="c_merge_sort_tree.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503310022534718d6a70a594701.png" /></p>
+<ul>
+<li><code>a[]</code> 是要排序的数组。</li>
+<li><code>l</code> 是当前处理的数组区间的左边界（闭区间）。</li>
+<li><code>r</code> 是当前处理的数组区间的右边界（闭区间）。</li>
+</ul>
+<p><strong>终止条件</strong>：如果
+<code>l &gt;= r</code>（即数组只剩一个或没有元素时），直接返回。</p>
+<ul>
+<li><code>mid = (l + r) &gt;&gt; 1</code>：通过取中间位置
+<code>mid</code> 将当前区间 <code>[l, r]</code> 分为两个子区间
+<code>[l, mid]</code> 和 <code>[mid + 1, r]</code>。</li>
+<li>递归调用 <code>merge_sort(a, l, mid)</code>
+对左半部分排序，<code>merge_sort(a, mid + 1, r)</code>
+对右半部分排序。</li>
+</ul>
+<p><strong>合并两个有序部分</strong>：</p>
+<ul>
+<li>使用两个指针 <code>i</code> 和 <code>j</code> 分别指向左半部分
+<code>[l, mid]</code> 和右半部分 <code>[mid + 1, r]</code>
+的起始位置。通过比较 <code>a[i]</code> 和 <code>a[j]</code>
+的值，将较小的值放入临时数组
+<code>tmp[]</code>（因为是<code>&lt;=</code>，相等的时候把左边元素放入临时数组，所以稳定）。</li>
+<li>如果左半部分未遍历完，将剩余部分加入 <code>tmp[]</code>。</li>
+<li>如果右半部分未遍历完，也将其加入 <code>tmp[]</code>。</li>
+<li>最后，将临时数组 <code>tmp[]</code> 中的元素复制回原数组
+<code>a[]</code>，完成本次合并。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">merge_sort</span><span class="hljs-params">(<span class="hljs-type">int</span> a[], <span class="hljs-type">int</span> l, <span class="hljs-type">int</span> r)</span> </span>&#123;<br>    <span class="hljs-comment">// 递归终止条件：如果子序列中只有1个元素或0个元素，返回</span><br>    <span class="hljs-keyword">if</span> (l &gt;= r) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>; <span class="hljs-comment">// 计算中间索引，将数组一分为二</span><br>    <span class="hljs-comment">// l + (r - l) / 2  防止溢出</span><br>    <br>    <span class="hljs-built_in">merge_sort</span>(a, l, mid); <span class="hljs-comment">// 递归排序左半部分</span><br>    <span class="hljs-built_in">merge_sort</span>(a, mid + <span class="hljs-number">1</span>, r); <span class="hljs-comment">// 递归排序右半部分</span><br><br>    <span class="hljs-comment">// 合并两个已排序的部分</span><br>    <span class="hljs-type">int</span> k = l; <span class="hljs-comment">// 临时数组的索引</span><br>    <span class="hljs-type">int</span> i = l, j = mid + <span class="hljs-number">1</span>; <span class="hljs-comment">// 左半部分和右半部分的指针</span><br>     <br>    <span class="hljs-comment">// 合并过程：将较小的元素放入临时数组</span><br>    <span class="hljs-keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r) &#123;<br>        <span class="hljs-comment">// 如果左半部分当前元素小于等于右半部分，加入临时数组</span><br>        <span class="hljs-comment">// 正是因为这里是 &lt;= ，如果元素相等先取前面的，所以稳定</span><br>        <span class="hljs-keyword">if</span> (a[i] &lt;= a[j]) tmp[k++] = a[i++]; <br>        <span class="hljs-comment">// 否则，加入右半部分的当前元素</span><br>        <span class="hljs-keyword">else</span> tmp[k++] = a[j++]; <br>    &#125;<br>    <br>    <span class="hljs-comment">// 将左半部分的剩余元素加入临时数组</span><br>    <span class="hljs-keyword">while</span> (i &lt;= mid) tmp[k++] = a[i++]; <br>    <span class="hljs-comment">// 将右半部分的剩余元素加入临时数组</span><br>    <span class="hljs-keyword">while</span> (j &lt;= r) tmp[k++] = a[j++]; <br><br>    <span class="hljs-comment">// 将临时数组的内容复制回原数组</span><br>    <span class="hljs-keyword">for</span> (i = l; i &lt;= r; i++) a[i] = tmp[i]; <br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">快速排序</th>
+<th style="text-align: center;">归并排序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">分治</td>
+<td style="text-align: center;">先交换，后拆分</td>
+<td style="text-align: center;">先拆分，后合并</td>
+</tr>
+<tr>
+<td style="text-align: center;">稳定性</td>
+<td style="text-align: center;">不稳定</td>
+<td style="text-align: center;">稳定</td>
+</tr>
+</tbody>
+</table>
+<h1 id="sort排序">7 sort()排序</h1>
+<h2 id="概述">7.1 概述</h2>
+<p><code>sort()</code>函数是一个比较<strong>灵活</strong>的函数。很多解释是：<code>sort()</code>函数是类似于快速排序的方法，时间复杂度为n*log2(n)，执行效率较高。</p>
+<blockquote>
+<p>STL中的<code>sort()</code>并非只是普通的快速排序，除了对普通的快速排序进行优化，它还结合了插入排序和堆排序。根据不同的数量级别以及不同情况，能自动选用合适的排序方法。当数据量较大时采用快速排序，分段递归。一旦分段后的数据量小于某个阀值，为避免递归调用带来过大的额外负荷，便会改用插入排序。而如果递归层次过
+深，有出现最坏情况的倾向，还会改用堆排序。</p>
+</blockquote>
+<h2 id="sort的使用方法">7.2 sort()的使用方法</h2>
+<p>在C++中使用<code>sort()</code>函数需要使用<code>#include &lt;algorithm&gt;</code>头文件，algorithm意为”算法”，是C++的标准模版库（STL）中最重要的头文件之一，提供了大量基于迭代器的非成员模版函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">sort</span>(begin, end, cmp);<br></code></pre></td></tr></table></figure>
+<p><code>sort()</code>函数可以对给定区间的元素进行排序，它有三个参数：</p>
+<ul>
+<li>其中<code>begin</code>为待排序数组的起始地址</li>
+<li><code>end</code>为指向待排序数组结束地址下一个位置的指针</li>
+<li><code>cmp</code>参数为排序准则，如果不写，<strong>默认从小到大</strong>进行排序。如果我们想从大到小排序可以将<code>cmp</code>参数写为<code>greater&lt;int&gt;()</code>，<code>&lt;&gt;</code>中表示排序数组的类型，C++11中可以透明比较器<code>greater&lt;&gt;()</code>。如果需要按照其他的排序准则，那么需要我们自己定义一个<code>bool</code>类型的函数来传入。</li>
+</ul>
+<p>使用<code>sort()</code>不仅仅可以从大到小或者从小到大排，还可以按照一定的准则进行排序，编写<code>cmp</code>函数传入<code>sort()</code>函数。比如按照个位从小到大比较：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> a % <span class="hljs-number">10</span> &gt; b % <span class="hljs-number">10</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>对<strong>结构体</strong>进行排序，比如定义一个结构体包含学生的姓名和年龄，按照年龄从小到大排序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Student</span> &#123;<br>    string name;<br>    <span class="hljs-type">int</span> age;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(Student a, Student b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> a.age &lt; b.age;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在以上的代码示例中使用了<strong>值传递</strong>，每次调用函数都会创建<code>Student</code>对象的副本，增加额外的开销，降低排序的效率，使用<strong>引用传递</strong>可以避免拷贝开销，更加高效。值传递会创建参数的副本，对于大型对象或复杂数据结构，可能涉及大量的内存分配和数据复制，引用传递避免了这些操作，因为它直接操作原始对象。</p>
+<table>
+
+<thead>
+<tr>
+<th>特性</th>
+<th>值传递</th>
+<th>引用传递</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据传递方式</td>
+<td>副本传递，函数操作的是实参的副本</td>
+<td>引用传递，函数操作的是实参的原数据</td>
+</tr>
+<tr>
+<td>内存开销</td>
+<td>需要创建副本，开销较大，尤其对于大型对象</td>
+<td>无需创建副本，内存开销小</td>
+</tr>
+<tr>
+<td>是否修改实参</td>
+<td>函数内部的修改不会影响实参</td>
+<td>函数内部的修改会直接影响实参</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>相对更安全，因为函数无法修改外部数据</td>
+<td>可能产生副作用，修改不应修改的数据</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>当不希望修改外部数据，或数据结构比较简单时使用</td>
+<td>当需要修改实参，或数据结构较大时使用</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">cmp</span><span class="hljs-params">(<span class="hljs-type">const</span> Student&amp; a,<span class="hljs-type">const</span> Student&amp; b)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> a.age &lt; b.age;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>引用参数</strong>：<code>const Student&amp; a</code> 和
+<code>const Student&amp; b</code> 表示对 <code>Student</code>
+类型的常量引用，这样函数内部无法修改 <code>Student</code>
+的内容，同时避免了复制带来的性能损失。</p>
+<p><strong>const 关键字</strong>：使用 <code>const</code>
+关键字表明函数不会修改传入的对象，这也是一个良好的编码习惯。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-%E7%AE%97%E6%B3%95/" class="category-chain-item">C++算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+      
+        <a href="/tags/%E6%8E%92%E5%BA%8F/" class="print-no-link">#排序</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>常见排序总结</div>
+      <div>http://example.com/2025/10/29/coding/C++与算法/常见排序总结/常见排序总结/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="深度优先搜索">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">深度优先搜索</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径">
+                        <span class="hidden-mobile">最短路径</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

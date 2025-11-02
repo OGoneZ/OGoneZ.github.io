@@ -1,0 +1,1155 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. Maven 简介 Maven 是 Apache 旗下的一个开源项目，它基于项目对象模型(Project Object Model , 简称: POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。是一款用于管理和构建 Java 项目的工具。 官网：Maven – Welcome to Apache Maven  Apache 软件基金会，成立于1999年7月，是目前世">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven使用教程">
+<meta property="og:url" content="http://example.com/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1. Maven 简介 Maven 是 Apache 旗下的一个开源项目，它基于项目对象模型(Project Object Model , 简称: POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。是一款用于管理和构建 Java 项目的工具。 官网：Maven – Welcome to Apache Maven  Apache 软件基金会，成立于1999年7月，是目前世">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/maven.png">
+<meta property="article:published_time" content="2025-10-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-02T09:28:32.457Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="Maven">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/maven.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Maven使用教程 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Maven使用教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-29 00:00" pubdate>
+          2025年10月29日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          45 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Web开发"
+        id="heading-3b451acfb78b69289662a6dd4d9d042c" role="tab" data-toggle="collapse" href="#collapse-3b451acfb78b69289662a6dd4d9d042c"
+        aria-expanded="true"
+      >
+        Web开发
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3b451acfb78b69289662a6dd4d9d042c"
+           role="tabpanel" aria-labelledby="heading-3b451acfb78b69289662a6dd4d9d042c">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="HTTP协议与Tomcat服务器"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">HTTP协议与Tomcat服务器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Maven使用教程"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Maven使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/MyBatis%E6%95%99%E7%A8%8B/MyBatis%E6%95%99%E7%A8%8B/" title="MyBatis教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MyBatis教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" title="MySQL简易教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL简易教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/SpringBoot%E5%85%A5%E9%97%A8/SpringBoot%E5%85%A5%E9%97%A8/" title="SpringBoot入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">SpringBoot入门</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%89%8D%E7%AB%AF/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Web前端开发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/" title="文件上传和阿里云OSS"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">文件上传和阿里云OSS</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Maven使用教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="maven-简介">1. Maven 简介</h1>
+<p>Maven 是 Apache 旗下的一个开源项目，它基于项目对象模型(Project Object
+Model , 简称:
+POM)的概念，通过一小段描述信息来管理项目的构建、报告和文档。是一款用于<strong>管理和构建
+Java 项目的工具</strong>。 官网：<a
+target="_blank" rel="noopener" href="https://maven.apache.org/">Maven – Welcome to Apache Maven</a></p>
+<blockquote>
+<p>Apache
+软件基金会，成立于1999年7月，是目前世界上最大的最受欢迎的开源软件基金会，也是一个专门为支持开源项目而生的非盈利性组织。
+开源项目：<a
+target="_blank" rel="noopener" href="https://www.apache.org/index.html#projects-list">Welcome to The
+Apache Software Foundation!</a></p>
+</blockquote>
+<h1 id="maven-的作用">2. Maven 的作用</h1>
+<h2 id="方便的依赖管理">2.1 方便的依赖管理</h2>
+<ul>
+<li>方便的依赖管理：方便快捷的管理项目依赖的资源（jar包），避免版本冲突问题。</li>
+</ul>
+<p>若没有通过 Maven
+进行大型项目的依赖管理，我们在开发项目时，需要引入大量的 jar 包，jar
+包和 jar 包之间很多时候是需要版本匹配的，很容易出现版本冲突问题。当使用
+Maven 进行项目依赖（jar包）管理，则可以很方便地解决这个问题。
+我们只需要在 Maven 项目的 pom.xml 文件中，修改配置即可实现。</p>
+<h2 id="统一的项目结构">2.2 统一的项目结构</h2>
+<ul>
+<li>统一的项目结构：提供标准、统一的项目结构。</li>
+</ul>
+<p>在项目开发中，当使用不同的开发工具
+(如：Eclipse、IDEA)，创建项目工程时，项目目录结构是不一样的，若我们创建的是一个
+Maven 工程，可以帮我们自动生成统一、标准的项目目录结构：</p>
+<p><img src="assets/2.2.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="标准的项目构建流程">2.3 标准的项目构建流程</h2>
+<ul>
+<li>标准的项目构建流程：标准跨平台（Linux、Windows、MacOS）的自动化项目构建方式。</li>
+</ul>
+<p>我们开发了一套系统，代码需要进行编译、测试、打包、发布，这些操作如果需要反复进行就显得特别麻烦，而
+Maven 提供了一套简单的命令来完成项目构建。</p>
+<h1 id="maven-模型">3. Maven 模型</h1>
+<p>Maven 由以下三个部分组成：</p>
+<p><img src="assets/3.1.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>项目对象模型 (Project Object
+Model)：将我们自己的项目抽象成一个对象模型，有自己专属的坐标。</li>
+</ul>
+<blockquote>
+<p>坐标：就是资源（jar包）的唯一标识，通过坐标可以定位到所需资源（jar包）位置</p>
+</blockquote>
+<ul>
+<li>依赖管理模型(Dependency)：使用坐标来描述当前项目依赖哪些第三方jar包。</li>
+</ul>
+<p><img src="assets/3.2.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>构建生命周期/阶段(Build lifecycle &amp;
+phases)：用来完成标准化构建流程
+。当我们需要编译，Maven提供了一个编译插件供我们使用；当我们需要打包，Maven就提供了一个打包插件供我们使用等。</li>
+</ul>
+<h1 id="maven-仓库">4. Maven 仓库</h1>
+<p>之前我们项目中需要 jar 包时，直接就把 jar 包复制到项目下的 lib
+目录，而现在书写在 pom.xml 文件中的坐标又是怎么能找到所要的 jar
+包文件的呢？ Maven 仓库：用于存储资源，管理各种 jar 包</p>
+<blockquote>
+<p>仓库的本质就是一个目录（文件夹），这个目录被用来存储开发中所有依赖就是（jar
+包）和插件</p>
+</blockquote>
+<p>Maven仓库分为：</p>
+<ul>
+<li>本地仓库：自己计算机上的一个目录(用来存储jar包)</li>
+<li>中央仓库：由 Maven 团队维护的全球唯一的。仓库地址：<a
+target="_blank" rel="noopener" href="https://repo1.maven.org/maven2/">Central Repository:
+(maven.org)</a></li>
+<li>远程仓库(私服)：一般由公司团队搭建的私有仓库</li>
+</ul>
+<p>当项目中使用坐标引入对应依赖 jar
+包后，首先会查找本地仓库中是否有对应的 jar 包</p>
+<ul>
+<li>如果有，则在项目直接引用</li>
+<li>如果没有，则去中央仓库中下载对应的 jar 包到本地仓库</li>
+</ul>
+<p>如果搭建远程仓库(私服)，jar 包的查找顺序则变为： 本地仓库 –&gt;
+远程仓库–&gt; 中央仓库</p>
+<h1 id="maven-安装和配置">5. Maven 安装和配置</h1>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">Maven –
+Download Apache Maven</a></p>
+<ol type="1">
+<li>直接解压到没有中文、特殊字符的路径下。</li>
+</ol>
+<p>解压后的目录结构如下：</p>
+<p><img src="assets/5.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>bin目录：存放的是可执行命令。（mvn 命令重点关注）</li>
+<li>conf目录：存放 Maven
+的配置文件。（settings.xml配置文件后期需要修改）</li>
+<li>lib目录：存放 Maven 依赖的jar包。（Maven 也是使用 java
+开发的，所以它也依赖其他的 jar 包）</li>
+</ul>
+<ol start="2" type="1">
+<li>配置本地仓库：修改 conf/settings.xml 中的
+<code>&lt;localRepository&gt;</code> 为一个指定目录，这个目录是将来存放
+jar 包的地方。</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">localRepository</span>&gt;</span>D:\Develop\Development Tool\mvn-repository<span class="hljs-tag">&lt;/<span class="hljs-name">localRepository</span>&gt;</span>  <br></code></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>配置阿里云私服：由于中央仓库在国外，所以下载jar包速度可能比较慢，而阿里公司提供了一个远程仓库，里面基本也都有开源项目的jar包。修改
+conf/settings.xml 中的 <code>&lt;mirrors&gt;</code>
+标签，为其添加如下子标签：</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">mirrors</span>&gt;</span><br>   <span class="hljs-comment">&lt;!--配置阿里云镜像--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mirror</span>&gt;</span> <br>          <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>alimaven<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span> <br>          <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>aliyun maven<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span> <br>          <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span> <br>          <span class="hljs-tag">&lt;<span class="hljs-name">mirrorOf</span>&gt;</span>central<span class="hljs-tag">&lt;/<span class="hljs-name">mirrorOf</span>&gt;</span> <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">mirror</span>&gt;</span> <br><span class="hljs-tag">&lt;/<span class="hljs-name">mirrors</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>只可配置一个 &lt;mirror&gt; (另一个要注释)
+，不然两个可能发生冲突，导致 jar 包无法下载！！！</p>
+</blockquote>
+<ol start="4" type="1">
+<li>配置环境变量：MAVEN_HOME 为 Maven 的解压目录，并将其 bin 目录加入
+PATH 环境变量。
+<ol type="1">
+<li>在系统变量处新建一个变量 MAVEN_HOME，值设置为 maven
+的解压安装目录</li>
+<li>在 Path 中进行配置，值设置为 %MAVEN_HOME%\bin</li>
+<li>打开 cmd 命令提示符进行验证，输入 <code>mvn -v</code> 显示 Maven
+版本则成功</li>
+</ol></li>
+</ol>
+<h1 id="idea-集成-maven">6. IDEA 集成 Maven</h1>
+<ol type="1">
+<li>设置 IDEA 使用本地安装的 Maven，并修改配置文件及本地仓库路径</li>
+</ol>
+<p><img src="assets/6.1.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="2" type="1">
+<li>配置工程的编译版本和运行版本为 17</li>
+</ol>
+<p><img src="assets/6.2.png" srcset="/img/loading.gif" lazyload /></p>
+<blockquote>
+<p>在项目中的设置是针对当前项目的设置，再打开别的项目是无效的，关闭项目在
+IDEA 欢迎页面的设置才是全局设置。</p>
+</blockquote>
+<h1 id="maven-项目">7. Maven 项目</h1>
+<ol type="1">
+<li>创建空项目</li>
+</ol>
+<p><img src="assets/7.1.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="2" type="1">
+<li>创建 Maven 模块</li>
+</ol>
+<p><img src="assets/7.2.png" srcset="/img/loading.gif" lazyload /></p>
+<p>Maven 项目的目录结构如下：</p>
+<p><img src="assets/7.3.png" srcset="/img/loading.gif" lazyload /></p>
+<p>Maven 项目的导入有以下两种方式： 通过右侧 Maven 面板或者在 Project
+Structure 中导入模块，直接选择对应模块的 pom 文件即可。</p>
+<p><img src="assets/7.4.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="pom-配置详解">8. POM 配置详解</h1>
+<p>POM (Project Object Model) ：指的是项目对象模型，用来描述当前的 Maven
+项目。使用 pom.xml 文件来实现，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:schemaLocation</span>=<span class="hljs-string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- POM模型版本 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">modelVersion</span>&gt;</span>4.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">modelVersion</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 当前项目坐标 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.baoduo<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>maven_project1<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.0-SNAPSHOT<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!-- 打包方式 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">packaging</span>&gt;</span>jar<span class="hljs-tag">&lt;/<span class="hljs-name">packaging</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;project&gt;</code> ：pom 文件的根标签，表示当前 Maven
+项目</li>
+<li><code>&lt;modelVersion&gt;</code> ：声明项目描述遵循哪一个 POM
+模型版本，虽然模型本身的版本很少改变，但它仍然是必不可少的。目前 POM
+模型版本是4.0.0</li>
+<li>坐标
+：<code>&lt;groupId&gt;</code>、<code>&lt;artifactId&gt;</code>、<code>&lt;version&gt;</code>，定位项目在本地仓库中的位置</li>
+<li><code>&lt;packaging&gt;</code> ：Maven 项目的打包方式，通常设置为
+jar 或 war（默认值：jar）</li>
+</ul>
+<p>什么是坐标？</p>
+<ul>
+<li>Maven 中的坐标是资源的唯一标识，通过该坐标可以唯一定位资源位置</li>
+<li>使用坐标来定义项目或引入项目中需要的依赖</li>
+</ul>
+<p>Maven坐标主要组成：</p>
+<ul>
+<li><code>groupId</code>：定义当前 Maven
+项目隶属组织名称（通常是域名反写，例如：com.baoduo）</li>
+<li><code>artifactId</code>：定义当前 Maven
+项目名称（通常是模块名称，例如 order-service、goods-service）</li>
+<li><code>version</code>：定义当前项目版本号</li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>
+上面所说的资源可以是插件、依赖、当前项目。我们的项目如果被其他的项目依赖时，也是需要坐标来引入的。</p>
+</blockquote>
+<h1 id="依赖管理">9. 依赖管理</h1>
+<h2 id="依赖配置">9.1 依赖配置</h2>
+<p>依赖：指当前项目运行所需要的 jar 包。一个项目中可以引入多个依赖。</p>
+<ol type="1">
+<li>在 pom.xml 中编写<code>&lt;dependencies&gt;</code>标签</li>
+<li>在
+<code>&lt;dependencies&gt;</code>标签中使用<code>&lt;dependency&gt;</code>引入坐标</li>
+<li>定义坐标的
+<code>&lt;groupId&gt;</code>、<code>&lt;artifactId&gt;</code>、<code>&lt;version&gt;</code></li>
+<li>点击刷新按钮，引入最新加入的坐标，证每一次引入新的依赖，或者修改现有的依赖配置，都可以加入最新的坐标</li>
+</ol>
+<p>添加或修改配置之后记得点击这个小按钮刷新。</p>
+<p><img src="assets/9.1.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果不知道依赖的坐标信息，可以到<a
+target="_blank" rel="noopener" href="https://mvnrepository.com/">Maven Repository:
+Search/Browse/Explore (mvnrepository.com)</a>中搜索。</p>
+<p>还可以使用 IDEA 工具搜索依赖，<code>Alt</code> + <code>Insert</code>
+中选择 <code>Dependency</code> 直接搜索需要的依赖。</p>
+<p><img src="assets/9.2.png" srcset="/img/loading.gif" lazyload /></p>
+<blockquote>
+<p>如果引入的依赖在本地仓库不存在，将会连接远程仓库/中央仓库，然后下载依赖。（这个过程会比较耗时，耐心等待）</p>
+</blockquote>
+<h2 id="依赖传递">9.2 依赖传递</h2>
+<p>依赖具有传递性： 直接依赖：在当前项目中通过依赖配置建立的依赖关系
+间接依赖：被依赖的资源如果依赖其他资源，当前项目间接依赖其他资源</p>
+<p>如下图，projectA 依赖了 projectB。对于projectA 来说，projectB
+就是直接依赖。而 projectB 依赖了 projectC 及其他 jar 包。 那么此时，在
+projectA 中也会将 projectC 的依赖传递下来。对于projectA
+来说，projectC就是间接依赖。</p>
+<p><img src="assets/9.3.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果 A 依赖 B，B 依赖 C，如果 A 不想将 C 依赖进来，可以使用排除依赖。
+排除依赖：指主动断开依赖的资源，被排除的资源无需指定版本。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"> <span class="hljs-comment">&lt;!--排除依赖, 主动断开依赖的资源--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">exclusions</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">exclusion</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">exclusion</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">exclusions</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h2 id="依赖范围">9.3 依赖范围</h2>
+<p>依赖的 jar 包，默认情况下，可以在任何地方使用。可以通过
+<code>&lt;scope&gt;…&lt;/ scope &gt;</code> 设置其作用范围。</p>
+<p>作用范围：</p>
+<ul>
+<li>主程序范围有效。（main文件夹范围内）</li>
+<li>测试程序范围有效。（test文件夹范围内）</li>
+<li>是否参与打包运行。（package指令范围内）</li>
+</ul>
+<p><code>scope</code> 标签的取值范围：</p>
+<table>
+<thead>
+<tr>
+<th><strong>scope</strong>值</th>
+<th><strong>主程序</strong></th>
+<th><strong>测试程序</strong></th>
+<th><strong>打包（运行）</strong></th>
+<th><strong>范例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>compile（默认）</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>log4j</td>
+</tr>
+<tr>
+<td>test</td>
+<td>-</td>
+<td>Y</td>
+<td>-</td>
+<td>junit</td>
+</tr>
+<tr>
+<td>provided</td>
+<td>Y</td>
+<td>Y</td>
+<td>-</td>
+<td>servlet-api</td>
+</tr>
+<tr>
+<td>runtime</td>
+<td>-</td>
+<td>Y</td>
+<td>Y</td>
+<td>jdbc驱动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="生命周期">9.4 生命周期</h2>
+<p>Maven 的生命周期就是为了对所有的构建过程进行抽象和统一。
+描述了一次项目构建，经历哪些阶段。在 Maven
+出现之前，项目构建的生命周期就已经存在，软件开发人员每天都在对项目进行清理，编译，测试及部署。虽然大家都在不停地做构建工作，但公司和公司间、项目和项目间，往往使用不同的方式做类似的工作。</p>
+<p>Maven
+从大量项目和构建工具中学习和反思，总结了一套高度完美的，易扩展的项目构建生命周期。这个生命周期包含了项目的清理，初始化，编译，测试，打包，集成测试，验证，部署和站点生成等几乎所有构建步骤。</p>
+<p>Maven
+对项目构建的生命周期划分为3套（<strong>相互独立</strong>）：</p>
+<ul>
+<li>clean：清理工作。</li>
+<li>default：核心工作。如：编译、测试、打包、安装、部署等。</li>
+<li>site：生成报告、发布站点等。</li>
+</ul>
+<p>每套生命周期包含一些阶段（phase），阶段是有顺序的，后面的阶段依赖于前面的阶段。这意味着：在同一套生命周期中，当运行后面的阶段时，前面的阶段都会运行。</p>
+<p><img src="assets/9.4.png" srcset="/img/loading.gif" lazyload /></p>
+<p>我们看到这三套生命周期，里面有很多很多的阶段，这么多生命周期阶段，其实我们常用的并不多，主要关注以下几个：
+• clean：移除上一次构建生成的文件，target 目录会被清除 •
+compile：编译项目源代码，将 class 字节码文件放在 target 目录下 •
+test：使用合适的单元测试框架运行测试(junit) •
+package：将编译后的文件打包放在 target 目录下，如：jar、war等 •
+install：安装项目到本地仓库，也就是将打好的 jar 包安装到本地仓库中</p>
+<p><img src="assets/9.5.png" srcset="/img/loading.gif" lazyload /></p>
+<p>执行指定生命周期的两种方式：</p>
+<ul>
+<li>在idea中，右侧的 Maven 工具栏，选中对应的生命周期，双击执行。</li>
+<li>在命令行中，通过命令执行。 mvn clean、 mvn compile…</li>
+</ul>
+<p>由于在同一套生命周期中，运行后面的阶段时，前面的阶段都会运行。在 IDEA
+的 Maven 面板中可以跳过不想执行的阶段。</p>
+<p>Maven
+的生命周期是抽象的，这意味着生命周期本身不做任何实际工作。<strong>在Maven的设计中，实际任务（如源代码编译）都交由插件来完成。</strong>
+IDEA工具为了方便程序员使用 Maven 生命周期，在右侧的 Maven
+工具栏中，已给出快速访问通道。</p>
+<p><img src="assets/9.6.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="附录">10. 附录</h1>
+<h2 id="更新依赖索引">10.1 更新依赖索引</h2>
+<p>有时候给 IDEA 配置完 Maven 仓库信息后，在 IDEA 中依然搜索不到仓库中的
+jar 包。这是因为仓库中的 jar 包索引尚未更新到 IDEA
+中。这个时候我们就需要更新 IDEA 中 Maven 的索引了，具体做法如下：
+打开设置—-搜索maven—-Repositories—-选中本地仓库—–点击Update</p>
+<p><img src="assets/9.7.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="清理-maven-仓库">10.2 清理 Maven 仓库</h2>
+<p>初始情况下，我们的本地仓库是没有任何 jar
+包的，此时会从私服去下载（如果没有配置，就直接从中央仓库去下载），可能由于网络的原因，jar
+包下载不完全，这些不完整的 jar 包都是以 lastUpdated 结尾。此时，Maven
+不会再重新下载，我们需要删除这些以 lastUpdated 结尾的文件，然后 Maven
+才会再次自动下载这些 jar 包。</p>
+<p><img src="assets/10.png" srcset="/img/loading.gif" lazyload /></p>
+<p>如果本地仓库中有很多这样的以 lastUpadted
+结尾的文件，可以定义一个批处理文件，在其中编写如下脚本来删除：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">set</span> REPOSITORY_PATH=D:\Develop\Development Tool\mvn-repository<br><span class="hljs-comment">rem 正在搜索...</span><br><br><span class="hljs-built_in">del</span> /s /q <span class="hljs-variable">%REPOSITORY_PATH%</span>\*.lastUpdated<br><span class="hljs-comment"></span><br><span class="hljs-comment">rem 搜索完毕</span><br><span class="hljs-built_in">pause</span><br></code></pre></td></tr></table></figure>
+<p>上面的 <code>REPOSITORY_PATH=</code>
+后面是本地仓库的地址。定义批处理文件 del_lastUpdated.bat
+(直接创建一个文本文件，命名为 del_lastUpdated，后缀名直接改为 bat 即可
+)，需要清理 Maven 仓库的时候双击运行即可删除 Maven
+仓库中的残留文件。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Web%E5%BC%80%E5%8F%91/" class="category-chain-item">Web开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Maven/" class="print-no-link">#Maven</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Maven使用教程</div>
+      <div>http://example.com/2025/10/29/coding/Java开发/应用框架/后端/Maven使用教程/Maven使用教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/10/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="标准输入输出">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">标准输入输出</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/10/29/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%89%8D%E7%AB%AF/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                        <span class="hidden-mobile">Web前端开发</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
