@@ -1,0 +1,1027 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 整数二分  指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找 123456789">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分">
+<meta property="og:url" content="http://example.com/2022/01/19/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E9%80%9A%E7%94%A8%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 整数二分  指针的跳跃次数 logn l + 1 &#x3D; r 时结束，也就是 l 和 r 紧挨的时候 可行区的指针最后一定指向答案 开区间可以正确处理边界（l和r初始化在数组的两侧）  注意： 访问a[l]或a[r]的时候注意边界问题 例如目标值在左侧，需要判断 a[l] &#x3D;&#x3D; x，l有可能一直是-1，此时访问a[l]会出现下标越界 1.1 最大化查找 123456789">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/cpp.png">
+<meta property="article:published_time" content="2022-01-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-19T03:04:52.882Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="cpp">
+<meta property="article:tag" content="二分">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/cpp.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>二分 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="二分"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-01-19 00:00" pubdate>
+          2022年1月19日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          930 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="C++算法"
+        id="heading-2bae0fd5a9e6f9898d39596521be441d" role="tab" data-toggle="collapse" href="#collapse-2bae0fd5a9e6f9898d39596521be441d"
+        aria-expanded="true"
+      >
+        C++算法
+        <span class="list-group-count">(19)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-2bae0fd5a9e6f9898d39596521be441d"
+           role="tabpanel" aria-labelledby="heading-2bae0fd5a9e6f9898d39596521be441d">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2022/03/13/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/" title="C++基础算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++基础算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/01/15/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C++基础语法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++基础语法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/07/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/C++%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/" title="C++文件读取"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">C++文件读取</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/04/29/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/Clion%E5%88%B7%E9%A2%98%E6%94%BB%E7%95%A5-%E9%85%8D%E7%BD%AECmake/" title="Clion刷题攻略-配置Cmake"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Clion刷题攻略-配置Cmake</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/04/22/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/STL%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8C%97/" title="STL学习指北"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">STL学习指北</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/01/19/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E9%80%9A%E7%94%A8%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86/" title="二分"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">二分</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/04/05/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E4%BA%8C%E5%88%86/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%EF%BC%88%E5%94%AF%E4%B8%80%E5%80%BC%EF%BC%89/" title="二分查找（唯一值）"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">二分查找（唯一值）</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/06/26/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%9B%BE/%E5%9B%BE/" title="图"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">图</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/24/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/%E5%9F%83%E6%B0%8F%E7%AD%9B%E6%8C%87%E6%95%B0%E5%88%A4%E5%AE%9A/%E5%9F%83%E6%B0%8F%E7%AD%9B%E8%B4%A8%E6%95%B0%E5%88%A4%E5%AE%9A/" title="埃氏筛质数判定"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">埃氏筛质数判定</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/03/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符数组与字符串"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">字符数组与字符串</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/04/27/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/%E5%AE%B9%E5%99%A8%E5%A1%AB%E5%85%85%E5%87%BD%E6%95%B0/" title="容器填充函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">容器填充函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/03/02/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E6%80%BB%E7%BB%93/" title="常见排序总结"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">常见排序总结</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/05/04/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="广度优先搜索"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">广度优先搜索</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/08/03/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" title="最短路径"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">最短路径</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/02/12/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/%E6%A0%87%E5%87%86%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA/" title="标准输入输出"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">标准输入输出</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/06/18/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A0%91/%E6%A0%91/" title="树"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/05/02/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" title="深度优先搜索"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">深度优先搜索</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/04/18/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E9%93%BE%E8%A1%A8/%E9%93%BE%E8%A1%A8/" title="链表"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">链表</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2022/05/14/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E9%AB%98%E7%B2%BE%E5%BA%A6/%E9%AB%98%E7%B2%BE%E5%BA%A6%E5%8A%A0%E5%87%8F/" title="高精度加减"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">高精度加减</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">二分</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="整数二分">1 整数二分</h1>
+<ol type="1">
+<li>指针的跳跃次数 <code>logn</code></li>
+<li><code>l + 1 = r</code> 时结束，也就是 <code>l</code> 和
+<code>r</code> 紧挨的时候</li>
+<li>可行区的指针最后一定指向答案</li>
+<li>开区间可以正确处理边界（<code>l</code>和<code>r</code>初始化在数组的两侧）</li>
+</ol>
+<p><strong>注意：</strong>
+访问<code>a[l]</code>或<code>a[r]</code>的时候注意边界问题</p>
+<p>例如目标值在左侧，需要判断
+<code>a[l] == x</code>，<code>l</code>有可能一直是-1，此时访问<code>a[l]</code>会出现下标越界</p>
+<h2 id="最大化查找">1.1 最大化查找</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> q)</span> </span>&#123;<br>    <span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>        <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(a[mid] &lt;= q) l = mid;  <span class="hljs-comment">// l 一直在可行区内</span><br>        <span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// r 一直在不可行区内</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="c_binary1.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<h2 id="最小化查找">1.2 最小化查找</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; a, <span class="hljs-type">int</span> x)</span> </span>&#123;<br>    <span class="hljs-type">int</span> l = <span class="hljs-number">-1</span>, r = a.<span class="hljs-built_in">size</span>();<br>    <span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>        <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span>(a[mid] &gt;= x) r = mid;  <span class="hljs-comment">// r 一直在可行区内</span><br>        <span class="hljs-keyword">else</span> l = mid;  <span class="hljs-comment">// l 一直在不可行区内</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> r;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure>
+<img src="c_binary2.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<h2 id="二分函数">1.3 二分函数</h2>
+<h3 id="lower_boundbegin-end-x-第一个-x">1.3.1 lower_bound(begin, end,
+x) 第一个 &gt;=x</h3>
+<ul>
+<li><code>begin</code>：待排序数组的起始地址</li>
+<li><code>end</code>：待排序数组结束地址下一个位置的指针</li>
+<li><code>x</code>：要查找的值</li>
+</ul>
+<p><strong>前提是有序的情况下</strong>：</p>
+<ul>
+<li>如果找得到返回指向第一个大于等于x值的位置。</li>
+<li>如果找不到则返回指向尾元素的下一个位置（由于r一直在右边界未发生移动）</li>
+</ul>
+<figure>
+<img src="c_binary_fun1.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// 返回值为地址，减去起始地址a为下标值</span><br><span class="hljs-type">int</span> index = <span class="hljs-built_in">lower_bound</span>(a, a + n, x) - a;<br></code></pre></td></tr></table></figure>
+<h3 id="upper_boundbegin-end-x-第一个-x">1.3.2 upper_bound(begin, end,
+x) 第一个 &gt;x</h3>
+<ul>
+<li><code>begin</code>：待排序数组的起始地址</li>
+<li><code>end</code>：待排序数组结束地址下一个位置的指针</li>
+<li><code>x</code>：要查找的值</li>
+</ul>
+<p><strong>前提是有序的情况下</strong>：</p>
+<ul>
+<li>如果找得到返回指向第一个大于x值的位置。</li>
+<li>如果找不到则返回指向尾元素的下一个位置</li>
+</ul>
+<figure>
+<img src="c_binary_fun2.png" srcset="/img/loading.gif" lazyload
+alt="Pasted-image-202503311343047ead4742bd8a0a4a.png" />
+<figcaption
+aria-hidden="true">Pasted-image-202503311343047ead4742bd8a0a4a.png</figcaption>
+</figure>
+<blockquote>
+<p>用<code>upper_bound</code>返回值 - a - 1
+就是最后一个小于等于x的下标</p>
+</blockquote>
+<h1 id="浮点数二分">2 浮点数二分</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span> </span>&#123;<span class="hljs-comment">/* ... */</span>&#125; <span class="hljs-comment">// 检查x是否满足某种性质</span><br><br><span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">binary_search</span><span class="hljs-params">(<span class="hljs-type">double</span> l, <span class="hljs-type">double</span> r)</span> </span>&#123;<br>    <span class="hljs-type">const</span> <span class="hljs-type">double</span> eps = <span class="hljs-number">1e-6</span>;  <span class="hljs-comment">// eps表示精度，比题目要求小数位多两位即可</span><br>    <span class="hljs-keyword">while</span>(r - l &gt; eps) &#123;<br>        <span class="hljs-type">double</span> mid = (l + r) / <span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">check</span>(mid)) l = mid;<br>        <span class="hljs-keyword">else</span> r = mid;<br>    &#125;<br>    <span class="hljs-keyword">return</span> l;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="二分答案">3 二分答案</h1>
+<p>二分答案与二分查找类似，要求满足条件的<strong>答案是单调有序的</strong>。
+原理：在答案可能的范围<code>(L, R)</code>内二分查找答案，不断检查当前答案是否满足题目的要求，根据检查结果更新查找的区间，最终取得最符合题目要求的答案。</p>
+<p>同样可以使用以下板子： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-type">int</span> ans)</span> </span>&#123;<br>    <span class="hljs-comment">// 根据题意，符合条件返回true，否则false</span><br>&#125;<br><br><span class="hljs-comment">// 假设这里分析得出答案最小值为min，最大值为max</span><br><br><span class="hljs-type">int</span> l = min - <span class="hljs-number">1</span>, r = max + <span class="hljs-number">1</span>;  <br><span class="hljs-comment">// 根据题目答案范围设置 l 和 r，注意初始值要在边界两侧，开区间</span><br><span class="hljs-keyword">while</span>(l + <span class="hljs-number">1</span> &lt; r) &#123;<br>    <span class="hljs-type">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>    <span class="hljs-comment">// 下面 l 和 r 的顺序根据题目进行调整</span><br>    <span class="hljs-keyword">if</span>(check[mid]) l = mid;  <span class="hljs-comment">// 满足题意</span><br>    <span class="hljs-keyword">else</span> r = mid;  <span class="hljs-comment">// 不满足题意</span><br>&#125;<br><span class="hljs-keyword">return</span> l;  <span class="hljs-comment">// 根据题意进行调整</span><br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>关于开区间，由于最终<code>l</code>和<code>r</code>一定会停在相邻的位置，左边是<code>l</code>，右边是<code>r</code>。
+最终返回的答案，不论使用的是<code>l</code>还是<code>r</code>，只要作为答案的指针能够在整个答案的闭区间内移动即可。
+比如：
+最终答案返回<code>r</code>，<code>r</code>的初始值可以是<code>max</code>，而不用取外侧的<code>max + 1</code>，因为最终<code>r</code>可以取到<code>max</code>；但<code>l</code>必须取到<code>min - 1</code>，因为最终答案有可能是<code>min</code>，而<code>l</code>如果占到<code>min</code>，则会出现<code>r</code>取不到最终答案的情况。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C-%E7%AE%97%E6%B3%95/" class="category-chain-item">C++算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/cpp/" class="print-no-link">#cpp</a>
+      
+        <a href="/tags/%E4%BA%8C%E5%88%86/" class="print-no-link">#二分</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>二分</div>
+      <div>http://example.com/2022/01/19/coding/C++与算法/二分/通用二分/二分/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年1月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/03/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="字符数组与字符串">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">字符数组与字符串</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/15/coding/C++%E4%B8%8E%E7%AE%97%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/C++%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="C++基础语法">
+                        <span class="hidden-mobile">C++基础语法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1593 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 机器学习三要素 机器学习方法 &#x3D; 模型 + 策略 + 算法  模型(model)：总结数据的内在规律，用数学语言描述的参数系统 策略(strategy)：选取最优模型的评价准则 算法(algorithm)：选取最优模型的具体方法  2 机器学习方法分类  3 建模流程  收集数据：收集用于训练和测试的数据集，确保数据代表实际问题的不同方面 数据清洗：对数据进行清洗，去除">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_机器学习基本理论">
+<meta property="og:url" content="http://example.com/2024/07/12/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 机器学习三要素 机器学习方法 &#x3D; 模型 + 策略 + 算法  模型(model)：总结数据的内在规律，用数学语言描述的参数系统 策略(strategy)：选取最优模型的评价准则 算法(algorithm)：选取最优模型的具体方法  2 机器学习方法分类  3 建模流程  收集数据：收集用于训练和测试的数据集，确保数据代表实际问题的不同方面 数据清洗：对数据进行清洗，去除">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/ml.png">
+<meta property="article:published_time" content="2024-07-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-19T03:32:33.646Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/ml.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>02_机器学习基本理论 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="02_机器学习基本理论"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-12 00:00" pubdate>
+          2024年7月12日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="机器学习"
+        id="heading-61bb1751fd355596e307767d1927c855" role="tab" data-toggle="collapse" href="#collapse-61bb1751fd355596e307767d1927c855"
+        aria-expanded="true"
+      >
+        机器学习
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-61bb1751fd355596e307767d1927c855"
+           role="tabpanel" aria-labelledby="heading-61bb1751fd355596e307767d1927c855">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/07/09/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/" title="01_机器学习概览"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_机器学习概览</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/12/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/" title="02_机器学习基本理论"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">02_机器学习基本理论</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/13/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/03_KNN%E7%AE%97%E6%B3%95/03_KNN%E7%AE%97%E6%B3%95/" title="03_KNN算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_KNN算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/14/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/04_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/04_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" title="04_线性回归"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_线性回归</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/16/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="05_逻辑回归"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_逻辑回归</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/18/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/06_%E5%86%B3%E7%AD%96%E6%A0%91/06_%E5%86%B3%E7%AD%96%E6%A0%91/" title="06_决策树"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_决策树</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/19/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" title="07_朴素贝叶斯"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_朴素贝叶斯</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/22/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" title="08_集成学习"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">08_集成学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/23/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/09_K-means%E8%81%9A%E7%B1%BB/09_K-means%E8%81%9A%E7%B1%BB/" title="09_K-means聚类"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">09_K-means聚类</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/25/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/" title="10_感知机"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">10_感知机</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">02_机器学习基本理论</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="机器学习三要素">1 机器学习三要素</h1>
+<p><strong>机器学习方法 = 模型 + 策略 + 算法</strong></p>
+<ul>
+<li>模型(model)：总结数据的内在规律，用数学语言描述的参数系统</li>
+<li>策略(strategy)：选取最优模型的评价准则</li>
+<li>算法(algorithm)：选取最优模型的具体方法</li>
+</ul>
+<h1 id="机器学习方法分类">2 机器学习方法分类</h1>
+<p><img src="02_algorithm_sum.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="建模流程">3 建模流程</h1>
+<ol type="1">
+<li><strong>收集数据</strong>：收集用于训练和测试的数据集，确保数据代表实际问题的不同方面</li>
+<li><strong>数据清洗</strong>：对数据进行清洗，去除掉脏数据和不可用的数据</li>
+<li><strong>特征工程</strong>：对数据进行转换和格式化，确保适合用于机器学习模型训练</li>
+<li><strong>选择算法</strong>：选择适合任务类型(分类、回归、聚类等)和数据特征的机器学习算法</li>
+<li><strong>模型训练</strong>：使用训练集数据训练模型，让模型从数据中学习规律</li>
+<li><strong>模型评估</strong>：使用测试集评估模型性能，确认是否达到预期效果</li>
+<li><strong>模型优化</strong>：确保模型有较好性能的基础上进一步提高模型效果</li>
+<li><strong>模型部署</strong>：将训练好的模型部署到生产环境，实时监控其表现</li>
+</ol>
+<h1 id="特征工程">4 特征工程</h1>
+<h2 id="特征工程概述">4.1 特征工程概述</h2>
+<p>特征工程 (Feature
+Engineering)是机器学习过程中非常重要的一步，通过对原始数据的处理、转换和构造，生成新的特征或选择有效的特征，从而提高模型的性能。优秀的特征工程可以显著提高模型的表现，忽视特征工程可能导致模型性能欠佳。</p>
+<blockquote>
+<p>数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限。</p>
+</blockquote>
+<h2 id="特征工程内容">4.2 特征工程内容</h2>
+<h3 id="特征选择">4.2.1 特征选择</h3>
+<p>从原始特征中挑选出<strong>与目标变量关系最密切的特征</strong>，剔除冗余、无关或噪声特征。减少模型的复杂度、加速训练过程、并减少过拟合的风险。</p>
+<p>特征选择不会创建新特征，也不会改变数据结构。</p>
+<ul>
+<li>过滤法(Filter
+Method)：基于统计测试(如卡方检验、相关系数、信息增益等)来评估特征与目标变量之间的关系，选择最相关的特征。</li>
+<li>包裹法(Wrapper Method)：使用模型(如递归特征消除
+RFE)来评估特征的重要性，并根据模型的表现进行特征选择。</li>
+<li>嵌入法(Embedded
+Method)：使用模型本身的特征选择机制(如决策树的特征重要性，L1
+正则化的特征选择)来选择最重要的特征。</li>
+</ul>
+<h3 id="特征转换">4.2.2 特征转换</h3>
+<p>对数据进行数学或统计处理，使其变得更加适合模型的输入要求。</p>
+<ul>
+<li><strong>归一化(Normalization)</strong>：将特征缩放到特定的范围(通常是
+0 到 1 之间)。适用于对尺度敏感的模型(如 KNN、SVM)。</li>
+<li><strong>标准化(Standardization)</strong>：通过减去均值并除以标准差，使特征的分布具有均值
+0，标准差 1。</li>
+<li><strong>对数变换</strong>：对于有偏态的分布(如收入、价格等)，对数变换可以将其转化为更接近正态分布的形式。</li>
+<li>类别(category)变量的编码
+<ul>
+<li><strong>独热编码 (One-Hot Encoding)</strong>
+：将类别型变量转换为二进制列，常用于无序类别特征，如红色、绿色、蓝色。</li>
+<li><strong>标签编码(Label
+Encoding)</strong>：将类别型变量映射为整数，常用于有序类别特征，如高、中、低。</li>
+<li><strong>目标编码(Target
+Encoding)</strong>：将类别变量的每个类别替换为其对应目标变量的平均值或其他统计量。</li>
+<li><strong>频率编码(Frequency
+Encoding)</strong>：将类别变量的每个类别替换为该类别在数据集中的出现频率。</li>
+</ul></li>
+</ul>
+<h3 id="特征构造">4.2.3 特征构造</h3>
+<p>特征构造是基于现有的特征创造出新的、更有代表性的特征。通过组合、转换、或者聚合现有的特征，形成能够更好反映数据规律的特征。</p>
+<ul>
+<li><p><strong>交互特征</strong>：将两个特征组合起来，形成新的特征。例如，两个特征的乘积、和或差等。
+例如，将年龄与收入结合创建新的特征，可能能更好地反映某些模式。</p></li>
+<li><p><strong>统计特征</strong>：从原始特征中提取统计值，例如求某个时间窗口的平均值、最大值、最小值、标准差等。
+例如，在时间序列数据中，从原始数据中提取每个小时、每日的平均值。</p></li>
+<li><p><strong>日期和时间特征</strong>：从日期时间数据中提取如星期几、月份、年份、季度等特征。
+例如，将“2000-01-01”转换为“星期几”、“是否节假日”、“月初或月末”等特征。</p></li>
+</ul>
+<h3 id="特征降维">4.2.4 特征降维</h3>
+<p>当数据集的特征数量非常大时，特征降维可以帮助减少计算复杂度并避免过拟合。通过降维方法，可以在保持数据本质的情况下减少特征的数量。</p>
+<ul>
+<li><strong>主成分分析(PCA)</strong>：通过线性变换将原始特征映射到一个新的空间，使得新的特征(主成分)尽可能地保留数据的方差。</li>
+<li><strong>线性判别分析(LDA)</strong>：一种监督学习的降维方法，通过最大化类间距离与类内距离的比率来降维。</li>
+<li><strong>t 分布随机近邻嵌入(t-Distributed Stochastic Neighbor
+Embedding，t-SNE)</strong>：一种非线性的降维技术，特别适合可视化高维数据。</li>
+<li><strong>自编码器(Auto
+Encoder)</strong>：一种神经网络模型，通过压缩编码器来实现数据的降维。</li>
+</ul>
+<h2 id="常用方法">4.3 常用方法</h2>
+<p>对于一个模型来说，有些特征可能很关键，而有些特征可能用处不大。因此<strong>特征选择</strong>是最基本的操作。有时也会遇到维度灾难，即特征数量过多，在确保不丢失重要特征的前提下减少维度的数量，经常会用到<strong>特征降维</strong>。</p>
+<h3 id="低方差过滤法">4.3.1 低方差过滤法</h3>
+<p>低方差意味着该特征的样本值几乎都一样，对预测影响很小，可以直接去掉。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> VarianceThreshold<br><br><span class="hljs-comment"># 过滤掉方差低于 0.1 的特征</span><br>var_thresh = VarianceThreshold(threshold=<span class="hljs-number">0.1</span>)<br>X_filtered = var_thresh.fit_transform(X)<br></code></pre></td></tr></table></figure></p>
+<h3 id="相关系数法">4.3.2 相关系数法</h3>
+<p>通过计算特征与目标变量或特征之间的相关性，筛选出高相关性特征(与目标相关)或剔除冗余特征(特征间高度相关)。</p>
+<ol type="1">
+<li><strong>皮尔逊相关系数 (Pearson
+Correlation)</strong>：用于衡量两个变量的<strong>线性相关性</strong>，考察的是变量之间沿着一条直线的相似程度。</li>
+</ol>
+<p><span class="math display">$$
+r=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^n(y_i-\bar{y})^2}}
+$$</span></p>
+<p>适用于<strong>连续变量</strong>，且这些变量近似服从<strong>正态分布</strong>。如果数据不符合正态分布，或者关系不是线性的，皮尔逊相关系数可能无法准确反映变量间的关系。</p>
+<p>取值范围[-1, 1]：</p>
+<ul>
+<li>+1 表示完全正相关(一个变量增加，另一个也增加)</li>
+<li>-1 表示完全负相关(一个变量增加，另一个减少)</li>
+<li>0 表示没有线性相关性</li>
+</ul>
+<p>使用<code>pandas.DataFrame.corrwith(method="pearson")</code>可以计算各个特征与标签间的皮尔逊相关系数。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">X.corrwith(y, method=<span class="hljs-string">&#x27;pearson&#x27;</span>)<br><span class="hljs-comment"># sepal length (cm) 0.798078 </span><br><span class="hljs-comment"># sepal width (cm) -0.440290 </span><br><span class="hljs-comment"># petal length (cm) 0.935431 </span><br><span class="hljs-comment"># petal width (cm) 0.938179 </span><br><span class="hljs-comment"># dtype: float64</span><br></code></pre></td></tr></table></figure></p>
+<p>使用 <code>pandas.DataFrame.corr(method="pearson")</code>
+计算皮尔逊相关系数矩阵。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">corr_matrix = X.corr(method=<span class="hljs-string">&#x27;pearson&#x27;</span>)<br></code></pre></td></tr></table></figure></p>
+<table style="width:100%;">
+
+<thead>
+<tr>
+<th></th>
+<th>sepal length (cm)</th>
+<th>sepal width (cm)</th>
+<th>petal length (cm)</th>
+<th>petal width (cm)</th>
+<th>label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sepal length (cm)</td>
+<td>1.000000</td>
+<td>-0.117570</td>
+<td>0.871754</td>
+<td>0.817941</td>
+<td>0.782561</td>
+</tr>
+<tr>
+<td>sepal width (cm)</td>
+<td>-0.117570</td>
+<td>1.000000</td>
+<td>-0.428440</td>
+<td>-0.366126</td>
+<td>-0.426658</td>
+</tr>
+<tr>
+<td>petal length (cm)</td>
+<td>0.871754</td>
+<td>-0.428440</td>
+<td>1.000000</td>
+<td>0.962865</td>
+<td>0.949035</td>
+</tr>
+<tr>
+<td>petal width (cm)</td>
+<td>0.817941</td>
+<td>-0.366126</td>
+<td>0.962865</td>
+<td>1.000000</td>
+<td>0.956547</td>
+</tr>
+<tr>
+<td>label</td>
+<td>0.782561</td>
+<td>-0.426658</td>
+<td>0.949035</td>
+<td>0.956547</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+<p>使用热力图将皮尔逊矩阵可视化。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sns.heatmap(corr_matrix, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;.2f)</span><br></code></pre></td></tr></table></figure></p>
+<p><img src="02_heatmap.png" srcset="/img/loading.gif" lazyload /></p>
+<ol start="2" type="1">
+<li><strong>斯皮尔曼相关系数(Spearman’s Rank Correlation
+Coefficient)</strong>：用于衡量两个变量之间的<strong>单调关系</strong>，考察的是一个变量增加时，另一个变量也倾向于增加或减少的程度，不一定是线性关系。其中 <span
+class="math inline"><em>d</em><sub><em>i</em></sub></span>
+是两个变量在排名时的差异，<span
+class="math inline"><em>n</em></span> 是样本大小。 <span
+class="math display">$$
+ρ=1−\frac{6\sum_{i=1}^n​d_i^2​}{n(n^2−1)}​
+$$</span></li>
+</ol>
+<p>取值范围 [-1, 1]：</p>
+<ul>
+<li>+1 表示完全单调递增关系</li>
+<li>-1 表示完全单调递减关系</li>
+<li>0 表示没有单调关系</li>
+</ul>
+<p>适用于<strong>连续变量或离散变量</strong>。对数据的分布没有严格要求，即使数据不服从正态分布也可以使用。
+特别适合于处理顺序数据(例如，排名)。</p>
+<p>使用 <code>pandas.DataFrame.corrwith(method="spearman")</code>
+计算斯皮尔曼相关系数。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">X.corrwith(y, method=<span class="hljs-string">&#x27;spearman&#x27;</span>)<br><span class="hljs-comment"># sepal length (cm)    0.798078</span><br><span class="hljs-comment"># sepal width (cm)    -0.440290</span><br><span class="hljs-comment"># petal length (cm)    0.935431</span><br><span class="hljs-comment"># petal width (cm)     0.938179</span><br><span class="hljs-comment"># dtype: float64</span><br></code></pre></td></tr></table></figure></p>
+<p>同样可以使用 <code>pandas.DataFrame.corr(method="spearman")</code>
+来计算斯皮尔曼相关系数矩阵。</p>
+<h3 id="主成分分析pca">4.3.3 主成分分析(PCA)</h3>
+<p>主成分分析(Principal Component Analysis，
+PCA)是一种常用的降维技术，通过线性变换将高维数据投影到低维空间，同时保留数据的主要变化模式。</p>
+<p>使用 <code>sklearn.decomposition.PCA(n_components=2)</code>
+进行主成分分析。 参数<code>n_components</code> ：</p>
+<ul>
+<li>小数：表示保留多少比例的信息</li>
+<li>整数：表示保留多少个维度</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.decomposition <span class="hljs-keyword">import</span> PCA<br><br><span class="hljs-comment"># 保留两个维度的特征</span><br>pca = PCA(n_components=<span class="hljs-number">2</span>)<br>X_pca = pca.fit_transform(X)<br></code></pre></td></tr></table></figure>
+<p>可视化： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python">fig = plt.figure(figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">4</span>))<br><br><span class="hljs-comment"># 转换前的三维可视化</span><br>ax1 = fig.add_subplot(<span class="hljs-number">121</span>, projection=<span class="hljs-string">&#x27;3d&#x27;</span>)<br>ax1.scatter(X[:, <span class="hljs-number">0</span>], X[:, <span class="hljs-number">1</span>], X[:, <span class="hljs-number">2</span>])<br>ax1.set_title(<span class="hljs-string">&#x27;Before PCA(3D)&#x27;</span>)<br>ax1.set_xlabel(<span class="hljs-string">&quot;Feature 1&quot;</span>)<br>ax1.set_ylabel(<span class="hljs-string">&quot;Feature 2&quot;</span>)<br>ax1.set_zlabel(<span class="hljs-string">&quot;Feature 3&quot;</span>)<br><br><span class="hljs-comment"># 转换后的二维可视化</span><br>ax2 = fig.add_subplot(<span class="hljs-number">122</span>)<br>ax2.scatter(X_pca[:, <span class="hljs-number">0</span>], X_pca[:, <span class="hljs-number">1</span>])<br>ax2.set_title(<span class="hljs-string">&#x27;After PCA(2D)&#x27;</span>)<br>ax2.set_xlabel(<span class="hljs-string">&quot;Principal Component 1&quot;</span>)<br>ax2.set_ylabel(<span class="hljs-string">&quot;Principal Component 2&quot;</span>)<br></code></pre></td></tr></table></figure> <img src="02_pca.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="模型评估和选择">5 模型评估和选择</h1>
+<h2 id="损失函数">5.1 损失函数</h2>
+<p>预测结果 <span class="math inline"><em>f</em>(<em>X</em>)</span>
+和真实值 <span class="math inline"><em>y</em></span>
+之间的存在偏差，我们使用损失函数(loss
+function)来度量预测偏差的程度，记作 <span
+class="math inline"><em>L</em>(<em>y</em>, <em>f</em>(<em>X</em>))</span>，损失函数是非负实值函数，损失函数值越小，模型越好。</p>
+<p>常见损失函数：</p>
+<ul>
+<li><p>0-1损失函数 <span class="math display">$$
+L(y,f(X))=\begin{cases} 1,\quad y≠f(X) \\ 0,\quad y=f(X) )\end{cases}
+$$</span></p></li>
+<li><p>平方损失函数 <span
+class="math display"><em>L</em>(<em>y</em>, <em>f</em>(<em>X</em>)) = (<em>y</em> − <em>f</em>(<em>X</em>))<sup>2</sup></span></p></li>
+<li><p>绝对损失函数 <span
+class="math display"><em>L</em>(<em>y</em>, <em>f</em>(<em>X</em>)) = |<em>y</em> − <em>f</em>(<em>X</em>)|</span></p></li>
+<li><p>对数似然损失函数 <span
+class="math display"><em>L</em>(<em>y</em>, <em>F</em>(<em>X</em>)) = −[<em>y</em> log  <em>p</em><sub><em>x</em></sub> + (1 − <em>y</em>) log  (1 − <em>p</em><sub><em>x</em></sub>)]</span>
+<span class="math inline"><em>y</em></span> 是实际标签（ <span
+class="math inline"><em>y</em> ∈ {0, 1}</span> ，表示类别 0 或 1），
+<span class="math inline"><em>p</em><sub><em>x</em></sub></span>
+是模型预测的样本 <span class="math inline"><em>x</em></span> 属于类别 1
+的概率。</p></li>
+</ul>
+<h2 id="经验误差">5.2 经验误差</h2>
+<p>根据选取的损失函数，就可以计算出模型 <span
+class="math inline"><em>f</em>(<em>X</em>)</span>
+在训练集上的平均误差，称为训练误差，也被称作 <strong>经验误差(empirical
+error)</strong> 或 经验风险(empirical risk)。 <span
+class="math display">$$
+R_{emp}= \frac{1}{n}\sum _{i=1}^nL(y_i, f(x_i))
+$$</span> 类似地，在测试集上的平均误差，被称为测试误差或者
+<strong>泛化误差 (generalization error)</strong>。</p>
+<p>一般情况下对模型评估的策略，就是考察经验误差；当经验风险最小时，就认为取到了最优的模型。这种策略被称为
+<strong>经验风险最小化(empirical risk minimization，ERM)</strong>。</p>
+<h2 id="欠拟合和过拟合">5.3 欠拟合和过拟合</h2>
+<p>拟合(Fitting)是指机器学习模型在训练数据上学习到规律并生成预测结果的过程。
+<img src="02_fitting_model.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>过拟合(overfitting)</strong>：模型在训练集上学得太好，甚至记住了噪声或偶然特征，导致在训练集表现好、测试集表现差。
+<strong>欠拟合(underfitting)</strong>：模型对训练数据学习不足，连训练集都拟合不好，模型太简单、能力不够，无法捕捉数据中的真实规律。</p>
+<p>欠拟合通过增加模型复杂度、增加特征或改进特征工程、增加训练时间、减少正则化强度即可，一般来说更容易遇到、并且不易解决的问题是过拟合。</p>
+<ul>
+<li>过拟合产生原因：
+<ul>
+<li>模型复杂度过高：模型过于复杂，参数过多</li>
+<li>训练数据不足：数据集太小，模型学到的细节无法泛化到新数据</li>
+<li>特征过多：模型记住了数据的噪声，而不是规律</li>
+<li>训练时间过长：模型学会了数据中的噪声，而不是规律</li>
+</ul></li>
+<li>过拟合解决方案：
+<ul>
+<li>减少模型复杂度：降低模型参数数量，使用简化的模型或降维</li>
+<li>增加训练数据：收集更多数据增强数据多样性</li>
+<li><strong>使用正则化：引入 L1 、L2 正则化</strong></li>
+<li>早停：模型验证损失不再下降时，提前停止训练</li>
+</ul></li>
+</ul>
+<h2 id="正则化">5.4 正则化</h2>
+<p>正则化(Regularization)通过在损失函数中添加额外项，<strong>惩罚过大的参数</strong>，进而限制模型复杂度、避免过拟合，提高模型泛化能力。</p>
+<p>如在平方损失函数中加入正则化： <span class="math display">$$
+Loss=\frac{1}{n}{\left(\sum_{i=1}^n(f(x_i)-y_i)^2+\lambda\sum_{i=1}^k{w_i}^2\right)}
+$$</span> 𝜆
+是<strong>正则化系数</strong>，用来表示<strong>惩罚项的权重</strong>。正则化系数需在模型训练开始之前手动设置，是“超参数”。</p>
+<ul>
+<li>𝜆 过大：可能使模型太简单，导致欠拟合</li>
+<li>𝜆 过小：可能使模型太复杂，导致过拟合</li>
+</ul>
+<p>原损失函数和正则化项相互平衡，在模型的拟合能力和复杂度之间找到最佳折中。</p>
+<ul>
+<li>原损失函数的目的：更好的拟合数据集</li>
+<li>正则化项的目的：减小参数的大小，从而降低模型复杂度</li>
+</ul>
+<p>常见的正则化技术有 L1 正则化和 L2 正则化。</p>
+<h3 id="l1-正则化lasso回归">5.4.1 L1 正则化(Lasso回归)</h3>
+<p>L1 正则化在损失函数中加入参数的绝对值之和： <span
+class="math display">$$Loss_{L1}=\text{原}Loss+\lambda\sum_{i=1}^k|w_i|$$</span>
+L1 正则化通过惩罚模型参数的绝对值，使得部分权重<strong>趋近 0 甚至变为
+0</strong>。这会导致<strong>特</strong>
+<strong>征选择</strong>，即模型会自动“丢弃”一些不重要的特征。</p>
+<blockquote>
+<p>在解决回归问题时，使用 L1 正则化也被称为“Lasso 回归”。</p>
+</blockquote>
+<h3 id="l2-正则化ridge回归">5.4.2 L2 正则化(Ridge回归)</h3>
+<p>L2 正则化在损失函数中加入参数的平方之和： <span
+class="math display">$$Loss_{L2}=\text{原}Loss+\lambda\sum_{i=1}^kw_i{}^2$$</span>
+L2
+正则化通过惩罚模型参数的平方，使得所有参数都变得更小，但不会将参数强行压
+缩为 0。它会使得模型<strong>尽量平滑</strong>，从而防止过拟合。</p>
+<p>由于 L2 正则化平方的存在，虽然在 <span
+class="math inline"><em>w</em><sub><em>i</em></sub></span> 绝对值大于 1
+时，惩罚力度更大，但是当 <span
+class="math inline"><em>w</em><sub><em>i</em></sub></span> 绝对值小于 1
+时，惩罚力度变小，所以即使某个特征对模型影响很小，也不会将其权重压缩为
+0。 <img src="02_L1_L2.png" srcset="/img/loading.gif" lazyload /></p>
+<blockquote>
+<p>在解决回归问题时，使用 L2 正则化也被称为“岭回归”。</p>
+</blockquote>
+<h3 id="elasticnet-正则化弹性网格回归">5.4.3 ElasticNet
+正则化(弹性网格回归)</h3>
+<p>ElasticNet 正则化结合了 L1 和 L2
+正则化，通过调整两个正则化项的比例来取得平衡，从而同时具备稀疏性和稳定性的优点。
+<span class="math display">$$
+Loss_{ElasticNet}=\text{原}Loss+\lambda\left(\alpha\sum_{i=1}^n|\omega_i|+(1-\alpha)\sum_{i=1}^n\omega_i^2\right)
+$$</span> 其中 <span class="math inline"><em>α</em></span> 是控制 L1 和
+L2 正则化的比例。</p>
+<h2 id="评估方法">5.5 评估方法</h2>
+<h3 id="留出法hold-out">5.5.1 留出法(Hold-Out)</h3>
+<p>留出法(Hold-Out Validation)将数据划分为训练集、验证集和测试集(如
+70%训练，30%测试)。结果受单次划分影响较大，可能高估或低估模型性能。</p>
+<h3 id="k-折交叉验证k-fold-cv">5.5.2 k 折交叉验证(k-Fold CV)</h3>
+<p>交叉验证(Cross-Validation)是一种评估模型泛化能力的方法，通过将数据集划分为多个子集，反复进行训练和验证，以减少因单次数据划分带来的随机性误差。</p>
+<p>k 折交叉验证(k-Fold Cross-Validation)将数据均匀分为 k
+个子集(称为“折”)，每次用 k−1 折训练，剩余 1 折验证，重复 k
+次后取平均性能。充分利用数据，结果更稳定。k 一般取 10、5。 <img
+src="02_kfold.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="留一法leave-one-out">5.5.3 留一法(Leave-One-Out)</h3>
+<p>留一法(Leave-One-Out, LOO) 是 k-Fold
+的特殊形式，每次仅留一个样本作为验证集，其余全部用于训练，重复直到所有样本都被验证一次。适用于小数据集，计算成本极高。</p>
+<h1 id="模型求解算法">6 模型求解算法</h1>
+<p>模型求解其实就是寻找最优参数，让增加了正则化之后的损失函数最小化，称为结构风险最小化(Structural
+Risk Minimization，SRM)。 <span
+class="math display">$$\min\frac{1}{n}(\sum_{i=1}^nL(y_i,f(x_i))+\lambda
+J(\theta))$$</span> 这其实就是求解一个
+<strong>最优化问题</strong>。代入训练集所有数据
+(𝑥𝑖,𝑦𝑖)，要求最小值的目标函数就是模型中参数 𝜃 的函数。</p>
+<p>具体求解的算法，可以利用数学公式直接计算解析解，也可以使用<strong>迭代算法</strong>。</p>
+<h2 id="解析解">6.1 解析解</h2>
+<p>通过数学公式进行严格推导得到解析解，那么就直接得到了最优模型的全部参数，这种方法称作解析法。</p>
+<ul>
+<li>优点：直接通过计算得到最优值，精确迅速</li>
+<li>缺点：适用条件苛刻，目标函数必须可导，且导数方程有解析解；特征维度较大时，计算复杂度极高</li>
+</ul>
+<p>例如线性回归问题：通过最小二乘法得到解析解 <span
+class="math display">$$\begin{gathered}
+Loss_{MSE}=\frac{1}{n}(X\beta-y)^T(X\beta-y) \\
+\nabla Loss_{MSE}=\frac{2}{n}X^T(X\beta-y)=0 \\
+\boldsymbol{\beta}=(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}
+\end{gathered}$$</span></p>
+<h2 id="梯度下降法">6.2 梯度下降法</h2>
+<h3 id="梯度下降思想">6.2.1 梯度下降思想</h3>
+<p>梯度下降法(gradient
+descent)是迭代算法，基本思路就是先选取一个适当的初始值 <span
+class="math inline"><em>𝜃</em><sub>0</sub></span>，然后沿着负梯度方向，不停地更新参数，最终取到极小值。</p>
+<p>(1)初始化参数：随机选择初始参数
+(2)计算梯度：在当前参数下，计算损失函数的梯度
+(3)更新参数：沿负梯度方向调整参数
+(4)重复迭代：直到满足停止条件(如梯度接近零、达到最大迭代次数等)</p>
+<ul>
+<li>梯度方向：函数变化增长最快的方向(变量沿此方向变化时函数增长最快)</li>
+<li>负梯度方向：函数变化减少最快的方向(变量沿此方向变化时函数减少最快)</li>
+</ul>
+<p>沿着损失函数的负梯度方向变化，此时损失函数减少最快，能够以最快速度下降到极小值。
+<span
+class="math display"><em>θ</em><sub><em>k</em> + 1</sub> = <em>θ</em><sub><em>k</em></sub> − <em>α</em> ⋅ ∇<em>L</em>(<em>θ</em><sub><em>k</em></sub>)</span>
+<span class="math inline">$\nabla𝐿(𝜃_𝑘)$</span>是参数取值为 <span
+class="math inline"><em>𝜃</em><sub><em>𝑘</em></sub></span> 时损失函数 𝐿
+的梯度； 𝛼 是每次迭代的步长，被称为<strong>学习率(learning
+rate)</strong>，是一个常见的超参数，设置过小训练迭代过慢，设置过大不易收敛。</p>
+<blockquote>
+<p>注意每次更新的是“x”，而不是“y”，每次“x”沿着负梯度方向移动一段距离。</p>
+</blockquote>
+<p>梯度下降不一定能够找到全局的最优解，有可能是一个局部最优解。</p>
+<ul>
+<li>优点：适用性广，计算简单</li>
+<li>缺点：收敛速度慢，可能陷入局部最优解</li>
+</ul>
+<h3 id="梯度下降分类">6.2.2 梯度下降分类</h3>
+<ol type="1">
+<li>批量梯度下降(Batch Gradient
+Descent，BGD)：每次迭代使用<strong>全部训练数据</strong>计算梯度。
+<ul>
+<li>优点：梯度方向稳定，更新平滑，收敛过程较稳定。</li>
+<li>缺点：每次都计算整个训练集，计算量大，对大数据集效率低。</li>
+</ul></li>
+<li>随机梯度下降(Stochastic Gradient
+Descent，SGD)：每次迭代随机选取<strong>一个样本</strong>计算梯度。
+<ul>
+<li>优点：快速迭代，每次只用一个样本计算梯度；由于引入了随机性，有助于跳出局部最优解。</li>
+<li>缺点：每次更新方向不确定，收敛过程波动很大，甚至难以收敛，在最小值附近震荡。</li>
+</ul></li>
+<li>小批量梯度下降(Mini-batch Gradient
+Descent，MBGD)：每次迭代使用<strong>一小批样本</strong>(如32、64个)计算梯度。
+<ul>
+<li>优点：计算成本相对 BGD 较低，又比 SGD 稳定，兼具 BGD 的稳定和 SGD
+的速度。</li>
+<li>缺点：合适的 batch size 需要实验。</li>
+</ul></li>
+</ol>
+<p><a
+target="_blank" rel="noopener" href="https://www.jeremyjordan.me/gradient-descent/">梯度下降优化扩展内容</a></p>
+<h2 id="牛顿法和拟牛顿法">6.3 牛顿法和拟牛顿法</h2>
+<p>牛顿法也是求解无约束最优化问题的常用方法，核心思想是利用目标函数的二阶导数信息（不需要手动指定学习率了），通过迭代逐渐逼近极值点。
+<span
+class="math display"><em>θ</em><sub><em>k</em> + 1</sub> = <em>θ</em><sub><em>k</em></sub> − <em>H</em><sup>−1</sup>(<em>θ</em><sub><em>k</em></sub>) ⋅ ∇<em>L</em>(<em>θ</em><sub><em>k</em></sub>)</span>
+<span
+class="math inline"><em>𝐻</em><sup>−1</sup>(<em>𝜃</em><sub><em>𝑘</em></sub>)</span>
+表示损失函数 <span class="math inline"><em>L</em></span>
+黑塞矩阵的逆在点 <span
+class="math inline"><em>𝜃</em><sub><em>𝑘</em></sub></span> 的取值。</p>
+<ul>
+<li>优点：收敛速度快，精度高。</li>
+<li>缺点：计算非常复杂，可能发散。</li>
+</ul>
+<p>由于牛顿法中需要计算黑塞矩阵的逆 <span
+class="math inline"><em>𝐻</em><sup>−1</sup>(<em>𝜃</em><sub><em>𝑘</em></sub>)</span>，这一步比较复杂，
+所以可以考虑用一个 <span class="math inline"><em>n</em></span>
+阶正定矩阵来近似代替它，这种方法称为“拟牛顿法”。</p>
+<p>牛顿法和拟牛顿法一般用于解决中小规模的凸优化问题。</p>
+<h1 id="模型评估指标">7 模型评估指标</h1>
+<p>模型的评估指标用于衡量模型在训练集或测试集上的性能，评估结果反映了模型预测的准确性和泛化能力。</p>
+<h2 id="回归模型">7.1 回归模型</h2>
+<h3 id="均方误差mse">7.1.1 均方误差(MSE)</h3>
+<p>均方误差(Mean Squared Error,
+MSE)：每个样本的<strong>预测值与真实值之差的平方</strong>的平均值。
+<span class="math display">$$
+{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+$$</span></p>
+<p>MSE
+对误差进行平方，因此对<strong>异常值非常敏感</strong>。MSE的值越小，说明模型的预测越精准，性能越好。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_squared_error<br><br>mean_squared_error(y_true, y_test)<br></code></pre></td></tr></table></figure></p>
+<h3 id="均方根误差rmse">7.1.2 均方根误差(RMSE)</h3>
+<p>均方根误差(Root Mean Squared Error,
+RMSE)：均方根误差是均方误差的平方根。 <span class="math display">$$
+RMSE=\sqrt{MSE}=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i−\hat{y}_i)^2}
+$$</span></p>
+<p>RMSE 同样对<strong>大误差</strong>敏感，因为它是在 MSE
+的基础上计算得到的，优势在于与目标的量纲一致。如果一味地降低
+RMSE，可能会导致模型对异常值也拟合度很高，容易过拟合。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> root_mean_squared_error<br><br>root_mean_squared_error(y_true, y_test)<br></code></pre></td></tr></table></figure></p>
+<h3 id="平均绝对误差mae">7.1.3 平均绝对误差(MAE)</h3>
+<p>平均绝对误差(Mean Absolute Error,
+MAE)：预测值与真实值差的绝对值的平均值。 <span class="math display">$$
+MAE=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|
+$$</span></p>
+<p>MAE
+对所有误差都给予相同的权重，因此对<strong>异常值</strong>不敏感，并且和目标量纲一致。</p>
+<blockquote>
+<p>如果希望模型对异常值更加敏感，可以选择 MSE 或 RMSE。RMSE 比 MSE
+更易于解释。 如果希望模型对异常值不敏感，可以选择 MAE。
+在实际应用中，通常会同时考虑这三个指标，以便更全面地评估模型的性能。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_absolute_error<br><br>mean_absolute_error(y_true, y_test)<br></code></pre></td></tr></table></figure>
+<h3 id="r2-决定系数">7.1.4 <span
+class="math inline"><em>R</em><sup>2</sup></span> 决定系数</h3>
+<p><span class="math inline"><em>R</em><sup>2</sup></span>
+决定系数：衡量模型对目标变量的解释能力，越接近 1
+越好。由于分母是均方误差，所以对异常值也敏感。 <span
+class="math display">$$R^2=1-\frac{MSE}{Var}=1-\frac{\sum_{i=1}^n(f(x_i)-y_i)^2}{\sum_{i=1}^n(y_i-\bar{y})^2}$$</span>
+决定系数右侧的所减项实际为均方误差与方差的比值。</p>
+<ul>
+<li>均方误差越接近 0，整体越接近 1。</li>
+<li>方差越大，说明真实数据本身规律越弱，允许的误差范围越大，整体也会越接近
+1。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> r2_score<br><br>r2_score(y_true, y_test)<br></code></pre></td></tr></table></figure>
+<h2 id="分类模型">7.2 分类模型</h2>
+<h3 id="混淆矩阵confusion-matrix">7.2.1 混淆矩阵(Confusion Matrix)</h3>
+<p>正类为 Positive (P)，负类为 Negative (N)，总样本数 <span
+class="math inline"><em>n</em> = <em>T</em><em>P</em> + <em>T</em><em>N</em> + <em>F</em><em>P</em> + <em>F</em><em>N</em></span>。展示了模型预测结果与实际标签的对比情况，n
+分类问题的混淆矩阵为 <span
+class="math inline"><em>n</em> × <em>n</em></span>。</p>
+<table>
+<thead>
+<tr>
+<th>
+真实类别
+</th>
+<th>
+预测为正例
+</th>
+<th>
+预测为反例
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<b>正例 (P)</b>
+</td>
+<td>
+真正例(True Positive, TP)
+</td>
+<td>
+假反例(False Negative, FN)
+</td>
+</tr>
+<tr>
+<td>
+<b>反例 (N)</b>
+</td>
+<td>
+假正例(False Positive, FP)
+</td>
+<td>
+真反例(True Negative, TN)
+</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> confusion_matrix<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><br><span class="hljs-comment"># 查看混淆矩阵</span><br>cm = confusion_matrix(y_ture, y_pred)<br><br><span class="hljs-comment"># 热力图可视化</span><br>sns.heatmap(cm, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">&#x27;.2f&#x27;</span>, cmap=<span class="hljs-string">&#x27;warmcool&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="精度accuracy">7.2.2 精度(Accuracy)</h3>
+<p>预测正确的比例。 <span class="math display">$$
+Accuracy=\frac{TP+TN}{n}​
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>
+真实类别
+</th>
+<th>
+预测为正例
+</th>
+<th>
+预测为反例
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<b>正例 (P)</b>
+</td>
+<td style="background-color:#D5E8D4;">
+真正例(True Positive, TP)
+</td>
+<td style="background-color:#F8CECC;">
+假反例(False Negative, FN)
+</td>
+</tr>
+<tr>
+<td>
+<b>反例 (N)</b>
+</td>
+<td style="background-color:#F8CECC;">
+假正例(False Positive, FP)
+</td>
+<td style="background-color:#D5E8D4;">
+真反例(True Negative, TN)
+</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><br><span class="hljs-comment"># 方式一</span><br>accuracy_score(y_true, y_pred)<br><br><span class="hljs-comment"># 方式二</span><br>model.score(X_test, y_test)<br></code></pre></td></tr></table></figure>
+<p>错误率(Error)：预测错误的比例。 <span class="math display">$$
+Error=\frac{FP+FN}{n}=1−Accuracy
+$$</span></p>
+<h3 id="查准率precision">7.2.3 查准率(Precision)</h3>
+<p>预测为正例的样本中，真正为正的比例，衡量模型预测的准不准。 <span
+class="math display">$$
+Precision=\frac{TP}{TP+FP}​
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>
+真实类别
+</th>
+<th>
+预测为正例
+</th>
+<th>
+预测为反例
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<b>正例 (P)</b>
+</td>
+<td style="background-color:#D5E8D4;">
+真正例(True Positive, TP)
+</td>
+<td>
+假反例(False Negative, FN)
+</td>
+</tr>
+<tr>
+<td>
+<b>反例 (N)</b>
+</td>
+<td style="background-color:#F8CECC;">
+假正例(False Positive, FP)
+</td>
+<td>
+真反例(True Negative, TN)
+</td>
+</tr>
+</tbody>
+</table>
+<p>核心特点：宁缺毋滥。
+查准率高，意味着模型在说一个样本是正例时，有很高的可信度。<strong>误报代价高</strong>时更关心，比如垃圾邮件检测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> precision_score<br><br>precision_score(y_true, y_pred)<br></code></pre></td></tr></table></figure>
+<h3 id="查全率召回率recall">7.2.4 查全率/召回率(Recall)</h3>
+<p>真正的正例中，被模型判正的比例，衡量模型找得全不全。 <span
+class="math display">$$
+Recall=\frac{TP}{TP+FN}
+$$</span></p>
+<table>
+<thead>
+<tr>
+<th>
+真实类别
+</th>
+<th>
+预测为正例
+</th>
+<th>
+预测为反例
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<b>正例 (P)</b>
+</td>
+<td style="background-color:#D5E8D4;">
+真正例(True Positive, TP)
+</td>
+<td style="background-color:#F8CECC;">
+假反例(False Negative, FN)
+</td>
+</tr>
+<tr>
+<td>
+<b>反例 (N)</b>
+</td>
+<td>
+假正例(False Positive, FP)
+</td>
+<td>
+真反例(True Negative, TN)
+</td>
+</tr>
+</tbody>
+</table>
+<p>核心特点：宁多报不漏报。
+查全率高，意味着模型能够把绝大多数的正例都找出来，很少漏掉。<strong>漏报代价高</strong>时更关心，比如病毒检测。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> recall_score<br><br>recall_score(y_true, y_pred)<br></code></pre></td></tr></table></figure>
+<h3 id="f1度量f1-score">7.2.5 F1度量(F1-score)</h3>
+<p>查准率和查全率是相互制约的，需要一个综合性的指标来平衡它们，F1度量就是它们的调和平均数，同时兼顾了查准率和查全率。
+<span class="math display">$$
+\frac{1}{F_1}=\frac{1}{2}·(\frac{1}{Precision}+\frac{1}{Recall})
+$$</span> 得=&gt; <span class="math display">$$
+F_1​=2\cdot\frac{Precision\cdot Recall}{Precision+Recall}
+$$</span></p>
+<ul>
+<li><p><strong>F-beta度量</strong>：不平衡场景可用加权的 <span
+class="math inline"><em>F</em><sub><em>β</em></sub></span>​ 强调召回或查准。
+<span class="math display">$$
+F_β=(1+β^2)⋅\frac{PR}{β^2P+R}​
+$$</span></p></li>
+<li><p>当 <span
+class="math inline"><em>β</em> &gt; 1</span> 时，更看重Recall（如 <span
+class="math inline"><em>F</em><sub>2</sub>​</span> 度量）</p></li>
+<li><p>当 <span
+class="math inline"><em>β</em> &lt; 1</span> 时，更看重Precision（如 <span
+class="math inline"><em>F</em><sub>0.5</sub></span> 度量）</p></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> f1_score<br><br>f1_score(y_true, y_pred)<br></code></pre></td></tr></table></figure>
+<hr />
+<p>使用 <code>sklearn</code> 中的 <code>classification_report</code>
+可以生成分类任务的评估报告， 可以很方便地查看精确率、召回率、F1
+分数等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">classification_report(y_true, y_pred)<br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">             precision    recall    f1-score    support </span><br><span class="hljs-string">        0.0     1.00       1.00       1.00         8 </span><br><span class="hljs-string">        1.0     0.92       1.00       0.96        11 </span><br><span class="hljs-string">        2.0     1.00       0.91       0.95        11 </span><br><span class="hljs-string">          </span><br><span class="hljs-string">accuracy                              0.97        30 </span><br><span class="hljs-string">macro avg       0.97       0.97       0.97        30 </span><br><span class="hljs-string">weighted avg    0.97       0.97       0.97        30</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="roc曲线">7.2.6 ROC曲线</h3>
+<ul>
+<li>真正例率（TPR）：实际为正例，被预测为正例的比例，即召回率。(第一行)</li>
+<li>假正例率（FPR）：实际为负例，被预测为正例的比例。（第二行）</li>
+<li>阈值（Threshold）：根据阈值将概率（一般是正例概率）转换为类别标签。</li>
+</ul>
+<p><span
+class="math display">$$TPR=\frac{TP}{\textit{实际正例数}}=\frac{TP}{TP+FN}\qquad
+FPR=\frac{FP}{\textit{实际负例数}}=\frac{FP}{FP+TN}$$</span></p>
+<table>
+<thead>
+<tr>
+<th>
+真实类别
+</th>
+<th>
+预测为正例
+</th>
+<th>
+预测为反例
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<b>正例 (P)</b>
+</td>
+<td>
+真正例(True Positive, TP)
+</td>
+<td>
+假反例(False Negative, FN)
+</td>
+</tr>
+<tr>
+<td>
+<b>反例 (N)</b>
+</td>
+<td>
+假正例(False Positive, FP)
+</td>
+<td>
+真反例(True Negative, TN)
+</td>
+</tr>
+</tbody>
+</table>
+<p>ROC 曲线（Receiver Operating Characteristic
+Curve，受试者工作特征）是评估二分类模型性能的工具，以假正例率（FPR）为横轴，以真正例率（TPR）为纵轴，展示不同阈值下模型的表现。绘制
+ROC 曲线时，从高到低调整阈值，计算每个阈值的 TPR 和 FPR
+并绘制所有阈值的点，形成 ROC 曲线。 <img src="02_roc.png" srcset="/img/loading.gif" lazyload /></p>
+<p>中间的红色虚线是随机猜测概率，只要 ROC
+曲线在虚线上方就有预测价值，当然如果在虚线下方说明能够反向预测正确，反转输出也有预测价值。</p>
+<blockquote>
+<p>在左下角时，阈值被设定的很高（比如
+0.999才预测为正例），那么模型将所有样本都预测为负例，不预测为正例就不会出错，所以
+TPR 和 FPR 都很低。 阈值稍微降低，由于此时正例概率很大，TPR
+提升很快，有预测就有失误，FPR 随之提升，但没有 TPR
+提升快，曲线向上凸起。
+当阈值继续降低，正例概率变低，将会导致更多的预测失误，FPR 增长速度超越
+TPR，曲线开始向下弯曲。
+右上角是另一种极端，阈值设定很低，所有样本都预测为正例，TPR 和 FPR
+都很高。</p>
+</blockquote>
+<h3 id="auc值">7.2.7 AUC值</h3>
+<p>AUC 值代表 ROC 曲线下的面积，用于量化模型性能。AUC
+值越大，模型区分正负类的能力越强，模型性能越好。AUC 值=0.5
+表示模型接近随机猜测，AUC 值=1 代表完美模型。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> roc_auc_score<br><br><span class="hljs-comment"># 获取正类预测概率值</span><br>y_proba = model.predict_proba(X_test)[:, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 计算 auc 值</span><br>roc_auc_score(y_test, y_proba)<br></code></pre></td></tr></table></figure></p>
+<p>绘制 ROC 曲线： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> roc_curve, roc_auc_score<br><span class="hljs-keyword">import</span> matplotplib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 获取正类预测概率值</span><br>y_proba = model.predict_proba(X_test)[:, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 返回 FPR, TPR, 阈值 数组</span><br>fpr, tpr, threshold = roc_curve(y_test, y_proba)<br><br><span class="hljs-comment"># 计算 AUC 值</span><br>roc_auc = roc_auc_score(y_test, y_proba)<br><br><span class="hljs-comment"># 绘制 ROC 曲线</span><br>plt.plot(fpr, tpr, label=<span class="hljs-string">f&#x27;ROC curve(roc_auc=<span class="hljs-subst">&#123;roc_auc:<span class="hljs-number">.2</span>f&#125;</span>)&#x27;</span>)<br>plt.plot([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], linestyle=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.xlim(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)<br>plt.ylim(<span class="hljs-number">0</span>, <span class="hljs-number">1.05</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;False Positive Rate&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;True Positive Rate&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;ROC Curve&#x27;</span>)<br>plt.legend(loc=<span class="hljs-string">&#x27;lower right&#x27;</span>)<br></code></pre></td></tr></table></figure> <img src="02_roc_curve.png" srcset="/img/loading.gif" lazyload /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="print-no-link">#机器学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>02_机器学习基本理论</div>
+      <div>http://example.com/2024/07/12/coding/大模型开发/04 机器学习/02_机器学习基本理论/02_机器学习基本理论/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月12日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/13/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/03_KNN%E7%AE%97%E6%B3%95/03_KNN%E7%AE%97%E6%B3%95/" title="03_KNN算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">03_KNN算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/09/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/" title="01_机器学习概览">
+                        <span class="hidden-mobile">01_机器学习概览</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

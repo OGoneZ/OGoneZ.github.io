@@ -1,0 +1,3570 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Numpy和Pandas的关系：就像先掌握算术才能学代数一样，NumPy就是数据分析的”算术基础”，虽然可以直接用计算器（Pandas），但理解底层原理才能走得更远。 Pandas 核心数据机构是Series(数据系列)、DataFrame(数据窗&#x2F;数据框)，Series可以看做表中的一列，DataFrame则是整个表格，由多个列构成。除此之外还有一个特殊的Index类，为Series和Dat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05_Pandas数据结构">
+<meta property="og:url" content="http://example.com/2024/06/22/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/05_Pandas%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/05_Pandas%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="Numpy和Pandas的关系：就像先掌握算术才能学代数一样，NumPy就是数据分析的”算术基础”，虽然可以直接用计算器（Pandas），但理解底层原理才能走得更远。 Pandas 核心数据机构是Series(数据系列)、DataFrame(数据窗&#x2F;数据框)，Series可以看做表中的一列，DataFrame则是整个表格，由多个列构成。除此之外还有一个特殊的Index类，为Series和Dat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/pandas.png">
+<meta property="article:published_time" content="2024-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-19T03:32:33.327Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="Pandas">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/pandas.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>05_Pandas数据结构 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="05_Pandas数据结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-06-22 00:00" pubdate>
+          2024年6月22日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          56 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="数据处理与分析"
+        id="heading-2e8cc546db56ffd77538a0a0074513ed" role="tab" data-toggle="collapse" href="#collapse-2e8cc546db56ffd77538a0a0074513ed"
+        aria-expanded="true"
+      >
+        数据处理与分析
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-2e8cc546db56ffd77538a0a0074513ed"
+           role="tabpanel" aria-labelledby="heading-2e8cc546db56ffd77538a0a0074513ed">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/06/01/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/00%20MySQL%E5%9F%BA%E7%A1%80/00_MySQL%E5%9F%BA%E7%A1%80/" title="00_MySQL基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">00_MySQL基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/04/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/01_Numpy%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95/01_Numpy%E5%9F%BA%E7%A1%80%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95/" title="01_Numpy基础属性和方法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_Numpy基础属性和方法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/05/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/02_Numpy%E7%B4%A2%E5%BC%95%E5%92%8C%E5%B8%83%E5%B0%94%E9%80%BB%E8%BE%91/02_Numpy%E7%B4%A2%E5%BC%95%E5%92%8C%E5%B8%83%E5%B0%94%E9%80%BB%E8%BE%91/" title="02_Numpy索引和布尔逻辑"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_Numpy索引和布尔逻辑</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/06/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/03_Numpy%E6%95%B0%E7%BB%84%E8%BF%90%E7%AE%97%E5%92%8C%E5%87%BD%E6%95%B0/03_Numpy%E6%95%B0%E7%BB%84%E8%BF%90%E7%AE%97%E5%92%8C%E5%87%BD%E6%95%B0/" title="03_Numpy数组运算和函数"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_Numpy数组运算和函数</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/07/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/04_Numpy%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E7%BB%84/04_Numpy%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E7%BB%84/" title="04_Numpy结构化数组"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Numpy结构化数组</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/22/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/05_Pandas%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/05_Pandas%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="05_Pandas数据结构"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">05_Pandas数据结构</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/23/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/06_Pandas%E7%B4%A2%E5%BC%95%E8%BF%90%E7%AE%97/06_Pandas%E7%B4%A2%E5%BC%95%E8%BF%90%E7%AE%97/" title="06_Pandas索引运算"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_Pandas索引运算</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/25/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/07_Pandas%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E5%92%8C%E6%B8%85%E6%B4%97/07_Pandas%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E5%92%8C%E6%B8%85%E6%B4%97/" title="07_Pandas数据操作和清洗"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_Pandas数据操作和清洗</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/28/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/08_Matplotlib%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/08_Matplotlib%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" title="08_Matplotlib数据可视化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">08_Matplotlib数据可视化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/06/30/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/09_Seaborn%E5%9F%BA%E6%9C%AC%E5%9B%BE%E8%A1%A8/09_Seaborn%E5%9F%BA%E6%9C%AC%E5%9B%BE%E8%A1%A8/" title="09_Seaborn基本图表"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">09_Seaborn基本图表</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">05_Pandas数据结构</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Numpy和Pandas的关系：就像先掌握算术才能学代数一样，NumPy就是数据分析的”算术基础”，虽然可以直接用计算器（Pandas），但理解底层原理才能走得更远。</p>
+<p>Pandas
+核心数据机构是<code>Series</code>(数据系列)、<code>DataFrame</code>(数据窗/数据框)，<code>Series</code>可以看做表中的一列，<code>DataFrame</code>则是整个表格，由多个列构成。除此之外还有一个特殊的<code>Index</code>类，为<code>Series</code>和<code>DataFrame</code>提供索引功能。</p>
+<h1 id="series对象">1 Series对象</h1>
+<h2 id="创建-series-对象">1.1 创建 Series 对象</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br></code></pre></td></tr></table></figure>
+<p><code>Series</code>对象内部结构：一个ndarray用来保存数据，一个index用来保存索引。类似Numpy的一维数组，但是增加了“标签”，具有数据和索引。</p>
+<figure>
+<img src="05_series.png" srcset="/img/loading.gif" lazyload alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<ul>
+<li>通过列表和数组创建
+<ul>
+<li><code>data</code>：数据</li>
+<li><code>index</code>：索引</li>
+<li><code>name</code>：名称</li>
+</ul></li>
+</ul>
+<p>其中<code>name</code>的作用：</p>
+<ol type="1">
+<li>创建<code>DataFrame</code>时自动变成列名</li>
+<li>合并时作为对齐依据</li>
+<li>导出csv时成为列名</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1 = pd.Series(data=np.arange(<span class="hljs-number">4</span>), index=[<span class="hljs-string">&#x27;春&#x27;</span>, <span class="hljs-string">&#x27;夏&#x27;</span>, <span class="hljs-string">&#x27;秋&#x27;</span>, <span class="hljs-string">&#x27;冬&#x27;</span>], name=<span class="hljs-string">&#x27;季节&#x27;</span>)<br>ser1<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">春    0
+夏    1
+秋    2
+冬    3
+Name: 季节, dtype: int64</code></pre>
+<ul>
+<li>通过字典创建
+<ul>
+<li>字典的键就是索引</li>
+<li>字典的值就是数据</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2 = pd.Series(data=&#123;<span class="hljs-string">&#x27;春&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;夏&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;秋&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;冬&#x27;</span>: <span class="hljs-number">4</span>&#125;)<br>ser2<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">春    1
+夏    2
+秋    3
+冬    4
+dtype: int64</code></pre>
+<h2 id="series-的运算">1.2 Series 的运算</h2>
+<p>由于 Pandas 是基于 Numpy
+开发的，所以很多性质和数组是一样的，比如<strong>矢量化运算和广播</strong>。</p>
+<h3 id="标量运算">1.2.1 标量运算</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1 += <span class="hljs-number">10</span><br>ser1<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">春    10
+夏    11
+秋    12
+冬    13
+Name: 季节, dtype: int64</code></pre>
+<h3 id="矢量运算">1.2.2 矢量运算</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1 += ser2<br>ser1<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">春    11
+夏    13
+秋    15
+冬    17
+Name: 季节, dtype: int64</code></pre>
+<h2 id="series-的属性">1.3 Series 的属性</h2>
+<ul>
+<li><code>dtype</code>：返回<code>Series</code>对象的数据类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1.dtype<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">dtype(&#39;int64&#39;)</code></pre>
+<ul>
+<li><code>size</code>：返回<code>Series</code>对象中元素的个数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1.size<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">4</code></pre>
+<ul>
+<li><code>index</code>：返回<code>Series</code>对象的索引<code>Index</code>对象</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;索引对象&#x27;</span>, ser1.index)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;通过下标取出具体索引&#x27;</span>, ser1.index[<span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">索引对象 Index([&#39;春&#39;, &#39;夏&#39;, &#39;秋&#39;, &#39;冬&#39;], dtype=&#39;object&#39;)
+通过下标取出具体索引 春</code></pre>
+<ul>
+<li><code>values</code>：以<code>ndarray</code>的形式返回<code>Series</code>对象的值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(ser1.values)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;通过下标取出具体值&#x27;</span>, ser1.values[<span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[11 13 15 17]
+通过下标取出具体值 11</code></pre>
+<h2 id="series-的方法">1.4 Series 的方法</h2>
+<h3 id="描述性统计">1.4.1 描述性统计</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;计数：&#x27;</span>, ser1.count())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;求和：&#x27;</span>, ser1.<span class="hljs-built_in">sum</span>())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;均值：&#x27;</span>, ser1.mean())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;中位数：&#x27;</span>, ser1.median())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;最小值：&#x27;</span>, ser1.<span class="hljs-built_in">min</span>())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;最大值：&#x27;</span>, ser1.<span class="hljs-built_in">max</span>())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;标准差：&#x27;</span>, ser1.std())<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;方差：&#x27;</span>, ser1.var())<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">计数： 4
+求和： 56
+均值： 14.0
+中位数： 14.0
+最小值： 11
+最大值： 17
+标准差： 2.581988897471611
+方差： 6.666666666666667</code></pre>
+<ul>
+<li><code>describe()</code>：获取描述性统计信息。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser1.describe()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">count     4.000000
+mean     14.000000
+std       2.581989
+min      11.000000
+25%      12.500000
+50%      14.000000
+75%      15.500000
+max      17.000000
+Name: 季节, dtype: float64</code></pre>
+<p><code>describe()</code>返回的是一个<code>Series</code>对象，所以可以通过索引访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;平均值：&#x27;</span>, ser1.describe()[<span class="hljs-string">&#x27;mean&#x27;</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最大值，最小值：\n<span class="hljs-subst">&#123;ser1.describe()[[<span class="hljs-string">&#x27;max&#x27;</span>, <span class="hljs-string">&#x27;min&#x27;</span>]]&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">平均值： 14.0
+最大值，最小值：
+max    17.0
+min    11.0
+Name: 季节, dtype: float64</code></pre>
+<h3 id="处理数据">1.4.2 处理数据</h3>
+<ul>
+<li><code>isnull()</code>：空值判断</li>
+<li><code>notnull()</code>：非空值判断</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2 = pd.Series(data=[<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, np.nan, <span class="hljs-number">30</span>, np.nan])<br>ser2.isnull()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    False
+1    False
+2     True
+3    False
+4     True
+dtype: bool</code></pre>
+<ul>
+<li><code>dropna()</code>：删除空值</li>
+<li><code>fillna()</code>：填充空值</li>
+</ul>
+<p>处理数据的方法都有一个<code>inplace</code>参数，默认为<code>False</code>。</p>
+<ul>
+<li><code>inplace=False</code>：处理完成返回新的对象</li>
+<li><code>inplace=True</code>：在原对象上进行处理</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2.dropna()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    10.0
+1    20.0
+3    30.0
+dtype: float64</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2.fillna(<span class="hljs-number">66</span>, inplace=<span class="hljs-literal">True</span>)<br>ser2<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    10.0
+1    20.0
+2    66.0
+3    30.0
+4    66.0
+dtype: float64</code></pre>
+<ul>
+<li><code>duplicated()</code>：检测重复数据</li>
+<li><code>drop_duplicates()</code>：删除重复数据</li>
+<li><code>unique</code>：去除重复数据，返回一个数组</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2.duplicated()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    False
+1    False
+2    False
+3    False
+4     True
+dtype: bool</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2.drop_duplicates()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    10.0
+1    20.0
+2    66.0
+3    30.0
+dtype: float64</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser2.unique()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">array([10., 20., 66., 30.])</code></pre>
+<h3 id="排序">1.4.3 排序</h3>
+<ul>
+<li><code>sort_index()</code>：根据索引排序，默认升序</li>
+<li><code>sort_values()</code>：根据值排序，默认升序</li>
+</ul>
+<p>使用<code>ascending=False</code>参数可以实现降序排列，排序结果返回一个新的
+<code>Series</code> 对象，原对象不变。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3 = pd.Series(data=[<span class="hljs-number">30</span>, <span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">10</span>, <span class="hljs-number">50</span>], index=[<span class="hljs-string">&#x27;Bob&#x27;</span>, <span class="hljs-string">&#x27;Alice&#x27;</span>, <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-string">&#x27;Eve&#x27;</span>, <span class="hljs-string">&#x27;Jack&#x27;</span>])<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3.sort_index()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Alice    10
+Bob      30
+Eve      10
+Jack     50
+John     20
+dtype: int64</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3.sort_values(ascending=<span class="hljs-literal">False</span>, inplace=<span class="hljs-literal">True</span>)<br>ser3<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Jack     50
+Bob      30
+John     20
+Alice    10
+Eve      10
+dtype: int64</code></pre>
+<ul>
+<li><code>head(n)</code>：返回前 n 个元素，默认 n=5</li>
+<li><code>tail(n)</code>：返回后 n 个元素，默认 n=5</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3.head(<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Jack    50
+Bob     30
+John    20
+dtype: int64</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3.tail(<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Alice    10
+Eve      10
+dtype: int64</code></pre>
+<h3 id="绘制图表">1.4.4 绘制图表</h3>
+<p><code>Series</code>对象可以直接绘制图表，默认绘制折线图，还可以绘制柱状图、饼图等，只需指定<code>kind</code>参数即可。默认会使用索引作为横坐标，值作为纵坐标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ser3.plot(kind=<span class="hljs-string">&#x27;bar&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;Axes: &gt;</code></pre>
+<figure>
+<img src="05_bar.png" srcset="/img/loading.gif" lazyload alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h1 id="dataframe-对象">2 DataFrame 对象</h1>
+<p><code>DataFrame</code>是一个二维的表格型数据结构，既有行索引，也有列索引，可以将其看作由多个<code>Series</code>按列组成的一个字典。是
+Pandas
+中最常用的数据结构，可以用来保存和处理异质的二维数据，每个列可以是不同的数据类型，这也是和
+NumPy 数组的最大区别。</p>
+<p>数据表格三要素贯穿 Pandas 数据分析的始终：</p>
+<ul>
+<li><code>column</code>：对应着列名，也就是列索引</li>
+<li><code>index</code>：代表行索引</li>
+<li><code>value</code>：则指代具体的数据值</li>
+</ul>
+<h2 id="创建-dataframe-对象">2.1 创建 DataFrame 对象</h2>
+<h3 id="通过二维数组列表创建">2.1.1 通过二维数组/列表创建</h3>
+<p><code>data</code>指定数据，<code>columns</code>指定列名，<code>index</code>指定行索引。
+如果没有指定索引，则默认从 0 开始。如果没有指定列名，则默认从 0
+开始。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">score = np.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">101</span>, size=(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>))<br>course = [<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]<br>stu_id = [<span class="hljs-string">&#x27;1001&#x27;</span>, <span class="hljs-string">&#x27;1002&#x27;</span>, <span class="hljs-string">&#x27;1003&#x27;</span>, <span class="hljs-string">&#x27;1004&#x27;</span>, <span class="hljs-string">&#x27;1005&#x27;</span>]<br>df1 = pd.DataFrame(data=score, columns=course, index=stu_id)<br>df1<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1001
+</th>
+<td>
+89
+</td>
+<td>
+98
+</td>
+<td>
+58
+</td>
+</tr>
+<tr>
+<th>
+1002
+</th>
+<td>
+15
+</td>
+<td>
+48
+</td>
+<td>
+24
+</td>
+</tr>
+<tr>
+<th>
+1003
+</th>
+<td>
+48
+</td>
+<td>
+42
+</td>
+<td>
+60
+</td>
+</tr>
+<tr>
+<th>
+1004
+</th>
+<td>
+62
+</td>
+<td>
+17
+</td>
+<td>
+46
+</td>
+</tr>
+<tr>
+<th>
+1005
+</th>
+<td>
+18
+</td>
+<td>
+54
+</td>
+<td>
+71
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="通过字典创建">2.1.2 通过字典创建</h3>
+<p>字典嵌套列表：按照列名进行创建 <code>DataFrame</code> 对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">info1 = &#123;<br>    <span class="hljs-string">&#x27;姓名&#x27;</span>: [<span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-string">&#x27;李四&#x27;</span>, <span class="hljs-string">&#x27;王五&#x27;</span>, <span class="hljs-string">&#x27;赵六&#x27;</span>],<br>    <span class="hljs-string">&#x27;年龄&#x27;</span>: [<span class="hljs-number">18</span>, <span class="hljs-number">19</span>, <span class="hljs-number">20</span>, <span class="hljs-number">21</span>],<br>    <span class="hljs-string">&#x27;性别&#x27;</span>: [<span class="hljs-string">&#x27;男&#x27;</span>, <span class="hljs-string">&#x27;女&#x27;</span>, <span class="hljs-string">&#x27;男&#x27;</span>, <span class="hljs-string">&#x27;女&#x27;</span>]<br>&#125;<br>df2 = pd.DataFrame(data=info1)<br>df2<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+年龄
+</th>
+<th>
+性别
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+18
+</td>
+<td>
+男
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+19
+</td>
+<td>
+女
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+20
+</td>
+<td>
+男
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+赵六
+</td>
+<td>
+21
+</td>
+<td>
+女
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>列表嵌套列表：按照行进行创建 <code>DataFrame</code> 对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">info2 = [<br>    &#123;<span class="hljs-string">&#x27;姓名&#x27;</span>: <span class="hljs-string">&#x27;张三&#x27;</span>, <span class="hljs-string">&#x27;年龄&#x27;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;性别&#x27;</span>: <span class="hljs-string">&#x27;男&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;姓名&#x27;</span>: <span class="hljs-string">&#x27;李四&#x27;</span>, <span class="hljs-string">&#x27;年龄&#x27;</span>: <span class="hljs-number">19</span>, <span class="hljs-string">&#x27;性别&#x27;</span>: <span class="hljs-string">&#x27;女&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;姓名&#x27;</span>: <span class="hljs-string">&#x27;王五&#x27;</span>, <span class="hljs-string">&#x27;年龄&#x27;</span>: <span class="hljs-number">20</span>, <span class="hljs-string">&#x27;性别&#x27;</span>: <span class="hljs-string">&#x27;男&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;姓名&#x27;</span>: <span class="hljs-string">&#x27;赵六&#x27;</span>, <span class="hljs-string">&#x27;年龄&#x27;</span>: <span class="hljs-number">21</span>, <span class="hljs-string">&#x27;性别&#x27;</span>: <span class="hljs-string">&#x27;女&#x27;</span>&#125;<br>]<br>df3 = pd.DataFrame(data=info2)<br>df3<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+年龄
+</th>
+<th>
+性别
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+18
+</td>
+<td>
+男
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+19
+</td>
+<td>
+女
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+20
+</td>
+<td>
+男
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+赵六
+</td>
+<td>
+21
+</td>
+<td>
+女
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="数据读取和存储">2.2 数据读取和存储</h2>
+<p>实际应用中，单独创建数据结构的情况较少，更多的是通过读取外部数据文件来创建数据结构。</p>
+<h3 id="读取-excel">2.2.1 读取 Excel</h3>
+<p>通过<code>read_excel</code>读取 Excel 文件，默认读取第一个
+sheet，可以通过<code>sheet_name</code>参数指定读取的 sheet。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4 = pd.read_excel(<span class="hljs-string">&#x27;data/data1.xlsx&#x27;</span>)<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+张三
+</th>
+<th>
+88
+</th>
+<th>
+100
+</th>
+<th>
+90
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+92
+</td>
+<td>
+60
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Pandas
+默认会将第一行数据作为列名，如果想自定义列名，可以将<code>header=None</code>告诉Pandas数据中没有表头，然后通过<code>names</code>参数指定列名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4 = pd.read_excel(<span class="hljs-string">&#x27;data/data1.xlsx&#x27;</span>, header=<span class="hljs-literal">None</span>, names=[<span class="hljs-string">&#x27;姓名&#x27;</span>, <span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>])<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+92
+</td>
+<td>
+60
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>此外读取数据还有很多参数，比如：</p>
+<ul>
+<li><code>index_col</code>：指定哪一列作为行索引</li>
+<li><code>usecols</code>：指定读取哪些列</li>
+<li><code>nrows</code>：指定读取多少行</li>
+<li><code>dtype</code>：指定列的数据类型</li>
+</ul>
+<h3 id="读取-csv">2.2.2 读取 CSV</h3>
+<p>通过<code>read_csv</code>函数可以读取 CSV 和 TSV
+文件，默认使用UTF-8编码格式，如果是其他编码格式，可以通过<code>encoding</code>参数指定。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4 = pd.read_csv(<span class="hljs-string">&#x27;data/data2.csv&#x27;</span>)<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>大多数CSV文件以逗号分隔，如果是其他字符分
+隔，可以通过<code>sep</code>参数指定分隔符。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pd.read_csv(<span class="hljs-string">&#x27;data/data2.csv&#x27;</span>, sep=<span class="hljs-string">&#x27;\t&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>在某些Python版本读取中文路径会报错，因为默认读取引擎是C语言，可以通过<code>engine</code>参数指定为Python引擎。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pd.read_csv(<span class="hljs-string">&#x27;data/data2.csv&#x27;</span>mengine=<span class="hljs-string">&#x27;python&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="连接mysql">2.2.3 连接MySQL</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需要安装pymysql，部分版本需要额外安装sqlalchemy</span><br><span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> create_engine<br><br>engine = create_engine(<span class="hljs-string">&#x27;mysql+pymysql://root:123456@127.0.0.1:3306/sql_practice03?charset=utf8&#x27;</span>)<br><span class="hljs-comment"># mysql 表示数据库类型</span><br><span class="hljs-comment"># pymysql 表示python操作数据库的包</span><br><span class="hljs-comment"># root:123456 表示数据库的账号和密码，用冒号连接</span><br><span class="hljs-comment"># 127.0.0.1:3306/sql_practice03 表示数据库的ip和端口，以及名叫sql_practice03的库</span><br><span class="hljs-comment"># charset=utf8 规定编码格式</span><br></code></pre></td></tr></table></figure>
+<p>数据库读取数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 读取整张表</span><br>pd.read_sql(<span class="hljs-string">&#x27;dept&#x27;</span>, engine)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+DEPTNO
+</th>
+<th>
+DNAME
+</th>
+<th>
+LOC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+10
+</td>
+<td>
+ACCOUNTING
+</td>
+<td>
+NEW YORK
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+20
+</td>
+<td>
+RESEARCH
+</td>
+<td>
+DALLAS
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+30
+</td>
+<td>
+SALES
+</td>
+<td>
+CHICAGO
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+40
+</td>
+<td>
+OPERATIONS
+</td>
+<td>
+BOSTON
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># SQL语句查询指定内容</span><br>pd.read_sql(<span class="hljs-string">&#x27;select DEPTNO, DNAME from dept&#x27;</span>, engine)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+DEPTNO
+</th>
+<th>
+DNAME
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+10
+</td>
+<td>
+ACCOUNTING
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+20
+</td>
+<td>
+RESEARCH
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+30
+</td>
+<td>
+SALES
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+40
+</td>
+<td>
+OPERATIONS
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>写入数据到数据库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.to_sql(<span class="hljs-string">&#x27;df_score_table&#x27;</span>, engine, index=<span class="hljs-literal">False</span>, if_exists=<span class="hljs-string">&#x27;append&#x27;</span>)<br><span class="hljs-comment"># index：是否将index写入数据库</span><br><span class="hljs-comment"># if_exists：如果表存在如何操作 </span><br><span class="hljs-comment">#     append：追加  </span><br><span class="hljs-comment">#     replace：覆盖</span><br><span class="hljs-comment">#     fail：报错</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">3</code></pre>
+<h3 id="读取其他文件">2.2.4 读取其他文件</h3>
+<p>Excel和CSV是最常用的，其他文件读取简单了解，读取文件的大部分参数是通用的。</p>
+<ul>
+<li><code>read_table()</code>： 读取文本文件</li>
+<li><code>read_json()</code>： 读取 JSON 文件</li>
+</ul>
+<h3 id="存储数据">2.2.5 存储数据</h3>
+<p>在Pandas中存储数据直接使用<code>to_xxx()</code>方法即可，默认会把索引也存储进去，如果不需要索引，可以通过<code>index=False</code>参数去掉索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.to_excel(<span class="hljs-string">&#x27;data/new_data2.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="dataframe-的属性">2.3 DataFrame 的属性</h2>
+<ul>
+<li><code>columns</code>：列索引</li>
+<li><code>index</code>：行索引</li>
+<li><code>values</code>：数据值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(df4)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n列索引：&#x27;</span>, df4.columns)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;行索引：&#x27;</span>, df4.index)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;数据值：\n&#x27;</span>, df4.values)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">   姓名  语文   数学  英语
+0  张三  88  100  90
+1  李四  82   65  52
+2  王五  80  100  60
+
+列索引： Index([&#39;姓名&#39;, &#39;语文&#39;, &#39;数学&#39;, &#39;英语&#39;], dtype=&#39;object&#39;)
+行索引： RangeIndex(start=0, stop=3, step=1)
+数据值：
+ [[&#39;张三&#39; 88 100 90]
+ [&#39;李四&#39; 82 65 52]
+ [&#39;王五&#39; 80 100 60]]</code></pre>
+<ul>
+<li><code>dtypes</code>：每一列的数据类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.dtypes<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">姓名    object
+语文     int64
+数学     int64
+英语     int64
+dtype: object</code></pre>
+<ul>
+<li><code>ndim</code>：维度</li>
+<li><code>shape</code>：形状</li>
+<li><code>size</code>：元素个数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;维度&#x27;</span>, df4.ndim)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;形状&#x27;</span>, df4.shape)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;元素个数&#x27;</span>, df4.size)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">维度 2
+形状 (3, 4)
+元素个数 12</code></pre>
+<h2 id="dataframe-的方法">2.4 DataFrame 的方法</h2>
+<h3 id="快速查看">2.4.1 快速查看</h3>
+<ul>
+<li><code>info()</code>：查看DataFrame的基本信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.info()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 3 entries, 0 to 2
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype 
+---  ------  --------------  ----- 
+ 0   姓名      3 non-null      object
+ 1   语文      3 non-null      int64 
+ 2   数学      3 non-null      int64 
+ 3   英语      3 non-null      int64 
+dtypes: int64(3), object(1)
+memory usage: 224.0+ bytes</code></pre>
+<ul>
+<li><code>describe()</code>：获取统计性描述信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.describe()<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+count
+</th>
+<td>
+3.000000
+</td>
+<td>
+3.000000
+</td>
+<td>
+3.000000
+</td>
+</tr>
+<tr>
+<th>
+mean
+</th>
+<td>
+83.333333
+</td>
+<td>
+88.333333
+</td>
+<td>
+67.333333
+</td>
+</tr>
+<tr>
+<th>
+std
+</th>
+<td>
+4.163332
+</td>
+<td>
+20.207259
+</td>
+<td>
+20.033306
+</td>
+</tr>
+<tr>
+<th>
+min
+</th>
+<td>
+80.000000
+</td>
+<td>
+65.000000
+</td>
+<td>
+52.000000
+</td>
+</tr>
+<tr>
+<th>
+25%
+</th>
+<td>
+81.000000
+</td>
+<td>
+82.500000
+</td>
+<td>
+56.000000
+</td>
+</tr>
+<tr>
+<th>
+50%
+</th>
+<td>
+82.000000
+</td>
+<td>
+100.000000
+</td>
+<td>
+60.000000
+</td>
+</tr>
+<tr>
+<th>
+75%
+</th>
+<td>
+85.000000
+</td>
+<td>
+100.000000
+</td>
+<td>
+75.000000
+</td>
+</tr>
+<tr>
+<th>
+max
+</th>
+<td>
+88.000000
+</td>
+<td>
+100.000000
+</td>
+<td>
+90.000000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>head(n)</code>：查看前n行数据，默认n=5</li>
+<li><code>tail(n)</code>：查看后n行数据，默认n=5</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.head(<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.tail(<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>value_counts()</code>：统计每一个唯一值出现的次数，索引为唯一值，值为出现的次数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4[<span class="hljs-string">&#x27;数学&#x27;</span>].value_counts()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">数学
+100    2
+65     1
+Name: count, dtype: int64</code></pre>
+<h3 id="描述性统计-1">2.4.2 描述性统计</h3>
+<p>DataFrame也有很多统计性描述信息的方法，和Series一致，不过多了一个<code>axis</code>参数控制聚合轴向：</p>
+<ul>
+<li><code>axis=0</code>：按列进行统计（默认）</li>
+<li><code>axis=1</code>：按行进行统计</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;计数：\n<span class="hljs-subst">&#123;df4.count()&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;求和：\n<span class="hljs-subst">&#123;df4.<span class="hljs-built_in">sum</span>()&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;均值：\n<span class="hljs-subst">&#123;df4[[<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]].mean(axis=<span class="hljs-number">1</span>)&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;中位数：\n<span class="hljs-subst">&#123;df4[[<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]].median()&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">计数：
+姓名    3
+语文    3
+数学    3
+英语    3
+dtype: int64
+求和：
+姓名    张三李四王五
+语文       250
+数学       265
+英语       202
+dtype: object
+均值：
+0    92.666667
+1    66.333333
+2    80.000000
+dtype: float64
+中位数：
+语文     82.0
+数学    100.0
+英语     60.0
+dtype: float64</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最小值：\n<span class="hljs-subst">&#123;df4[<span class="hljs-string">&#x27;数学&#x27;</span>].<span class="hljs-built_in">min</span>()&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最大值：\n<span class="hljs-subst">&#123;df4.<span class="hljs-built_in">max</span>(numeric_only=<span class="hljs-literal">True</span>)&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标准差：\n<span class="hljs-subst">&#123;df4.std(numeric_only=<span class="hljs-literal">True</span>)&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;方差：\n<span class="hljs-subst">&#123;df4.var(numeric_only=<span class="hljs-literal">True</span>)&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">最小值：
+65
+最大值：
+语文     88
+数学    100
+英语     90
+dtype: int64
+标准差：
+语文     4.163332
+数学    20.207259
+英语    20.033306
+dtype: float64
+方差：
+语文     17.333333
+数学    408.333333
+英语    401.333333
+dtype: float64</code></pre>
+<ul>
+<li><code>idxmax()</code>：求最大值位置</li>
+<li><code>idxmin()</code>：求最小值位置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">display(df4.idxmax())<br>display(df4.idxmin())<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">姓名    2
+语文    0
+数学    0
+英语    0
+dtype: int64
+
+
+
+姓名    0
+语文    2
+数学    1
+英语    1
+dtype: int64</code></pre>
+<h3 id="累计运算">2.4.3 累计运算</h3>
+<ul>
+<li><code>cumsum()</code>：累计和</li>
+<li><code>cumprod()</code>：累计积</li>
+<li><code>cummax()</code>：累计最大值</li>
+<li><code>cummin()</code>：累计最小值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.cumsum()<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+张三李四
+</td>
+<td>
+170
+</td>
+<td>
+165
+</td>
+<td>
+142
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+张三李四王五
+</td>
+<td>
+250
+</td>
+<td>
+265
+</td>
+<td>
+202
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.cummin()<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+张三
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+张三
+</td>
+<td>
+80
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>diff()</code>：计算与上一个值的差值</li>
+<li><code>pct_change()</code>：计算与上一个值的百分比变化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4[[<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]].diff()<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+-6.0
+</td>
+<td>
+-35.0
+</td>
+<td>
+-38.0
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+-2.0
+</td>
+<td>
+35.0
+</td>
+<td>
+8.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4[[<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]].pct_change()<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+<td>
+NaN
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+-0.068182
+</td>
+<td>
+-0.350000
+</td>
+<td>
+-0.422222
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+-0.024390
+</td>
+<td>
+0.538462
+</td>
+<td>
+0.153846
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="排序-1">2.4.4 排序</h3>
+<ul>
+<li><code>sort_index()</code>：根据索引排序，默认升序</li>
+<li><code>sort_values()</code>：根据值排序，默认升序</li>
+</ul>
+<p>使用<code>ascending=False</code>参数可以实现降序排列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.sort_index(ascending=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.sort_values(<span class="hljs-string">&#x27;英语&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+</tr>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="apply自定义函数">2.4.5 apply自定义函数</h3>
+<p>可以将一个函数应用（apply）到 Series 的每个元素上，或者 DataFrame
+的每一行或每一列上。</p>
+<p>当作用于 Series（DataFrame 的一列）时，apply() 会将函数依次作用于
+Series 中的每一个元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">check_score</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">if</span> x &gt;= <span class="hljs-number">80</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;高&#x27;</span><br>    <span class="hljs-keyword">elif</span> x &gt;= <span class="hljs-number">60</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;中&#x27;</span><br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;低&#x27;</span><br>    <br>df4[<span class="hljs-string">&#x27;英语&#x27;</span>].apply(check_score)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">0    高
+1    低
+2    中
+Name: 英语, dtype: object</code></pre>
+<p>当作用于 DataFrame 时，apply() 可以将函数作用于每一列或每一行。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.apply(func, axis=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>func：要应用的函数</li>
+<li>axis：指定函数应用方向
+<ul>
+<li><code>0</code>：默认值，将函数应用到每一列，接收对象是Series</li>
+<li><code>1</code>：将函数应用到每一行，接收对象是Series</li>
+</ul></li>
+</ul>
+<p>沿列应用时，函数接收到的一列数据，通常用于聚合（如求和、最大值等）或对整列进行转换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 计算每一科最高分和最低分的差值</span><br>df4[[<span class="hljs-string">&#x27;语文&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>, <span class="hljs-string">&#x27;英语&#x27;</span>]].apply(<span class="hljs-keyword">lambda</span> x: x.<span class="hljs-built_in">max</span>() - x.<span class="hljs-built_in">min</span>())<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">语文     8
+数学    35
+英语    38
+dtype: int64</code></pre>
+<p>沿行应用时，函数接收到的是一行数据，索引为列名，通常用于使用多列计算新值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4[<span class="hljs-string">&#x27;加权分&#x27;</span>] = df4.apply(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">&#x27;语文&#x27;</span>] * <span class="hljs-number">0.4</span> + x[<span class="hljs-string">&#x27;数学&#x27;</span>] * <span class="hljs-number">0.4</span> + x[<span class="hljs-string">&#x27;英语&#x27;</span>] * <span class="hljs-number">0.2</span>, axis=<span class="hljs-number">1</span>)<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="index-对象">3 Index 对象</h1>
+<p><code>Index</code>用来唯一标识 DataFrame
+中的每一行数据，就像数据库表中的主键一样，但它不强制要求是唯一的，类似于一维数组，存储着用于标记各行数据的标签。</p>
+<h2 id="index-的特点">3.1 Index 的特点</h2>
+<ol type="1">
+<li>标签：作为行标签使用，用来访问特定行<code>df.loc[行标签]</code></li>
+<li>对齐：两个<code>DataFrame</code>之间运算（比如加法、合并等）时，Pandas根据<code>Index</code>和<code>Column</code>自动将数据对齐，而不需要行和列的顺序相同</li>
+<li>不可变性：<code>Index</code>对象一旦创建，不允许被修改，所有修改索引必须整体修改</li>
+</ol>
+<h2 id="index-常用操作">3.2 Index 常用操作</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>index</code>：查看index</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.index<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">RangeIndex(start=0, stop=3, step=1)</code></pre>
+<p><code>set_index()</code>：将普通列设为行索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.set_index(keys, drop=<span class="hljs-literal">True</span>, inplace=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>keys：新索引的列名或列名列表</li>
+<li>drop：用于创建新索引的列是否从表中删除，默认为True</li>
+<li>inplace：是否在原表修改</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df5 = df4.set_index(<span class="hljs-string">&#x27;姓名&#x27;</span>)<br>df5<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+<tr>
+<th>
+姓名
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+<th>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+张三
+</th>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+李四
+</th>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+王五
+</th>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>reset_index</code>：<code>set_index</code>的逆操作，将索引重置为普通列，并且创建一个新的<code>RangeIndex</code>作为索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.reset_index(drop=<span class="hljs-literal">False</span>, name=<span class="hljs-literal">None</span>, inplace=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>drop：是否删除原有索引，不转化为普通列，默认为False</li>
+<li>names：指定转为为普通列之后的名称</li>
+<li>inplace：是否在原表修改</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df5.reset_index(names=<span class="hljs-string">&#x27;大名&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+大名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>rename()</code>：重命名行索引或列索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df.rename(columns=<span class="hljs-literal">None</span>, index=<span class="hljs-literal">None</span>, axis=<span class="hljs-literal">None</span>, inplace=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>columns：重命名列索引，{‘旧列名’: ‘新列名’, …}</li>
+<li>index：重命名行索引，{‘旧行名’: ‘新行名’, …}</li>
+<li>axis：指定重命名行索引还是列索引，0或’index’表示行索引，1或’columns’表示列索引，默认0</li>
+<li>inplace：是否在原数据上修改，默认False表示不修改原数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+语文
+</th>
+<th>
+数学
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.rename(columns=&#123;<span class="hljs-string">&#x27;语文&#x27;</span>: <span class="hljs-string">&#x27;Chinese&#x27;</span>, <span class="hljs-string">&#x27;数学&#x27;</span>: <span class="hljs-string">&#x27;Math&#x27;</span>&#125;, inplace=<span class="hljs-literal">True</span>)<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+Chinese
+</th>
+<th>
+Math
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">df4.rename(index=&#123;<span class="hljs-number">1</span>: <span class="hljs-number">1001</span>&#125;, inplace=<span class="hljs-literal">True</span>)<br>df4<br></code></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>
+</th>
+<th>
+姓名
+</th>
+<th>
+Chinese
+</th>
+<th>
+Math
+</th>
+<th>
+英语
+</th>
+<th>
+加权分
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+张三
+</td>
+<td>
+88
+</td>
+<td>
+100
+</td>
+<td>
+90
+</td>
+<td>
+93.2
+</td>
+</tr>
+<tr>
+<th>
+1001
+</th>
+<td>
+李四
+</td>
+<td>
+82
+</td>
+<td>
+65
+</td>
+<td>
+52
+</td>
+<td>
+69.2
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+王五
+</td>
+<td>
+80
+</td>
+<td>
+100
+</td>
+<td>
+60
+</td>
+<td>
+84.0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E5%88%86%E6%9E%90/" class="category-chain-item">数据处理与分析</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Pandas/" class="print-no-link">#Pandas</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>05_Pandas数据结构</div>
+      <div>http://example.com/2024/06/22/coding/大模型开发/03 数据处理与统计分析/05_Pandas数据结构/05_Pandas数据结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年6月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/23/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/06_Pandas%E7%B4%A2%E5%BC%95%E8%BF%90%E7%AE%97/06_Pandas%E7%B4%A2%E5%BC%95%E8%BF%90%E7%AE%97/" title="06_Pandas索引运算">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">06_Pandas索引运算</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/07/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/03%20%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%B8%8E%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90/04_Numpy%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E7%BB%84/04_Numpy%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E7%BB%84/" title="04_Numpy结构化数组">
+                        <span class="hidden-mobile">04_Numpy结构化数组</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,971 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Git是目前世界上最先进的分布式版本控制系统！ 1 安装和配置Git 1.1 Linux环境 12345678# 查看是否安装 gitgit# CentOS 系列sudo yum install git # Ubuntu 系列sudo apt install git 1.2 macOS环境 使用Homebrew可以很方便地安装。 12345678# 查看 Homebrew 是否安装bre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git使用指南">
+<meta property="og:url" content="http://example.com/2023/08/26/coding/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/Git%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="Git是目前世界上最先进的分布式版本控制系统！ 1 安装和配置Git 1.1 Linux环境 12345678# 查看是否安装 gitgit# CentOS 系列sudo yum install git # Ubuntu 系列sudo apt install git 1.2 macOS环境 使用Homebrew可以很方便地安装。 12345678# 查看 Homebrew 是否安装bre">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/git.png">
+<meta property="article:published_time" content="2023-08-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-19T03:40:42.604Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/git.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Git使用指南 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>GGbond</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Git使用指南"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-26 00:00" pubdate>
+          2023年8月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="研发工具"
+        id="heading-f1644fa286a987d8581b79410272a9e8" role="tab" data-toggle="collapse" href="#collapse-f1644fa286a987d8581b79410272a9e8"
+        aria-expanded="true"
+      >
+        研发工具
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f1644fa286a987d8581b79410272a9e8"
+           role="tabpanel" aria-labelledby="heading-f1644fa286a987d8581b79410272a9e8">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/08/26/coding/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/Git%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="Git使用指南"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">Git使用指南</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/15/coding/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/%E9%9B%86%E6%88%90%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/IDEA%20%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="IDEA 使用小技巧"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">IDEA 使用小技巧</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/29/coding/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/Linux%E7%B3%BB%E7%BB%9F/Linux%E5%9F%BA%E7%A1%80/" title="Linux基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Linux基础</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Git使用指南</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Git是目前世界上最先进的分布式版本控制系统！</p>
+<h1 id="安装和配置git">1 安装和配置Git</h1>
+<h2 id="linux环境">1.1 Linux环境</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看是否安装 git</span><br>git<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">CentOS 系列</span><br>sudo yum install git <br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">Ubuntu 系列</span><br>sudo apt install git<br></code></pre></td></tr></table></figure>
+<h2 id="macos环境">1.2 macOS环境</h2>
+<p>使用Homebrew可以很方便地安装。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">查看 Homebrew 是否安装</span><br>brew -v<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装 Homebrew</span><br>/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">安装 git</span><br>brew install git<br></code></pre></td></tr></table></figure></p>
+<h2 id="windows环境">1.3 Windows环境</h2>
+<p>可以先安装一个包管理工具<a target="_blank" rel="noopener" href="https://scoop.sh/">Scoop</a>。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">安装 git</span><br>scoop install git<br></code></pre></td></tr></table></figure></p>
+<h2 id="配置">1.4 配置</h2>
+<p>由于Git是分布式版本控制系统，所以安装之后还要配置个人信息。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git config --global user.name &quot;Your Name&quot;<br>git config --global user.email &quot;email@example.com&quot;<br></code></pre></td></tr></table></figure></p>
+<h1 id="版本库">2 版本库</h1>
+<p><strong>版本库又名仓库</strong>（Repository），可以简单理解成一个目录，这个目录里面的所有文件都可以被Git管理起来，每个文件的修改、删除，Git都能跟踪。</p>
+<h2 id="创建版本库">2.1 创建版本库</h2>
+<p>进入文件夹执行<code>git init</code>命令就可以把这个目录变成Git管理的仓库：
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git init<br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>目录下会自动生成一个<code>.git</code>的目录，这个目录是Git来跟踪管理版本库的，不要乱动。</p>
+</blockquote>
+<p>如果想要把<code>.git</code>目录生成到别的文件夹，可以使用下面的命令指定：
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git init --separate-git-dir=D:/Develop/GitRecord<br></code></pre></td></tr></table></figure></p>
+<p>实际是生成了一个<code>.git</code>文件里面写入了<code>gitdir: D:/Develop/GitRecord</code>。</p>
+<h2 id="添加文件到版本库">2.2 添加文件到版本库</h2>
+<p>假设当前有一个仓库叫做DemoProject，在这个目录下创建文件<code>readme.txt</code>，把文件放入仓库一共需要两步。使用<code>add</code>添加多个文件到仓库，使用<code>commit</code>一次性提交到仓库。</p>
+<ol type="1">
+<li><p>使用<code>git add</code>把文件添加到仓库 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add readme.txt<br></code></pre></td></tr></table></figure>
+执行上面的命令，没有任何显示，Unix的哲学是“没有消息就是好消息”，说明添加成功。</p></li>
+<li><p>使用<code>git commit</code>把文件提交到仓库
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;提交说明&quot;<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<p>如果想要把已有目录交给<code>git</code>管理，可以使用<code>git add .</code>将所有文件全部添加到暂存区，然后一次性<code>git commit</code>进行提交。</p>
+<blockquote>
+<p>所有的版本控制系统，都只能跟踪文本文件的改动，而图片、视频这些二进制文件，虽然也能由版本控制系统管理，但没法跟踪文件的变化。另外不要使用Windows自带的<strong>记事本</strong>编辑任何文本文件。</p>
+</blockquote>
+<h2 id="git工作流程">2.3 Git工作流程</h2>
+<p>牢记Git分为以下三个核心区域，它们是并列关系，构成了Git的核心工作流。</p>
+<ul>
+<li><strong>工作区 (Working Directory / Working
+Tree)</strong>：电脑上看到的实际目录，实际开发的地方</li>
+<li><strong>暂存区 (Staging Area / Index)</strong>：一个缓存区，保存了
+<code>git add</code> 准备提交的文件快照</li>
+<li><strong>版本库 (Local Repository)</strong>：已经
+<code>git commit</code> 的所有历史版本</li>
+</ul>
+<blockquote>
+<p>工作区有一个隐藏目录<code>.git</code>不算工作区，里面存储的是Git的<strong>版本库</strong>。暂存区（<code>index</code>
+文件）虽然物理上位于 <code>.git</code> 目录中，但它不属于版本库。</p>
+</blockquote>
+<p>Git的版本库里存了很多东西，其中最重要的就是称为<strong>stage</strong>（或者叫index）的<strong>暂存区</strong>，还有Git自动创建的第一个分支<code>master</code>，以及指向<code>master</code>的一个指针叫<code>HEAD</code>。
+<img src="repo.png" srcset="/img/loading.gif" lazyload /></p>
+<p>了解了工作区和版本库，对于很多操作就明白实际是做什么了。</p>
+<ul>
+<li><code>git add</code>把文件添加进去，实际上就是把文件修改添加到暂存区</li>
+<li><code>git commit</code>提交更改，实际上就是把暂存区的所有内容提交到当前分支</li>
+</ul>
+<blockquote>
+<p><strong>Git管理的是修改，而不是文件。</strong>
+每次修改，如果不用<code>git add</code>到暂存区，那就不会加入到<code>commit</code>中。</p>
+</blockquote>
+<h1 id="版本管理">3 版本管理</h1>
+<h2 id="查看信息">3.1 查看信息</h2>
+<p><code>git status</code>命令可以让我们时刻掌握仓库当前的状态，比如是否有文件修改（新增、删除都属于修改）。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell">git status<br><br>On branch master<br>Changes not staged for commit:<br>  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)<br>  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)<br><br>    modified:   readme.txt<br><br>no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)<br><br></code></pre></td></tr></table></figure></p>
+<p><code>git diff</code>命令可以知道某个文件具体修改了什么内容。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git diff readme.txt<br></code></pre></td></tr></table></figure></p>
+<p>提交修改和提交新文件是一样的，第一步<code>git add</code>，第二步<code>git commit</code>。</p>
+<h2 id="版本回退">3.2 版本回退</h2>
+<p>每一次<code>commit</code>相当于一个版本，使用<code>git log</code>可以查看版本历史记录，加上<code>--pretty=oneline</code>参数可以让显示更清晰。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git log [--pretty=oneline]<br></code></pre></td></tr></table></figure></p>
+<p>使用<code>git reset</code>回到指定版本，Git中<code>HEAD</code>表示当前版本，上一个版本是<code>HEAD^</code>，上上一个版本是<code>HEAD^^</code>，更早的版本是<code>HEAD~n</code>，n表示上n个版本，也可以直接指定版本号（不用写全，Git会自动去找）。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset --hard HEAD^<br></code></pre></td></tr></table></figure></p>
+<h2 id="撤销修改">3.3 撤销修改</h2>
+<h3 id="未到暂存区">3.3.1 未到暂存区</h3>
+<p>使用<code>git checkout -- file</code>可以丢弃工作区的修改。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout -- readme.txt<br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>--</code> 双破折号非常重要，它告诉
+Git后面的参数是一个文件路径，而不是一个分支名。</p>
+</blockquote>
+<p>Git会执行以下操作：</p>
+<ol type="1">
+<li>查找<strong>暂存区</strong>中 <code>readme.txt</code>
+的版本（找不到会从 <code>HEAD</code>，即最后一次提交中恢复。）</li>
+<li>用这个版本的文件<strong>覆盖</strong>工作目录中的
+<code>readme.txt</code></li>
+</ol>
+<p>本质上这是一个反向的 <code>git add</code> 操作：
+<code>git add &lt;file&gt;</code>
+会将工作目录中的文件快照存入暂存区（index）。
+<code>git checkout -- &lt;file&gt;</code>
+会将暂存区里的文件快照<strong>还原</strong>到工作目录，从而丢弃对文件所做的所有本地修改。</p>
+<h3 id="已到暂存区">3.3.2 已到暂存区</h3>
+<ol type="1">
+<li>使用命令<code>git reset HEAD &lt;file&gt;</code>可以把暂存区的修改撤销掉（unstage），重新放回工作区。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git reset HEAD readme.txt<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p><code>git reset</code>命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用<code>HEAD</code>时，表示最新的版本。</p>
+<ol start="2" type="1">
+<li>放回工作区后，暂存区是干净的，工作区有所修改，再使用未到暂存区的处理方式<code>git checkout -- file</code>。</li>
+</ol>
+<h2 id="删除文件">3.4 删除文件</h2>
+<p>当删除文件之后，工作区和版本库不一致，有两种选择。</p>
+<ol type="1">
+<li>确实要从版本库删除该文件</li>
+</ol>
+<p>和添加文件类似，第一步<code>git rm</code>从暂存区移除，第二步<code>git commit</code>提交。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git rm readme.txt<br><br>git commit<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>先手动删除文件，然后使用<code>git rm &lt;file&gt;</code>和直接使用<code>git rm &lt;file&gt;</code>效果是完全相同的。</p>
+</blockquote>
+<ol start="2" type="1">
+<li>误删文件，想要恢复</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git checkout -- readme.txt<br></code></pre></td></tr></table></figure>
+<p><code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+<h1 id="远程仓库">4 远程仓库</h1>
+<h2 id="ssh密钥配置">4.1 SSH密钥配置</h2>
+<ol type="1">
+<li>生成SSH密钥对</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;<br></code></pre></td></tr></table></figure>
+<p>生成在C:.ssh目录下，<code>id_ed25519.pub</code>是公钥，<code>id_ed25519</code>是私钥。</p>
+<ol start="2" type="1">
+<li>将公钥添加到 GitHub
+<ul>
+<li>打开 <code>C:\Users\你的用户名\.ssh\id_ed25519.pub</code>，复制内容</li>
+<li>进入 GitHub → Settings → SSH and GPG keys → 添加新 SSH 密钥</li>
+</ul></li>
+<li>SSH测试连接</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
+<p>如果看到 <code>Hi 你的用户名! You've successfully authenticated...</code> 说明
+SSH 配置成功。</p>
+<h2 id="添加到远程库">4.2 添加到远程库</h2>
+<ol type="1">
+<li>先在Github创建远程仓库，在本地仓库执行以下命令： <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote add origin git@github.com:账户名/仓库名.git<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>添加后，远程库的名字就是<code>origin</code>，这是Git默认的叫法，也可以改成别的，但是<code>origin</code>这个名字一看就知道是远程库。</p>
+<ol start="2" type="1">
+<li>使用<code>git remote -v</code>可以检查远程仓库地址：
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git remote -v<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p>如果能显示下列信息，说明远程仓库配置没问题，可以进行推送和拉取了。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">origin  git@github.com:账户名/仓库名.git (fetch)<br>origin  git@github.com:账户名/仓库名.git (push)<br></code></pre></td></tr></table></figure></p>
+<h2 id="推送到远程库">4.3 推送到远程库</h2>
+<p>使用远程库比本地工作流程多一步push，为下面三步：</p>
+<ol type="1">
+<li><p>把改动放入暂存区 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git add &lt;文件&gt;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>把暂存区改动提交到本地仓库，生成一个新的commit
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git commit -m &quot;说明&quot;<br></code></pre></td></tr></table></figure></p></li>
+<li><p>把本地仓库的commit推送到远程仓库 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push origin master<br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<blockquote>
+<p>注意：如果远程仓库的默认分支是 <code>main</code>，命令里的
+<code>master</code> 改成 <code>main</code> 即可。
+Github后来把默认主分支改成<code>main</code>了。</p>
+</blockquote>
+<hr />
+<p>每次推送执行<code>git push origin master</code>命令较长，推荐<strong>在第一次推送时</strong>加上<code>-u</code>参数，除了推送之外，它还会把本地分支
+<code>master</code> 与远程分支 <code>origin/master</code> 关联起来。
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push -u origin master<br></code></pre></td></tr></table></figure></p>
+<p>与远程分支关联以后就可以简化命令，直接使用<code>push</code>推送，使用<code>pull</code>拉取，Git
+就会自动知道本地的 <code>master</code> 对应远程的
+<code>origin/master</code>。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">git push<br>git pull<br></code></pre></td></tr></table></figure></p>
+<h2 id="从远程库克隆">4.4 从远程库克隆</h2>
+<p>在本地目录运行下面命令即可克隆一个本地库。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone git@github.com:账户名/仓库名.git<br></code></pre></td></tr></table></figure></p>
+<p><code>git clone</code> 下来的仓库，Git 会自动创建一个名为
+<code>origin</code>
+的远程别名，本地分支和远程分支已经自动关联了，一般直接
+<code>git push / git pull</code> 就可以，不需要再手动
+<code>-u</code>。</p>
+<h1 id="分支管理">5 分支管理</h1>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A0%94%E5%8F%91%E5%B7%A5%E5%85%B7/" class="category-chain-item">研发工具</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Git/" class="print-no-link">#Git</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Git使用指南</div>
+      <div>http://example.com/2023/08/26/coding/研发工具/代码管理工具/Git使用指南/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/05/coding/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/01%20Python%E5%9F%BA%E7%A1%80/01_Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/01_Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="01_Python基础语法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">01_Python基础语法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/22/coding/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/" title="文件上传和阿里云OSS">
+                        <span class="hidden-mobile">文件上传和阿里云OSS</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
