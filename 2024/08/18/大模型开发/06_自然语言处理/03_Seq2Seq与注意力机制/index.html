@@ -1,0 +1,1028 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 Seq2Seq 模型 Seq2Seq 并不是一种全新的网络架构，而是传统序列模型的一种应用。传统的自然语言处理任务（如文本分类、序列标注）以静态输出为主，其目标是预测固定类别或标签。 而在机器翻译、文本摘要、问答系统等任务中，输入和输出都是长度动态可变的序列，使用传统的单一序列模型，只能完成 N vs 1，或者 N vs N，因此提出了 Seq2Seq（Sequence to Seq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03_Seq2Seq与注意力机制">
+<meta property="og:url" content="http://example.com/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 Seq2Seq 模型 Seq2Seq 并不是一种全新的网络架构，而是传统序列模型的一种应用。传统的自然语言处理任务（如文本分类、序列标注）以静态输出为主，其目标是预测固定类别或标签。 而在机器翻译、文本摘要、问答系统等任务中，输入和输出都是长度动态可变的序列，使用传统的单一序列模型，只能完成 N vs 1，或者 N vs N，因此提出了 Seq2Seq（Sequence to Seq">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/nlp.jpg">
+<meta property="article:published_time" content="2024-08-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:09:51.699Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="Seq2Seq">
+<meta property="article:tag" content="Attention">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/nlp.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>03_Seq2Seq与注意力机制 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="03_Seq2Seq与注意力机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-18 00:00" pubdate>
+          2024年8月18日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自然语言处理"
+        id="heading-f48c43f5fd14bfd8a5057a0131e7aa20" role="tab" data-toggle="collapse" href="#collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+        aria-expanded="true"
+      >
+        自然语言处理
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+           role="tabpanel" aria-labelledby="heading-f48c43f5fd14bfd8a5057a0131e7aa20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_文本处理与词表示</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/" title="02_传统序列模型"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_传统序列模型</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="03_Seq2Seq与注意力机制"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">03_Seq2Seq与注意力机制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/21/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/04_Transformer%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" title="04_Transformer架构详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Transformer架构详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/05_Transformer%E6%89%8B%E6%92%95%E5%AE%9E%E7%8E%B0/" title="05_Transformer手撕实现"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_Transformer手撕实现</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/" title="06_迁移学习"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_迁移学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/" title="07_Hugging Face生态使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_Hugging Face生态使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">03_Seq2Seq与注意力机制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="seq2seq-模型">1 Seq2Seq 模型</h1>
+<p>Seq2Seq
+并不是一种全新的网络架构，而是传统序列模型的一种应用。传统的自然语言处理任务（如文本分类、序列标注）以静态输出为主，其目标是预测固定类别或标签。</p>
+<p>而在机器翻译、文本摘要、问答系统等任务中，输入和输出都是长度动态可变的序列，使用传统的单一序列模型，只能完成
+N vs 1，或者 N vs N，因此提出了 <strong>Seq2Seq（Sequence to
+Sequence，序列到序列）模型</strong>，可以完成 N vs M 的任务。</p>
+<h2 id="基本结构">1.1 基本结构</h2>
+<p>Seq2Seq 模型由一个编码器（Encoder）和一个解码器（Decoder）构成。</p>
+<ul>
+<li>编码器：提取输入序列的语义信息，并压缩为上下文向量（Context
+Vector）</li>
+<li>解码器：使用来自编码器的上下文向量，逐步生成目标序列</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-seq2seq2.gif" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="编码器">1.1.1 编码器</h3>
+<p>编码器主要由一个循环神经网络（RNN/LSTM/GRU）构成，依次接收每个 token
+的输入，并在每个时间步更新隐藏状态。每个隐藏状态都携带了截止到当前时间步的历史信息，最终在最后一个时间步形成一个包含整句信息的隐藏状态。最终的隐藏状态就可以作为<strong>上下文向量（context
+vector）</strong> 传递给解码器用于指导后续的序列生成。</p>
+<p>这个循环神经网络也可以采用双向结构（结合前文与后文信息）或多层结构（提取更深的语义特征），以增强模型理解能力。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-encoder.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="解码器">1.1.2 解码器</h3>
+<p>解码器主要也由一个循环神经网络组成，这个循环神经网络将编码传来的上下文向量作为初始隐藏状态（也就是编码器的历史记忆），并接收一个特殊起始符
+<code>&lt;sos&gt;（start of sentence）</code>作为第一个时间步的输入，用于预测第一个
+token。</p>
+<p>在后续的每个时间步，将上一步的预测结果作为下一步的输入，并生成一个
+token 作为输出。这种的方式被称为<strong>自回归生成（Autoregressive
+Generation）</strong>，它确保了生成结果的连贯性。</p>
+<p>直到最终生成了一个特殊结束符
+<code>&lt;eos&gt; （end of sentence）</code>，表示句子生成完成。</p>
+<blockquote>
+<p>起始符和结束符会在训练数据中显式添加，模型会在训练中学会何时开始、如何续写，以及何时结束，从而掌握完整的生成流程。</p>
+</blockquote>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-decoder.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="交叉熵损失">1.2 交叉熵损失</h2>
+<p>解码器每一个时间步的输出经过线性层转换为对每个词的预测得分，使用
+softmax
+转换为概率分布，使用标准的损失函数————多元交叉熵损失函数。在每一步，我们都力求最大化模型分配给正确标签的概率。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-cre.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="训练和推理策略">1.3 训练和推理策略</h2>
+<p>编码器在训练阶段和推理阶段使用相同的策略，而解码器会使用不同的策略。</p>
+<h3 id="训练阶段">1.3.1 训练阶段</h3>
+<p>在训练阶段，解码器会使用 Teacher Forcing
+策略，每一个时间步的输入不是上一个时间步的输出，而是真实的目标序列。避免了在训练阶段由于初始预测错误，而在后续时间步中不断累积错误。有两个明显的好处：</p>
+<ul>
+<li>训练更快，误差不会累积</li>
+<li>梯度传播更稳定，有利于优化收敛</li>
+</ul>
+<p>在预测完成之后，解码器每一步输出一个
+token，每个时间步的损失本质上就是多分类任务的交叉熵，一个样本的总损失就是所有时间步的交叉熵之和。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-trian_loss.png" srcset="/img/loading.gif" lazyload /></p>
+<h3 id="推理阶段">1.3.2 推理阶段</h3>
+<p>在推理阶段，解码器生成方式采用<strong>自回归生成（Autoregressive
+Generation）</strong>，每一步的输出会作为下一步的输入，逐步构造完整句子。</p>
+<p>而每一个时间步的输出实质是一个所有词的概率分布，那么选择哪个词作为下一步的输入，有两种常见的词选择策略：</p>
+<ol type="1">
+<li><strong>贪心策略（Greedy
+Strategy）</strong>：每次选择概率最大的词作为下一步的输入。
+<ul>
+<li>优点：简单，计算量小</li>
+<li>缺点：容易陷入局部最优，生成不够多样</li>
+</ul></li>
+<li><strong>束搜索（beam
+search）</strong>：每次保留几个概率较大的假设词作为下一步的输入。束尺寸通常为
+4-10。
+<ul>
+<li>优点：全局考虑，生成质量高，生成更加多样</li>
+<li>缺点：计算量大</li>
+</ul></li>
+</ol>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-beam_search.jpeg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="代码实现">1.4 代码实现</h2>
+<p>由于篇幅原因，这里只展示基本的模型架构。</p>
+<ul>
+<li>编码器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Encoder</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, vocab_size, padding_idx</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.embed = nn.Embedding(<br>            num_embeddings=vocab_size, <br>            embedding_dim=config.EMBEDDING_SIZE,<br>            padding_idx=padding_idx<br>        )<br>        <span class="hljs-comment"># 双向GRU</span><br>        <span class="hljs-variable language_">self</span>.gru = nn.GRU(<br>            input_size=config.EMBEDDING_SIZE,<br>            hidden_size=config.ENCODER_HIDDEN_SIZE,<br>            num_layers=config.ENCODER_NUM_LAYERS,<br>            batch_first=<span class="hljs-literal">True</span>,<br>            bidirectional=<span class="hljs-literal">True</span>  <span class="hljs-comment"># 编码器通常使用双向结构增强上下文理解能力</span><br>        )<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;前向传播</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param x: 输入张量，形状 (batch_size, seq_len)</span><br><span class="hljs-string">        :return: output: 输出张量，形状 (batch_size, seq_len, encoder_hidden_size * 2)</span><br><span class="hljs-string">        :return: context_vector: 上下文向量，形状 (batch_size, encoder_hidden_size * 2)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 由于存在 padding，计算每个序列的实际长度</span><br>        lengths = (x != <span class="hljs-variable language_">self</span>.embed.padding_idx).<span class="hljs-built_in">sum</span>(dim=<span class="hljs-number">1</span>)  <br>        <span class="hljs-comment"># 经过词嵌入</span><br>        embedded = <span class="hljs-variable language_">self</span>.embed(x) <br>        <span class="hljs-comment"># 经过 GRU</span><br>        output, _ = <span class="hljs-variable language_">self</span>.gru(embedded)<br>        <br>        <span class="hljs-comment"># 一批次中每个序列真实数据的最后一个时间步的输出作为上下文向量</span><br>        context_vector = output[torch.arange(output.shape[<span class="hljs-number">0</span>]), lengths - <span class="hljs-number">1</span>]<br>        <br>        <span class="hljs-keyword">return</span> output, context_vector<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解码器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Decoder</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, vocab_size, padding_idx</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.embed = nn.Embedding(<br>            num_embeddings=vocab_size,<br>            embedding_SIZE=config.EMBEDDING_SIZE,<br>            padding_idx=padding_idx<br>        )<br>        <span class="hljs-comment"># 单向GRU</span><br>        <span class="hljs-variable language_">self</span>.gru = nn.GRU(<br>            input_size=config.EMBEDDING_SIZE,<br>            hidden_size=config.DECODER_HIDDEN_SIZE,<br>            num_layers=config.DECODER_NUM_LAYERS,<br>            batch_first=<span class="hljs-literal">True</span>,<br>        )<br>        <span class="hljs-variable language_">self</span>.fc = nn.Linear(<br>            in_features=config.DECODER_HIDDEN_SIZE,<br>            out_features=vocab_size<br>        )<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, hidden</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;单步前向传播，每次预测一个 token</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param x: [batch_size, 1]</span><br><span class="hljs-string">        :param hidden: [num_layers, batch_size, decoder_hidden_size]</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 经过词嵌入</span><br>        x = <span class="hljs-variable language_">self</span>.embed(x)<br>        <span class="hljs-comment"># 经过 GRU</span><br>        output, hidden = <span class="hljs-variable language_">self</span>.gru(x, hidden)<br>        <span class="hljs-comment"># 经过全连接层，转换为每个 token 的概率得分</span><br>        output = <span class="hljs-variable language_">self</span>.fc(output)<br>        <br>        <span class="hljs-keyword">return</span> output, hidden<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>注意双向编码器最后一个时间步的输出为 [batch_size, encoder_hidden_size
+* 2]，单向解码器的隐状态输入维度 decoder_hidden_size 要等于
+encoder_hidden_size * 2，才能保持维度匹配。</p>
+</blockquote>
+<h2 id="存在问题">1.5 存在问题</h2>
+<p>Seq2Seq
+架构下，编码器将整个输入序列转换为一个固定长度的上下文向量，作为解码器生成目标序列的唯一参考，这种机制存在以下问题：</p>
+<ul>
+<li>语义丢失：无论多长的输入序列，都要被编码器压缩为一个上下文向量，导致信息被大大压缩，语义表达不完整。</li>
+<li>缺乏动态感知：解码器生成目标序列时，只能参考唯一的上下文向量，不能有选择地关注输入序列中的不同部分。</li>
+</ul>
+<h1 id="注意力机制">2 注意力机制</h1>
+<p>为了解决 Seq2Seq 的问题，引入了 Attention
+机制。核心思想是解码器在生成目标序列时，不再仅仅依靠静态的上下文向量，而是动态地从编码器各时间步隐状态中选取最相关的信息。这种机制能够使解码器在生成当前输出时，自动判断原始输入序列中哪些时间步信息最重要，从而提升生成质量。</p>
+<h2 id="核心机制">2.1 核心机制</h2>
+<ol type="1">
+<li><strong>相关性计算</strong>：解码过程中，解码器在每个时间步 t
+会计算其上一个隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span>
+与编码器中每个隐状态 <span
+class="math inline"><em>s</em><sub>1</sub></span>, <span
+class="math inline"><em>s</em><sub>2</sub></span>, …, <span
+class="math inline"><em>s</em><sub><em>m</em></sub></span>
+的相关性。这个计算称为注意力评分函数，接收一个解码器状态和一个编码器状态，并返回一个标量值
+<span
+class="math inline"><em>s</em><em>c</em><em>o</em><em>r</em><em>e</em>(<em>h</em><sub><em>t</em> − 1</sub>, <em>s</em><sub><em>k</em></sub>)</span>。</li>
+<li><strong>计算注意力权重</strong>：使用 softmax
+函数计算将得分归一化为概率分布，作为注意力权重，表示各编码器隐状态在当前解码时的重要性。</li>
+<li><strong>更新上下文向量</strong>：解码器利用这些注意力权重，对编码器输出的所有隐状态
+<span class="math inline"><em>s</em><sub><em>k</em></sub></span>
+进行加权求和，形成新的上下文向量 <span
+class="math inline"><em>c</em><sub><em>t</em></sub></span>，用于聚合与当前预测最相关的信息。</li>
+<li><strong>解码信息融合</strong>：将新的上下文向量 <span
+class="math inline"><em>c</em><sub><em>t</em></sub></span>
+与解码器当前时间步的输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span>
+进行融合（通常使用拼接），融合后的向量作为解码器当前时间步的输入，进一步用于生成当前的输出。</li>
+</ol>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-attention_all.png" srcset="/img/loading.gif" lazyload /></p>
+<p>下图以 RNN 为例，更为详细地描述了整个计算过程。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-attention_desc.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="注意力评分函数">2.2 注意力评分函数</h2>
+<p>注意力评分函数有多种实现方式，虽然在结构上各有差异，但本质上都是用于衡量解码器当前隐藏状态与编码器各时间步隐藏状态之间的相关性。</p>
+<h3 id="点积注意力">2.2.1 点积注意力</h3>
+<p>点积注意力（Dot-Product
+Attention）通过计算解码器当前时间步的隐藏状态与编码器每个时间步的隐藏状态的点积，来衡量二者之间的相关性。如果两个向量方向越相似，它们的点积就越大，表示相关性越强，非常简单直接。</p>
+<p><span
+class="math display"><em>s</em><em>c</em><em>o</em><em>r</em><em>e</em>(<em>h</em><sub><em>t</em></sub>, <em>s</em><sub><em>k</em></sub>) = <em>h</em><sub><em>t</em></sub> ⋅ <em>s</em><sub><em>k</em></sub><sup><em>T</em></sup></span></p>
+<blockquote>
+<p>两个有关联的词元，它们的向量如何变得相似？会在不断的训练当中为二者分配合适的词向量，使其变得相似，点积值也会变大。</p>
+</blockquote>
+<p>为了提升数值稳定性，防止随着维度的增大，点积得分变得越来越大，从而在应用
+softmax
+时造成梯度消失或梯度爆炸等问题。可以把得分除以一个常数，通常是该向量维度的平方根，这就是缩放点积（Scaled
+Dot-Product Attention），也是 Transformer 中的实现方式。</p>
+<p><span class="math display">$$score(h_t,s_k)=\frac{h_t \cdot
+{s_k}^T}{\sqrt{d}}$$</span></p>
+<p>通用点积（General Dot-Product
+Attention）在点积的基础上引入了一个可学习的权重矩阵
+W,先对编码器隐藏状态进行线性变换，再与解码器隐藏状态进行点积。不仅解决了编码器和解码器隐藏状态维度不一致的问题，还提升了模型的表达能力。</p>
+<p><span
+class="math display"><em>s</em><em>c</em><em>o</em><em>r</em><em>e</em>(<em>h</em><sub><em>t</em></sub>, <em>s</em><sub><em>k</em></sub>) = <em>h</em><sub><em>t</em></sub> ⋅ <em>W</em> ⋅ <em>s</em><sub><em>k</em></sub><sup><em>T</em></sup></span></p>
+<h3 id="加性注意力">2.2.2 加性注意力</h3>
+<p>加性注意力（Additive
+Attention）将解码器的隐状态和编码器的隐状态进行拼接后，通过一个全连接层，经过线性变换和非线性激活函数，最后和一个权重向量相乘，从而将多维向量投影为一个标量作为注意力得分。加性注意力通过引入非线性，模型能够捕捉更复杂的相似性关系。</p>
+<p><span
+class="math display">score(<em>h</em><sub><em>t</em></sub>, <em>s</em><sub><em>k</em></sub>) = <em>w</em><sub>2</sub><sup><em>T</em></sup> ⋅ tanh (<em>W</em><sub>1</sub>[<em>h</em><sub><em>t</em></sub>, <em>s</em><sub><em>k</em></sub>])</span></p>
+<p>下图是 Bahdanau
+模型的构造，由双向编码器组成，图上的计算方式就是加性注意力。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_Seq2Seq与注意力机制-add_attention.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="代码实现-1">2.3 代码实现</h2>
+<p>PyTorch 提供了专门处理 3D 张量运算的模块
+<code>torch.bmm</code>，全称是 Batch Matrix
+Multiplication（批量矩阵乘法），不像 <code>@</code> 和
+<code>torch.matmul</code> 那样有广播机制，如果输入不是 3D
+张量，直接报错，相当于提供了一个维度的强制检查。</p>
+<p><code>torch.bmm(input, mat2)</code>，参数和形状：</p>
+<ul>
+<li>input: (b, n, m)</li>
+<li>mat2: (b, m, p)</li>
+</ul>
+<p>其中 Batch
+维度必须相同，这是并行的基础，内部维度和矩阵乘法规则相同（前一个矩阵的列数
+= 后一个矩阵的行数），输出结果的形状为 (b, n, p)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br>mat2 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>)<br><br>torch.bmm(<span class="hljs-built_in">input</span>, mat2)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[[ 0.2251,  1.9282,  0.2330, -0.7461],
+         [-1.3417,  3.0018,  1.7747, -1.1693],
+         [-4.1933, -2.5293,  3.4258,  1.8658]],
+
+        [[ 1.1425,  0.2468,  1.2771,  1.0578],
+         [-0.6750,  2.0262,  0.7572,  4.7870],
+         [-4.0731, -1.8482, -0.8492,  2.4882]]])</code></pre>
+<hr />
+<p>加入注意力机制，主要改变的是解码器部分，编码器不需要修改。</p>
+<ul>
+<li>注意力机制</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Attention</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, decoder_output, encoder_outputs</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;使用注意力机制计算上下文向量</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param decoder_output: 解码器当前输出 [batch_size, 1,  decoder_hidden_size]</span><br><span class="hljs-string">        :param encoder_outputs: 编码器每个时间步的输出 [batch_size, seq_len, encoder_hidden_size * 2]</span><br><span class="hljs-string">        :return: _description_</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 计算编码器每个时间步注意力得分 [batch_size, 1, seq_len]</span><br>        score = torch.bmm(decoder_output, encoder_outputs.transpose(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>))<br>        <span class="hljs-comment"># 归一化权重值 [batch_size, 1, seq_len]</span><br>        weight = torch.softmax(score, dim=-<span class="hljs-number">1</span>)<br>        <span class="hljs-comment"># 加权求和，新的上下文向量 [batch_size, 1,  encoder_hidden_size * 2]</span><br>        context_vector = torch.bmm(weight, encoder_outputs)<br>        <br>        <span class="hljs-keyword">return</span> context_vector<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解码器</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Decoder</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, vocab_size, padding_idx</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.embed = nn.Embedding(<br>            num_embeddings=vocab_size,<br>            embedding_dim=config.EMBEDDING_SIZE,<br>            padding_idx=padding_idx<br>        )<br>        <span class="hljs-variable language_">self</span>.gru = nn.GRU(<br>            input_size=config.EMBEDDING_SIZE,<br>            hidden_size=config.DECODER_HIDDEN_SIZE,<br>            num_layers=config.DECODER_NUM_LAYERS,<br>            batch_first=<span class="hljs-literal">True</span>,<br>        )<br>        <br>        <span class="hljs-comment"># 注意力</span><br>        <span class="hljs-variable language_">self</span>.attention = Attention()<br>        <br>        <span class="hljs-variable language_">self</span>.fc = nn.Linear(<br>            <span class="hljs-comment"># 由于原输出和上下文张量拼接，所以输入维度为 * 2 </span><br>            in_features=<span class="hljs-number">2</span> * config.DECODER_HIDDEN_SIZE,<br>            out_features=vocab_size<br>        )<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x, hidden, encoder_outputs</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;单步前向传播</span><br><span class="hljs-string"></span><br><span class="hljs-string">        :param x: 当前时间步输入 [batch_size, 1]</span><br><span class="hljs-string">        :param hidden: 上一隐状态输出 [num_layers, batch_size, decoder_hidden_size]</span><br><span class="hljs-string">        :param encoder_outputs: 编码器所有隐状态输出 [batch_size, seq_len, encoder_hidden_size * 2]</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 经过词嵌入</span><br>        x = <span class="hljs-variable language_">self</span>.embed(x)<br>        <span class="hljs-comment"># 经过 GRU</span><br>        output, hidden = <span class="hljs-variable language_">self</span>.gru(x, hidden)<br>        <span class="hljs-comment"># 计算当前时间步对编码器输出的注意力，生成新的上下文张量</span><br>        context_vector = <span class="hljs-variable language_">self</span>.attention(output, encoder_outputs)<br>        <br>        <span class="hljs-comment"># 将当前时间步输出和上下文张量拼接起来，作为新的输入</span><br>        combine = torch.cat([output, context_vector], dim=-<span class="hljs-number">1</span>)<br>        <span class="hljs-comment"># 经过全连接层，得到概率得分</span><br>        final_output = <span class="hljs-variable language_">self</span>.fc(combine)<br>        <br>        <span class="hljs-keyword">return</span> final_output, hidden<br></code></pre></td></tr></table></figure>
+<h2 id="存在问题-1">2.4 存在问题</h2>
+<p>尽管注意力机制极大地增强了 Seq2Seq
+模型的建模能力，但是核心依然是基于传统的序列模型，RNN
+结构始终存在两个问题无法得到根本解决：</p>
+<ol type="1">
+<li>长期依赖关系难以建模：在处理超长序列时，需要跨越多个时间步来传递信息，训练过程容易出现梯度消失。</li>
+<li>无法并行计算：由于序列模型的时间步之间存在强依赖，必须顺序执行，无法利用硬件资源并行计算，限制了模型训练效率。</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" class="category-chain-item">自然语言处理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NLP/" class="print-no-link">#NLP</a>
+      
+        <a href="/tags/Seq2Seq/" class="print-no-link">#Seq2Seq</a>
+      
+        <a href="/tags/Attention/" class="print-no-link">#Attention</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>03_Seq2Seq与注意力机制</div>
+      <div>http://example.com/2024/08/18/大模型开发/06_自然语言处理/03_Seq2Seq与注意力机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月18日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/21/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/04_Transformer%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" title="04_Transformer架构详解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">04_Transformer架构详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/" title="02_传统序列模型">
+                        <span class="hidden-mobile">02_传统序列模型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

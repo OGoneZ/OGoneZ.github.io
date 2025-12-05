@@ -1,0 +1,1397 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 神经网络的构成 12345import numpy as npimport matplotlib.pyplot as pltimport seaborn as snssns.set_theme() 人工神经网络（Artificial Neural Network，ANN）简称神经网络（NN），是一种模仿生物神经网络结构和功能的计算模型，由多个神经元构成。 每个神经元类似机器学习中的感知">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_神经网络基础">
+<meta property="og:url" content="http://example.com/2024/08/05/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 神经网络的构成 12345import numpy as npimport matplotlib.pyplot as pltimport seaborn as snssns.set_theme() 人工神经网络（Artificial Neural Network，ANN）简称神经网络（NN），是一种模仿生物神经网络结构和功能的计算模型，由多个神经元构成。 每个神经元类似机器学习中的感知">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/dl.jpg">
+<meta property="article:published_time" content="2024-08-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:10:07.866Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/dl.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>02_神经网络基础 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="02_神经网络基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-05 00:00" pubdate>
+          2024年8月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="深度学习"
+        id="heading-8c5f70f85d5a691a5f1dc7be5473736b" role="tab" data-toggle="collapse" href="#collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+        aria-expanded="true"
+      >
+        深度学习
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+           role="tabpanel" aria-labelledby="heading-8c5f70f85d5a691a5f1dc7be5473736b">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/03/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/01_%E5%BC%A0%E9%87%8F%E5%92%8C%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/" title="01_张量和自动微分"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_张量和自动微分</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/05/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="02_神经网络基础"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">02_神经网络基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/07/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="03_损失函数和优化算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_损失函数和优化算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="04_CNN卷积神经网络"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_CNN卷积神经网络</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/10/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="05_RNN循环神经网络"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_RNN循环神经网络</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">02_神经网络基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="神经网络的构成">1 神经网络的构成</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><br>sns.set_theme()<br></code></pre></td></tr></table></figure>
+<p>人工神经网络（Artificial Neural
+Network，ANN）简称神经网络（NN），是一种模仿生物神经网络结构和功能的计算模型，由多个神经元构成。</p>
+<p>每个神经元类似机器学习中的感知机，每个输入有不同的权重，加权求和经过<strong>激活函数</strong>得到输出。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_神经网络基础-neuron.png" srcset="/img/loading.gif" lazyload /></p>
+<p>使用多个神经元构成网络，相邻层之间相互连接，每层之间通过激活函数进行非线性映射，最终得到结果。同一层的多个神经元可以看作是并行计算处理相同的输入数据，学习输入数据的不同特征。每个神经元可能会关注输入数据中的不同部分，从而捕捉到数据的不同属性。类似集成学习的思想，多个神经元组合在一起，可以处理更复杂的数据。</p>
+<p>每一层神经网络（全连接层）本质都是一次线性变换加一次非线性映射，类似逻辑回归+激活函数。神经网络正是靠这种“线性变换
++
+非线性映射”的重复堆叠，才能从简单的线性模型扩展成可以逼近任意函数的复杂结构。</p>
+<p><img src="https://img.zhubaoduo.com/02_神经网络基础-nn.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li><strong>输入层（Input Layer）</strong>:
+每个输入特征对应一个神经元</li>
+<li><strong>输出层（Output Layer）</strong>:
+输出层的神经元根据网络的任务（回归、分类等）生成最终的预测结果</li>
+<li><strong>隐藏层（Hidden Layers）</strong>:
+输入层和输出层之间都是隐藏层，神经网络的“深度”通常由隐藏层的数量决定</li>
+</ul>
+<p>相邻层的神经元相互连接，称为<strong>全连接（Fully
+Connected）</strong>，全连接神经网络接收的样本数据是<strong>二维的</strong>，数据在每一层之间需要以二维的形式传递。每个连接都会有一个权重，神经元的信息逐层传递称为<strong>前向传播（forward）</strong>，上一层的输出作为下一层的输入。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_神经网络基础-nn_inner.png" srcset="/img/loading.gif" lazyload /></p>
+<p>每个神经元在前向传播时保存<em>内部状态值（加权求和值）</em>和<em>激活值</em>，在反向传播时计算并保存的<em>激活值梯度</em>和<em>内部状态值梯度</em>。</p>
+<ul>
+<li>前向传播
+<ul>
+<li>内部状态值：<span
+class="math inline"><em>𝑧</em> = <em>𝑤</em> ⋅ <em>𝑥</em> + <em>𝑏</em></span></li>
+<li>激活值：<span
+class="math inline"><em>𝑎</em> = <em>𝑓</em>(<em>𝑧</em>)</span></li>
+</ul></li>
+<li>反向传播
+<ul>
+<li>激活值梯度：损失函数对激活值的偏导 <span
+class="math inline">$\frac{\partial L}{\partial a}$</span></li>
+<li>内部状态值梯度：激活值梯度 × 激活函数导数 <span
+class="math inline">$\frac{\partial L}{\partial z}=\frac{\partial
+L}{\partial a} · f^{\prime}(z)$</span></li>
+</ul></li>
+</ul>
+<h1 id="激活函数">2 激活函数</h1>
+<p>如果没有激活函数，无论加入多少隐藏层，整个神经网络都等效于单层线性变换。激活函数为神经网络引入了非线性，使得神经网络能够学习和表示复杂的非线性关系。</p>
+<p><a target="_blank" rel="noopener" href="https://playground.tensorflow.org/">可视化神经网络</a></p>
+<h2 id="阶跃函数">2.1 阶跃函数</h2>
+<p>阶跃函数是在感知机中最简单的激活函数，可以为输入设置一个阈值；一旦超过这个阈值，就切换输出（0
+或者
+1）。阶跃函数在0点不可导，并且在其他点导数为0，因此无法进行梯度下降。</p>
+<p><span class="math display">$$f(x)=\left\{
+\begin{array}
+{c}0,x&lt;0 \\
+1, x\geq0
+\end{array}\right. ,\quad f^{\prime}(x)=0$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">step</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.array(x &gt; <span class="hljs-number">0</span>, dtype=np.int32)<br><br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br>plt.plot(x, step(x))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[&lt;matplotlib.lines.Line2D at 0x176df26e0&gt;]</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_14_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="sigmoid函数">2.2 Sigmoid函数</h2>
+<p>Sigmoid（也叫 Logistic
+函数）是平滑可微的，能将任意输入映射到区间(0,1)。因其涉及指数运算，计算量相对较高。</p>
+<p><span class="math display">$$f(x)=\frac{1}{1+e^{-x} } ,\quad
+f^{\prime}(x)=\frac{1}{1+e^{-x} }\left(1-\frac{1}{1+e^{-x}
+}\right)=f(x)\left(1-f(x)\right)$$</span></p>
+<p>Sigmoid 的导数范围是(0, 0.25]，梯度较小，并且输入在 [-6, 6]
+之外的输出值变化很小，此时网络参数更新极其缓慢，甚至无法更新。</p>
+<p>Sigmoid 一般在 5
+层之内就会出现梯度消失的情况，并且由于该函数不是以0为中心的，激活值总是正数，在梯度更新时只对某些特征产生相同方向的影响。一般只用在<strong>二分类的输出层</strong>或者层数较少的神经网络。</p>
+<p>Sigmoid 在二分类的输出层，输出为 1 个节点，直接表示样本属于类别 1
+的概率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_sigmoid</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> / (<span class="hljs-number">1</span> + np.exp(-x))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">sigmoid_prime</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> my_sigmoid(x) * (<span class="hljs-number">1</span> - my_sigmoid(x))<br><br>_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">5</span>))<br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br><br>axs[<span class="hljs-number">0</span>].plot(x, my_sigmoid(x))<br>axs[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&quot;Sigmoid(x)&quot;</span>)<br>axs[<span class="hljs-number">1</span>].plot(x, sigmoid_prime(x))<br>axs[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&quot;Sigmoid&#x27;(x)&quot;</span>)<br><br>axs[<span class="hljs-number">0</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)  <span class="hljs-comment"># x 轴</span><br>axs[<span class="hljs-number">0</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)  <span class="hljs-comment"># y 轴</span><br>axs[<span class="hljs-number">1</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;matplotlib.lines.Line2D at 0x177a2ccd0&gt;</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_17_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="tanh函数">2.3 Tanh函数</h2>
+<p>上面说到 Sigmoid 不以 0 值为中心，并且导数值比较小，Tanh 就是对
+Sigmoid 的改进，进行缩放和偏移，使其以 0 值为中心，并且导数值接近
+1。</p>
+<p><span class="math display">$$f(x)=\frac{2}{1+e^{-2x}
+}-1=\frac{2}{1+e^{-2x} }+\frac{-1-e^{-2x} }{1+e^{-2x} }=\frac{1-e^{-2x}
+}{1+e^{-2x} }$$</span></p>
+<p><span class="math display">$$f^{\prime}(x)=1-\left(\frac{1-e^{-2x}
+}{1+e^{-2x} }\right)^{2}=1-f^{2}(x)$$</span></p>
+<p>Tanh 在 [-3, 3] 之外的输出值变化也很小，与 Sigmoid 相比，Tanh 以 0
+为中心，并且梯度值更大，所以收敛速度更快，但同样存在梯度消失的问题。可以<strong>在隐藏层中使用
+Tanh，在输出层中使用 Sigmoid</strong>。</p>
+<blockquote>
+<p><span class="math inline">$\frac{2}{1+e^{-2x} }-1$</span> 是 Sigmoid
+的变形，2 倍的 Sigmoid 将 y 轴 放大 1 倍， 2x 将 x 轴缩放 1倍，再 -1 将
+y 轴平移到 (-1, 1) 区间内。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_tanh</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.tanh(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">tanh_prime</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> - np.tanh(x) ** <span class="hljs-number">2</span><br><br>_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">5</span>))<br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br><br>axs[<span class="hljs-number">0</span>].plot(x, my_tanh(x))<br>axs[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&quot;Tanh(x)&quot;</span>)<br>axs[<span class="hljs-number">1</span>].plot(x, tanh_prime(x))<br>axs[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&quot;Tanh&#x27;(x)&quot;</span>)<br><br>axs[<span class="hljs-number">0</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">0</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;matplotlib.lines.Line2D at 0x177a99150&gt;</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_20_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="relu函数">2.4 ReLU函数</h2>
+<p>ReLU（Rectified Linear Unit，修正线性单元）会将小于等于 0
+的输入转换为 0，大于 0 的输入则保持不变。ReLu
+更加重视正信号，而忽略负信号。</p>
+<p><span class="math display">$$
+f ( x )=\left\{ {\begin{array} {l} {0, x \leq0} \\ {x, x &gt; 0}
+\end{array} } ,\quad \right. f^{\prime} ( x )=\left\{ {\begin{array} {l}
+{0, x \leq0} \\ {1, x &gt; 0} \end{array} } \right.
+$$</span></p>
+<p>ReLU 在大于 0 时，导数一直为 1，不存在梯度消失的问题。但在输入小于 0
+时，输出为 0，ReLu
+只会激活部分神经元，这种稀疏性有助于减少计算量提高效率，并且可以缓解过拟合的发生。但如果部分输入一直小于0，输出一直为0，那么就会导致另一个问题，即<strong>神经元死亡</strong>，如果大量的神经元死亡，会影响模型的学习能力。</p>
+<p>ReLu
+计算简单，不存在梯度消失的问题，并且可以使网络稀疏，<strong>常用于隐藏层</strong>，适用于深层神经网络。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_relu</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.maximum(<span class="hljs-number">0</span>, x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">relu_prime</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1.0</span> * (x &gt; <span class="hljs-number">0</span>)<br><br>_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">5</span>))<br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br><br>axs[<span class="hljs-number">0</span>].plot(x, my_relu(x))<br>axs[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&quot;ReLU(x)&quot;</span>)<br>axs[<span class="hljs-number">1</span>].plot(x, relu_prime(x))<br>axs[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&quot;ReLU&#x27;(x)&quot;</span>)<br><br>axs[<span class="hljs-number">0</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">0</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;matplotlib.lines.Line2D at 0x177c517b0&gt;</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_23_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="leaky-relu函数">2.5 Leaky ReLU函数</h2>
+<p>为了解决 ReLu 的神经元死亡问题，引入了 Leaky ReLu
+激活函数，在输入为负的时候引入一个很小的斜率，从而避免神经元死亡。</p>
+<p><span class="math display">$$
+f ( x )=\left\{ {\begin{array} {l} {\alpha x, x \leq0} \\ {x, x &gt; 0}
+\end{array} },\quad \right. f^{\prime} ( x )=\left\{ {\begin{array} {l}
+{\alpha, x \leq0} \\ {1, x &gt; 0} \end{array} } \right.
+$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_leaky_relu</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.maximum(<span class="hljs-number">0.05</span> * x, x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">leaky_relu_prime</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.where(x &gt; <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0.05</span>)<br><br>_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">5</span>))<br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br><br>axs[<span class="hljs-number">0</span>].plot(x, my_leaky_relu(x))<br>axs[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&quot;Leaky ReLU(x)&quot;</span>)<br>axs[<span class="hljs-number">1</span>].plot(x, leaky_relu_prime(x))<br>axs[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&quot;Leaky ReLU&#x27;(x)&quot;</span>)<br><br>axs[<span class="hljs-number">0</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">0</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;matplotlib.lines.Line2D at 0x177d371c0&gt;</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_26_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="softmax函数">2.6 Softmax函数</h2>
+<p>Softmax 将一个任意的实数向量转换为一个概率分布，确保输出值的总和为
+1,是二分类激活函数 Sigmoid
+在多分类上的推广。<strong>常用于多分类问题的输出层</strong>，用来表示类别的输出概率。</p>
+<p><span class="math display">$$
+y_{k}={\frac{e^{x_{k} } } {\sum_{i=1}^{n} e^{x_{i} } } }, \quad k=1
+{\sim} n
+\qquad\qquad
+\frac{\partial y_{k} } {\partial x_{i} }=\left\{\begin{matrix} {y_{k} (
+1-y_{i} ), k=i} \\ {-y_{k} y_{i}, k \neq i} \\ \end{matrix} \right.
+$$</span></p>
+<p>Softmax
+会放大输入中较大的值，使得最大输入值对应的输出概率较大，其他较小的值会被压缩。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">my_softmax</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.exp(x) / np.<span class="hljs-built_in">sum</span>(np.exp(x), axis=<span class="hljs-number">1</span>).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br><br>x = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]])<br><br>_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">8</span>))<br>axs[<span class="hljs-number">0</span>].pie(my_softmax(x)[<span class="hljs-number">0</span>], labels=x[<span class="hljs-number">0</span>])<br>axs[<span class="hljs-number">1</span>].pie(my_softmax(x)[<span class="hljs-number">1</span>], labels=x[<span class="hljs-number">0</span>])<br><br><span class="hljs-comment"># 每个分类的概率  </span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\t1\t2\t3\t4\t5\n&#x27;</span>,np.char.add(np.<span class="hljs-built_in">round</span>(my_softmax(x) * <span class="hljs-number">100</span>, <span class="hljs-number">2</span>).astype(<span class="hljs-built_in">str</span>), <span class="hljs-string">&#x27;%&#x27;</span>))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">    1   2   3   4   5
+ [[&#39;1.17%&#39; &#39;3.17%&#39; &#39;8.61%&#39; &#39;23.41%&#39; &#39;63.64%&#39;]
+ [&#39;0.62%&#39; &#39;92.46%&#39; &#39;0.62%&#39; &#39;1.69%&#39; &#39;4.6%&#39;]]</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_29_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="其他激活函数">2.7 其他激活函数</h2>
+<h3 id="identity恒等函数">2.7.1 Identity恒等函数</h3>
+<p>Identity 函数非常简单，它返回输入值本身，适用于回归任务的输出。</p>
+<p><span
+class="math display"><em>f</em>(<em>x</em>) = <em>x</em>,  <em>f</em><sup>′</sup>(<em>x</em>) = 1</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = np.array([-<span class="hljs-number">10</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>])<br>plt.plot(x, x)<br><br>plt.axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Identity&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 1.0, &#39;Identity&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_33_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h3 id="prelu函数">2.7.2 PReLU函数</h3>
+<p>PReLU（Parametric Rectified Linear Unit）中的 α
+是一个可训练的参数，而不是固定常数。</p>
+<p><span class="math display">$$
+f ( x )=\left\{ {\begin{array} {l} {\alpha x, x \leq0} \\ {x, x &gt; 0}
+\end{array} },\quad \right. f^{\prime} ( x )=\left\{ {\begin{array} {l}
+{\alpha, x \leq0} \\ {1, x &gt; 0} \end{array} } \right.
+$$</span></p>
+<h3 id="rrelu函数">2.7.3 RReLU函数</h3>
+<p>RReLU（Randomized Leaky ReLU）中的 α
+是从均匀分布中随机选择的一个值，范围是 [0, 1]。</p>
+<p><span class="math display">$$
+f ( x )=\left\{ {\begin{array} {l} {\alpha x, x \leq0} \\ {x, x &gt; 0}
+\end{array} },\quad \right. f^{\prime} ( x )=\left\{ {\begin{array} {l}
+{\alpha, x \leq0} \\ {1, x &gt; 0} \end{array} } \right.
+$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">rrelu</span>(<span class="hljs-params">x, alpha=<span class="hljs-number">0.01</span></span>):<br>    <span class="hljs-keyword">return</span> np.where(x &gt; <span class="hljs-number">0</span>, x, alpha * x)<br><br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br>plt.plot(x, rrelu(x))<br>plt.fill_between(x, rrelu(x, alpha=<span class="hljs-number">0.1</span>), rrelu(x, alpha=<span class="hljs-number">0.5</span>), where=(x &lt; <span class="hljs-number">0</span>), color=<span class="hljs-string">&#x27;navy&#x27;</span>, alpha=<span class="hljs-number">0.5</span>)<br><br>plt.axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;RReLU&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 1.0, &#39;RReLU&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_38_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h3 id="elu函数">2.7.4 ELU函数</h3>
+<p>ELU（Exponential Linear Unit）是在负轴上更加平滑的ReLU函数。</p>
+<p><span class="math display">$$
+f ( x )=\left\{\begin{array} {c} { {\alpha( e^{x}-1 ), x \leq0} } \\ {
+{x, x &gt; 0} } \end{array} \right.,\quad \ f^{\prime} ( x
+)=\left\{\begin{array} {c} { {\alpha e^{x}, x \leq0} } \\ { {1, x &gt;
+0} } \end{array} \right.
+$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">elu</span>(<span class="hljs-params">x, alpha=<span class="hljs-number">0.01</span></span>):<br>    <span class="hljs-keyword">return</span> np.where(x &gt; <span class="hljs-number">0</span>, x, alpha * (np.exp(x) - <span class="hljs-number">1</span>))<br><br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br>plt.plot(x, elu(x, alpha=<span class="hljs-number">1</span>))<br><br>plt.axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;ELU&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 1.0, &#39;ELU&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_41_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h3 id="swish函数">2.7.5 Swish函数</h3>
+<p>Swish，也称Sigmoid Linear Unit，SiLU函数。</p>
+<p><span class="math display">$$
+f ( x )=\frac{x} {1+e^{-x} } ,\quad f^{\prime( x )}=\frac{1+e^{-x}+x
+e^{-x} } {( 1+e^{-x} )^{2} }
+$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">swish</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x * my_sigmoid(x)<br><br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br>plt.plot(x, swish(x))<br><br>plt.axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Swish&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 1.0, &#39;Swish&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_44_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h3 id="softplus函数">2.7.6 Softplus函数</h3>
+<p><span class="math display">$$
+f ( x )=\ln( 1+e^{x} ) ,\quad f^{\prime( x )}=\frac{1} {1+e^{-x} }
+$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">softplus</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.log(<span class="hljs-number">1</span> + np.exp(x))<br><br>x = np.arange(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">0.1</span>)<br>plt.plot(x, softplus(x))<br><br>plt.axhline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.axvline(c=<span class="hljs-string">&#x27;gray&#x27;</span>, ls=<span class="hljs-string">&#x27;--&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Softplus&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 1.0, &#39;Softplus&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/02_神经网络基础-02_神经网络基础_47_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h2 id="激活函数的选择">2.8 激活函数的选择</h2>
+<ul>
+<li><strong>隐藏层</strong>
+<ul>
+<li>首选 ReLU 函数，如果效果不好可尝试 Leaky ReLU 等函数</li>
+<li>Tanh 的输出均值为
+0，对中心化数据更友好，但可能出现梯度消失，仅适用于浅层网络</li>
+<li>Sigmoid 在隐藏层容易导致梯度消失，仅适用于浅层网络</li>
+</ul></li>
+<li><strong>输出层</strong>
+<ul>
+<li>二分类选择 Sigmoid</li>
+<li>多分类选择 Softmax</li>
+<li>回归选择 Identity</li>
+</ul></li>
+</ul>
+<h2 id="api-实现">2.9 API 实现</h2>
+<ul>
+<li><code>Sigmoid</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br>torch.manual_seed(<span class="hljs-number">66</span>)<br>x = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br><br><span class="hljs-comment"># 函数式写法，方便直接计算</span><br>z = torch.sigmoid(x)<br><br><span class="hljs-comment"># 模块写法，需要先创建对象，方便管理模型</span><br>sigmoid = nn.Sigmoid()<br>z = sigmoid(x)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>Tanh</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">tanh = nn.Tanh()<br>tanh(x)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[ 0.9497, -0.2163,  0.3297],
+        [-0.9473,  0.1161,  0.8130]])</code></pre>
+<ul>
+<li><code>ReLU</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">relu = nn.ReLU()<br>relu(x)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[1.8289, 0.0000, 0.3424],
+        [0.0000, 0.1166, 1.1357]])</code></pre>
+<ul>
+<li><code>Leaky ReLU</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">leaky_relu = nn.LeakyReLU(negative_slope=<span class="hljs-number">0.1</span>)<br>leaky_relu(x)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[ 1.8289, -0.0220,  0.3424],
+        [-0.1805,  0.1166,  1.1357]])</code></pre>
+<ul>
+<li><code>Softmax</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">softmax = nn.Softmax(dim=-<span class="hljs-number">1</span>)  <span class="hljs-comment"># dim 为 -1 ，表示最后一维进行归一化，这里也就是列</span><br>softmax(x)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[0.7380, 0.0951, 0.1669],
+        [0.0374, 0.2553, 0.7073]])</code></pre>
+<p>其他激活函数在 <code>nn</code> 中也有对应模块，不再一一演示。</p>
+<h1 id="神经网络简单实现">3 神经网络简单实现</h1>
+<p>深度神经网络由多个层（layer）组成，通常将其称之为模型（Model）。整个模型接收原始输入（特征），生成输出（预测），并包含一些参数。下图是一个三层神经网络，权重和神经元的上标
+<span class="math inline"><sup>(1)</sup></span> 表示网络层号，下标 <span
+class="math inline"><sub>21</sub></span>
+分别代表输入神经元编号和输出神经元编号。</p>
+<p>输入层-&gt;第1层，使用矩阵乘法表示：</p>
+<p><span
+class="math display"><em>A</em><sup>(1)</sup> = <em>X</em><em>W</em><sup>(1)</sup> + <em>B</em><sup>(1)</sup></span></p>
+<p>其中</p>
+<p><span class="math display">$$
+A^{( 1 )}=( a_{1}^{( 1 )} \; a_{2}^{( 1 )} \; a_{3}^{( 1 )}), \quad X=(
+x_{1} \, \, x_{2} ), \quad B^{( 1 )}=( b_{1}^{( 1 )} \, \, \, b_{2}^{( 1
+)} \, \, \, b_{3}^{( 1 )}), \quad
+W^{( 1 )}=\left( \begin{matrix} { {w_{1 1}^{( 1 )} } } &amp; { {w_{1
+2}^{( 1 )} } } &amp; { {w_{1 3}^{( 1 )} } } \\ { {w_{2 1}^{( 1 )} } }
+&amp; { {w_{2 2}^{( 1 )} } } &amp; { {w_{2 3}^{( 1 )} } } \end{matrix}
+\right)
+$$</span></p>
+<p>计算得到的 <span class="math inline"><em>A</em><sup>(1)</sup></span>
+再经过激活函数 <span class="math inline"><em>h</em>()</span> 得到 <span
+class="math inline"><em>Z</em><sup>(1)</sup></span>，继续作为第1层-&gt;第2层的输入，以此类推。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_神经网络基础-nn_signal.png" srcset="/img/loading.gif" lazyload /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><br><span class="hljs-comment"># 初始化权重和偏置</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">init_network</span>():<br>    network = &#123;&#125;<br>    network[<span class="hljs-string">&#x27;W1&#x27;</span>] = np.random.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br>    network[<span class="hljs-string">&#x27;b1&#x27;</span>] = np.random.randn(<span class="hljs-number">3</span>)<br>    network[<span class="hljs-string">&#x27;W2&#x27;</span>] = np.random.randn(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br>    network[<span class="hljs-string">&#x27;b2&#x27;</span>] = np.random.randn(<span class="hljs-number">2</span>)<br>    network[<span class="hljs-string">&#x27;W3&#x27;</span>] = np.random.randn(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>    network[<span class="hljs-string">&#x27;b3&#x27;</span>] = np.random.randn(<span class="hljs-number">2</span>)<br>    <br>    <span class="hljs-keyword">return</span> network<br><br><br><span class="hljs-comment"># 前向传播</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">network, x</span>):<br>    w1, w2, w3 = network[<span class="hljs-string">&#x27;W1&#x27;</span>], network[<span class="hljs-string">&#x27;W2&#x27;</span>], network[<span class="hljs-string">&#x27;W3&#x27;</span>]<br>    b1, b2, b3 = network[<span class="hljs-string">&#x27;b1&#x27;</span>], network[<span class="hljs-string">&#x27;b2&#x27;</span>], network[<span class="hljs-string">&#x27;b3&#x27;</span>]<br>    <br>    a1 = x @ w1 + b1  <span class="hljs-comment"># 第 1 层加权求和值</span><br>    z1 = my_tanh(a1)  <span class="hljs-comment"># 第 1 层经过激活函数</span><br>    a2 = z1 @ w2 + b2  <span class="hljs-comment"># 第 2 层加权求和值</span><br>    z2 = my_relu(a2)  <span class="hljs-comment"># 第 2 层经过激活函数</span><br>    a3 = z2 @ w3 + b3  <span class="hljs-comment"># 第 3 层加权求和值</span><br>    y = my_sigmoid(a3)  <span class="hljs-comment"># 第 3 层经过激活函数输出</span><br>    <br>    <span class="hljs-keyword">return</span> y<br><br><br>net = init_network()<br>X = np.array([<span class="hljs-number">4</span>, <span class="hljs-number">2</span>])<br>y = forward(net, X)<br><span class="hljs-built_in">print</span>(y)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[0.88363004 0.34900234]</code></pre>
+<h1 id="参数初始化">4 参数初始化</h1>
+<p>神经网络中的参数是需要初始化，参数初始化的作用：</p>
+<ul>
+<li><strong>防止梯度消失或爆炸</strong>：初始权重值过大或过小会导致梯度在反向传播中指数级增大或缩小。</li>
+<li><strong>提高收敛速度</strong>：合理的初始化使得网络的激活值分布适中，有助于梯度高效更新。</li>
+<li><strong>保持对称性破除</strong>：权重的初始化需要打破对称性，否则网络的学习能力会受到限制。（对称性指权重的值相同，神经元的功能没有差异）</li>
+</ul>
+<h2 id="常数初始化">4.1 常数初始化</h2>
+<p>无法打破对称性，反向传播时全部都会进行相同的更新，使得网络失去了不同神经元的意义，无法有效训练。通常只会使用全
+0 初始化偏置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br>linear = nn.Linear(<span class="hljs-number">5</span>, <span class="hljs-number">2</span>)<br><br><span class="hljs-comment"># 所有参数初始化为 0</span><br>nn.init.zeros_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br><br><span class="hljs-comment"># 所有参数初始化为 1</span><br>nn.init.ones_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br><br><span class="hljs-comment"># 所有参数初始化为固定常数</span><br>nn.init.constant_(linear.weight, <span class="hljs-number">66</span>)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0.]], requires_grad=True)
+Parameter containing:
+tensor([[1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.]], requires_grad=True)
+Parameter containing:
+tensor([[66., 66., 66., 66., 66.],
+        [66., 66., 66., 66., 66.]], requires_grad=True)</code></pre>
+<h2 id="秩初始化">4.2 秩初始化</h2>
+<p>权重参数初始化为单位矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.init.eye_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[1., 0., 0., 0., 0.],
+        [0., 1., 0., 0., 0.]], requires_grad=True)</code></pre>
+<h2 id="随机初始化">4.3 随机初始化</h2>
+<p>均匀分布初始化：从区间中均匀随机取值，默认区间为（0，1），可以设为
+$(-，) $，其中 d 为神经元的输入数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.init.uniform_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[0.4520, 0.7268, 0.0245, 0.7780, 0.5695],
+        [0.9082, 0.2932, 0.1449, 0.6995, 0.1598]], requires_grad=True)</code></pre>
+<p>正态分布初始化：从均值为 0，标准差为 1
+的高斯分布中取样，使用一些很小的值进行初始化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.init.normal_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[ 1.0646,  0.6571, -1.7206, -0.5381, -1.1052],
+        [-0.4689,  1.1999, -1.7586,  0.9557, -0.8140]], requires_grad=True)</code></pre>
+<h2 id="xavier初始化">4.4 Xavier初始化</h2>
+<p>Xavier 初始化，也叫 Glorot
+初始化，设计思想是让每层的输入方差和输出方差一致，保持信号在每一层传播时不衰减、不放大。常用于
+Sigmoid 和 Tanh 激活函数，不推荐用于 ReLU 激活函数。</p>
+<ul>
+<li><p>Xavier 均匀分布初始化：<span
+class="math inline">$\left[-{\sqrt{\frac{6} {n_{i n}+n_{o u t} } } },
+{\sqrt{\frac{6} {n_{i n}+n_{o u t} } } } \right]$</span></p></li>
+<li><p>Xavier 正态分布初始化：均值为 0，均值为 <span
+class="math inline">${\sqrt{\frac{2} {n_{i n}+n_{o u t} } }
+}$</span></p></li>
+</ul>
+<p>其中 <span
+class="math inline"><em>n</em><sub><em>i</em><em>n</em></sub></span>
+表示输入神经元的数量，也就是上一层神经元的数量，<span
+class="math inline"><em>n</em><sub><em>o</em><em>u</em><em>t</em></sub></span>
+是输出神经元的数量，也就是下一层神经元的数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Xavier 均匀分布初始化</span><br>nn.init.xavier_uniform_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br><br><span class="hljs-comment"># Xavier 正态分布初始化</span><br>nn.init.xavier_normal_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[ 0.2802,  0.8988, -0.1018,  0.4321, -0.4568],
+        [-0.2845,  0.3657, -0.7230, -0.2094,  0.9017]], requires_grad=True)
+Parameter containing:
+tensor([[ 0.2160, -0.9007, -0.3396, -0.4396,  0.2919],
+        [-0.0365, -0.2839, -0.6361, -0.3293,  0.3296]], requires_grad=True)</code></pre>
+<h2 id="kaiming初始化">4.5 Kaiming初始化</h2>
+<p>Kaiming 初始化，也叫 He 初始化，考虑到 ReLU 会把一半的神经元输出设为
+0，因此需要更大的方差来维持信号幅度。常用于 ReLu 和 Leaky
+ReLU，不推荐用于 Sigmoid。</p>
+<ul>
+<li><p>Kaiming 均匀分布初始化：<span
+class="math inline">$\left[-{\sqrt{\frac{6} {n_{i n} } } },
+{\sqrt{\frac{6} {n_{i n} } } } \right]$</span></p></li>
+<li><p>Kaiming 正态分布初始化：均值为 0，均值为 <span
+class="math inline">${\sqrt{\frac{2} {n_{i n} } } }$</span></p></li>
+</ul>
+<p>其中 <span
+class="math inline"><em>n</em><sub><em>i</em><em>n</em></sub></span>
+表示输入神经元的数量，也就是上一层神经元的数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Kaiming 均匀分布初始化</span><br>nn.init.kaiming_uniform_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br><br><span class="hljs-comment"># Kaiming 正态分布初始化</span><br>nn.init.kaiming_normal_(linear.weight)<br><span class="hljs-built_in">print</span>(linear.weight)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Parameter containing:
+tensor([[ 0.7357, -0.4194,  0.6922, -0.8139, -1.0905],
+        [-0.2551, -0.3574,  0.3759,  0.9959,  0.1350]], requires_grad=True)
+Parameter containing:
+tensor([[ 0.3897,  0.4593,  1.3781, -0.0915,  0.3848],
+        [ 0.3878, -0.3613,  0.7376, -0.3496, -0.1828]], requires_grad=True)</code></pre>
+<h1 id="搭建神经网络">5 搭建神经网络</h1>
+<h2 id="自定义网络">5.1 自定义网络</h2>
+<p>在神经网络框架中，由多个层组成的组件称之为模块（Module），在 PyTorch
+中 Module 是所有神经网络的基类。定义 Module
+时需要继承<code>nn.Module</code>，并主要重写两个方法：</p>
+<ul>
+<li><code>__init__</code>：定义网络中的层结构，并视情况进行初始化。</li>
+<li><code>forward</code>：根据输入进行前向传播，并返回输出。在调用神经网络模型对象的时候，底层会自动调用该函数。</li>
+</ul>
+<p>下面神经网络设计如下：</p>
+<ol type="1">
+<li>输入层：输入层有4个节点，对应输入数据的4个特征</li>
+<li>第1隐藏层：有3个节点，使用 Xavier 正态分布初始化权重，激活函数使用
+Tanh</li>
+<li>第2隐藏层：有2个节点，使用 Kaiming 正态分布初始化权重，激活函数使用
+ReLU</li>
+<li>输出层：有 3
+个节点，按默认方式（PyTorch默认均匀随机分布）进行初始化，激活函数使用
+Softmax</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch <br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Model</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()  <span class="hljs-comment"># 调用父类初始化</span><br>        <br>        <span class="hljs-variable language_">self</span>.fc1 = nn.Linear(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>)  <span class="hljs-comment"># 第1层初始化，4个输入，3个输出</span><br>        <span class="hljs-variable language_">self</span>.fc2 = nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)  <span class="hljs-comment"># 第2层初始化，3个输入，2个输出</span><br>        <span class="hljs-variable language_">self</span>.out = nn.Linear(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)  <span class="hljs-comment"># 输出层，2个输入，3个输出</span><br>        <br>        <span class="hljs-comment"># 激活函数</span><br>        <span class="hljs-variable language_">self</span>.relu = nn.ReLU()<br>        <span class="hljs-variable language_">self</span>.tanh = nn.Tanh()<br>        <br>        <span class="hljs-comment"># 初始化权重</span><br>        nn.init.xavier_normal_(<span class="hljs-variable language_">self</span>.fc1.weight) <br>        nn.init.kaiming_normal_(<span class="hljs-variable language_">self</span>.fc2.weight) <br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        x = <span class="hljs-variable language_">self</span>.fc1(x)  <span class="hljs-comment"># 经过第 1 个隐藏层</span><br>        x = <span class="hljs-variable language_">self</span>.tanh(x)  <span class="hljs-comment"># 第 1 层激活函数</span><br>        x = <span class="hljs-variable language_">self</span>.fc2(x)  <span class="hljs-comment"># 经过第 2 个隐藏层</span><br>        x = torch.relu(x)  <span class="hljs-comment"># 第 2 层激活函数</span><br>        x = <span class="hljs-variable language_">self</span>.out(x)  <span class="hljs-comment"># 经过输出层</span><br>        <span class="hljs-comment"># softmax 的 dim 指定归一化的维度，此处可以使用 1 表示对每一行做归一化，也可以使用 -1 更加通用地表示最后一维</span><br>        x = torch.softmax(x, dim=-<span class="hljs-number">1</span>)  <span class="hljs-comment"># 激活函数</span><br>        <br>        <span class="hljs-keyword">return</span> x<br>    <br>model = Model()<br>X = torch.randn(<span class="hljs-number">6</span>, <span class="hljs-number">4</span>)<br>y_pred = model(X)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;预测值：\n&#x27;</span>, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;预测标签：\n&#x27;</span>, torch.argmax(y_pred, dim=<span class="hljs-number">1</span>).detach().numpy())<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">预测值：
+ tensor([[0.2632, 0.3978, 0.3391],
+        [0.2272, 0.3991, 0.3737],
+        [0.2632, 0.3978, 0.3391],
+        [0.2632, 0.3978, 0.3391],
+        [0.2632, 0.3978, 0.3391],
+        [0.2342, 0.3991, 0.3667]], grad_fn=&lt;SoftmaxBackward0&gt;)
+预测标签：
+ [1 1 1 1 1 1]</code></pre>
+<h2 id="查看模型参数">5.2 查看模型参数</h2>
+<p>使用 <code>named_parameters()</code>
+查看各层参数，通常迭代和访问所有可训练参数（requires_grad=True）供梯度更新使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> name, param <span class="hljs-keyword">in</span> model.named_parameters():<br>    <span class="hljs-built_in">print</span>(name, param, <span class="hljs-string">&#x27;\n&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">fc1.weight Parameter containing:
+tensor([[-1.0289, -0.0880,  0.8888, -0.6779],
+        [-0.3527, -0.1030, -0.1152, -0.0459],
+        [-0.2099, -0.1153,  0.2160, -0.9007]], requires_grad=True) 
+
+fc1.bias Parameter containing:
+tensor([-0.0480,  0.2268, -0.4755], requires_grad=True) 
+
+fc2.weight Parameter containing:
+tensor([[-0.5187, -0.6714,  0.4459],
+        [-0.0557, -0.4336, -0.9717]], requires_grad=True) 
+
+fc2.bias Parameter containing:
+tensor([-0.3928, -0.5646], requires_grad=True) 
+
+out.weight Parameter containing:
+tensor([[-0.1984, -0.6112],
+        [-0.5136, -0.2566],
+        [-0.0660, -0.0348]], requires_grad=True) 
+
+out.bias Parameter containing:
+tensor([0.0401, 0.4532, 0.2935], requires_grad=True) </code></pre>
+<p>使用 <code>state_dict</code>
+查看各层参数，返回一个字典，常用于存储和加载模型的所有状态，保存检查点和部署。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model.state_dict()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">OrderedDict([(&#39;fc1.weight&#39;,
+              tensor([[-1.0289, -0.0880,  0.8888, -0.6779],
+                      [-0.3527, -0.1030, -0.1152, -0.0459],
+                      [-0.2099, -0.1153,  0.2160, -0.9007]])),
+             (&#39;fc1.bias&#39;, tensor([-0.0480,  0.2268, -0.4755])),
+             (&#39;fc2.weight&#39;,
+              tensor([[-0.5187, -0.6714,  0.4459],
+                      [-0.0557, -0.4336, -0.9717]])),
+             (&#39;fc2.bias&#39;, tensor([-0.3928, -0.5646])),
+             (&#39;out.weight&#39;,
+              tensor([[-0.1984, -0.6112],
+                      [-0.5136, -0.2566],
+                      [-0.0660, -0.0348]])),
+             (&#39;out.bias&#39;, tensor([0.0401, 0.4532, 0.2935]))])</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 保存模型参数</span><br>torch.save(model.state_dict(), <span class="hljs-string">&#x27;model/model.pth&#x27;</span>)<br><br><span class="hljs-comment"># 加载模型参数</span><br>model.load_state_dict(torch.load(<span class="hljs-string">&#x27;model/model.pth&#x27;</span>))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;All keys matched successfully&gt;</code></pre>
+<h2 id="模型参数可视化">5.3 模型参数可视化</h2>
+<p><code>summary</code>
+是一个模型结构可视化工具，它可以清晰地模型每一层的：层名称（Layer
+Type）、输出张量形状（Output
+Shape）、参数数量（Params）、以及总参数量统计。需要使用
+<code>pip install torchsummary</code> 安装。</p>
+<p><code>summary</code> 会自动构造一个虚拟输入张量，传入模型做一次
+<code>forward</code>，然后记录每一层的输入/输出形状、参数量、占用内存等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torchsummary <span class="hljs-keyword">import</span> summary<br><br>summary(<br>        model = model,     <span class="hljs-comment"># 模型</span><br>        input_size=(<span class="hljs-number">4</span>, ),  <span class="hljs-comment"># 表示一个输入样本的维度</span><br>        batch_size=<span class="hljs-number">16</span>,     <span class="hljs-comment"># 批次大小</span><br>        device=<span class="hljs-string">&#x27;cpu&#x27;</span>       <span class="hljs-comment"># 默认使用 GPU，PyTorch 不允许CPU和GPU混合运算，或者可以将模型和数据 to(&#x27;cuda&#x27;)</span><br>        )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">----------------------------------------------------------------
+        Layer (type)               Output Shape         Param #
+================================================================
+            Linear-1                    [16, 3]              15
+              Tanh-2                    [16, 3]               0
+            Linear-3                    [16, 2]               8
+            Linear-4                    [16, 3]               9
+================================================================
+Total params: 32
+Trainable params: 32
+Non-trainable params: 0
+----------------------------------------------------------------
+Input size (MB): 0.00
+Forward/backward pass size (MB): 0.00
+Params size (MB): 0.00
+Estimated Total Size (MB): 0.00
+----------------------------------------------------------------</code></pre>
+<p>另外也可以使用<code>torchinfo.summary()</code>，只需要<code>model</code>和<code>input_size</code>作为参数传入即可，更加方便。使用<code>pip install torchinfo</code>安装。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torchinfo <span class="hljs-keyword">import</span> summary<br><br>inputs = torch.randn(<span class="hljs-number">16</span>, <span class="hljs-number">4</span>)<br><br>summary(<br>    model=model, <br>    input_size=(<span class="hljs-number">16</span>, <span class="hljs-number">4</span>),  <span class="hljs-comment"># 输入数据的大小</span><br>    <span class="hljs-comment"># input_data=inputs, # 也可以使用输入数据</span><br>    <span class="hljs-comment"># batch_dim=0,       # 指定批次的维度索引</span><br>    verbose=<span class="hljs-number">2</span>,           <span class="hljs-comment"># 显示详细信息  </span><br>    )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Model                                    [16, 3]                   --
+├─Linear: 1-1                            [16, 3]                   15
+│    └─weight                                                      ├─12
+│    └─bias                                                        └─3
+├─Tanh: 1-2                              [16, 3]                   --
+├─Linear: 1-3                            [16, 2]                   8
+│    └─weight                                                      ├─6
+│    └─bias                                                        └─2
+├─Linear: 1-4                            [16, 3]                   9
+│    └─weight                                                      ├─6
+│    └─bias                                                        └─3
+==========================================================================================
+Total params: 32
+Trainable params: 32
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 0.00
+==========================================================================================
+Input size (MB): 0.00
+Forward/backward pass size (MB): 0.00
+Params size (MB): 0.00
+Estimated Total Size (MB): 0.00
+==========================================================================================
+
+
+
+
+
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+Model                                    [16, 3]                   --
+├─Linear: 1-1                            [16, 3]                   15
+│    └─weight                                                      ├─12
+│    └─bias                                                        └─3
+├─Tanh: 1-2                              [16, 3]                   --
+├─Linear: 1-3                            [16, 2]                   8
+│    └─weight                                                      ├─6
+│    └─bias                                                        └─2
+├─Linear: 1-4                            [16, 3]                   9
+│    └─weight                                                      ├─6
+│    └─bias                                                        └─3
+==========================================================================================
+Total params: 32
+Trainable params: 32
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 0.00
+==========================================================================================
+Input size (MB): 0.00
+Forward/backward pass size (MB): 0.00
+Params size (MB): 0.00
+Estimated Total Size (MB): 0.00
+==========================================================================================</code></pre>
+<h2 id="顺序网络">5.4 顺序网络</h2>
+<p>使用 <code>nn.Sequential</code>
+构建的网络，各层按照添加的顺序逐层连接，其中每一层的输出直接作为下一层的输入。构建非常简单，但限制了网络的复杂性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">model = nn.Sequential(<br>    nn.Linear(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>),<br>    nn.Tanh(),<br>    nn.Linear(<span class="hljs-number">4</span>, <span class="hljs-number">8</span>),<br>    nn.ReLU(),<br>    nn.Linear(<span class="hljs-number">8</span>, <span class="hljs-number">3</span>),<br>    nn.Softmax(dim=-<span class="hljs-number">1</span>)<br>)<br><br><span class="hljs-comment"># 如果需要初始化参数，请使用以下代码</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">init_params</span>(<span class="hljs-params">m</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">type</span>(m) == nn.Linear:<br>        nn.init.kaiming_normal_(m.weight)<br>        nn.init.zeros_(m.bias)<br><br><span class="hljs-comment"># apply 会遍历所有子模块依次调用此函数</span><br>model.apply(init_params)<br><br>model(torch.rand(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[0.5799, 0.2505, 0.1696],
+        [0.4363, 0.3862, 0.1775]], grad_fn=&lt;SoftmaxBackward0&gt;)</code></pre>
+<h1 id="神经网络的本质">6 神经网络的本质</h1>
+<p>在神经网络中，每一层都可以看作是对输入特征的<strong>抽象与变换</strong>。</p>
+<p>假设有 10 个样本，每个样本有 5 个特征，即输入矩阵的形状是 (10,
+5)。</p>
+<ol type="1">
+<li>第一隐藏层有 10 个神经元，对应权重矩阵的形状是 (5, 10)。</li>
+</ol>
+<p>输入与权重相乘后得到输出矩阵 (10, 10)，也就是模型将原来的 5
+维特征抽象成了新的 10 维特征表示。</p>
+<ol start="2" type="1">
+<li>第二隐藏层有 4 个神经元，权重矩阵为 (10, 4)。</li>
+</ol>
+<p>上一层输出 (10, 10) 乘以 (10, 4)，得到新的表示 (10,
+4)，相当于模型进一步提炼出了 4 维抽象特征。</p>
+<ol start="3" type="1">
+<li>输出层有 3 个神经元，对应权重矩阵 (4, 3)。</li>
+</ol>
+<p>(10, 4) @ (4, 3) = (10, 3)，表示模型为每个样本生成了 3 个输出值，对应
+3 个类别的未归一化得分（logits）。</p>
+<ol start="4" type="1">
+<li>最后通过 softmax 激活函数，得到 10 行 10 个样本，每一行的 3
+个得分转化为概率分布，即每个样本属于 3 个类别的概率，形状仍是 (10,
+3)。</li>
+</ol>
+<p>可以看出，全连接层中的矩阵乘法会消掉连接的维度，保留输入层的<strong>批次维度或样本大小</strong>，以及<strong>输出层的神经元节点数</strong>，最终的输出形状为：</p>
+<p><span
+class="math display">最终输出形状 = 批次大小 <em>o</em><em>r</em> 样本大小 × 输出节点数</span></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>02_神经网络基础</div>
+      <div>http://example.com/2024/08/05/大模型开发/05 深度学习/02_神经网络基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/07/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="03_损失函数和优化算法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">03_损失函数和优化算法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/03/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/01_%E5%BC%A0%E9%87%8F%E5%92%8C%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/" title="01_张量和自动微分">
+                        <span class="hidden-mobile">01_张量和自动微分</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

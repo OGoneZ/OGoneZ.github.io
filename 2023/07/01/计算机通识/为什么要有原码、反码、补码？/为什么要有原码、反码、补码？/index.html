@@ -1,0 +1,1033 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1、原码  原码：十进制数据的二进制表现形式，最左边是符号位，0为正，1为负  一个字节 8 个bit，第 1 位是符号位, 0 为正, 1 为负，后 7 位表示数值。 那么最大值应该为符号位是 0 表示正数，其他位都为 1，为 0111 1111，为十进制的 127；最小值应该是符号位是 1 表示负数， 其他位都为 1，为 1111 1111，为十进制的 -127。 原码已经可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么要有原码、反码、补码？">
+<meta property="og:url" content="http://example.com/2023/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%EF%BC%9F/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%EF%BC%9F/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1、原码  原码：十进制数据的二进制表现形式，最左边是符号位，0为正，1为负  一个字节 8 个bit，第 1 位是符号位, 0 为正, 1 为负，后 7 位表示数值。 那么最大值应该为符号位是 0 表示正数，其他位都为 1，为 0111 1111，为十进制的 127；最小值应该是符号位是 1 表示负数， 其他位都为 1，为 1111 1111，为十进制的 -127。 原码已经可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/code.png">
+<meta property="article:published_time" content="2023-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:14:12.675Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="计算机通识">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/code.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>为什么要有原码、反码、补码？ - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="为什么要有原码、反码、补码？"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-01 00:00" pubdate>
+          2023年7月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="计算机通识"
+        id="heading-442d6cfb5b1d1b9840dfa22676d07bdf" role="tab" data-toggle="collapse" href="#collapse-442d6cfb5b1d1b9840dfa22676d07bdf"
+        aria-expanded="true"
+      >
+        计算机通识
+        <span class="list-group-count">(3)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-442d6cfb5b1d1b9840dfa22676d07bdf"
+           role="tabpanel" aria-labelledby="heading-442d6cfb5b1d1b9840dfa22676d07bdf">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/06/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="「计算机科学」"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">「计算机科学」</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/07/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%EF%BC%9F/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%8E%9F%E7%A0%81%E3%80%81%E5%8F%8D%E7%A0%81%E3%80%81%E8%A1%A5%E7%A0%81%EF%BC%9F/" title="为什么要有原码、反码、补码？"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">为什么要有原码、反码、补码？</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/05/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84/%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84/" title="相对路径"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">相对路径</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">为什么要有原码、反码、补码？</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="原码">1、原码</h3>
+<blockquote>
+<p>原码：十进制数据的二进制表现形式，最左边是符号位，0为正，1为负</p>
+</blockquote>
+<p>一个字节 8 个bit，第 1 位是符号位, 0 为正, 1 为负，后 7 位表示数值。
+那么最大值应该为符号位是 0 表示正数，其他位都为 1，为 <strong>0111
+1111</strong>，为十进制的 <strong>127</strong>；最小值应该是符号位是 1
+表示负数， 其他位都为 1，为 <strong>1111 1111</strong>，为十进制的
+<strong>-127</strong>。</p>
+<p>原码已经可以表示正数和负数，为什么还需要反码和补码？</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">十进制</th>
+<th style="text-align: center;">原码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0000 0011</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0000 0010</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0000 0001</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0000 0000</td>
+</tr>
+<tr>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1000 0001</td>
+</tr>
+<tr>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">1000 0010</td>
+</tr>
+<tr>
+<td style="text-align: center;">-3</td>
+<td style="text-align: center;">1000 0011</td>
+</tr>
+</tbody>
+</table>
+<p>在原码的计算过程中， <code>2 + 1 = 3</code> &lt;==&gt;
+<code>0000 0010 + 0000 0001 = 0000 0011</code> 二进制计算的结果与 2 + 1
+= 3 完全一致，正数是完全没有问题的 <strong>But</strong>
+<code>-2 + 1 = -1</code> &lt;==&gt;
+<code>1000 0010 + 0000 0001 = 1000 0011</code> 二进制计算的结果 -2 + 1
+结果是 -3，而正确结果应该是 -1 <code>-2 - 1 = -3</code> &lt;==&gt;
+<code>1000 0010 - 0000 0001 = 1000 0001</code> 二进制计算的结果 -2 - 1
+结果是 -1，而正确结果应该是 -3</p>
+<p>由此可见负数计算会出现错误，计算结果与预期结果是<strong>相反的</strong>，为了解决负数运算的问题，因此发明了反码</p>
+<h3 id="反码">2、反码</h3>
+<p>负数的原码在计算时总是往相反的方向走，因为有第一位符号位负的存在，加的时候变小，减的时候变大，所以干脆把负数的数据位全部取反，0
+变 1、1 变
+0，而正数原码计算没有问题，所以正数的反码和原码一样，也就引出了反码的概念</p>
+<blockquote>
+<p>反码：正数的反码是其本身，负数的反码是符号位保持不变，其余位取反</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">十进制</th>
+<th style="text-align: center;">原码</th>
+<th style="text-align: center;">反码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0000 0011</td>
+<td style="text-align: center;">0000 0011</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0000 0010</td>
+<td style="text-align: center;">0000 0010</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0000 0001</td>
+<td style="text-align: center;">0000 0001</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0000 0000</td>
+<td style="text-align: center;">0000 0000</td>
+</tr>
+<tr>
+<td style="text-align: center;">-0</td>
+<td style="text-align: center;">1000 0000</td>
+<td style="text-align: center;">1111 1111</td>
+</tr>
+<tr>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1000 0001</td>
+<td style="text-align: center;">1111 1110</td>
+</tr>
+<tr>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">1000 0010</td>
+<td style="text-align: center;">1111 1101</td>
+</tr>
+<tr>
+<td style="text-align: center;">-3</td>
+<td style="text-align: center;">1000 0011</td>
+<td style="text-align: center;">1111 1100</td>
+</tr>
+</tbody>
+</table>
+<p><code>-2 + 1 = -1</code> &lt;==&gt;
+<code>1111 1101 + 0000 0001 = 1111 1110</code> 计算结果 1111 1110
+对应的是 -1 的反码，与实际结果相符 <code>-2 - 1 = -3</code> &lt;==&gt;
+<code>1111 1101 - 0000 0001 = 1111 1100</code> 计算结果 1111 1100
+对应的是 -3 的反码，两个负数的运算也与结果相符 <strong>But</strong>
+<code>-1 + 3 = 2</code> &lt;==&gt;
+<code>1111 1110 + 0000 0011 = 0000 0001</code> 计算结果 0000 0001 是 1
+的反码，而预期结果是 2，再试试别的数值 <code>-2 + 5 = 3</code>
+&lt;==&gt; <code>1111 1101 + 0000 0101 = 0000 0010</code> 计算结果 0000
+0010 是 2 的反码，而预期结果是 3</p>
+<p>这些出错的例子都有一些共同的特点，它们都<strong>跨越 0</strong>
+了，这是因为存在 0 和 -0，而 0 和 -0
+是一样的，但占据了一位反码的空间，为解决这个问题，引出了补码的概念</p>
+<h3 id="补码">3、补码</h3>
+<p>反码跨 0 计算总是会和预期结果存在 1 的偏差，这个偏差是由于反码多一个
+-0 而导致的，解决方法其实很简单，把整个反码向下移一位，也就是消除 -0
+这一位， 规定 -1 的补码为 1111
+1111，也就是常说的<strong>负数的补码是反码加1</strong><del>（所以这个加1并不是无厘头规定非要加1）</del>，而正数原码没有任何计算问题，所以正数的补码依然和原码相同</p>
+<blockquote>
+<p>补码：正数的补码是其本身，负数的补码是在其反码的基础上加 1</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">十进制</th>
+<th style="text-align: center;">原码</th>
+<th style="text-align: center;">反码</th>
+<th style="text-align: center;">补码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">127</td>
+<td style="text-align: center;">0111 1111</td>
+<td style="text-align: center;">0111 1111</td>
+<td style="text-align: center;">0111 1111</td>
+</tr>
+<tr>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0000 0011</td>
+<td style="text-align: center;">0000 0011</td>
+<td style="text-align: center;">0000 0011</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0000 0010</td>
+<td style="text-align: center;">0000 0010</td>
+<td style="text-align: center;">0000 0010</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0000 0001</td>
+<td style="text-align: center;">0000 0001</td>
+<td style="text-align: center;">0000 0001</td>
+</tr>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0000 0000</td>
+<td style="text-align: center;">0000 0000</td>
+<td style="text-align: center;">0000 0000</td>
+</tr>
+<tr>
+<td style="text-align: center;">-0</td>
+<td style="text-align: center;">1000 0000</td>
+<td style="text-align: center;">1111 1111</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1000 0001</td>
+<td style="text-align: center;">1111 1110</td>
+<td style="text-align: center;">1111 1111</td>
+</tr>
+<tr>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">1000 0010</td>
+<td style="text-align: center;">1111 1101</td>
+<td style="text-align: center;">1111 1110</td>
+</tr>
+<tr>
+<td style="text-align: center;">-3</td>
+<td style="text-align: center;">1000 0011</td>
+<td style="text-align: center;">1111 1100</td>
+<td style="text-align: center;">1111 1101</td>
+</tr>
+<tr>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+<td style="text-align: center;">…</td>
+</tr>
+<tr>
+<td style="text-align: center;">-127</td>
+<td style="text-align: center;">1111 1111</td>
+<td style="text-align: center;">1000 0000</td>
+<td style="text-align: center;">1000 0001</td>
+</tr>
+<tr>
+<td style="text-align: center;">-128</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">1000 0000</td>
+</tr>
+</tbody>
+</table>
+<p>再来计算 <code>-1 + 3 = 2</code> &lt;==&gt;
+<code>1111 1111 + 0000 0011 = 0000 0010</code> 结果 0000 0010 为
+2，完美匹配预期，跨 0 问题完美解决 <code>-2 - 1 = -3</code> &lt;==&gt;
+<code>1111 1110 - 0000 0001 = 1111 1101</code> 结果 1111 1101 是十进制的
+-3，负数计算问题完美解决</p>
+<p>补码成功解决了所有问题，而因为加 1 向下移动一位，多出来一位
+<code>1000 0000</code>，所以规定它为特殊的
+-128，没有反码，也没有原码，这就是为什么一个字节的范围正数到
+<strong>127</strong>，而负数可以到 <strong>-128</strong></p>
+<h3 id="类型转换的底层原理">4. 类型转换的底层原理</h3>
+<ul>
+<li>byte：1 个字节</li>
+<li>short：2 个字节</li>
+<li>int：4 个字节</li>
+<li>long：8 个字节</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/为什么要有原码、反码、补码？-ma.png" srcset="/img/loading.gif" lazyload /></p>
+<p><strong>1）隐式转换</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">byte</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;  <span class="hljs-comment">//0000 1010</span><br><span class="hljs-type">short</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> a;  <span class="hljs-comment">//转化为0000 0000 0000 1010</span><br></code></pre></td></tr></table></figure>
+<strong>2）强制类型转换</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">300</span>;  <span class="hljs-comment">//0000 0000 0000 0000 0000 0001 0010 1100</span><br><span class="hljs-type">byte</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> (<span class="hljs-type">byte</span>)a; <span class="hljs-comment">//前面直接抹掉 0010 1100</span><br>System.out.println(b); <span class="hljs-comment">//输出 0010 1100 对应的 44</span><br></code></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">200</span>;      <span class="hljs-comment">//0000 0000 0000 0000 0000 0000 1100 1000</span><br><span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> (<span class="hljs-type">byte</span>)a;  <span class="hljs-comment">//前面直接抹掉 1100 1000</span><br>System.out.println(b); <br><span class="hljs-comment">//1100 1000 对应的反码是 1100 0111，原码是 1011 1000，输出对应的 -56 </span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/" class="category-chain-item">计算机通识</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/" class="print-no-link">#计算机通识</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>为什么要有原码、反码、补码？</div>
+      <div>http://example.com/2023/07/01/计算机通识/为什么要有原码、反码、补码？/为什么要有原码、反码、补码？/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/03/Java%E5%BC%80%E5%8F%91/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/01_Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84/01_Java%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84/" title="01_Java基本语法结构">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">01_Java基本语法结构</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E9%80%9A%E8%AF%86/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" title="「计算机科学」">
+                        <span class="hidden-mobile">「计算机科学」</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

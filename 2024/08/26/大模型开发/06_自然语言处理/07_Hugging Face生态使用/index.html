@@ -1,0 +1,1383 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 概述 Hugging Face 是一个专注于人工智能的开源生态平台，类似 AI 界的 GitHub + 应用商店，提供了丰富的模型、数据集、应用、工具等资源。 Hugging Face 生态核心包括：  Transformers：最核心的库，支持主流深度学习框架，包含大量预训练模型，比如 BERT、GPT、RoBERTa 等。  AutoModel：预训练模型，包含多种模型，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="07_Hugging Face生态使用">
+<meta property="og:url" content="http://example.com/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 概述 Hugging Face 是一个专注于人工智能的开源生态平台，类似 AI 界的 GitHub + 应用商店，提供了丰富的模型、数据集、应用、工具等资源。 Hugging Face 生态核心包括：  Transformers：最核心的库，支持主流深度学习框架，包含大量预训练模型，比如 BERT、GPT、RoBERTa 等。  AutoModel：预训练模型，包含多种模型，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/nlp.jpg">
+<meta property="article:published_time" content="2024-08-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:05:04.484Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="HuggingFace">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/nlp.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>07_Hugging Face生态使用 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="07_Hugging Face生态使用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-26 00:00" pubdate>
+          2024年8月26日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          87 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自然语言处理"
+        id="heading-f48c43f5fd14bfd8a5057a0131e7aa20" role="tab" data-toggle="collapse" href="#collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+        aria-expanded="true"
+      >
+        自然语言处理
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+           role="tabpanel" aria-labelledby="heading-f48c43f5fd14bfd8a5057a0131e7aa20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_文本处理与词表示</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/" title="02_传统序列模型"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_传统序列模型</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="03_Seq2Seq与注意力机制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_Seq2Seq与注意力机制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/21/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/04_Transformer%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" title="04_Transformer架构详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Transformer架构详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/05_Transformer%E6%89%8B%E6%92%95%E5%AE%9E%E7%8E%B0/" title="05_Transformer手撕实现"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_Transformer手撕实现</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/" title="06_迁移学习"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_迁移学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/" title="07_Hugging Face生态使用"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">07_Hugging Face生态使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">07_Hugging Face生态使用</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="概述">1 概述</h1>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/">Hugging Face</a>
+是一个专注于人工智能的开源生态平台，类似 AI 界的 GitHub +
+应用商店，提供了丰富的模型、数据集、应用、工具等资源。</p>
+<p>Hugging Face 生态核心包括：</p>
+<ul>
+<li>Transformers：最核心的库，支持主流深度学习框架，包含大量预训练模型，比如
+BERT、GPT、RoBERTa 等。
+<ul>
+<li>AutoModel：预训练模型，包含多种模型，比如 BERT、GPT、RoBERTa
+等。</li>
+<li>Tokenizers：每个模型都有自己搭配的分词器，支持分词、编解码、填充、截断、掩码等操作。</li>
+</ul></li>
+<li>Datasets：数据集库，提供丰富的数据集，可以高效加载和处理数据，支持多种数据格式，如
+CSV、JSON、Arrow 等。</li>
+<li>Hugging Face
+Hub：模型仓库，提供模型、数据集、应用托管服务，可以方便地上传和下载。</li>
+</ul>
+<p>使用 <code>pip install transformers datasets</code> 安装。</p>
+<h1 id="预训练模型">2 预训练模型</h1>
+<p>和 Transformers 这个库的名字一样，这个库提供了大量基于 Transformer
+的预训练模型，以及训练和加载预训练模型所需的工具。</p>
+<h2 id="automodel">2.1 AutoModel</h2>
+<p>Transformers 包含大量的预训练模型，每个模型本质上都是一个基于
+<code>nn.Module</code>
+的类，如果加载每种模型都使用各自的加载方法，就十分麻烦。为了简化这一流程，Transformers
+提供了统一的模型加载接口
+<code>AutoModel</code>，用于自动下载和加载模型。</p>
+<p>在 Hugging Face Hub 上找好所需的模型，只需要将模型的标识名称传给
+<code>AutoModel.from_pretrained()</code> 方法即可，当然，HF
+模型页面一般也会提供 Use this model 的加载代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModel<br><br>bert_model = AutoModel.from_pretrained(<span class="hljs-string">&quot;google-bert/bert-base-chinese&quot;</span>)<br><br><span class="hljs-comment"># 也可以从本地目录加载</span><br><span class="hljs-comment"># model = AutoModel.from_pretrained(&quot;pretrained_model&quot;)</span><br></code></pre></td></tr></table></figure>
+<p>上述代码执行时，会去本地目录寻找模型文件，如果找不到，会去 Hugging
+Face Hub
+下载所需的模型文件，这些文件会缓存在本地目录，之后再加载时会直接从本地目录加载。</p>
+<p>执行下方代码可以查看模型缓存的位置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> TRANSFORMERS_CACHE<br><span class="hljs-built_in">print</span>(TRANSFORMERS_CACHE)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">/Users/zhubaoduo/.cache/huggingface/hub</code></pre>
+<p>存储结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">models--google-bert--bert-base-chinese &lt;= models--组织--模型<br>│<br>├── blobs/                   &lt;-- 【仓库：实际存储区】<br>│   │                        (文件名全是乱码般的 Hash 值)<br>│   ├── 56216b3f...          &lt;-- 这可能是真实的 model.safetensors<br>│   ├── a5b6c7d8...          &lt;-- 这可能是真实的 config.json<br>│   └── ... (其他大文件)<br>│<br>├── refs/                       &lt;-- 【指针：分支信息】<br>│   └── main                    &lt;-- 记录最新的 Commit ID<br>│<br>└── snapshots/                  &lt;-- 【快照：实际加载区】<br>    │<br>    └── 32f4a1... (Commit ID )  &lt;-- 对应某个特定版本的文件夹<br>        │                      （软链接文件，指向 blobs 中的文件）<br>        ├── config.json         ──&gt; ../../blobs/a5b6c7d8...<br>        ├── model.safetensors   ──&gt; ../../blobs/56216b3f...<br></code></pre></td></tr></table></figure>
+<p>如果不想缓存到默认目录，可以通过设置 <code>cache_dir</code>
+参数临时指定缓存目录。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">model = AutoModel.from_pretrained(<br>    <span class="hljs-string">&quot;google-bert/bert-base-chinese&quot;</span>, <br>    cache_dir=<span class="hljs-string">&quot;MyExternalDrive/hf_cache&quot;</span><br>)<br></code></pre></td></tr></table></figure>
+<p>或者设置全局生效的环境变量，在 .zshrc 文件中添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> HF_HOME=/MyExternalDrive/hf_cache<br></code></pre></td></tr></table></figure>
+<p>Transformers 创建预训练模型的流程：</p>
+<ol type="1">
+<li>根据 <code>config.json</code>
+文件中的配置信息，自动识别模型类型，并自动实例化对应的模型类（创建的对象本质就是一个标准的神经网络模型）。</li>
+<li>从 <code>model.safetensors</code> 文件中加载权重参数。</li>
+<li>模型创建成功，已经可以直接用于推理或微调。</li>
+</ol>
+<p>使用 <code>type()</code> 可以看到 BERT 的模型类型为
+<code>BertModel</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">type</span>(bert_model)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">transformers.models.bert.modeling_bert.BertModel</code></pre>
+<p>使用 <code>config</code> 可以查看模型的配置信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">bert_model.config<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">BertConfig &#123;
+  &quot;architectures&quot;: [
+    &quot;BertForMaskedLM&quot;
+  ],
+  &quot;attention_probs_dropout_prob&quot;: 0.1,
+  &quot;classifier_dropout&quot;: null,
+  &quot;directionality&quot;: &quot;bidi&quot;,
+  &quot;dtype&quot;: &quot;float32&quot;,
+  &quot;hidden_act&quot;: &quot;gelu&quot;,
+  &quot;hidden_dropout_prob&quot;: 0.1,
+  &quot;hidden_size&quot;: 768,
+  &quot;initializer_range&quot;: 0.02,
+  &quot;intermediate_size&quot;: 3072,
+  &quot;layer_norm_eps&quot;: 1e-12,
+  &quot;max_position_embeddings&quot;: 512,
+  &quot;model_type&quot;: &quot;bert&quot;,
+  &quot;num_attention_heads&quot;: 12,
+  &quot;num_hidden_layers&quot;: 12,
+  &quot;pad_token_id&quot;: 0,
+  &quot;pooler_fc_size&quot;: 768,
+  &quot;pooler_num_attention_heads&quot;: 12,
+  &quot;pooler_num_fc_layers&quot;: 3,
+  &quot;pooler_size_per_head&quot;: 128,
+  &quot;pooler_type&quot;: &quot;first_token_transform&quot;,
+  &quot;position_embedding_type&quot;: &quot;absolute&quot;,
+  &quot;transformers_version&quot;: &quot;4.57.3&quot;,
+  &quot;type_vocab_size&quot;: 2,
+  &quot;use_cache&quot;: true,
+  &quot;vocab_size&quot;: 21128
+&#125;</code></pre>
+<h2 id="automodelforxxx">2.2 AutoModelForXxx</h2>
+<p><code>AutoModel</code>
+只会加载模型的主干结构，不包含任何任务相关的输出层，也就是说没有特定任务，适合自定义模型结构，处理后续输出。</p>
+<p>Transformers 还提供了很多有 <strong>任务头（Task Head）</strong>
+的模型，也就是可以用于下游任务的模型<code>AutoModelForXxx</code>。在模型主干的基础上，添加了适配特定任务的输出层，使模型能够直接用于文本分类、实体识别等标准
+NLP 任务。</p>
+<p>常见任务对应的 Auto 模型：</p>
+<ul>
+<li><code>AutoModelForSequenceClassification</code>：序列分类任务，如情感分析。</li>
+<li><code>AutoModelForTokenClassification</code>：序列标注任务，如词性标注。</li>
+<li><code>AutoModelForQuestionAnswering</code>：抽取式问答任务，如阅读理解。</li>
+<li><code>AutoModelForSeq2SeqLM</code>：序列到序列任务，如机器翻译。</li>
+</ul>
+<p><code>AutoModelForXxx</code> 的用法和 <code>AutoModel</code>
+类似，这里做一个简单的演示。下面直接使用 <code>bert-base-chinese</code>
+进行演示，由于该模型并不是预训练好的分类模型，会提示缺少权重，Transformers
+会自动初始化了输出层的权重，用于后续训练和微调。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModelForSequenceClassification<br><br>classifier_model = AutoModelForSequenceClassification.from_pretrained(<br>    <span class="hljs-string">&quot;google-bert/bert-base-chinese&quot;</span>,<br>    num_labels=<span class="hljs-number">10</span>  <span class="hljs-comment"># 可以指定模型分类数</span><br>    )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Some weights of BertForSequenceClassification were not initialized from the model checkpoint at google-bert/bert-base-chinese and are newly initialized: [&#39;classifier.bias&#39;, &#39;classifier.weight&#39;]
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.</code></pre>
+<p>使用<code>type</code>可以看出这次是一个<code>BertForSequenceClassification</code>类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">type</span>(classifier_model)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">transformers.models.bert.modeling_bert.BertForSequenceClassification</code></pre>
+<p>直接使用 <code>print(model)</code>
+可以输出模型的结构，分别查看上面两个模型，可以发现<code>BertForSequenceClassification</code>模型结构仅仅比<code>BertModel</code>多如下结构，核心就是一个全连接层，用于分类。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">(dropout): Dropout(p=0.1, inplace=False)<br>(classifier): Linear(in_features=768, out_features=3, bias=True)<br></code></pre></td></tr></table></figure>
+<h2 id="输入输出格式">2.3 输入输出格式</h2>
+<p>由于 Transformers 的预训练模型都继承 <code>nn.Module</code>
+类，推理过程通过<code>forward</code>前向传播。每个模型都有自己的输入输出格式，具体使用方法可以查看直接每个模型的
+<code>forward</code> 方法，或者查阅官方文档 <a
+target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">Hugging Face
+Transformers</a>。</p>
+<p>这里以 <code>BertModel</code> 为例介绍基本使用方法。</p>
+<p><code>BertModel</code> 的标准输入是一个字典，通常包含以下三个核心
+Tensor。假设 batch_size 为 B，seq_len 为 L。</p>
+<table>
+
+<thead>
+<tr>
+<th>键名</th>
+<th>形状</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input_ids</td>
+<td>(B,L)</td>
+<td>核心输入，词元对应的词表索引。</td>
+</tr>
+<tr>
+<td>attention_mask</td>
+<td>(B,L)</td>
+<td>掩码，告诉模型哪些是真词（1），哪些是补全的
+Padding（0），模型不会去注意 0 的部分。</td>
+</tr>
+<tr>
+<td>token_type_ids</td>
+<td>(B,L)</td>
+<td>句段 ID，用于区分两句话。第一句全是 0，第二句全是
+1。如果是单句任务，通常全是 0。</td>
+</tr>
+</tbody>
+</table>
+<p><code>BertModel</code>返回的是一个<code>BaseModelOutputWithPoolingAndCrossAttentions</code>对象，其中最重要的两个属性是：</p>
+<ul>
+<li><code>last_hidden_state</code>（最后一层隐藏状态）
+<ul>
+<li>形状：(batch_size, seq_len, hidden_size)</li>
+<li>含义：模型对每一个 Token 理解后的上下文向量表示。</li>
+<li>用途：序列标注、词性识别，抽取式问答等需要每个 Token
+上下文信息时。</li>
+</ul></li>
+<li><code>pooler_output</code>（池化输出）
+<ul>
+<li>形状：(batch_size, hidden_size)</li>
+<li>含义：取序列第一个位置（即
+<code>[CLS]</code>）的输出向量，经过了一个线性层和 Tanh
+激活函数处理后的结果，包含整句话的语义信息。</li>
+<li>用途：句子相似度计算等需要整句话的语义信息时。</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>上述用途并不绝对，由于 <code>pooler</code>
+是预训练的线性层，有可能对我们的任务适配并不那么好。比如文本分类任务，直觉上应该直接使用<code>pooler</code>的输出，但实际使用<code>output</code>第一个位置的输出，再接入自定义的线性层，效果会更好。</p>
+</blockquote>
+<p>pooler 层结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">(pooler): BertPooler(<br>    (dense): Linear(in_features=768, out_features=768, bias=True)<br>    (activation): Tanh()<br>)<br></code></pre></td></tr></table></figure>
+<h1 id="分词器">3 分词器</h1>
+<p>在 Transformers 库中，每一个预训练模型都有与之配套的
+<code>Tokenizer</code>，可以将原始文本直接转换为模型所需的输入形式（如
+<code>input_ids</code>、<code>attention_mask</code>和<code>token_type_ids</code>），集成了分词、编码、填充、截断、掩码等操作，搭配起来非常方便。</p>
+<h2 id="加载-tokenizer">3.1 加载 Tokenizer</h2>
+<p>加载分词器和加载预训练模型流程基本一致，由于它们通常是配套使用的，所以模型的标识名称也是一样的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoTokenizer<br><br>tokenizer = AutoTokenizer.from_pretrained(<span class="hljs-string">&#x27;google-bert/bert-base-chinese&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>在模型的缓存目录中，在 <code>snapshots</code>
+快照文件夹中，主要添加了如下 3 个软连接：</p>
+<ul>
+<li><code>vocab.txt</code>：词表文件，每行一个 token，保存了索引到 token
+的映射关系。</li>
+<li><code>tokenizer_config.json</code>：分词器配置文件，记录了分词器的行为参数。比如
+do_lower_case=True（是否转小写），以及
+model_max_length=512（最大长度限制）。</li>
+<li><code>tokenizer.json</code>：非 Fast 版所需的 vocab.txt 和
+special_tokens_map.json 的合并文件，Fast
+版的分词器会优先使用这个文件。保存了所有词表映射关系和特殊字符。</li>
+</ul>
+<p>同样的，这三个软链接指向 <code>blobs</code> 中真实的文件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">type</span>(tokenizer)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">transformers.models.bert.tokenization_bert_fast.BertTokenizerFast</code></pre>
+<blockquote>
+<p>使用<code>type</code>查看 <code>tokenizer</code>
+的类型，可以看到是<code>BertTokenizerFast</code>，这里有一个
+Fast，莫非还有有 Slow
+版本？<code>tokenizer</code>的确有两个版本，通过参数<code>use_fast</code>控制，默认为<code>True</code>，使用
+RUST 实现，这个版本加载速度更快，<code>False</code>则使用 Python
+的实现。</p>
+</blockquote>
+<h2 id="tokenizer-使用">3.2 Tokenizer 使用</h2>
+<ul>
+<li><code>tokenize()</code>：对文本进行分词，返回一个列表。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">tokens = tokenizer.tokenize(<span class="hljs-string">&quot;自然语言处理非常有趣&quot;</span>)<br>tokens<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[&#39;自&#39;, &#39;然&#39;, &#39;语&#39;, &#39;言&#39;, &#39;处&#39;, &#39;理&#39;, &#39;非&#39;, &#39;常&#39;, &#39;有&#39;, &#39;趣&#39;]</code></pre>
+<ul>
+<li><code>convert_tokens_to_ids()</code>: 将 tokens
+列表转为词表对应的索引列表。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">tokenizer.convert_tokens_to_ids(tokens)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[5632, 4197, 6427, 6241, 1905, 4415, 7478, 2382, 3300, 6637]</code></pre>
+<ul>
+<li><code>convert_ids_to_tokens()</code>：将索引列表转换成对应的 tokens
+列表。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ids = [<span class="hljs-number">5632</span>, <span class="hljs-number">4197</span>, <span class="hljs-number">6427</span>, <span class="hljs-number">6241</span>, <span class="hljs-number">1905</span>, <span class="hljs-number">4415</span>, <span class="hljs-number">7478</span>, <span class="hljs-number">2382</span>, <span class="hljs-number">3300</span>, <span class="hljs-number">6637</span>]<br>tokenizer.convert_ids_to_tokens(ids)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[&#39;自&#39;, &#39;然&#39;, &#39;语&#39;, &#39;言&#39;, &#39;处&#39;, &#39;理&#39;, &#39;非&#39;, &#39;常&#39;, &#39;有&#39;, &#39;趣&#39;]</code></pre>
+<ul>
+<li><code>encode()</code>：对文本进行编码，先分词再映射为索引，返回编码后的列表。一般会添加特殊标记，比如<code>[CLS]</code>和<code>[SEP]</code>。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">tokenizer.encode(<br>    <span class="hljs-string">&quot;自然语言处理非常有趣&quot;</span>, <br>    add_special_tokens=<span class="hljs-literal">True</span>  <span class="hljs-comment"># 添加特殊标记，默认为True</span><br>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[101, 5632, 4197, 6427, 6241, 1905, 4415, 7478, 2382, 3300, 6637, 102]</code></pre>
+<ul>
+<li><code>decode()</code>：对索引列表进行解码，返回对应的原始文本。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ids = [<span class="hljs-number">101</span>, <span class="hljs-number">5632</span>, <span class="hljs-number">4197</span>, <span class="hljs-number">6427</span>, <span class="hljs-number">6241</span>, <span class="hljs-number">1905</span>, <span class="hljs-number">4415</span>, <span class="hljs-number">7478</span>, <span class="hljs-number">2382</span>, <span class="hljs-number">3300</span>, <span class="hljs-number">6637</span>, <span class="hljs-number">102</span>]<br>tokenizer.decode(ids)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&#39;[CLS] 自 然 语 言 处 理 非 常 有 趣 [SEP]&#39;</code></pre>
+<p>将文本转换为输入的方法还有 <code>encode_plus()</code> 和批处理的
+<code>batch_encode_plus</code>，这里更加推荐使用它们的集合体———<code>tokenizer()</code>。</p>
+<ul>
+<li><code>tokenizer()</code>：也就是<code>__call__</code>方法，允许将对象当做方法使用，这个方法进行了高度封装，自动完成了分词、转索引、加特殊符号，支持填充、截断，并且自动生成
+mask 等，支持批处理，能够直接构造模型所需的所有输入，非常方便。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">texts = [<span class="hljs-string">&#x27;自然语言处理&#x27;</span>, <span class="hljs-string">&#x27;非常有趣&#x27;</span>]<br>inputs = tokenizer(texts)<br></code></pre></td></tr></table></figure>
+<p>返回值是一个字典，包括模型所需的所有输入，可以通过<code>inputs['键名']</code>访问，每个值默认都是一个列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&#123;<br>&#x27;input_ids&#x27;: [[101, 5632, 4197, 6427, 6241, 1905, 4415, 102], <br>              [101, 7478, 2382, 3300, 6637, 102]], <br>&#x27;token_type_ids&#x27;: [[0, 0, 0, 0, 0, 0, 0, 0], <br>                   [0, 0, 0, 0, 0, 0]], <br>&#x27;attention_mask&#x27;: [[1, 1, 1, 1, 1, 1, 1, 1], <br>                   [1, 1, 1, 1, 1, 1]]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>除了直接使用<code>tokenizer()</code>，该方法还支持非常多的参数，实现填充截断等功能，这里介绍几个常用的参数。更多参数请查阅<a
+target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v5.0.0rc0/en/internal/tokenization_utils#transformers.PreTrainedTokenizerBase.__call__">官方文档</a></p>
+<ul>
+<li><code>padding</code>：填充
+<ul>
+<li><code>True</code>：填充到当前批最大长度</li>
+<li><code>False</code>：不填充（默认）</li>
+<li><code>max_length</code>：填充到 <code>max_length</code>
+参数的指定长度</li>
+</ul></li>
+<li><code>truncation</code>：截断
+<ul>
+<li><code>True</code>：截断到 <code>max_length</code>
+参数指定的长度</li>
+<li><code>False</code>：不截断（默认）</li>
+</ul></li>
+<li><code>max_length</code>：最大长度</li>
+<li><code>return_tensors</code>：字典中每个值的类型</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">inputs = tokenizer(<br>    texts,<br>    padding=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 填充</span><br>    truncation=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 截断</span><br>    max_length=<span class="hljs-number">10</span>,  <span class="hljs-comment"># 最大长度</span><br>    return_tensors=<span class="hljs-string">&quot;pt&quot;</span>,  <span class="hljs-comment"># PyTorch张量</span><br>)<br><br>inputs<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&#123;&#39;input_ids&#39;: tensor([[ 101, 5632, 4197, 6427, 6241, 1905, 4415,  102],
+        [ 101, 7478, 2382, 3300, 6637,  102,    0,    0]]), &#39;token_type_ids&#39;: tensor([[0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]]), &#39;attention_mask&#39;: tensor([[1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 0, 0]])&#125;</code></pre>
+<blockquote>
+<p>注意：这里的批次和 <code>DataLoader</code>
+的批次是两码事，<code>DataLoader</code>
+打乱数据后，每个批次内的长度可能不同，导致报错，具体解决方案在第 5
+节工作流中介绍。</p>
+</blockquote>
+<p><code>tokenizer</code>
+处理的字典直接解包传入模型，即可得到模型输出。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">outputs = bert_model(**inputs) <br><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(outputs))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;class &#39;transformers.modeling_outputs.BaseModelOutputWithPoolingAndCrossAttentions&#39;&gt;</code></pre>
+<p>模型输出是一个 <code>ModelOutput</code> 类型的对象
+<code>BaseModelOutputWithPoolingAndCrossAttentions</code>，它是 Hugging
+Face
+专门设计的一个混合容器，不仅拥有字典的功能，还拥有对象和元组的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 像对象一样的属性访问</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;last_hidden_state: <span class="hljs-subst">&#123;outputs.last_hidden_state.shape&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 像字典一样的键访问</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;last_hidden_state: <span class="hljs-subst">&#123;outputs[<span class="hljs-string">&#x27;last_hidden_state&#x27;</span>].shape&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 像元组一样的索引访问</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;pooler_output: <span class="hljs-subst">&#123;outputs[<span class="hljs-number">1</span>].shape&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">last_hidden_state: torch.Size([2, 8, 768])
+last_hidden_state: torch.Size([2, 8, 768])
+pooler_output: torch.Size([2, 768])</code></pre>
+<h1 id="datasets">4 Datasets</h1>
+<p>datasets 是 Hugging Face 生态系统中的另一块基石。如果说 transformers
+是用来搞定模型和算法的，那么 datasets 就是专门用来搞定数据的。</p>
+<p>datasets 可以从 Hugging Face Hub
+中一键加载数据集，或者从本地加载各种类型的文件。加载后的结构类似字典，可以划分训练集、验证集、测试集，每个数据集都是一个清晰的类表格结构。datasets
+还支持强大的数据处理功能，可以批量处理数据。</p>
+<p>相较于 Pandas 一次性把数据集读入内存中，datasets 底层使用 Apache
+Arrow 格式和操作系统的 Memory Mapping (mmap)
+技术，将数据存储在硬盘上，操作系统将其映射到虚拟内存，即使是普通的笔记本电脑，也能流畅地浏览和处理几百
+GB 的数据集，而且读取速度极快。</p>
+<h2 id="加载-datasets">4.1 加载 Datasets</h2>
+<p>在 Hugging Face Hub
+找好需要的数据集，可以直接使用<code>load_dataset</code>联网下载数据集，下载好的数据集会缓存到和模型相同的根目录下，文件结构也是类似的，这里不再赘述。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_dataset<br><br>dataset_dict1 = load_dataset(<span class="hljs-string">&quot;lansinuote/ChnSentiCorp&quot;</span>)<br>dataset_dict1<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">DatasetDict(&#123;
+    train: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 9600
+    &#125;)
+    validation: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 1200
+    &#125;)
+    test: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 1200
+    &#125;)
+&#125;)</code></pre>
+<p><code>load_dataset</code>返回的是<code>DatasetDict</code>对象，该对象是字典结构，可以包括多个数据集。</p>
+<p>加载本地数据时需要声明文件类型，如
+CSV、JSON、Parquet，并通过<code>data_files</code>参数指定文件路径。如果只有一个文件，那么默认是键为<code>train</code>的数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset_dict2 = load_dataset(<br>    <span class="hljs-string">&#x27;csv&#x27;</span>,  <span class="hljs-comment"># 数据集格式</span><br>    data_files=<span class="hljs-string">&#x27;data/train.txt&#x27;</span>,  <span class="hljs-comment"># 数据集路径，必须是字符串，不支持 Path</span><br>    sep=<span class="hljs-string">&#x27;\t&#x27;</span>,  <span class="hljs-comment"># 数据集分隔符</span><br>    column_names=[<span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;label&#x27;</span>]  <span class="hljs-comment"># 指定数据集列名（默认使用第一行为列名）</span><br>)<br><br>dataset_dict2<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">DatasetDict(&#123;
+    train: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 16000
+    &#125;)
+&#125;)</code></pre>
+<p>如果有多个数据集，需要以字典形式传入<code>data_files</code>，键为数据集名称，值为数据集路径。返回值为包含多个<code>Dataset</code>的<code>DatasetDict</code>对象，每个<code>Dataset</code>称为一个
+split。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset_dict2 = load_dataset(<br>    <span class="hljs-string">&#x27;csv&#x27;</span>, <br>    data_files=&#123;<br>        <span class="hljs-string">&#x27;train&#x27;</span>: <span class="hljs-string">&#x27;data/train.txt&#x27;</span>, <br>        <span class="hljs-string">&#x27;test&#x27;</span>: <span class="hljs-string">&#x27;data/test.txt&#x27;</span><br>    &#125;,<br>    sep=<span class="hljs-string">&#x27;\t&#x27;</span>,<br>    names=[<span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;label&#x27;</span>]<br>)<br><br>dataset_dict2<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">DatasetDict(&#123;
+    train: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 16000
+    &#125;)
+    test: Dataset(&#123;
+        features: [&#39;text&#39;, &#39;label&#39;],
+        num_rows: 4000
+    &#125;)
+&#125;)</code></pre>
+<h2 id="datasets-使用">4.2 Datasets 使用</h2>
+<h3 id="数据格式">4.2.1 数据格式</h3>
+<ul>
+<li><code>dataset_dict['键名']</code>：获取数据集。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">train_dataset = dataset_dict1[<span class="hljs-string">&#x27;train&#x27;</span>]<br>train_dataset<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Dataset(&#123;
+    features: [&#39;text&#39;, &#39;label&#39;],
+    num_rows: 9600
+&#125;)</code></pre>
+<ul>
+<li><code>dataset[索引/列名]</code>：获取数据集的样本。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 通过索引访问</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;第 0 个样本：\n<span class="hljs-subst">&#123;train_dataset[<span class="hljs-number">0</span>]&#125;</span>\n&#x27;</span>)<br><br><span class="hljs-comment"># 通过列名访问，默认取前 5 行</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;按列名访问：\n<span class="hljs-subst">&#123;train_dataset[<span class="hljs-string">&#x27;text&#x27;</span>]&#125;</span>\n&#x27;</span>)<br><br><span class="hljs-comment"># 查看具体样本</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;查看具体样本：\n<span class="hljs-subst">&#123;train_dataset[<span class="hljs-number">0</span>][<span class="hljs-string">&#x27;text&#x27;</span>]&#125;</span>\n&#x27;</span>)<br><br><span class="hljs-comment"># 使用切片访问</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;切片取前 3 项：\n<span class="hljs-subst">&#123;train_dataset[:<span class="hljs-number">3</span>]&#125;</span>\n&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">第 0 个样本：
+&#123;&#39;text&#39;: &#39;选择珠江花园的原因就是方便，有电动扶梯直接到达海边，周围餐馆、食廊、商场、超市、摊位一应俱全。酒店装修一般，但还算整洁。 泳池在大堂的屋顶，因此很小，不过女儿倒是喜欢。 包的早餐是西式的，还算丰富。 服务吗，一般&#39;, &#39;label&#39;: 1&#125;
+
+按列名访问：
+Column([&#39;选择珠江花园的原因就是方便，有电动扶梯直接到达海边，周围餐馆、食廊、商场、超市、摊位一应俱全。酒店装修一般，但还算整洁。 泳池在大堂的屋顶，因此很小，不过女儿倒是喜欢。 包的早餐是西式的，还算丰富。 服务吗，一般&#39;, &#39;15.4寸笔记本的键盘确实爽，基本跟台式机差不多了，蛮喜欢数字小键盘，输数字特方便，样子也很美观，做工也相当不错&#39;, &#39;房间太小。其他的都一般。。。。。。。。。&#39;, &#39;1.接电源没有几分钟,电源适配器热的不行. 2.摄像头用不起来. 3.机盖的钢琴漆，手不能摸，一摸一个印. 4.硬盘分区不好办.&#39;, &#39;今天才知道这书还有第6卷,真有点郁闷:为什么同一套书有两种版本呢?当当网是不是该跟出版社商量商量,单独出个第6卷,让我们的孩子不会有所遗憾。&#39;])
+
+查看具体样本：
+选择珠江花园的原因就是方便，有电动扶梯直接到达海边，周围餐馆、食廊、商场、超市、摊位一应俱全。酒店装修一般，但还算整洁。 泳池在大堂的屋顶，因此很小，不过女儿倒是喜欢。 包的早餐是西式的，还算丰富。 服务吗，一般
+
+切片取前 3 项：
+&#123;&#39;text&#39;: [&#39;选择珠江花园的原因就是方便，有电动扶梯直接到达海边，周围餐馆、食廊、商场、超市、摊位一应俱全。酒店装修一般，但还算整洁。 泳池在大堂的屋顶，因此很小，不过女儿倒是喜欢。 包的早餐是西式的，还算丰富。 服务吗，一般&#39;, &#39;15.4寸笔记本的键盘确实爽，基本跟台式机差不多了，蛮喜欢数字小键盘，输数字特方便，样子也很美观，做工也相当不错&#39;, &#39;房间太小。其他的都一般。。。。。。。。。&#39;], &#39;label&#39;: [1, 1, 0]&#125;</code></pre>
+<p><code>Dataset</code>的使用类似 Pandas
+和字典的结合。它的数据是按照列进行组织的，可以通过键名（列名）访问列数据。如果取一批样本，它们是字典形式，键对应列名，值为列数据的列表。这种组织方式有利于后续和<code>Tokenizer</code>联动。
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&#123;<br>    &#x27;feature1&#x27;: [&#x27;text1&#x27;, &#x27;text2&#x27;, &#x27;text3&#x27;], <br>    &#x27;feature2&#x27;: [label1, label2, label3]<br>&#125;<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><code>features</code>：查看数据集的列，以及列的数据类型。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">train_dataset.features<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&#123;&#39;text&#39;: Value(&#39;string&#39;), &#39;label&#39;: Value(&#39;int64&#39;)&#125;</code></pre>
+<ul>
+<li><code>ClassLabel()</code>：类标签数据类型，专门处理分类数据，维护索引到字符串标签的双向映射。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> ClassLabel<br><br>c_label = ClassLabel(names=[<span class="hljs-string">&#x27;negative&#x27;</span>, <span class="hljs-string">&#x27;positive&#x27;</span>])<br><br><span class="hljs-comment"># 1. 模型训练用</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;字符串转整数: positive -&gt;&#x27;</span>, c_label.str2int(<span class="hljs-string">&#x27;positive&#x27;</span>))  <br><br><span class="hljs-comment"># 2. 查看结果用</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;整数转字符串: 0 -&gt;&#x27;</span>, c_label.int2str(<span class="hljs-number">0</span>))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">字符串转整数: positive -&gt; 1
+整数转字符串: 0 -&gt; negative</code></pre>
+<ul>
+<li><code>cast_column()</code>：转换数据集中某列的数据类型，返回新的数据集对象。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># cast_column(要转换的列名, 转换的列类型)</span><br>train_dataset = train_dataset.cast_column(<span class="hljs-string">&#x27;label&#x27;</span>, c_label)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;新的特征类型：&#x27;</span>, train_dataset.features)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;1 代表标签：&#x27;</span>, train_dataset.features[<span class="hljs-string">&#x27;label&#x27;</span>].int2str(<span class="hljs-number">1</span>))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">新的特征类型： &#123;&#39;text&#39;: Value(&#39;string&#39;), &#39;label&#39;: ClassLabel(names=[&#39;negative&#39;, &#39;positive&#39;])&#125;
+1 代表标签： positive</code></pre>
+<blockquote>
+<p>如果获取的数据集类别列是 <code>string</code> 类型，转换为
+<code>ClassLabel</code>
+类型，会自动将字符串映射为整数标签，便于后续模型训练，并且这一操作会改变底层数据。</p>
+<p>如果获取的数据集类别列是 <code>int</code>
+类型，可以直接用于训练，那么转换为 <code>ClassLabel</code>
+之后，并不会修改底层数据，而是通过元数据注入的方式建立双向映射，既方便人能读懂，又可以让
+<code>Trainer</code> 自动生成带标签配置的模型</p>
+</blockquote>
+<h3 id="数据预处理">4.2.2 数据预处理</h3>
+<ul>
+<li><code>train_test_split()</code>：划分训练集和测试集，不需要再导入
+<code>sklearn</code> 库。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 为了方便演示这里直接使用 train_dataset 分割训练集和测试集</span><br>dataset_dict = train_dataset.train_test_split(<br>    train_size=<span class="hljs-number">0.8</span>,<br>    stratify_by_column=<span class="hljs-string">&quot;label&quot;</span>  <span class="hljs-comment"># 按照 label 进行分层，必须是 ClassLabel 类型</span><br>)<br><br>train_dataset = dataset_dict[<span class="hljs-string">&quot;train&quot;</span>]<br>test_dataset = dataset_dict[<span class="hljs-string">&quot;test&quot;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>remove_columns()</code>: 删除数据集中的列，返回新的 dataset
+对象。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">rm_dataset = train_dataset.remove_columns([<span class="hljs-string">&#x27;label&#x27;</span>])<br>rm_dataset<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Dataset(&#123;
+    features: [&#39;text&#39;],
+    num_rows: 7680
+&#125;)</code></pre>
+<ul>
+<li><code>filter()</code>：根据条件筛选数据，返回过滤后的新数据集对象。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># x 为每一个样本</span><br>train_dataset.<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-string">&#x27;label&#x27;</span>] == <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Filter: 100%|██████████| 7680/7680 [00:00&lt;00:00, 305430.76 examples/s]
+
+
+
+
+
+Dataset(&#123;
+    features: [&#39;text&#39;, &#39;label&#39;],
+    num_rows: 3839
+&#125;)</code></pre>
+<ul>
+<li><code>map()</code>：最核心的方法，功能非常强大，可以多进程、批量化的处理数据，返回一个新的数据集对象。比如常常搭配
+tokenizer 使用，批量处理数据集为可以输入模型的格式。</li>
+</ul>
+<blockquote>
+<p><code>Datasets</code> 为了把数据放入硬盘上，存储的是 Arrow
+格式的文件。Arrow 格式只认识基础类型（Integers, Floats, Lists,
+Strings），它不认识 PyTorch Tensor。所以即使在 <code>map</code> 中返回
+<code>tensor</code> 类型，数据存储时也会变为基础类型，建议在放入
+<code>DataLoader</code> 前使用 <code>set_format</code> 函数转换。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">tokenize</span>(<span class="hljs-params">example</span>):<br>    <span class="hljs-comment"># example 为 dataset 的一个样本</span><br>    inputs = tokenizer(<br>        example[<span class="hljs-string">&quot;text&quot;</span>],<br>        padding=<span class="hljs-string">&#x27;max_length&#x27;</span>,  <span class="hljs-comment"># 这里为了方便适配 DataLoader，设置固定长度</span><br>        truncation=<span class="hljs-literal">True</span>,<br>        max_length=<span class="hljs-number">32</span>,<br>        return_tensors=<span class="hljs-string">&quot;pt&quot;</span>  <span class="hljs-comment"># 其实这里是多余的，无法生效，应使用 set_format</span><br>    )<br>    <br>    example[<span class="hljs-string">&quot;input_ids&quot;</span>] = inputs[<span class="hljs-string">&#x27;input_ids&#x27;</span>]<br>    example[<span class="hljs-string">&quot;attention_mask&quot;</span>] = inputs[<span class="hljs-string">&#x27;attention_mask&#x27;</span>]<br>    example[<span class="hljs-string">&#x27;labels&#x27;</span>] = example[<span class="hljs-string">&#x27;label&#x27;</span>]  <span class="hljs-comment"># 任务头模型接收的是 labels</span><br>    <br>    <span class="hljs-keyword">return</span> example<br><br><span class="hljs-comment"># 应用 tokenize 函数，使用 dataset_dict[&#x27;train&#x27;] 接收分词后的结果</span><br>dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>] = dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>].<span class="hljs-built_in">map</span>(<br>    function=tokenize,  <span class="hljs-comment"># 应用到每个样本的函数</span><br>    batched=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 是否批量处理，默认为 1000 条，极大提升处理效率</span><br>    remove_columns=[<span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;label&#x27;</span>],  <span class="hljs-comment"># 删除列</span><br>    num_proc=<span class="hljs-number">4</span>  <span class="hljs-comment"># 多进程，CPU 核数</span><br>)<br><br><span class="hljs-comment"># 经过 map 之后，会丢失元数据，这里重新转类型</span><br>dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>] = dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>].cast_column(<span class="hljs-string">&#x27;labels&#x27;</span>, c_label)<br><br><span class="hljs-built_in">print</span>(dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;实际没有转为张量：&#x27;</span>, <span class="hljs-built_in">type</span>(dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>][<span class="hljs-string">&#x27;input_ids&#x27;</span>][<span class="hljs-number">0</span>]))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Map (num_proc=4): 100%|██████████| 7680/7680 [00:00&lt;00:00, 18073.44 examples/s]
+Casting the dataset: 100%|██████████| 7680/7680 [00:00&lt;00:00, 2740768.72 examples/s]
+
+Dataset(&#123;
+    features: [&#39;input_ids&#39;, &#39;attention_mask&#39;, &#39;labels&#39;],
+    num_rows: 7680
+&#125;)
+实际没有转为张量： &lt;class &#39;list&#39;&gt;</code></pre>
+<blockquote>
+<p>注意：使用 <code>map</code>, <code>filter</code>,
+<code>shuffle</code>, <code>select</code>
+等数据处理方法时，由于返回的是新对象，无论使用<code>dataset</code>还是<code>dataset_dict</code>接收这个新对象，它们都会因此独立，互不影响。也就是说，修改
+<code>dataset</code>的数据，并不会影响<code>dataset_dict</code>的数据，反过来也是如此。希望改变谁的数据，就使用谁来接收，比如想要改变<code>dataset_dict['train']</code>的数据，需要使用<code>dataset_dict['train']</code>的方式接收。</p>
+</blockquote>
+<p><code>map</code> 方法会对数据集中的每个样本执行指定的
+<code>function</code>。该函数的返回值是一个字典，它将以增量更新的方式合并到原样本中：</p>
+<ul>
+<li>新增字段：如果返回的键在原样本中不存在，则作为新列添加。</li>
+<li>更新字段：如果返回的键在原样本中已存在，则覆盖原有值。</li>
+</ul>
+<blockquote>
+<p>注意：它不会直接丢弃原样本中未被返回的字段，除非显式指定
+<code>remove_columns</code>。</p>
+</blockquote>
+<ul>
+<li><code>set_format()</code>: 设置数据格式，喂给模型前转为
+<code>tensor</code>。原地修改，不返回新对象。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>].set_format(<br>    <span class="hljs-built_in">type</span>=<span class="hljs-string">&#x27;torch&#x27;</span>,  <span class="hljs-comment"># 数据格式</span><br>    columns=[<span class="hljs-string">&#x27;input_ids&#x27;</span>, <span class="hljs-string">&#x27;attention_mask&#x27;</span>, <span class="hljs-string">&#x27;labels&#x27;</span>]  <span class="hljs-comment"># 指定列</span><br>)<br><br>dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>][<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&#123;&#39;input_ids&#39;: tensor([ 101, 6848, 2885, 4638,  752,  891, 1922, 4895, 1936,  749, 8024, 1930,
+         1920,  749, 2552, 4415, 1486, 6418, 4638, 4385, 2141, 2692,  721, 8024,
+         6375,  782, 1927, 1343,  749,  928,  818,  102]),
+ &#39;attention_mask&#39;: tensor([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+         1, 1, 1, 1, 1, 1, 1, 1]),
+ &#39;labels&#39;: tensor(0)&#125;</code></pre>
+<blockquote>
+<p>注意：<code>set_format</code>只是改变了通过<code>__getitem__</code>（访问<code>dataset[i]</code>）获取数据的格式，而不会修改底层的数据存储格式。不过使用
+Arrow 格式存储时，元数据 state.json 会记录数据的
+<code>_format_type</code>。</p>
+</blockquote>
+<h2 id="保存和加载">4.3 保存和加载</h2>
+<ul>
+<li><code>to_csv()</code>：将 Dataset 保存为 CSV 文件。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">test_dataset.to_csv(<span class="hljs-string">&#x27;data/processed/test.csv&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Creating CSV from Arrow format: 100%|██████████| 2/2 [00:00&lt;00:00, 293.27ba/s]
+
+
+
+
+
+595543</code></pre>
+<ul>
+<li><code>to_json()</code>：将 Dataset 保存为 JSON 文件。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">test_dataset.to_json(<span class="hljs-string">&#x27;data/processed/test.jsonl&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Creating json from Arrow format: 100%|██████████| 2/2 [00:00&lt;00:00, 291.38ba/s]
+
+
+
+
+
+1207798</code></pre>
+<p>上述文件的加载方式使用 4.1 介绍的 <code>load_dataset</code>
+即可。</p>
+<ul>
+<li><code>save_to_disk()</code>：保存 Arrow 格式，支持 DatasetDict 和
+Dataset，是官方最推荐的保存方式。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset_dict.save_to_disk(<span class="hljs-string">&#x27;data/processed&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Saving the dataset (1/1 shards): 100%|██████████| 7680/7680 [00:00&lt;00:00, 2539397.30 examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 1920/1920 [00:00&lt;00:00, 528173.65 examples/s]</code></pre>
+<p>每个 split 都会生成一个文件，里面有 arrow
+数据文件和相应的元数据文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">processed/<br>├─ test/<br>│  ├─ data-00000-of-00001.arrow<br>│  ├─ dataset_info.json<br>│  └─ state.json<br>├─ train/<br>│  ├─ data-00000-of-00001.arrow<br>│  ├─ dataset_info.json<br>│  └─ state.json<br>└─ dataset_dict.json<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>load_from_disk()</code>：加载 Arrow 格式的数据文件。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datasets <span class="hljs-keyword">import</span> load_from_disk<br><br>dataset_dict = load_from_disk(<span class="hljs-string">&#x27;data/processed&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h1 id="工作流">5 工作流</h1>
+<h2 id="搭配-dataloader">5.1 搭配 DataLoader</h2>
+<p>Hugging Face 生态可以和 PyTorch 无缝集成，使用 <code>Datasets</code>
+获取数据并进行预处理，搭配 <code>Tokenizer</code>
+将源数据转换为可以输入到模型的格式，<code>Datasets</code> 结合 PyTorch
+的 <code>DataLoader</code> 可以实现数据的批量处理，将批量数据送入
+<code>Transformers</code> 中的各种预训练模型当中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> DataLoader<br><br>dataloader = DataLoader(<br>    dataset=dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>],<br>    batch_size=<span class="hljs-number">16</span>,<br>    shuffle=<span class="hljs-literal">True</span><br>)<br><br><span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> dataloader:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;batch keys:&#x27;</span>, batch.keys())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;input_ids shape:&#x27;</span>, batch[<span class="hljs-string">&#x27;input_ids&#x27;</span>].shape)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;attention_mask shape:&#x27;</span>, batch[<span class="hljs-string">&#x27;attention_mask&#x27;</span>].shape)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;labels shape:&#x27;</span>, batch[<span class="hljs-string">&#x27;labels&#x27;</span>].shape)<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n===============Bert分类模型===============&#x27;</span>)<br>    outputs = classifier_model(**batch)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;inputs keys:&#x27;</span>, batch.keys())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;outputs keys:&#x27;</span>, outputs.keys())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;loss:&#x27;</span>, outputs[<span class="hljs-string">&#x27;loss&#x27;</span>])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;logits shape:&#x27;</span>, outputs[<span class="hljs-string">&#x27;logits&#x27;</span>].shape)<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;\n=================Bert模型================&#x27;</span>)<br>    <span class="hljs-comment"># 使用 pop 弹出模型不需要的 labels 列，并且存下来后续计算损失使用</span><br>    labels = batch.pop(<span class="hljs-string">&#x27;labels&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;inputs keys:&#x27;</span>, batch.keys())<br>    <br>    outputs = bert_model(**batch)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;outputs keys:&#x27;</span>, outputs.keys())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;last_hidden_state shape:&#x27;</span>, outputs[<span class="hljs-string">&#x27;last_hidden_state&#x27;</span>].shape)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;pooler_output shape:&#x27;</span>, outputs[<span class="hljs-string">&#x27;pooler_output&#x27;</span>].shape)<br>    <br>    <span class="hljs-keyword">break</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">batch keys: dict_keys([&#39;input_ids&#39;, &#39;attention_mask&#39;, &#39;labels&#39;])
+input_ids shape: torch.Size([16, 32])
+attention_mask shape: torch.Size([16, 32])
+labels shape: torch.Size([16])
+
+===============Bert分类模型===============
+inputs keys: dict_keys([&#39;input_ids&#39;, &#39;attention_mask&#39;, &#39;labels&#39;])
+outputs keys: odict_keys([&#39;loss&#39;, &#39;logits&#39;])
+loss: tensor(2.3796, grad_fn=&lt;NllLossBackward0&gt;)
+logits shape: torch.Size([16, 10])
+
+=================Bert模型================
+inputs keys: dict_keys([&#39;input_ids&#39;, &#39;attention_mask&#39;])
+outputs keys: odict_keys([&#39;last_hidden_state&#39;, &#39;pooler_output&#39;])
+last_hidden_state shape: torch.Size([16, 32, 768])
+pooler_output shape: torch.Size([16, 768])</code></pre>
+<blockquote>
+<p><code>Dataset</code> 并未继承
+<code>torch.utils.data.Dataset</code>，但由于实现了
+<code>__len__()</code> 和 <code>__getitem__()</code>
+这两个核心接口，因此能够被 <code>DataLoader</code>
+正确识别批量迭代。</p>
+</blockquote>
+<h2 id="注意事项">5.2 注意事项</h2>
+<p>上面也提到过，<code>Tokenizer</code> 填充时的批次和
+<code>DataLoader</code> 加载时的批次是不同的，如果直接使用
+<code>DataLoader</code> 去加载 <code>Tokenizer</code>
+填充的数据，可能会由于批次不同导致内部数据长度不一，从而导致
+<code>DataLoader</code> 抛出异常。</p>
+<p>这里主要有两种解决方案：</p>
+<p>方法一：使用动态填充（<code>DataCollator</code>），这是 Hugging Face
+的标准做法，既省显存，又不会报错。</p>
+<p>不要在预处理（map）阶段把所有数据死板地补齐，而是把补齐的工作推迟到数据加载（DataLoader）阶段。使用
+<code>DataCollator</code> 在每个 Batch
+形成时，动态地将这个批次补齐到当前 Batch 最长的长度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> DataCollatorWithPadding<br><br><span class="hljs-comment"># 1. 实例化一个动态填充器</span><br>data_collator = DataCollatorWithPadding(tokenizer=tokenizer)<br><br><span class="hljs-comment"># 2. 在 DataLoader 中加入 collate_fn 参数</span><br>dataloader = DataLoader(<br>    dataset=dataset_dict[<span class="hljs-string">&#x27;train&#x27;</span>],<br>    batch_size=<span class="hljs-number">64</span>,<br>    shuffle=<span class="hljs-literal">True</span>,<br>    collate_fn=data_collator<br>)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>如果采用这种方式在数据加载阶段填充，那么在数据预处理时
+<code>tokenizer</code> 的 <code>padding</code> 参数应该设置为
+<code>False</code>，避免浪费空间。</p>
+</blockquote>
+<p>方法二：静态填充到统一长度，在数据预处理时将 <code>tokenizer</code>
+的填充参数设为 <code>padding='max_length'</code>。</p>
+<p>由于所有数据都是统一长度，即使 <code>DataLoader</code>
+随意打乱，每一批的数据长度也都是一致的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">tokenize</span>(<span class="hljs-params">example</span>):<br>    inputs = tokenizer(<br>        example[<span class="hljs-string">&quot;text&quot;</span>],<br>        padding=<span class="hljs-string">&quot;max_length&quot;</span>,  <span class="hljs-comment"># 强制填充到最大长度</span><br>        truncation=<span class="hljs-literal">True</span>,<br>        max_length=<span class="hljs-number">32</span>,         <span class="hljs-comment"># 所有数据长度都变成 32</span><br>        return_tensors=<span class="hljs-string">&quot;pt&quot;</span>,<br>    )<br>    <br>    <span class="hljs-keyword">return</span> inputs<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" class="category-chain-item">自然语言处理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NLP/" class="print-no-link">#NLP</a>
+      
+        <a href="/tags/HuggingFace/" class="print-no-link">#HuggingFace</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>07_Hugging Face生态使用</div>
+      <div>http://example.com/2024/08/26/大模型开发/06_自然语言处理/07_Hugging Face生态使用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/" title="06_迁移学习">
+                        <span class="hidden-mobile">06_迁移学习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1235 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 迁移学习 早期 NLP 领域针对每个具体任务单独构建并从头训练模型，这种方式不仅严重依赖高质量的标注数据，且模型之间无法共享语言知识，导致训练成本高昂、泛化能力差， 迁移学习是机器学习的一种思想或者说方法论，核心是将一个模型在一个任务中学到的知识（特征、权重等），应用到另一个任务中。 在过渡阶段，Word2Vec、GloVe 和 fastText 都是早期类似迁移学习的思想，核心是基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06_迁移学习">
+<meta property="og:url" content="http://example.com/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 迁移学习 早期 NLP 领域针对每个具体任务单独构建并从头训练模型，这种方式不仅严重依赖高质量的标注数据，且模型之间无法共享语言知识，导致训练成本高昂、泛化能力差， 迁移学习是机器学习的一种思想或者说方法论，核心是将一个模型在一个任务中学到的知识（特征、权重等），应用到另一个任务中。 在过渡阶段，Word2Vec、GloVe 和 fastText 都是早期类似迁移学习的思想，核心是基">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/nlp.jpg">
+<meta property="article:published_time" content="2024-08-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:11:08.668Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="BERT">
+<meta property="article:tag" content="GPT">
+<meta property="article:tag" content="T5">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/nlp.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>06_迁移学习 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="06_迁移学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-24 00:00" pubdate>
+          2024年8月24日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自然语言处理"
+        id="heading-f48c43f5fd14bfd8a5057a0131e7aa20" role="tab" data-toggle="collapse" href="#collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+        aria-expanded="true"
+      >
+        自然语言处理
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+           role="tabpanel" aria-labelledby="heading-f48c43f5fd14bfd8a5057a0131e7aa20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_文本处理与词表示</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/" title="02_传统序列模型"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_传统序列模型</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="03_Seq2Seq与注意力机制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_Seq2Seq与注意力机制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/21/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/04_Transformer%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" title="04_Transformer架构详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Transformer架构详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/05_Transformer%E6%89%8B%E6%92%95%E5%AE%9E%E7%8E%B0/" title="05_Transformer手撕实现"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_Transformer手撕实现</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/" title="06_迁移学习"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">06_迁移学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/" title="07_Hugging Face生态使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_Hugging Face生态使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">06_迁移学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="迁移学习">1 迁移学习</h1>
+<p>早期 NLP
+领域针对每个具体任务单独构建并从头训练模型，这种方式不仅严重依赖高质量的标注数据，且模型之间无法共享语言知识，导致训练成本高昂、泛化能力差，</p>
+<p>迁移学习是机器学习的一种思想或者说方法论，核心是<strong>将一个模型在一个任务中学到的知识（特征、权重等），应用到另一个任务中</strong>。</p>
+<p>在过渡阶段，Word2Vec、GloVe 和 fastText
+都是早期类似迁移学习的思想，核心是基于特征的迁移。先在大规模文本上预训练生成静态词向量，将其捕捉到的语义信息作为查找表初始化下游模型的嵌入层。虽然复用了词汇层面的知识，但难以解决多义词和复杂语境的问题。</p>
+<p>现在主流的迁移学习方式是 <strong>预训练 + 微调</strong> ：</p>
+<ul>
+<li>预训练（Pre-training）：利用海量无标注数据进行自监督学习，训练一个通用的语言模型（如
+BERT, GPT, T5），使其掌握词法、句法及上下文语义等通用语言规律。</li>
+<li>微调（Fine-tuning）：在通用模型的基础上，使用少量特定任务的标注数据，对模型参数进行微小的调整与适配，使其迅速掌握特定领域的业务逻辑。</li>
+</ul>
+<p>这种模式就像先读完大学（预训练），再进行岗前培训（微调）一样，极大地降低了下游任务的数据门槛和训练成本。</p>
+<h1 id="fasttext">2 fastText</h1>
+<h2 id="概述">2.1 概述</h2>
+<p>fastText 主要用于两个核心任务：</p>
+<ol type="1">
+<li>高效的文本分类(Text Classification)
+<ul>
+<li>模型结构简单：使用简单的浅层神经网络。</li>
+<li>训练速度快：使用层次 Softmax
+进行优化，可以在数十亿词汇的语料库上几分钟内完成训练。</li>
+<li>性能优异：尽管模型简单，但在文本分类任务上的表现可以与深度学习模型相媲美。</li>
+</ul></li>
+<li>学习词向量(Word Embeddings)
+<ul>
+<li>子词 (Subword) 信息：fastText
+最大的特色。它不是直接将一个完整的词映射为一个向量，而是将一个词分解成多个
+n-gram 字符序列。
+<ul>
+<li>处理未登录词 (Out-of-Vocabulary, OOV)：
+即使一个词没有出现在训练集中，只要它的子词 n-gram 出现过，fastText
+仍然可以根据这些子词向量来构建该词的向量表示。</li>
+<li>处理词形变化： 对于像 “run” 和 “running”
+这样有词形变化的词，它们会共享一些 n-gram
+子词，从而使得它们的词向量更加接近。</li>
+</ul></li>
+</ul></li>
+</ol>
+<h2 id="优化技术">2.2 优化技术</h2>
+<p>如果样本有 10 万个词，标准 Softmax 在训练每个样本时都需要做 10
+万次指数和加法运算，然后对这 10
+万个词进行多元交叉熵损失计算，效率非常低下。</p>
+<p>为了加速训练，Word2Vec 和 fastText 引入了层次 Softmax 和负采样：</p>
+<ul>
+<li>层次
+Softmax：将模型的输出层变成了一个哈夫曼树，只需要做十几次二分类任务。</li>
+<li>负采样：不再计算所有类别，而是变成了一个简单的分类器，只需要计算 1
+个正样本和几个负样本的得分，损失函数是变体。</li>
+</ul>
+<p>通常二者是二选一的，层次 Softmax
+由于树结构的优势，通常更适用于文本分类，而负采样训练的词向量效果更好。</p>
+<h3 id="层次softmax">2.2.1 层次Softmax</h3>
+<p>层次 Softmax 的将全量查找转换为树结构查找，从而大大提高效率。</p>
+<ol type="1">
+<li>首先使用所有词构建哈夫曼树，每个词都是树的一个节点，出现频率高的词离根结点更近，频率低的词离根节点更远。</li>
+<li>将问题转换为一系列二分类问题，最终节点的概率值为路径上节点的概率乘积。</li>
+</ol>
+<p>计算量从标准 Softmax 的 O(V) 降为 O(logV)。</p>
+<h3 id="负采样">2.2.2 负采样</h3>
+<p>核心思想其实非常简单，模型学习正例和几个负例就够了，其他的负例可以忽略。</p>
+<blockquote>
+<p>就像我们教小孩辨认大象，只需要给小孩子看大象的照片（正例），再随便看几个别的东西（负例），告诉他这不是大象就够了，而不需要指着世界上其他的所有东西一个一个告诉他这不是大象。</p>
+</blockquote>
+<p>比如当前词表有 10 万词，当前预测目标是 “man”
+这一个词，如果采用负采样，不会对这 10
+万个词都计算损失并更新参数，而是</p>
+<ol type="1">
+<li>选取 1 个正例（“man”）</li>
+<li>从词表随机选取 k 个负例</li>
+<li>最大化正例的概率，最小化这 k 个负例的概率</li>
+</ol>
+<p>这就把一个巨大的多分类问题，简化成了 k+1 的简单分类问题，k 通常取
+5~20。</p>
+<blockquote>
+<p>实际上不是完全的随机抽，而是高频词被抽到的概率更高。</p>
+</blockquote>
+<h2 id="文本分类">2.3 文本分类</h2>
+<p>文本分类是将文档（例如帖子，产品评论等）分配给一个或多个类别。</p>
+<ul>
+<li>二分类：通常是对立的，比如好评差评</li>
+<li>单标签多分类：每条文本只能属于一个类别，比如判断人名属于哪个国家</li>
+<li>多标签多分类：每条文本可以属于多个类别，比如帖子分类，可能既属于科技，又属于美食</li>
+</ul>
+<ol type="1">
+<li>获取数据</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;data/cooking_train.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>        <span class="hljs-built_in">print</span>(f.readline(), end=<span class="hljs-string">&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">__label__sauce __label__cheese how much does potato starch affect a cheese sauce recipe ? 
+__label__food-safety __label__acidity dangerous pathogens capable of growing in acidic environments
+__label__cast-iron __label__stove how do i cover up the white spots on my cast iron stove ? 
+__label__restaurant michelin three star restaurant; but if the chef is not there
+__label__knife-skills __label__dicing without knife skills ,  how can i quickly and accurately dice vegetables ? </code></pre>
+<blockquote>
+<p>每段文本可以有多个标签，所有标签均以前缀<code>__label__</code>开头，这是
+fastText 识别标签的格式，标签之后的一段话就是文本信息。</p>
+</blockquote>
+<ol start="2" type="1">
+<li>模型训练</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> fasttext<br><br>model = fasttext.train_supervised(<br>            <span class="hljs-built_in">input</span>=<span class="hljs-string">&#x27;data/cooking_train.txt&#x27;</span>,<br>            epoch=<span class="hljs-number">100</span>, <span class="hljs-comment"># 增加训练轮数</span><br>            lr=<span class="hljs-number">1</span>,  <span class="hljs-comment"># 增大学习率，加快收敛</span><br>            wordNgrams=<span class="hljs-number">3</span>,  <span class="hljs-comment"># 使用 3-gram，提升模型理解能力</span><br>            loss=<span class="hljs-string">&#x27;hs&#x27;</span>,  <span class="hljs-comment"># 使用层次 Softmax，性能小幅下降，但显著提升训练效率</span><br>        )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Read 0M words
+Number of words:  8952
+Number of labels: 735
+Progress: 100.0% words/sec/thread: 2192661 lr:  0.000000 avg.loss:  1.477953 ETA:   0h 0m 0s</code></pre>
+<ol start="3" type="1">
+<li>模型预测</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 输入一段文本进行预测</span><br>model.predict(<span class="hljs-string">&#x27;Michelin Three Star Restaurant; but if the chef is not there&#x27;</span>)<br><span class="hljs-comment"># 预测结果是二元组，分别是预测标签和预测概率</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">((&#39;__label__restaurant&#39;,), array([0.83001912]))</code></pre>
+<ol start="4" type="1">
+<li>模型评估</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">model.test(<span class="hljs-string">&#x27;data/cooking_valid.txt&#x27;</span>)<br><span class="hljs-comment"># 预测结果分别是 验证集数量, Precision, Recall</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(3000, 0.605, 0.26164047859305173)</code></pre>
+<p>手动调节超参数费时费力，fastText
+提供了自动调节超参数的功能。自动调节超参数时，有以下参数可以调节：</p>
+<ul>
+<li><code>autotuneValidationFile</code>: 用于验证的文件路径。</li>
+<li><code>autotuneDuration</code>: 最大训练时间（秒），默认为 300
+秒。</li>
+<li><code>autotuneModelSize</code>: 模型大小（small, medium,
+large）。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">model = fasttext.train_supervised(<br>            <span class="hljs-built_in">input</span>=<span class="hljs-string">&#x27;data/cooking_train.txt&#x27;</span>,<br>            autotuneValidationFile=<span class="hljs-string">&#x27;data/cooking_valid.txt&#x27;</span>,<br>            autotuneDuration=<span class="hljs-number">60</span><br>        )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Progress: 100.0% Trials:   10 Best score:  0.334910 ETA:   0h 0m 0s
+Training again with best arguments
+Read 0M words
+Number of words:  8952
+Number of labels: 735
+Progress: 100.0% words/sec/thread:   23056 lr:  0.000000 avg.loss:  6.539281 ETA:   0h 0m 0s</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model.test(<span class="hljs-string">&#x27;data/cooking_valid.txt&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(3000, 0.5483333333333333, 0.23713420787083753)</code></pre>
+<p>使用 softmax
+只能最大化一个标签，针对多标签分类任务，更好的方式是为每个标签使用独立的二分类器作为输出层结构，可以使用
+<code>ova</code>——— one vs all，同时训练多个二分类模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">model = fasttext.train_supervised(<br>            <span class="hljs-built_in">input</span>=<span class="hljs-string">&#x27;data/cooking_train.txt&#x27;</span>,<br>            epoch=<span class="hljs-number">150</span>, <span class="hljs-comment"># 增加训练轮数</span><br>            lr=<span class="hljs-number">0.3</span>,  <span class="hljs-comment"># 二分类任务不宜使用过大的学习率</span><br>            wordNgrams=<span class="hljs-number">3</span>,  <span class="hljs-comment"># 使用 3-gram，提升模型理解能力</span><br>            loss=<span class="hljs-string">&#x27;ova&#x27;</span>,  <span class="hljs-comment"># 使用多个二分类</span><br>        )<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Read 0M words
+Number of words:  8952
+Number of labels: 735
+Progress: 100.0% words/sec/thread:  185397 lr:  0.000000 avg.loss:  0.985614 ETA:   0h 0m 0s</code></pre>
+<p>预测时还有一些参数可以指定：</p>
+<ul>
+<li><code>k</code>：返回最可能的 k 个标签，-1 指返回所有标签</li>
+<li><code>threshold</code>：过滤概率大于指定阈值的标签</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">model.predict(<br>    text=<span class="hljs-string">&#x27;how much does potato starch affect a cheese sauce recipe ?&#x27;</span>,<br>    k=-<span class="hljs-number">1</span>,<br>    threshold=<span class="hljs-number">0.5</span><br>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">((&#39;__label__sauce&#39;, &#39;__label__cheese&#39;), array([0.99947423, 0.99859965]))</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">model.test(<br>    path=<span class="hljs-string">&#x27;data/cooking_valid.txt&#x27;</span>, <br>    k=-<span class="hljs-number">1</span>, <br>    threshold=<span class="hljs-number">0.5</span><br>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(3000, 0.6963788300835655, 0.21623180049012541)</code></pre>
+<ol start="6" type="1">
+<li>模型保存与加载</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 保存模型</span><br>model.save_model(<span class="hljs-string">&#x27;model/cooking_model.bin&#x27;</span>)<br><br><span class="hljs-comment"># 加载模型</span><br>model = fasttext.load_model(<span class="hljs-string">&#x27;model/cooking_model.bin&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="训练词向量">2.4 训练词向量</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 训练模型</span><br>model = fasttext.train_unsupervised(<br>    <span class="hljs-string">&#x27;corpus.txt&#x27;</span>,  <span class="hljs-comment"># 语料路径</span><br>    model=<span class="hljs-string">&#x27;cbow&#x27;</span>,  <span class="hljs-comment"># 模型类型</span><br>    dim=<span class="hljs-number">100</span>,       <span class="hljs-comment"># 词向量维度</span><br>    epoch=<span class="hljs-number">5</span>,       <span class="hljs-comment"># 训练轮数</span><br>    lr=<span class="hljs-number">0.1</span>,        <span class="hljs-comment"># 学习率</span><br>    thread=<span class="hljs-number">6</span>       <span class="hljs-comment"># 线程数</span><br><br><span class="hljs-comment"># 获取词向量</span><br>model.get_word_vector(<span class="hljs-string">&#x27;中国&#x27;</span>)<br><br><span class="hljs-comment"># 查找最相似的词</span><br>model.get_nearest_neighbors(<span class="hljs-string">&#x27;中国&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h1 id="预训练模型分类">3 预训练模型分类</h1>
+<p>几乎所有的预训练模型都在 Transformer
+基础上构建，根据结构差异，大致可以分为三类：</p>
+<ul>
+<li>解码器（Decoder-only）模型：代表模型为 GPT（Generative Pre-trained
+Transformer），由 OpenAI 于 2018 年 6 月提出<a
+target="_blank" rel="noopener" href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">《Improving
+Language Understanding by Generative Pre-Training》</a>。</li>
+<li>编码器（Encoder-only）模型：代表模型为 BERT（Bidirectional Encoder
+Representations from Transformers），由 Google 于 2018 年 10 月提出<a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/1810.04805.pdf">《BERT: Pre-training of Deep
+Bidirectional Transformers for Language Understanding》</a>。</li>
+<li>编码器-解码器（Encoder-Decoder）模型：代表模型为 T5（Text-to-Text
+Transfer Transformer），由 Google 于 2019 年 10 月提出<a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.10683.pdf">《Exploring the Limits of
+Transfer Learning with a Unified Text-to-Text Transformer》</a>。</li>
+</ul>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-aitree.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="gpt">4 GPT</h1>
+<p>GPT（Generative Pre-trained
+Transformer）核心思想是通过大规模无监督语料进行生成式语言建模预训练，训练模型根据上文预测下一个词，从而让模型学习自然语言的通用语法、语义和上下文依赖能力。完成预训练后，再通过微调适应具体的下游任务。</p>
+<h2 id="核心结构">4.1 核心结构</h2>
+<ul>
+<li>输入嵌入层（Text &amp; Position
+Embedding）：同样由词嵌入和位置编码组成，不同点在于 GPT
+的位置编码采用<strong>可学习的位置嵌入</strong>，模型可以在训练过程中自动优化位置参数。
+<ul>
+<li>Text Embedding（词嵌入）：将输入的文本序列映射为向量表示。</li>
+<li>Position Embedding（位置嵌入）：将位置信息映射为向量表示。</li>
+<li>每个 token 的表示为词嵌入和位置编码的和，维度为 768。</li>
+</ul></li>
+<li>解码器：由 12
+个解码器层堆叠而成，由于取消了解码器，因此不需要编码器-解码器注意力层，每个解码器层包括两个子层：
+<ul>
+<li>掩码多头自注意力：使用 12 个注意力头</li>
+<li>前馈神经网络</li>
+</ul></li>
+<li>输出层：根据任务不同，可以接入不同的任务头
+<ul>
+<li>Text Prediction（文本预测）：输出是经过 softmax
+之后，得到词表大小的概率分布，<strong>用于下一个词的生成，预训练阶段使用的就是这个任务头</strong>。</li>
+<li>Task
+Classifier（任务分类）：微调阶段使用，通过提取特定位置的表示对文本进行分类，比如情感极性分类，话题识别等。</li>
+</ul></li>
+</ul>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-gpt.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="预训练">4.2 预训练</h2>
+<p>GPT 的预训练阶段采用生成式语言建模（Generative Language
+Modeling）作为训练目标。具体来说就是<strong>基于已观察到的上文，预测当前词的位置应出现的词</strong>，在这个过程中学习自然语言的统计规律与上下文依赖关系。</p>
+<p>这种自回归语言建模方式不依赖人工标注，训练样本可以直接从原始文本中自动构建，极大地降低了构建数据的成本。</p>
+<h2 id="微调">4.3 微调</h2>
+<p>在完成无监督的预训练之后，需要针对下游任务进行微调，核心是在保留预训练语言建模能力的基础上，利用有监督数据对整个模型进行端到端优化，从而实现知识迁移。</p>
+<ul>
+<li>输出：在输出端引入线性层，根据下游任务的需要，将 GPT
+的隐状态映射为标签或具体值。</li>
+<li>输入：在输入端统一输入的格式，方便 GPT
+使用连续文本自回归生成。主要是开始标记 <code>Start</code>、结束标记
+<code>Extract</code>和隔断标记 <code>Delim</code>。</li>
+</ul>
+<p>由于 GPT
+是基于自回归的，只有最后一个词包含整句话的完整语义，因此在进行句级分类时，通常取最后一个位置，也就是
+<code>Extract</code> 对应的输出送入线性层。</p>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-gpt_tune.png" srcset="/img/loading.gif" lazyload /></p>
+<p>GPT
+在保留预训练模型结构和参数的基础上，仅添加极少量新参数（如线性层），便可高效完成从语言建模到多种下游任务的迁移。</p>
+<h1 id="bert">5 BERT</h1>
+<p>BERT（Bidirectional Encoder Representations from
+Transformers）核心在于使用了编码器结构，由于是没有掩码的双向自注意力机制，每个
+token 都融合了上下文的所有信息，因此能获得比 GPT
+更加准确丰富的语义信息，BERT 发布后曾在各项基准测试中霸榜。</p>
+<p>预训练完成得到每个 token 的表示后，通过微调适应下游任务。由于 BERT
+更加<strong>侧重自然语言理解</strong>，因此广泛应用在文本分类、序列标注、句子匹配等场景。</p>
+<h2 id="核心结构-1">5.1 核心结构</h2>
+<p>BERT 仅仅使用 Transformer 的编码器结构，不像 GPT
+那样可以自回归生成，BERT 进行了一些非常巧妙的设计，稍后介绍。</p>
+<ul>
+<li>输入嵌入层：BERT 在 GPT 的基础上，额外添加了一个句嵌入向量。
+<ul>
+<li>Token Embedding：词向量表示。</li>
+<li>Position Embedding：位置向量表示，也是可学习的向量。</li>
+<li>Segment
+Embedding：区分句子对任务的两个句子，各用一个可学习向量表示。</li>
+</ul></li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/06_迁移学习-bert_embed.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>编码器：结构与 Transformer 编码器相同，具体参数有两个版本。
+<ul>
+<li>Bert-base：对标 GPT，12 层，12 个注意力头，模型维度 768。</li>
+<li>Bert-large：24 层，16 个注意力头，模型维度 1024。</li>
+</ul></li>
+<li>输出层：根据下游任务不同，接入不同任务头。
+<ul>
+<li>词级（Token-Level）任务：如实体识别，使用每个位置的表示。</li>
+<li>句级（Sequence-Level）任务：如文本分类，使用特殊 token
+的输出表示。一般是使用
+<code>CLS</code>，在序列开头专门汇总整个序列的语义信息。</li>
+</ul></li>
+</ul>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-bert.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="预训练-1">5.2 预训练</h2>
+<p>BERT 的解码器结构，使其不能像 GPT
+那样可以在自回归中，通过上文预测当前词的方式训练模型，使其学习自然语言规律。因此
+BERT
+精心设计了两个核心任务，分别<strong>用于学习词级语义和句间逻辑关系</strong>：</p>
+<ul>
+<li>掩码语言模型（Masked Language Modeling, MLM）</li>
+<li>下一句预测（Next Sentence Prediction, NSP）</li>
+</ul>
+<h3 id="mlm">5.2.1 MLM</h3>
+<p>在此之前的传统语言模型，都是采用 left-to-right，或者 left-to-right +
+right-to-left 结合的方式，但这种单向或拼接的方式提取语义能力有限。BERT
+提出了深度双向表达模型(deep bidirectional
+representation)，也就是通过掩码语言模型训练。</p>
+<p>在训练过程中，BERT 会随机遮盖输入序列中 15% 的
+token，训练模型通过上下文预测被遮盖的 token。而在这 15% 遮盖的 token
+中，还采用了 811 策略：</p>
+<ul>
+<li>80% 的 token 替换为 <code>[MASK]</code></li>
+<li>10% 的 token 替换为随机词</li>
+<li>10% 的 token 保持原词</li>
+</ul>
+<p>这种机制下，模型既能看到上文，也能看到下文，真正实现了深度双向表达。</p>
+<p>模型在训练时，并不知道哪些词是要预测的，哪些词是原始的，哪些词是被遮罩的，哪些词是替换为其他单词的。在这种高度不确定中，使模型能够更快地学习自然语言规律，并且由于总遮盖只有
+15%，也不会破坏语言原本的结构。</p>
+<h3 id="nsp">5.2.2 NSP</h3>
+<p>在 NLP 中有一类句子对问题，比如 QA(Quention-Answer), NLI(Natural
+Language Inference),
+需要模型能够很好的理解两个句子之间的关系。为了提升模型理解句间关系的能力，BERT
+引入了 NSP 任务。</p>
+<p>设计非常简单，输入句子对(A, B), 模型来预测句子 B 是不是句子 A
+的真实后续句。</p>
+<ul>
+<li>50% 的训练样本 B 是 A 的真实后续句（正样本）</li>
+<li>50% 的训练样本 B 是随机抽取的句子（负样本）</li>
+</ul>
+<h3 id="预训练过程">5.2.3 预训练过程</h3>
+<p>BERT 在预训练时，输入两个句子对，并随机遮盖，在开头加上
+<code>CLS</code> 特殊标记，在句子间和结尾加上 <code>SEP</code>
+标记。分别计算 MLM 和 NSP
+的损失并求和，可以同时优化这两个任务目标，学习词级语义和句间逻辑关系。</p>
+<p><img
+src="https://img.zhubaoduo.com/06_迁移学习-bert_processs.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="微调-1">5.3 微调</h2>
+<p>BERT
+在预训练完成后，微调时模型主体结构保持不变，在顶部根据特定下游任务添加一个输出层，使用下游具体的标注数据进行训练。</p>
+<p>输入格式和预训练阶段基本一致，开头添加<code>CLS</code>，句间和结尾添加<code>SEP</code>，不同点在于使用哪些位置的表示，经过怎样的输出层映射。</p>
+<p>BERT 在原论文中展示了下图四类微调方式：</p>
+<ul>
+<li><ol type="a">
+<li>句子对分类任务：</li>
+</ol>
+<ul>
+<li>输入：<code>[CLS]句子1[SEP]句子2[SEP]</code></li>
+<li>输出：使用<code>CLS</code>作为句表示作为整个序列的表示，接入线性层做具体的分类。
+<ul>
+<li>MNLI：Multi-Genre Natural Language
+Inference，多类别句子蕴含判断</li>
+<li>QQP: Quora Question Pairs，问句语义重复判断</li>
+<li>QNLI: Question Natural Language
+Inference，判断句子是否为问题的答</li>
+<li>STS-B: Semantic Textual Similarity Benchmark，语义相似度回归</li>
+<li>MRPC: Microsoft Research Paraphrase Corpus，句子复述判断</li>
+<li>RTE: Recognizing Textual Entailment，二分类蕴含判断</li>
+<li>SWAG: Situations With Adversarial Generations，多项选择填句任务</li>
+</ul></li>
+</ul></li>
+<li><ol start="2" type="a">
+<li>单句分类任务</li>
+</ol>
+<ul>
+<li>输入：<code>[CLS]句子[SEP]</code></li>
+<li>输出：同样使用<code>CLS</code>作为句表示作为整个序列的表示，接入线性层做具体的分类。
+<ul>
+<li>SST-2: Stanford Sentiment Treebank
+(binary)，情感极性判断（二分类）</li>
+<li>CoLA: Corpus of Linguistic
+Acceptability，语法可接受性判断（二分类）</li>
+</ul></li>
+</ul></li>
+<li><ol start="3" type="a">
+<li>问答任务</li>
+</ol>
+<ul>
+<li>输入：<code>[CLS]问题[SEP]段落[SEP]</code></li>
+<li>输出：使用每个位置的输出，分别预测它们作为答案起始位置和结束位置的概率，最终确定答案在原始段落中的起始位置和结束位置，抽取连续的文本作为答案。
+<ul>
+<li>SQuAD v1.1：Stanford Question Answering Dataset
+抽取式问答（起止定位）</li>
+</ul></li>
+</ul></li>
+<li><ol start="4" type="a">
+<li>单句标注任务</li>
+</ol>
+<ul>
+<li>输入：<code>[CLS]文本[SEP]</code></li>
+<li>输出：接入线性层，对每个位置的输出分别预测类别。
+<ul>
+<li>NER：Named Entity Recognition，命名实体识别</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-bert_tune.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="t5">6 T5</h1>
+<p>T5（Text-to-Text Transfer Transformer）使用 Transformer
+完整的编码器-解码器架构，核心思想是将所有自然语言处理任务统一表示为<strong>文本到文本</strong>的转换问题（Text-to-Text
+Framework），这一思想使得 T5
+可以使用同一模型架构和预训练机制完成多种任务。</p>
+<p>下图展示了翻译任务、语法判断、句子相似度、摘要任务，都是输入文本，模型输出文本。</p>
+<p><img src="https://img.zhubaoduo.com/06_迁移学习-t5.png" srcset="/img/loading.gif" lazyload /></p>
+<p>T5 的核心结构和 Transformer 一致，不再赘述。</p>
+<h2 id="预训练-2">6.1 预训练</h2>
+<p>T5 的作者在论文中对比了多种预训练策略（如类似 BERT 的 MLM、类似 GPT
+的 CLM 等），最终发现效果最好的是一种被称为
+Span-Corruption（基于片段的去噪）
+的目标。基本上可以认为是一种填空任务，但比 BERT 的单字填空更高级。相比与
+BERT 的每次只 MASK 一个，T5 每次 MASK
+一个片段，使模型学习片段内的依赖关系和更长的上下文语义。</p>
+<ol type="1">
+<li>随机掩码（Masking）：模型会随机选中输入文本中的连续<strong>片段（Spans）</strong>进行掩盖。</li>
+<li>哨兵标记（Sentinel
+Tokens）：被掩盖的片段会被替换为一个唯一的哨兵标记（Sentinel
+Token），通常表示为 <extra_id_0>, <extra_id_1> 等。</li>
+<li>生成目标（Target）：
+模型需要生成被掩盖的片段内容，每个片段前加上对应的哨兵标记，并在最后加上结束标记。</li>
+</ol>
+<p>这种架构既保留了编码器的双向建模能力，又提供了编码器的生成式学习信号，使模型能够更轻松地适配下游任务。</p>
+<p><img
+src="https://img.zhubaoduo.com/06_迁移学习-t5_pretrain.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="微调-2">6.2 微调</h2>
+<p>T5 最具革命性的地方在于它的微调方式。在 BERT
+时代，针对不同的任务，我们需要在模型顶部添加不同的任务头（Task
+Head），比如一个全连接层用于分类。</p>
+<p><strong>但在 T5
+中，不需要改变模型结构</strong>。由于所有任务都是“输入文本 -&gt;
+输出文本”形式，T5 只需要在输入文本前添加一个
+<strong>文本提示（Prompt/Prefix）</strong>
+来告诉模型当前要做什么任务。</p>
+<p>比如：</p>
+<ul>
+<li>机器翻译：“<strong>translate English to Chinese:</strong> That is
+cool.” -&gt; “那很酷。”</li>
+<li>情感分类：“<strong>sentiment:</strong> This movie is so bad.” -&gt;
+“negative”</li>
+<li>文本摘要：“<strong>summarize:</strong> 长文本” -&gt; “摘要”</li>
+</ul>
+<p>当然提示可以不是上述单词，也可以有很多别的，不过输出都有一个共同点，那就是<strong>输出即标签</strong>，而不是概率分布，并且同一个模型可以同时通过多任务学习掌握上述所有能力。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" class="category-chain-item">自然语言处理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NLP/" class="print-no-link">#NLP</a>
+      
+        <a href="/tags/BERT/" class="print-no-link">#BERT</a>
+      
+        <a href="/tags/GPT/" class="print-no-link">#GPT</a>
+      
+        <a href="/tags/T5/" class="print-no-link">#T5</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>06_迁移学习</div>
+      <div>http://example.com/2024/08/24/大模型开发/06_自然语言处理/06_迁移学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/" title="07_Hugging Face生态使用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">07_Hugging Face生态使用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/05_Transformer%E6%89%8B%E6%92%95%E5%AE%9E%E7%8E%B0/" title="05_Transformer手撕实现">
+                        <span class="hidden-mobile">05_Transformer手撕实现</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

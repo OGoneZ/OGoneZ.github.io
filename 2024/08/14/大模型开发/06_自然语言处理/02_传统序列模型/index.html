@@ -1,0 +1,1120 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 RNN 在上一节中，已经解决了词向量的表示，虽然已经可以表示出每个 token 的语义信息，但是对于自然语言来说，token 的顺序对于理解句子的含义非常重要，比如“猫吃鱼”和“鱼吃猫”的含义完全不同。 因此在 1980 年代提出了一种新的方法 RNN（Recurrent Neural Network，循环神经网络），RNN 通过逐个读取 token 的信息，并在每一步结合当前词和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_传统序列模型">
+<meta property="og:url" content="http://example.com/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 RNN 在上一节中，已经解决了词向量的表示，虽然已经可以表示出每个 token 的语义信息，但是对于自然语言来说，token 的顺序对于理解句子的含义非常重要，比如“猫吃鱼”和“鱼吃猫”的含义完全不同。 因此在 1980 年代提出了一种新的方法 RNN（Recurrent Neural Network，循环神经网络），RNN 通过逐个读取 token 的信息，并在每一步结合当前词和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/nlp.jpg">
+<meta property="article:published_time" content="2024-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:14:05.191Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="GRU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/nlp.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>02_传统序列模型 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="02_传统序列模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-14 00:00" pubdate>
+          2024年8月14日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="自然语言处理"
+        id="heading-f48c43f5fd14bfd8a5057a0131e7aa20" role="tab" data-toggle="collapse" href="#collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+        aria-expanded="true"
+      >
+        自然语言处理
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-f48c43f5fd14bfd8a5057a0131e7aa20"
+           role="tabpanel" aria-labelledby="heading-f48c43f5fd14bfd8a5057a0131e7aa20">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_文本处理与词表示</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/02_%E4%BC%A0%E7%BB%9F%E5%BA%8F%E5%88%97%E6%A8%A1%E5%9E%8B/" title="02_传统序列模型"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">02_传统序列模型</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="03_Seq2Seq与注意力机制"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_Seq2Seq与注意力机制</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/21/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/04_Transformer%E6%9E%B6%E6%9E%84%E8%AF%A6%E8%A7%A3/" title="04_Transformer架构详解"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_Transformer架构详解</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/05_Transformer%E6%89%8B%E6%92%95%E5%AE%9E%E7%8E%B0/" title="05_Transformer手撕实现"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_Transformer手撕实现</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/24/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/06_%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/" title="06_迁移学习"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_迁移学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/07_Hugging%20Face%E7%94%9F%E6%80%81%E4%BD%BF%E7%94%A8/" title="07_Hugging Face生态使用"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_Hugging Face生态使用</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">02_传统序列模型</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="rnn">1 RNN</h1>
+<p>在上一节中，已经解决了词向量的表示，虽然已经可以表示出每个 token
+的语义信息，但是对于自然语言来说，token
+的顺序对于理解句子的含义非常重要，比如“猫吃鱼”和“鱼吃猫”的含义完全不同。</p>
+<p>因此在 1980 年代提出了一种新的方法 RNN（Recurrent Neural
+Network，循环神经网络），RNN 通过逐个读取 token
+的信息，并在每一步结合当前词和上下文信息，从而不断更新对句子的理解。</p>
+<h2 id="基础结构">1.1 基础结构</h2>
+<p>RNN 的核心结构是一个具有循环连接的隐藏层，以时间步（time
+step）为单位，对输入序列中的每一个 token 进行处理。在每一个时间步中，RNN
+层根据当前输入的 token
+和上一个时间步输出的隐藏层状态，生成新的隐藏层状态，并作为下一层的隐藏层输入。</p>
+<p><span
+class="math display"><em>h</em><sub><em>t</em></sub> = <em>f</em>(<em>W</em><sub><em>h</em></sub><em>h</em><sub><em>t</em> − 1</sub> + <em>W</em><sub><em>x</em></sub><em>x</em><sub><em>t</em></sub> + <em>b</em><sub><em>h</em></sub>)</span></p>
+<p>在一层 RNN 中共享权重，使用相同激活函数，一般选择 tanh。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-rnn_structure.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>上图中 4 个时间步的输入分别为 <span
+class="math inline"><em>x</em><sub>1</sub>, <em>x</em><sub>2</sub>, <em>x</em><sub>3</sub>, <em>x</em><sub>4</sub></span>，每个输入向量维度为
+3，隐藏层神经元个数为 4，每个词的输出向量维度则为
+4。每个时间步的输入向量 <span
+class="math inline"><em>x</em><sub><em>i</em></sub></span> 和权重 <span
+class="math inline"><em>W</em><sub><em>x</em></sub></span>
+相乘，上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>i</em> − 1</sub></span> 和权重
+<span class="math inline"><em>W</em><sub><em>h</em></sub></span>
+相乘，求和后加上偏置，得到当前时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>i</em></sub></span>。</p>
+<p>本质上就是传统的神经网络加上一个循环操作。</p>
+<p>下图抽象为一层 RNN 的结构，输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span>，输出 <span
+class="math inline"><em>h</em><sub><em>t</em></sub></span>，右边是沿时间步展开的一层
+RNN 结构。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-rnn_unfold.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="多层结构">1.2 多层结构</h2>
+<p>将多个 RNN
+层按堆叠起来，底层网络更容易捕捉局部模式（如词组、短语），而高层网络则能学习更抽象的语义信息（如句子主题或语境）。每一层的输出序列作为下一层的输入序列，最底层
+RNN 接收原始输入序列，顶层 RNN 的输出作为最终结果用于后续任务。</p>
+<p>在下图中，按照时间步顺序先向上传播，或者按照层的顺序，先向右传播，没有先后依赖顺序，在
+PyTorch 中的实现是按照时间步顺序，先向上传播。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-multi_rnn.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="双向结构">1.3 双向结构</h2>
+<p>基础的 RNN
+在每个时间步只输出一个隐藏状态，该状态仅包含来自上文的信息，而无法利用当前词之后的下文。于是引入了双向
+RNN （Bidirectional
+RNN），可以在每个时间步同时利用前文和后文信息，有助于提升序列标注等任务的预测效果。</p>
+<ul>
+<li>正向 RNN：从前到后处理序列</li>
+<li>反向 RNN：从后到前处理序列。</li>
+</ul>
+<p>由于正向反向没有依赖关系，所以可以并行计算。每个时间步的输出，是正向和反向隐藏状态的组合，从而同时获得上下文信息，例如拼接或求和，在
+PyTorch 中的实现是拼接。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-bi_rnn.jpg" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="多层双向结构">1.4 多层＋双向结构</h2>
+<p>多层结构和双向结构组合使用，每层都是双向 RNN。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-bi_multi_rnn.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="api-使用">1.5 API 使用</h2>
+<p>RNN 层的定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn <br><br>rnn = nn.RNN(<br>    input_size=<span class="hljs-number">3</span>,        <span class="hljs-comment"># 输入词向量维度</span><br>    hidden_size=<span class="hljs-number">5</span>,       <span class="hljs-comment"># 隐藏层维度，决定神经元的个数，对应抽取的词向量维度</span><br>    num_layers=<span class="hljs-number">3</span>,        <span class="hljs-comment"># RNN 层数，默认为 1</span><br>    nonlinearity=<span class="hljs-string">&quot;tanh&quot;</span>, <span class="hljs-comment"># 激活函数，默认为 tanh</span><br>    bias=<span class="hljs-literal">True</span>,           <span class="hljs-comment"># 是否使用偏置项，默认为 True</span><br>    batch_first=<span class="hljs-literal">True</span>,    <span class="hljs-comment"># 输入张量和输出张量第一维是否为 batch_size</span><br>    dropout=<span class="hljs-number">0.0</span>,         <span class="hljs-comment"># 除最后一层外，每层 dropout 的概率，默认为 0.0</span><br>    bidirectional=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 是否使用双向 RNN，默认为 False</span><br>    device=<span class="hljs-literal">None</span>,         <span class="hljs-comment"># 运行设备，如&#x27;cuda&#x27;, &#x27;cpu&#x27;</span><br>    dtype=<span class="hljs-literal">None</span>           <span class="hljs-comment"># 数据类型</span><br>)<br></code></pre></td></tr></table></figure>
+<p>RNN 层的输入输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>)<br>hx = torch.randn(<span class="hljs-number">2</span> * <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br><br>output, hn = rnn(<span class="hljs-built_in">input</span>, hx)<br>output.shape, hn.shape<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(torch.Size([2, 5, 10]), torch.Size([6, 2, 5]))</code></pre>
+<ul>
+<li><strong>input</strong>:
+输入序列，<code>[seq_len, batch_size, input_size]</code>，若
+batch_first=True，则为<code>[batch_size, seq_len, input_size]</code></li>
+<li><strong>hx</strong>: 初始隐状态，可选，默认为
+0，<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+<li><strong>output</strong>:
+输出序列，包含最后一层每个时间步的隐状态，<code>[seq_len, batch_size, hidden_size * num_directions]</code>，若
+batch_first=True，则为<code>[batch_size, seq_len, hidden_size * num_directions]</code></li>
+<li><strong>hn</strong>:
+包含每一层每个方向最后一个时间步的隐状态，<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+</ul>
+<h2 id="存在问题">1.6 存在问题</h2>
+<p>RNN 训练时采用的是时间反向传播（Backpropagation Through Time,
+BPTT）方法，在反向传播过程中，梯度需要在每个时间步上不断链式传递。</p>
+<p>tanh 的导数范围为 (0, 1]：</p>
+<ul>
+<li>如果 <span class="math inline"><em>W</em></span> 的值也小于
+1，经过多次连乘，早期时间步的梯度会呈指数级衰减，并迅速接近
+0，从而导致梯度消失。由于早期时间步的梯度几乎为
+0，总梯度几乎只受最近时间步的影响，也就是说早期的输入信息几乎不会对
+<span class="math inline"><em>W</em><sub><em>h</em></sub></span>
+的更新产生贡献。导致<strong>模型只能学到短期依赖，而无法学到长期依赖</strong>。</li>
+<li>如果 <span class="math inline"><em>W</em></span> 的值大于
+1，经过多次连乘，早期时间步的梯度又会呈指数级增长，导致梯度爆炸，又会使参数更新极其不稳定，甚至出现溢出。</li>
+</ul>
+<p>由于梯度消失和梯度爆炸的问题，当输入序列很长时，RNN
+难以有效学习早期输入对最终输出的影响，也就是长期依赖建模困难。并且由于每个时间步的输入依赖上一个时间步的输出，无法并行计算。</p>
+<h1 id="lstm">2 LSTM</h1>
+<p>为了缓解梯度消失和梯度爆炸的问题，Hochreiter 和 Schmidhuber 于 1997
+年提出了长短期记忆网络（Long Short-Term Memory, LSTM）。</p>
+<h2 id="基础结构-1">2.1 基础结构</h2>
+<p>LSTM 通过引入特殊的记忆单元（Memory
+Cell）和三个门结构———遗忘门、输入门、输出门，有效提升了模型对长序列依赖关系的建模能力。</p>
+<ul>
+<li><strong>记忆单元(Memory Cell)</strong>:
+负责在序列中长期保存关键信息，在多个时间步之间直接传递信息，记忆单元是缓解梯度消失和梯度爆炸问题的核心。</li>
+<li><strong>遗忘门(Forget Gate)</strong>:
+决定当前时间步要忘记多少过去的记忆。根据当前时间步的输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span>
+和上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span>，生成一个
+0~1 的系数，与上一时间步的记忆单元状态 <span
+class="math inline"><em>C</em><sub><em>t</em> − 1</sub></span>
+做哈达玛积，从而调整哪些记忆需要遗忘。
+<ul>
+<li><span
+class="math display"><em>f</em><sub><em>t</em></sub> = <em>S</em><em>i</em><em>g</em><em>m</em><em>o</em><em>i</em><em>d</em>(<em>W</em><sub><em>x</em></sub><sup><em>f</em></sup> ⋅ <em>x</em><sub><em>t</em></sub> + <em>W</em><sub><em>h</em></sub><sup><em>f</em></sup> ⋅ <em>h</em><sub><em>t</em> − 1</sub> + <em>b</em><sub><em>f</em></sub>)</span></li>
+</ul></li>
+<li><strong>输入门(Input Gate)</strong>:
+控制当前时间步的输入向记忆单元存入多少信息。当前时间步的信息由当前输入
+<span class="math inline"><em>x</em><sub><em>t</em></sub></span>
+和上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span>
+计算得出，输入门也由 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span> 和 $h_{t-1}
+计算得出。输入门生成 0~1
+的系数，与当前时间步的信息相乘，得到需要存入记忆单元的信息。
+<ul>
+<li><span class="math display">$$\hat{h_t} = tanh(W_x\cdot x_t+W_h\cdot
+h_{t-1}+b) \\
+  i_t = Sigmoid(W_x^i\cdot x_t+W_h^i\cdot h_{t-1}+b_i)$$</span></li>
+<li>记忆单元更新公式：遗忘门 <span class="math inline">⊙</span>
+上一时间步的记忆 + 输入门 <span class="math inline">⊙</span>
+当前时间步的信息 <span class="math display">$$C_t = f_t \odot C_{t-1} +
+i_t \odot \hat {h_t}$$</span></li>
+</ul></li>
+<li><strong>输出门(Output Gate)</strong>:
+控制从记忆单元中读取多少信息作为当前时间步的隐状态输出。根据当前时间步的输入
+<span class="math inline"><em>x</em><sub><em>t</em></sub></span>
+和上一时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span> 计算得出
+0~1 的系数，由于记忆单元一直在累加，为了数值的稳定性，需要对记忆单元做
+tanh 进行规范，压缩至 -1~1
+的范围，然后与输出门做哈达玛积，决定输出多少信息。
+<ul>
+<li><span
+class="math display"><em>o</em><sub><em>t</em></sub> = <em>S</em><em>i</em><em>g</em><em>m</em><em>o</em><em>i</em><em>d</em>(<em>W</em><sub><em>x</em></sub><sup><em>o</em></sup> ⋅ <em>x</em><sub><em>t</em></sub> + <em>W</em><sub><em>h</em></sub><sup><em>o</em></sup> ⋅ <em>h</em><sub><em>t</em> − 1</sub> + <em>b</em><sub><em>o</em></sub>)</span></li>
+<li>当前时间步隐状态：<span
+class="math display"><em>h</em><sub><em>t</em></sub> = <em>o</em><sub><em>t</em></sub> ⊙ <em>t</em><em>a</em><em>n</em><em>h</em>(<em>C</em><sub><em>t</em></sub>)</span></li>
+</ul></li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-lstm_structure.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="多层结构-1">2.2 多层结构</h2>
+<p>LSTM
+也可以通过堆叠多个层来构建更深的网络，以增强模型对序列特征的建模能力。每一层
+LSTM 的输出隐藏状态，会作为下一层 LSTM
+的输入，注意每一层会维护独立的记忆单元，而不会传递给下一层。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-multi_lstm.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="双向结构-1">2.3 双向结构</h2>
+<p>LSTM
+同样可以通过双向结构，捕获序列中的上文信息和下文信息，进一步提升模型的建模能力。每个时间步同时得到两个隐藏状态，通常将它们进行拼接，形成最终的输出。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-bi_lstm.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="多层双向结构-1">2.4 多层＋双向结构</h2>
+<p>LSTM 同样可以多层结构和双向结构组合使用。</p>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-bi_multi_lstm.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="api-使用-1">2.5 API 使用</h2>
+<p>构造 LSTM 层和 RNN 的参数几乎一致，唯一不同是少了
+<code>nonlinearity</code> 参数，多了一个 <code>proj_size</code>
+参数，详见<a
+target="_blank" rel="noopener" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.LSTM.html">官方文档</a>。基本思想是记忆单元
+<span class="math inline"><em>C</em><sub><em>t</em></sub></span>
+承载信息较多，而 <span
+class="math inline"><em>h</em><sub><em>t</em></sub></span>
+的信息较少，没有必要使二者维度相同，可以使用 <code>proj_size</code> 将
+<span class="math inline"><em>h</em><sub><em>t</em></sub></span>
+映射为更低维度的向量，减少计算负担，提高效率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">lstm = nn.LSTM(<br>    input_size=<span class="hljs-number">3</span>,        <span class="hljs-comment"># 输入词向量维度</span><br>    hidden_size=<span class="hljs-number">5</span>,       <span class="hljs-comment"># 隐藏层维度，决定神经元的个数，对应抽取的词向量维度</span><br>    num_layers=<span class="hljs-number">3</span>,        <span class="hljs-comment"># LSTM 层数，默认为 1</span><br>    bias=<span class="hljs-literal">True</span>,           <span class="hljs-comment"># 是否使用偏置项，默认为 True</span><br>    batch_first=<span class="hljs-literal">True</span>,    <span class="hljs-comment"># 输入张量和输出张量第一维是否为 batch_size</span><br>    dropout=<span class="hljs-number">0.0</span>,         <span class="hljs-comment"># 除最后一层外，每层 dropout 的概率，默认为 0.0</span><br>    bidirectional=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 是否使用双向 LSTM，默认为 False</span><br>    proj_size=<span class="hljs-number">0</span>,         <span class="hljs-comment"># 将 hidden_size 投影到 proj_size 维度，减少计算负担</span><br>    device=<span class="hljs-literal">None</span>,         <span class="hljs-comment"># 运行设备，如&#x27;cuda&#x27;, &#x27;cpu&#x27;</span><br>    dtype=<span class="hljs-literal">None</span>           <span class="hljs-comment"># 数据类型</span><br>)<br></code></pre></td></tr></table></figure>
+<p>LSTM 的输入输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">input</span> = torch.rand(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>)<br>hx = torch.rand(<span class="hljs-number">3</span> * <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br>cx = torch.rand(<span class="hljs-number">3</span> * <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br><br>output, (hn, cn) = lstm(<span class="hljs-built_in">input</span>, (hx, cx))<br>output.shape, hn.shape, cn.shape<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(torch.Size([2, 5, 10]), torch.Size([6, 2, 5]), torch.Size([6, 2, 5]))</code></pre>
+<ul>
+<li><strong>input</strong>:
+输入序列，<code>[seq_len, batch_size, input_size]</code>，若
+batch_first=True，则为<code>[batch_size, seq_len, input_size]</code></li>
+<li><strong>hx</strong>: 初始隐状态，可选，默认为
+0，<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+<li><strong>cx</strong>: 初始细胞状态，可选，默认为 0，和 hx 形状一致，
+<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+<li><strong>output</strong>:
+输出序列，包含最后一层每个时间步的隐状态，<code>[seq_len, batch_size, hidden_size * num_directions]</code>，若
+batch_first=True，则为<code>[batch_size, seq_len, hidden_size * num_directions]</code></li>
+<li><strong>hn</strong>:
+包含每一层每个方向最后一个时间步的隐状态，<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+<li><strong>cn</strong>:
+每一层每个方向最后一个时间步的细胞状态，<code>[num_layers * num_directions, batch_size, hidden_size]</code></li>
+</ul>
+<blockquote>
+<p>注意：如果 RNN 和 GRU 的 hx 参数为 None，调用
+<code>rnn/gru(x, hx)</code> 时 hx 默认为全零向量。而 LSTM
+的参数是一个元组 (hx, cx)，如果为 None 则必须
+<code>lstm(x)</code>，不能传入为 None 的 hx 和 cx。</p>
+</blockquote>
+<h2 id="存在问题-1">2.6 存在问题</h2>
+<p>LSTM 通过引入记忆单元，提供了一条稳定的梯度传播路径，就像一条
+“高速公路”，信息可以在上面长距离流动，而不会受到太多的衰减。记忆单元更新公式为：
+<span class="math display">$$C_t = f_t \odot C_{t-1} + i_t \odot \hat
+{h_t}$$</span></p>
+<p>记忆单元的更新方式主要是加法，而不是乘法，求偏导后为 <span
+class="math inline">$\frac{\partial C_t}{\partial
+C_{t-1}}=f_t$</span>，沿记忆单元传播路径，实际就是 <span
+class="math inline"><em>f</em><sub><em>t</em></sub></span> 连乘，而
+<span class="math inline"><em>f</em><sub><em>t</em></sub></span> 是 0~1
+的遗忘门，完全杜绝了梯度爆炸的问题。在实际任务中，遗忘门倾向于忘得少，通常接近
+1，梯度衰减速度远远小于传统 RNN
+中隐状态链式传播的指数衰减。使得早期时间步的输入也能通过记忆单元路径影响最终梯度，参与到参数更新中，提升了模型对长序列依赖的处理能力。</p>
+<ul>
+<li>长期依赖建模能力有限：LSTM
+虽然解决了梯度爆炸，但只是延缓了梯度消失，并不能完全消除。当序列很长时，LSTM
+依然难以捕捉远距离的依赖关系。</li>
+<li>难以并行计算：这里指时间步之间的计算无法并行，后一个时间步的输入依赖前一个时间步的输出。当然这不仅仅是
+LSTM 的问题，RNN 和变体这些序列模型都存在这种问题。</li>
+<li>计算开销大：LSTM
+内部包含三个门控机构和记忆单元，参数量大、结构复杂，计算开销比 RNN
+高很多。</li>
+</ul>
+<h1 id="gru">3 GRU</h1>
+<p>2014年，Cho et al. 提出了Gated Recurrent Unit（GRU,
+门控循环单元），是为了简化 LSTM 结构、降低计算成本而提出的一种变体。GRU
+保留了门控机制的核心思想，但结构更为简洁，参数更少，训练效率更高。</p>
+<p>在上一节 LSTM 的问题中，GRU 仅仅减轻了计算开销大的问题。GRU
+在保持类似性能的同时，能够显著减少训练时间。</p>
+<h2 id="基础结构-2">3.1 基础结构</h2>
+<p>GRU 取消了记忆单元，核心结构包括重置门(Reset Gate)和更新门(Update
+Gate)。</p>
+<ul>
+<li><strong>重置门(Reset
+Gate)</strong>：控制获取多少历史信息。由当前输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span>
+和上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span> 计算得出
+0~1 的门值。作用在上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span>
+中，从而控制获取多少历史信息。
+<ul>
+<li><span
+class="math display"><em>r</em><sub><em>t</em></sub> = <em>S</em><em>i</em><em>g</em><em>m</em><em>o</em><em>i</em><em>d</em>(<em>W</em><sub><em>x</em></sub><sup><em>r</em></sup> * <em>x</em><sub><em>t</em></sub> + <em>W</em><sub><em>h</em></sub><sup><em>r</em></sup> * <em>h</em><sub><em>t</em> − 1</sub> + <em>b</em><sub><em>r</em></sub>)</span></li>
+<li>当前时间步的信息（候选隐状态）： <span class="math display">$$\hat
+{h_t} = tanh(W_x * x_t + W_h * (r_t \odot h_{t-1}) + b_h)$$</span></li>
+</ul></li>
+<li><strong>更新门(Update Gate,
+z)</strong>：控制新信息和旧信息的融合比例。也是由当前输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span>
+和上一个时间步的隐状态 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span> 计算得出
+0~1 的门值 <span
+class="math inline"><em>z</em><sub><em>t</em></sub></span>。分别将 <span
+class="math inline"><em>z</em><sub><em>t</em></sub></span> 和 <span
+class="math inline">1 − <em>z</em><sub><em>t</em></sub></span>
+作用到新信息（候选隐状态）和旧信息（上一个时间步的隐状态），从而控制引入多少新信息，保留多少旧信息。
+<ul>
+<li><span
+class="math display"><em>z</em><sub><em>t</em></sub> = <em>S</em><em>i</em><em>g</em><em>m</em><em>o</em><em>i</em><em>d</em>(<em>W</em><sub><em>x</em></sub><sup><em>z</em></sup> * <em>x</em><sub><em>t</em></sub> + <em>W</em><sub><em>h</em></sub><sup><em>z</em></sup> * <em>h</em><sub><em>t</em> − 1</sub> + <em>b</em><sub><em>z</em></sub>)</span></li>
+<li>当前时间步的隐状态： <span class="math display">$$h_t = z_t \odot
+\hat{h_t} + (1 - z_t) \odot h_{t-1}$$</span></li>
+</ul></li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/02_传统序列模型-gru_structure.png" srcset="/img/loading.gif" lazyload /></p>
+<blockquote>
+<p>在不同资料中，更新门有不同融合方式，分别是 <span
+class="math display">$$z_t \odot \hat{h_t} + (1 - z_t) \odot
+h_{t-1}$$</span> <span class="math display">$$(1 - z_t) \odot \hat{h_t}
++ z_t \odot h_{t-1}$$</span>
+两种写法在实际应用中没有本质的区别，基本思想是一样的，只是表述方法不一样。</p>
+</blockquote>
+<h2 id="复杂结构和-api">3.2 复杂结构和 API</h2>
+<p>GRU 也同样支持多层结构、双向结构，以及组合使用，和 RNN
+基本一致，不再赘述。</p>
+<p>由于从外部来看，GRU 和 RNN 几乎是一致的，都是输入 input 和 hx，输出
+output 和 hn，并且维度也都是一致的，只需要将 RNN 的 API 名字换为 GRU
+即可。唯一区别就是取消了 <code>nononlinearity</code> 参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">gru = nn.GRU(<br>    input_size=<span class="hljs-number">3</span>,        <span class="hljs-comment"># 输入词向量维度</span><br>    hidden_size=<span class="hljs-number">5</span>,       <span class="hljs-comment"># 隐藏层维度，决定神经元的个数，对应抽取的词向量维度</span><br>    num_layers=<span class="hljs-number">3</span>,        <span class="hljs-comment"># RNN 层数，默认为 1</span><br>    bias=<span class="hljs-literal">True</span>,           <span class="hljs-comment"># 是否使用偏置项，默认为 True</span><br>    batch_first=<span class="hljs-literal">True</span>,    <span class="hljs-comment"># 输入张量和输出张量第一维是否为 batch_size</span><br>    dropout=<span class="hljs-number">0.0</span>,         <span class="hljs-comment"># 除最后一层外，每层 dropout 的概率，默认为 0.0</span><br>    bidirectional=<span class="hljs-literal">True</span>,  <span class="hljs-comment"># 是否使用双向 RNN，默认为 False</span><br>    device=<span class="hljs-literal">None</span>,         <span class="hljs-comment"># 运行设备，如&#x27;cuda&#x27;, &#x27;cpu&#x27;</span><br>    dtype=<span class="hljs-literal">None</span>           <span class="hljs-comment"># 数据类型</span><br>)<br><br><span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">3</span>)<br>hx = torch.randn(<span class="hljs-number">2</span> * <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br><br>output, hn = gru(<span class="hljs-built_in">input</span>, hx)<br>output.shape, hn.shape<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">(torch.Size([2, 5, 10]), torch.Size([6, 2, 5]))</code></pre>
+<h2 id="存在问题-2">3.3 存在问题</h2>
+<p>虽然 GRU 的长序列依赖建模比 RNN 效果好很多，并且计算量相较于 LSTM
+也少很多。但是 GRU
+仍然没有完全解决梯度消失的问题，在超长依赖建模时仍然存在限制，并且也存在
+RNN 及变体的通病———不能并行计算。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/" class="category-chain-item">自然语言处理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/NLP/" class="print-no-link">#NLP</a>
+      
+        <a href="/tags/RNN/" class="print-no-link">#RNN</a>
+      
+        <a href="/tags/LSTM/" class="print-no-link">#LSTM</a>
+      
+        <a href="/tags/GRU/" class="print-no-link">#GRU</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>02_传统序列模型</div>
+      <div>http://example.com/2024/08/14/大模型开发/06_自然语言处理/02_传统序列模型/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/03_Seq2Seq%E4%B8%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" title="03_Seq2Seq与注意力机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">03_Seq2Seq与注意力机制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示">
+                        <span class="hidden-mobile">01_文本处理与词表示</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

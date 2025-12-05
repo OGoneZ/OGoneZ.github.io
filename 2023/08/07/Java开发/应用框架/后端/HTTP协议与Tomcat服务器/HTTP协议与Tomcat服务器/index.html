@@ -1,0 +1,1268 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1. HTTP 协议 1.1 HTTP 概述 概念：Hyper Text Transfer Protocol，超文本传输协议，规定了浏览器和服务器之间数据传输的规则。   HTTP 是互联网上应用最为广泛的一种网络协议 HTTP 协议要求：浏览器在向服务器发送请求数据时，或是服务器在向浏览器发送响应数据时，都必须按照固定的格式进行数据传输  1.2 HTTP特点  基于TC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议与Tomcat服务器">
+<meta property="og:url" content="http://example.com/2023/08/07/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1. HTTP 协议 1.1 HTTP 概述 概念：Hyper Text Transfer Protocol，超文本传输协议，规定了浏览器和服务器之间数据传输的规则。   HTTP 是互联网上应用最为广泛的一种网络协议 HTTP 协议要求：浏览器在向服务器发送请求数据时，或是服务器在向浏览器发送响应数据时，都必须按照固定的格式进行数据传输  1.2 HTTP特点  基于TC">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/tomcat.png">
+<meta property="article:published_time" content="2023-08-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:05:04.201Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="Tomcat">
+<meta property="article:tag" content="HTTP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/tomcat.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>HTTP协议与Tomcat服务器 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HTTP协议与Tomcat服务器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-07 00:00" pubdate>
+          2023年8月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="Web开发"
+        id="heading-3b451acfb78b69289662a6dd4d9d042c" role="tab" data-toggle="collapse" href="#collapse-3b451acfb78b69289662a6dd4d9d042c"
+        aria-expanded="true"
+      >
+        Web开发
+        <span class="list-group-count">(7)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-3b451acfb78b69289662a6dd4d9d042c"
+           role="tabpanel" aria-labelledby="heading-3b451acfb78b69289662a6dd4d9d042c">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2023/08/07/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/HTTP%E5%8D%8F%E8%AE%AE%E4%B8%8ETomcat%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="HTTP协议与Tomcat服务器"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">HTTP协议与Tomcat服务器</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/05/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Maven使用教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Maven使用教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/16/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/MyBatis%E6%95%99%E7%A8%8B/MyBatis%E6%95%99%E7%A8%8B/" title="MyBatis教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MyBatis教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/10/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" title="MySQL简易教程"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">MySQL简易教程</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/19/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/SpringBoot%E5%85%A5%E9%97%A8/SpringBoot%E5%85%A5%E9%97%A8/" title="SpringBoot入门"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">SpringBoot入门</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/01/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%89%8D%E7%AB%AF/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Web前端开发</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2023/08/22/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%98%BF%E9%87%8C%E4%BA%91OSS/" title="文件上传和阿里云OSS"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">文件上传和阿里云OSS</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">HTTP协议与Tomcat服务器</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="http-协议">1. HTTP 协议</h1>
+<h2 id="http-概述">1.1 HTTP 概述</h2>
+<p>概念：Hyper Text Transfer
+Protocol，超文本传输协议，<strong>规定了浏览器和服务器之间数据传输的规则</strong>。</p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.1.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>HTTP 是互联网上应用最为广泛的一种网络协议</li>
+<li>HTTP
+协议要求：浏览器在向服务器发送请求数据时，或是服务器在向浏览器发送响应数据时，都必须按照固定的格式进行数据传输</li>
+</ul>
+<h2 id="http特点">1.2 HTTP特点</h2>
+<ul>
+<li><p><strong>基于TCP协议:</strong> 面向连接，安全</p>
+<blockquote>
+<p>TCP是一种面向连接的(建立连接之前是需要经过三次握手)、可靠的、基于字节流的传输层通信协议，在数据传输方面更安全</p>
+</blockquote></li>
+<li><p><strong>基于请求-响应模型:</strong>
+一次请求对应一次响应（先请求后响应）</p>
+<blockquote>
+<p>请求和响应是一一对应关系，没有请求，就没有响应</p>
+</blockquote></li>
+<li><p><strong>HTTP协议是无状态协议:</strong>
+对于数据没有记忆能力。每次请求-响应都是独立的</p>
+<blockquote>
+<p>无状态指的是客户端发送HTTP请求给服务端之后，服务端根据请求响应数据，响应完后，不会记录任何信息。</p>
+<ul>
+<li>缺点: 多次请求间不能共享数据</li>
+<li>优点: 速度快</li>
+</ul>
+<p>请求之间无法共享数据会引发的问题：</p>
+<ul>
+<li>如：京东购物。加入购物车和去购物车结算是两次请求</li>
+<li>由于HTTP协议的无状态特性，加入购物车请求响应结束后，并未记录加入购物车是何商品</li>
+<li>发起去购物车结算的请求后，因为无法获取哪些商品加入了购物车，会导致此次请求无法正确展示数据</li>
+</ul>
+<p>具体使用的时候，我们发现京东是可以正常展示数据的，原因是 Java
+早已考虑到这个问题，并提出了使用会话技术(Cookie、Session)来解决这个问题。这个我们后面会介绍。</p>
+</blockquote></li>
+</ul>
+<h2 id="http-请求响应">1.3 HTTP 请求响应</h2>
+<p>浏览器和服务器是按照 HTTP 协议进行数据通信的。HTTP
+协议又分为：请求协议和响应协议。 刚才提到 HTTP
+协议是规定了请求和响应数据的格式，那具体的格式是什么呢?
+我们可以打开浏览器，点击 <code>F12</code> 打开开发者工具，点击 Network
+来查看</p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.2.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>浏览器向服务器进行请求时：服务器按照固定的格式进行解析</li>
+<li>服务器向浏览器进行响应时：浏览器按照固定的格式进行解析</li>
+</ul>
+<p>所以，我们学习 HTTP 主要就是学习请求和响应数据的具体格式内容。</p>
+<h3 id="http-请求">1.3.1 HTTP 请求</h3>
+<ul>
+<li>请求协议：浏览器将数据以请求格式发送到服务器</li>
+<li>包括：<strong>请求行</strong>、<strong>请求头</strong>
+、<strong>请求体</strong></li>
+</ul>
+<p>在 HTTP1.1 版本中，浏览器访问服务器的几种方式：</p>
+<table>
+
+<thead>
+<tr>
+<th>请求方式</th>
+<th>请求说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GET</strong></td>
+<td>获取资源。 向特定的资源发出请求。例<a
+target="_blank" rel="noopener" href="http://www.baidu.com/s?wd=tomcat">http://www.baidu.com/s?wd=tomcat</a></td>
+</tr>
+<tr>
+<td><strong>POST</strong></td>
+<td>传输实体主体。
+向指定资源提交数据进行处理请求（例：上传文件），数据被包含在请求体中。</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>返回服务器针对特定资源所支持的 HTTP 请求方式。
+因为并不是所有的服务器都支持规定的方法，为了安全有些服务器可能会禁止掉一些方法，例如：DELETE、PUT等。那么
+OPTIONS 就是用来询问服务器支持的方法。</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>获得报文首部。 HEAD 方法类似 GET 方法，不同的是 HEAD
+方法不要求返回数据。通常用于确认 URI 的有效性及资源更新时间等。</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>传输文件。 PUT 方法用来传输文件。类似 FTP
+协议，文件内容包含在请求报文的实体中，然后请求保存到 URL
+指定的服务器位置。</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>删除文件。 请求服务器删除 Request-URI 所标识的资源</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>追踪路径。 回显服务器收到的请求，主要用于测试或诊断</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>要求用隧道协议连接代理。 HTTP1.1
+协议中预留给能够将连接改为管道方式的代理服务器</td>
+</tr>
+</tbody>
+</table>
+<p>在我们实际应用中常用的就是 ：<strong>GET、POST</strong></p>
+<p><strong>GET方式的请求协议：</strong></p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.3.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li><strong>请求行</strong> ：HTTP
+请求中的第一行数据。由：<code>请求方式</code>、<code>资源路径</code>、<code>协议/版本</code>组成（之间使用空格分隔）
+<ul>
+<li>请求方式：GET</li>
+<li>资源路径：/api/sysuser/delete?id=3
+<ul>
+<li>请求路径：/api/sysuser/delete</li>
+<li>请求参数：id=3
+<ul>
+<li>请求参数是以 <code>key=value</code> 形式出现</li>
+<li>多个请求参数之间使用 <code>&amp;</code> 连接</li>
+</ul></li>
+<li>请求路径和请求参数之间使用 <code>?</code> 连接</li>
+</ul></li>
+<li>协议/版本：HTTP/1.1</li>
+</ul></li>
+<li><strong>请求头</strong>
+：第二行开始，上图绿色部分内容就是请求头。格式为 <code>key: value</code>
+形式，HTTP
+是个无状态的协议，所以在请求头设置浏览器的一些自身信息和想要响应的形式。这样服务器在收到信息后，就可以知道是谁，想干什么</li>
+</ul>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-params">Host:</span> 表示请求的主机名  <br><span class="hljs-params">User-Agent:</span> 浏览器版本。 例如：Chrome 浏览器的标识类似 Mozilla<span class="hljs-symbol">/5.0</span> ...Chrome<span class="hljs-symbol">/79</span> ，IE浏览器的标识类似 Mozilla<span class="hljs-symbol">/5.0</span> (Windows NT ...)like Gecko  <br>Accept：表示浏览器能接收的资源类型，如 `text<span class="hljs-comment">/*`，`image/*` 或者 `*/</span><span class="hljs-operator">*</span>` 表示所有<br>Accept-Language：表示浏览器偏好的语言，服务器可以据此返回不同语言的网页<br>Accept-Encoding：表示浏览器可以支持的压缩类型，例如 gzip, deflate 等<br>Content-Type：请求主体的数据类型  <br>Content-Length：数据主体的大小（单位：字节）<br></code></pre></td></tr></table></figure>
+<p>GET 请求的请求参数在请求行中，故不需要设置请求体</p>
+<blockquote>
+<p>服务端可以根据请求头中的内容来获取客户端的相关信息，有了这些信息服务端就可以处理不同的业务需求。</p>
+<p>比如: - 不同浏览器解析 HTML 和 CSS
+标签的结果会有不一致，所以就会导致相同的代码在不同的浏览器会出现不同的效果
+-
+服务端根据客户端请求头中的数据获取到客户端的浏览器类型，就可以根据不同的浏览器设置不同的代码来达到一致的效果（这就是我们常说的浏览器兼容问题）</p>
+</blockquote>
+<p><strong>POST方式的请求协议：</strong></p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.4.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li><strong>请求行</strong>：上图红色部分，包含<code>请求方式</code>、<code>资源路径</code>、<code>协议/版本</code>,
+<ul>
+<li>请求方式：POST</li>
+<li>资源路径：/api/sysuser/add</li>
+<li>协议/版本：HTTP/1.1</li>
+</ul></li>
+<li><strong>请求头</strong>：上图绿色部分</li>
+<li><strong>请求体</strong>：上图蓝色部分，存放请求参数，请求体和请求头之间有一个空行隔开，用于标记请求头结束，Chrome
+浏览器在 Payload 中</li>
+</ul>
+<p><strong>GET</strong> 请求和 <strong>POST</strong> 请求的区别：</p>
+<table>
+
+<thead>
+<tr>
+<th>区别方式</th>
+<th>GET请求</th>
+<th>POST请求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>请求参数</td>
+<td>请求参数在请求行中。<br/>例：/api/sysuser/delete?id=3</td>
+<td>请求参数在请求体中</td>
+</tr>
+<tr>
+<td>请求参数长度</td>
+<td>请求参数长度有限制(浏览器不同限制也不同)</td>
+<td>请求参数长度没有限制</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>请求参数暴露在浏览器地址栏中，安全性低。</td>
+<td>安全性相对高</td>
+</tr>
+</tbody>
+</table>
+<h3 id="http-响应">1.3.2 HTTP 响应</h3>
+<ul>
+<li>响应协议：服务器将数据以响应格式返回给浏览器</li>
+<li>包括：<strong>响应行</strong> 、<strong>响应头</strong>
+、<strong>响应体</strong></li>
+</ul>
+<p>与 HTTP 请求一样，HTTP
+响应的数据也分为3部分：<strong>响应行</strong>、<strong>响应头</strong>
+、<strong>响应体</strong></p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.5.png" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li><strong>响应行</strong>：响应数据的第一行。响应行由<code>协议及版本</code>、<code>响应状态码</code>
+组成
+<ul>
+<li>协议/版本：HTTP/1.1</li>
+<li>响应状态码：200</li>
+</ul></li>
+<li><strong>响应头</strong>：响应数据的第二行开始，上图绿色部分。格式为
+<code>key：value</code> 形式，HTTP
+是个无状态的协议，所以可以在请求头和响应头中设置一些信息和想要执行的动作，这样，对方在收到信息后，就可以知道你是谁，你想干什么</li>
+</ul>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Content-<span class="hljs-keyword">Type</span>：表示该响应内容的类型，例如 <span class="hljs-type">text</span>/html，image/jpeg，application/<span class="hljs-type">json</span><br>Content-Length：表示该响应内容的长度（字节数）<br>Content-<span class="hljs-keyword">Encoding</span>：表示该响应压缩算法，例如 gzip<br><span class="hljs-keyword">Cache</span>-Control：指示客户端应如何缓存，例如 max-age=<span class="hljs-number">300</span> 表示可以最多缓存<span class="hljs-number">300</span>秒 <br><span class="hljs-keyword">Set</span>-Cookie: 告诉浏览器为当前页面所在的域设置 cookie<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>响应体</strong>：响应数据的最后一部分，上图蓝色部分，存放响应数据
+<ul>
+<li>响应体和响应头之间有一个空行隔开，用于标记响应头结束，Chrome
+浏览器在 Payload 中</li>
+</ul></li>
+</ul>
+<h3 id="响应状态码">1.3.3 响应状态码</h3>
+<p>响应状态码主要分为以下五类：</p>
+<table>
+
+<thead>
+<tr>
+<th>状态码分类</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td><strong>响应中</strong> —
+临时状态码。表示请求已经接受，告诉客户端应该继续请求或者如果已经完成则忽略</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td><strong>成功</strong> — 表示请求已经被成功接收，处理已完成</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td><strong>重定向</strong> —
+重定向到其它地方，让客户端再发起一个请求以完成整个处理</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td><strong>客户端错误</strong> —
+处理发生错误，责任在客户端，如：客户端的请求一个不存在的资源，客户端未被授权，禁止访问等</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td><strong>服务器端错误</strong> —
+处理发生错误，责任在服务端，如：服务端抛出异常，路由出错，HTTP
+版本不支持等</td>
+</tr>
+</tbody>
+</table>
+<p>这里再罗列一些常见的响应状态码：</p>
+<table>
+
+<thead>
+<tr>
+<th>状态码</th>
+<th>英文描述</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==200==</td>
+<td><strong><code>OK</code></strong></td>
+<td>客户端请求成功，即<strong>处理成功</strong>，这是我们最想看到的状态码</td>
+</tr>
+<tr>
+<td>302</td>
+<td><strong><code>Found</code></strong></td>
+<td>指示所请求的资源已移动到由<code>Location</code>响应头给定的
+URL，浏览器会自动重新访问到这个页面</td>
+</tr>
+<tr>
+<td>304</td>
+<td><strong><code>Not Modified</code></strong></td>
+<td>告诉客户端，你请求的资源至上次取得后，服务端并未更改，你直接用你本地缓存吧。隐式重定向</td>
+</tr>
+<tr>
+<td>400</td>
+<td><strong><code>Bad Request</code></strong></td>
+<td>客户端请求有<strong>语法错误</strong>，不能被服务器所理解</td>
+</tr>
+<tr>
+<td>403</td>
+<td><strong><code>Forbidden</code></strong></td>
+<td>服务器收到请求，但是<strong>拒绝提供服务</strong>，比如：没有权限访问相关资源</td>
+</tr>
+<tr>
+<td>==404==</td>
+<td><strong><code>Not Found</code></strong></td>
+<td><strong>请求资源不存在</strong>，一般是URL输入有误，或者网站资源被删除了</td>
+</tr>
+<tr>
+<td>405</td>
+<td><strong><code>Method Not Allowed</code></strong></td>
+<td>请求方式有误，比如应该用GET请求方式的资源，用了POST</td>
+</tr>
+<tr>
+<td>428</td>
+<td><strong><code>Precondition Required</code></strong></td>
+<td><strong>服务器要求有条件的请求</strong>，告诉客户端要想访问该资源，必须携带特定的请求头</td>
+</tr>
+<tr>
+<td>429</td>
+<td><strong><code>Too Many Requests</code></strong></td>
+<td>指示用户在给定时间内发送了<strong>太多请求</strong>（“限速”），配合
+Retry-After(多长时间后可以请求)响应头一起使用</td>
+</tr>
+<tr>
+<td>431</td>
+<td><strong><code>Request Header Fields Too Large</code></strong></td>
+<td><strong>请求头太大</strong>，服务器不愿意处理请求，因为它的头部字段太大。请求可以在减少请求头域的大小后重新提交。</td>
+</tr>
+<tr>
+<td>==500==</td>
+<td><strong><code>Internal Server Error</code></strong></td>
+<td><strong>服务器发生不可预期的错误</strong>。服务器出异常了，赶紧看日志去吧</td>
+</tr>
+<tr>
+<td>503</td>
+<td><strong><code>Service Unavailable</code></strong></td>
+<td><strong>服务器尚未准备好处理请求</strong>，服务器刚刚启动，还未初始化好</td>
+</tr>
+</tbody>
+</table>
+<p>想了解更多可以去这里查看：：<a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/chapter/13553">状态 | Status -
+HTTP 中文开发手册 - 开发者手册 - 腾讯云开发者社区-腾讯云
+(tencent.com)</a></p>
+<p>关于响应状态码，我们主要认识三个状态码，其余的等后期用到了再去掌握：</p>
+<ul>
+<li><strong>200 OK</strong> 客户端请求成功</li>
+<li><strong>404 Not Found</strong> 请求资源不存在，一般是 URL
+输入错误或网站资源被删除</li>
+<li><strong>500 Internal Server Error</strong>
+服务端发生不可预期的错误，服务器出现异常</li>
+</ul>
+<h2 id="http-协议解析">1.4 HTTP 协议解析</h2>
+<p>可以使用 ServerSocket 编写服务器代码对 HTTP 进行解析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.itheima;<br><br><span class="hljs-keyword">import</span> java.io.*;<br><span class="hljs-keyword">import</span> java.net.ServerSocket;<br><span class="hljs-keyword">import</span> java.net.Socket;<br><span class="hljs-keyword">import</span> java.nio.charset.StandardCharsets;<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment"> * 自定义web服务器</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Server</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">ServerSocket</span> <span class="hljs-variable">ss</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ServerSocket</span>(<span class="hljs-number">8080</span>); <span class="hljs-comment">// 监听指定端口</span><br>        System.out.println(<span class="hljs-string">&quot;server is running...&quot;</span>);<br><br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>)&#123;<br>            <span class="hljs-type">Socket</span> <span class="hljs-variable">sock</span> <span class="hljs-operator">=</span> ss.accept();<br>            System.out.println(<span class="hljs-string">&quot;connected from &quot;</span> + sock.getRemoteSocketAddress());<br>            <span class="hljs-type">Thread</span> <span class="hljs-variable">t</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Handler</span>(sock);<br>            t.start();<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Handler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Thread</span> &#123;<br>    Socket sock;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Handler</span><span class="hljs-params">(Socket sock)</span> &#123;<br>        <span class="hljs-built_in">this</span>.sock = sock;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">try</span> (<span class="hljs-type">InputStream</span> <span class="hljs-variable">input</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.sock.getInputStream();<br>             <span class="hljs-type">OutputStream</span> <span class="hljs-variable">output</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.sock.getOutputStream()) &#123;<br>                handle(input, output);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-built_in">this</span>.sock.close();<br>            &#125; <span class="hljs-keyword">catch</span> (IOException ioe) &#123;<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;client disconnected.&quot;</span>);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handle</span><span class="hljs-params">(InputStream input, OutputStream output)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">reader</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(input, StandardCharsets.UTF_8));<br>        <span class="hljs-type">BufferedWriter</span> <span class="hljs-variable">writer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedWriter</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">OutputStreamWriter</span>(output, StandardCharsets.UTF_8));<br>        <span class="hljs-comment">// 读取HTTP请求:</span><br>        <span class="hljs-type">boolean</span> <span class="hljs-variable">requestOk</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">first</span> <span class="hljs-operator">=</span> reader.readLine();<br>        <span class="hljs-keyword">if</span> (first.startsWith(<span class="hljs-string">&quot;GET / HTTP/1.&quot;</span>)) &#123;<br>            requestOk = <span class="hljs-literal">true</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (;;) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">header</span> <span class="hljs-operator">=</span> reader.readLine();<br>            <span class="hljs-keyword">if</span> (header.isEmpty()) &#123; <span class="hljs-comment">// 读取到空行时, HTTP Header读取完毕</span><br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            System.out.println(header);<br>        &#125;<br>        System.out.println(requestOk ? <span class="hljs-string">&quot;Response OK&quot;</span> : <span class="hljs-string">&quot;Response Error&quot;</span>);<br><br>        <span class="hljs-keyword">if</span> (!requestOk) &#123;<span class="hljs-comment">// 发送错误响应:</span><br>            writer.write(<span class="hljs-string">&quot;HTTP/1.0 404 Not Found\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;Content-Length: 0\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;\r\n&quot;</span>);<br>            writer.flush();<br>        &#125; <span class="hljs-keyword">else</span> &#123;<span class="hljs-comment">// 发送成功响应:</span><br>            <span class="hljs-comment">//读取html文件，转换为字符串</span><br>            <span class="hljs-type">InputStream</span> <span class="hljs-variable">is</span> <span class="hljs-operator">=</span> Server.class.getClassLoader().getResourceAsStream(<span class="hljs-string">&quot;html/a.html&quot;</span>);<br>            <span class="hljs-type">BufferedReader</span> <span class="hljs-variable">br</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedReader</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">InputStreamReader</span>(is));<br>            <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">data</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>            <span class="hljs-type">String</span> <span class="hljs-variable">line</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>            <span class="hljs-keyword">while</span> ((line = br.readLine()) != <span class="hljs-literal">null</span>)&#123;<br>                data.append(line);<br>            &#125;<br>            br.close();<br>            <span class="hljs-type">int</span> <span class="hljs-variable">length</span> <span class="hljs-operator">=</span> data.toString().getBytes(StandardCharsets.UTF_8).length;<br><br>            writer.write(<span class="hljs-string">&quot;HTTP/1.1 200 OK\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;Connection: keep-alive\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;Content-Type: text/html\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;Content-Length: &quot;</span> + length + <span class="hljs-string">&quot;\r\n&quot;</span>);<br>            writer.write(<span class="hljs-string">&quot;\r\n&quot;</span>); <span class="hljs-comment">// 空行标识Header和Body的分隔</span><br>            writer.write(data.toString());<br>            writer.flush();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>浏览器输入：<code>http://localhost:8080</code> 就会访问到
+ServerSocket 程序，ServerSocket 程序会读取服务器上
+<code>html/a.html</code> 文件，并把文件数据发送给浏览器，浏览器接收到
+<code>a.html</code> 文件中的数据后进行解析并呈现在页面上。</p>
+<p>现在大家知道了服务器是可以使用 Java
+完成编写，是可以接受页面发送的请求和响应数据给前端浏览器的。而在开发中真正用到的Web服务器，我们不用自己写，都是使用目前比较流行的
+Web 服务器，比如 Jetty、WebLogic、WebSphere，以及最受欢迎的 Apache
+软件基金会的 <strong>Tomcat</strong>。</p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-1.6.png" srcset="/img/loading.gif" lazyload /></p>
+<p>Web 服务器是一个软件程序，对 HTTP
+协议的操作进行封装，使得程序员不必直接对协议进行操作(不用程序员自己写代码去解析
+HTTP 协议规则)，让 Web 开发更加便捷，主要功能是 “提供网上信息浏览服务”
+。</p>
+<h1 id="tomcat-服务器">2. Tomcat 服务器</h1>
+<h2 id="服务器概述">2.1 服务器概述</h2>
+<p><strong>服务器硬件</strong>
+指的也是计算机，只不过服务器要比我们日常使用的计算机大很多。服务器，也称伺服器。是提供计算服务的设备。由于服务器需要响应服务请求，并进行处理，因此一般来说服务器应具备承担服务并且保障服务的能力。</p>
+<p>服务器的构成包括处理器、硬盘、内存、系统总线等，和通用的计算机架构类似，但是由于需要提供高可靠的服务，因此在处理能力、稳定性、可靠性、安全性、可扩展性、可管理性等方面要求较高。
+在网络环境下，根据服务器提供的服务类型不同，可分为：文件服务器，数据库服务器，应用程序服务器，WEB服务器等。</p>
+<p>服务器只是一台设备，必须安装服务器软件才能提供相应的服务。</p>
+<p><strong>服务器软件</strong> 服务器软件：基于 ServerSocket
+编写的程序</p>
+<ul>
+<li>服务器软件本质是一个运行在服务器设备上的应用程序</li>
+<li>能够接收客户端请求，并根据请求给客户端响应数据</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-2.1.png" srcset="/img/loading.gif" lazyload /></p>
+<p>Web 服务器是安装在服务器端的一款软件，将来我们把自己写的 Web
+项目部署到 Tomcat 服务器软件中，当 Web 服务器软件启动后，部署在 Web
+服务器软件中的页面就可以直接通过浏览器来访问了。</p>
+<h2 id="tomcat-简介">2.2 Tomcat 简介</h2>
+<p>Tomcat 服务器软件是一个免费的开源的 Web 应用服务器。是 Apache
+软件基金会的一个核心项目。由 Apache，Sun
+和其他一些公司及个人共同开发而成。</p>
+<p>由于 Tomcat 只支持 Servlet/JSP 少量 JavaEE
+规范，所以是一个开源免费的轻量级 Web 服务器。</p>
+<blockquote>
+<p>JavaEE规范： JavaEE =&gt; Java Enterprise Edition(Java企业版)</p>
+<p>JavaEE 规范就是指 Java
+企业级开发的技术规范总和。包含13项技术规范：JDBC、JNDI、EJB、RMI、JSP、Servlet、XML、JMS、Java
+IDL、JTS、JTA、JavaMail、JAF</p>
+</blockquote>
+<p>因为 Tomcat 支持 Servlet/JSP 规范，所以 Tomcat 也被称为 Web
+容器、Servlet 容器。JavaWeb 程序需要依赖 Tomcat 才能运行。</p>
+<p>Tomcat的官网: <a target="_blank" rel="noopener" href="https://tomcat.apache.org/">Apache Tomcat® -
+Welcome!</a></p>
+<h2 id="tomcat-基本使用">2.3 Tomcat 基本使用</h2>
+<p><strong>下载：</strong> 直接从官方网站下载：<a
+target="_blank" rel="noopener" href="https://tomcat.apache.org/download-90.cgi">Apache Tomcat® - Apache
+Tomcat 9 Software Downloads</a></p>
+<blockquote>
+<p>Tomcat软件类型说明： - tar.gz文件，是 linux 和 mac
+操作系统下的压缩版本 - zip文件，是 window
+操作系统下压缩版本（我们选择zip文件）</p>
+</blockquote>
+<p>Tomcat 是绿色版，直接解压即可</p>
+<blockquote>
+<p>注意，Tomcat
+在解压缩的时候，解压所在的目录可以任意，但最好解压到一个不包含中文和空格的目录，因为后期在部署项目的时候，如果路径有中文或者空格可能会导致程序部署失败。</p>
+</blockquote>
+<p>Tomcat 目录结构：</p>
+<p><img
+src="https://img.zhubaoduo.com/HTTP协议与Tomcat服务器-2.2.png" srcset="/img/loading.gif" lazyload /></p>
+<p><code>bin</code>：目录下有两类文件，一种是以<code>.bat</code>结尾的，是
+Windows 系统的可执行文件，一种是以 <code>.sh</code> 结尾的，是 Linux
+系统的可执行文件。 <code>webapps</code>：就是以后项目部署的目录。</p>
+<p><strong>卸载</strong>：绿色版直接删除目录即可</p>
+<p><strong>启动</strong>：双击 Tomcat 解压目录
+/bin/<strong>startup.bat</strong> 文件即可启动 Tomcat</p>
+<blockquote>
+<p>注意: Tomcat 服务器启动后，黑窗口不会关闭，只要黑窗口不关闭，就证明
+Tomcat 服务器正在运行</p>
+</blockquote>
+<p>Tomcat 的默认端口为
+8080，所以在浏览器的地址栏输入：<code>http://127.0.0.1:8080</code>
+即可访问 Tomcat 服务器，127.0.0.1 也可以使用 localhost
+代替。如：<code>http://localhost:8080</code></p>
+<blockquote>
+<p>Tomcat 启动的过程中，遇到控制台有中文乱码时，可以修改
+conf/logging.prooperties 文件，将下面这行的 UTF-8 改为 GBK</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs prooperties">java.util.logging.ConsoleHandler.encoding = UTF-8<br></code></pre></td></tr></table></figure>
+<p><strong>关闭</strong>： 直接×掉运行窗口：强制关闭（不建议）
+bin\shutdown.bat：正常关闭 Ctrl+C：正常关闭</p>
+<p><strong>部署项目</strong>： 将项目放置到 webapps 目录下，
+即部署完成</p>
+<p><strong>常见问题一</strong>：Tomcat启动时，窗口一闪而过 检查
+JAVA_HOME 环境变量是否正确配置</p>
+<p><strong>常见问题二</strong>：端口号冲突
+找到对应程序，将其关闭掉，或者修改 Tomcat 启动的端口号，需要修改
+conf/server.xml 文件中的 port</p>
+<blockquote>
+<p>注: HTTP 协议默认端口号为80，如果将 Tomcat 端口号改为80，则将来访问
+Tomcat 时，将不用输入端口号。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Web%E5%BC%80%E5%8F%91/" class="category-chain-item">Web开发</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Tomcat/" class="print-no-link">#Tomcat</a>
+      
+        <a href="/tags/HTTP/" class="print-no-link">#HTTP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HTTP协议与Tomcat服务器</div>
+      <div>http://example.com/2023/08/07/Java开发/应用框架/后端/HTTP协议与Tomcat服务器/HTTP协议与Tomcat服务器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/08/10/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/MySQL%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" title="MySQL简易教程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySQL简易教程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/05/Java%E5%BC%80%E5%8F%91/%E5%BA%94%E7%94%A8%E6%A1%86%E6%9E%B6/%E5%90%8E%E7%AB%AF/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Maven%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" title="Maven使用教程">
+                        <span class="hidden-mobile">Maven使用教程</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

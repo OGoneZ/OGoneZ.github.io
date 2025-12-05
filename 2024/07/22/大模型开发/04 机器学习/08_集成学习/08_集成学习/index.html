@@ -1,0 +1,1223 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 概述 集成学习（Ensemble Learning）并不是一种具体的算法，而是一种思想：将多个单模型组合成一个综合模型，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。 1.1 术语说明 基学习器 (base learner)、基模型(base model)、基估计器 (base estimator)，指的是集成学习中的单个模型。 进一步将基学习器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="08_集成学习">
+<meta property="og:url" content="http://example.com/2024/07/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 概述 集成学习（Ensemble Learning）并不是一种具体的算法，而是一种思想：将多个单模型组合成一个综合模型，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。 1.1 术语说明 基学习器 (base learner)、基模型(base model)、基估计器 (base estimator)，指的是集成学习中的单个模型。 进一步将基学习器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/ml.png">
+<meta property="article:published_time" content="2024-07-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:05:04.424Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="集成学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/ml.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>08_集成学习 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="08_集成学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-22 00:00" pubdate>
+          2024年7月22日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          67 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="机器学习"
+        id="heading-61bb1751fd355596e307767d1927c855" role="tab" data-toggle="collapse" href="#collapse-61bb1751fd355596e307767d1927c855"
+        aria-expanded="true"
+      >
+        机器学习
+        <span class="list-group-count">(10)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-61bb1751fd355596e307767d1927c855"
+           role="tabpanel" aria-labelledby="heading-61bb1751fd355596e307767d1927c855">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/07/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/01_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A6%82%E8%A7%88/" title="01_机器学习概览"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_机器学习概览</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/02_%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%90%86%E8%AE%BA/" title="02_机器学习基本理论"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_机器学习基本理论</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/13/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/03_KNN%E7%AE%97%E6%B3%95/03_KNN%E7%AE%97%E6%B3%95/" title="03_KNN算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_KNN算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/14/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/04_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/04_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" title="04_线性回归"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_线性回归</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/16/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/05_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92/" title="05_逻辑回归"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_逻辑回归</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/18/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/06_%E5%86%B3%E7%AD%96%E6%A0%91/06_%E5%86%B3%E7%AD%96%E6%A0%91/" title="06_决策树"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">06_决策树</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/19/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" title="07_朴素贝叶斯"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">07_朴素贝叶斯</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/22/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/08_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" title="08_集成学习"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">08_集成学习</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/23/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/09_K-means%E8%81%9A%E7%B1%BB/09_K-means%E8%81%9A%E7%B1%BB/" title="09_K-means聚类"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">09_K-means聚类</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/07/25/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/10_%E6%84%9F%E7%9F%A5%E6%9C%BA/" title="10_感知机"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">10_感知机</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">08_集成学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="概述">1 概述</h1>
+<p>集成学习（Ensemble
+Learning）并不是一种具体的算法，而是一种思想：<strong>将多个单模型组合成一个综合模型</strong>，从而克服单一模型可能存在的局限性，提高准确性和稳定性，获得比单一模型更好的泛化能力。</p>
+<h2 id="术语说明">1.1 术语说明</h2>
+<p>基学习器 (base learner)、基模型(base model)、基估计器 (base
+estimator)，指的是集成学习中的单个模型。 进一步将基学习器分为弱学习器
+(weak learner)和强学习器(strong learner)
+，弱学习器是表现略优于随机猜测的学习器。对于二元分类问题，弱分类器定义为准确率约为
+50%
+的分类器；强学习器则是实现了出色的预测性能，在二元分类问题中准确率大于等于
+80%。</p>
+<blockquote>
+<p>注意：很多资料将基学习器和弱学习器混为一谈，因为集成学习（尤其是串行方法）可以有效地将弱学习器提升为强学习器。</p>
+</blockquote>
+<h2 id="why-集成学习">1.2 Why 集成学习</h2>
+<h3 id="偏差-方差均衡">1.2.1 偏差-方差均衡</h3>
+<p>为了减少测试误差而增加训练误差的做法被称为<strong>偏差-方差权衡</strong>，也是许多正则化技术背后的驱动原则。</p>
+<ul>
+<li><strong>偏差（Bias）</strong>
+衡量的是预测值与真实值之间的平均差异。偏差越大，模型在训练集上的预测准确率就越低。高偏差是指训练过程中的误差较大，优化意味着尝试降低偏差。</li>
+<li><strong>方差（Variance）</strong>
+衡量的是给定模型在不同实现之间的预测差异。方差越大，模型对未知数据的预测准确率越低。高方差是指测试和验证过程中的误差较大，泛化是指试图降低方差。</li>
+</ul>
+<p>偏差和方差分别反向代表了模型在训练集和测试集上的准确率，我们希望同时降低模型偏差和方差，但同时降低两者并不总是可行的，因此需要进行正则化。正则化会降低模型方差，但代价是增加偏差。</p>
+<p>模型总误差由偏差、方差和数据集随机性导致的不可约误差构成： <span
+class="math display"><em>E</em><em>r</em><em>r</em><em>o</em><em>r</em> = <em>B</em><em>i</em><em>a</em><em>s</em><sup>2</sup> + <em>V</em><em>a</em><em>r</em><em>i</em><em>a</em><em>n</em><em>c</em><em>e</em> + <em>I</em><em>r</em><em>r</em><em>e</em><em>d</em><em>u</em><em>c</em><em>i</em><em>b</em><em>l</em><em>e</em> <em>E</em><em>r</em><em>r</em><em>o</em><em>r</em></span></p>
+<h3 id="多模型优势">1.2.1 多模型优势</h3>
+<p>任何一种模型都包含众多变量，例如训练数据、超参数等，这些变量会影响最终模型的总误差。因此，即使是单一训练算法也可能产生不同的模型，每个模型都有各自的偏差、方差和不可约误差。通过组合多个不同的模型，集成算法可以降低总体误差，保留每个模型自身的复杂性和优势，例如对特定数据子集的低偏差。</p>
+<p>一般来说，组合模型之间的<strong>多样性越大</strong>，最终的集成模型就越准确。由多种欠正则化模型，即与训练数据过拟合的模型，组成的集成模型性能优于单一正则化模型（集成森林中的决策树不需要剪枝）。集成学习还可以帮助解决高维数据引发的问题，有效替代降维方法。</p>
+<h1 id="算法分类">2 算法分类</h1>
+<p>集成学习主要分为并行和串行两种方法：</p>
+<ul>
+<li>并行方法会将每个基学习器与其他基学习器分开单独训练</li>
+<li>串行方法训练一个新的基础学习器，使其能够最小化前一步训练的模型所犯的错误</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/08_集成学习-08_parallel_sequential.png" srcset="/img/loading.gif" lazyload /></p>
+<p>并行方法进一步分为同质学习器和异质学习器，而串行方法通常使用同质学习器。</p>
+<ul>
+<li>同质（Homogeneous）：使用相同的基础学习算法来生成基学习器</li>
+<li>异质（Heterogeneous）：使用不同的基础学习算法来生成基学习器</li>
+</ul>
+<p>目前最流行的三种集成学习技术是 Bagging、Boosting 和 Stacking。</p>
+<h2 id="bagging">2.1 Bagging</h2>
+<p>Bagging（Bootstrap
+Aggregating，自助聚合）通过自助采样（bootstrap）构建多个基学习器，然后将这些基学习器的预测结果进行组合（分类问题采用投票法，回归问题采用平均法）</p>
+<p>特点：Bagging
+旨在<strong>减少方差</strong>，尤其在基学习器存在较大方差时效果显著。</p>
+<p>典型算法：</p>
+<ul>
+<li>随机森林（Random
+Forest）：通过构建大量决策树并进行投票来提高分类性能。</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/08_集成学习-08_bagging.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="boosting">2.2 Boosting</h2>
+<p>Boosting（提升）是一种迭代方法，模型是按顺序训练的，每个新模型都试图纠正先前模型的错误，最后通过对所有模型的预测进行加权平均。</p>
+<p>特点：Boosting
+旨在<strong>减少偏差</strong>，通过逐步改进模型提高预测的准确性，常常应用于简单的基学习器（如决策树桩）。</p>
+<p>典型算法：</p>
+<ul>
+<li>AdaBoost (Adaptive
+Boosting)：为每个训练样本分配一个权重，并在每次迭代中调整这些权重。</li>
+<li>Gradient Boosting Machine (GBM)：GBM 是一种更通用的 Boosting
+算法，它使用梯度下降来优化损失函数。</li>
+<li>XGBoost (Extreme Gradient Boosting)：GBM
+的一种优化版本，在效率、精度上都有很大的提升。</li>
+<li>LightGBM (Light Gradient Boosting Machine)：另一种 GBM
+的优化版本，它使用基于直方图的算法来加速训练过程，并减少内存使用，特别适用于处理大规模数据集。</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/08_集成学习-08_boosting.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="stacking">2.3 Stacking</h2>
+<p>Stacking（堆叠）是将多个基模型的预测结果作为新的特征输入到元学习器（Meta
+Learner）中进行训练，元学习器的目标是学习如何最好地组合基学习器的预测结果。</p>
+<p>特点：利用不同模型的优势，获得比单个模型更好的性能。</p>
+<p><img
+src="https://img.zhubaoduo.com/08_集成学习-08_stacking.png" srcset="/img/loading.gif" lazyload /></p>
+<h1 id="随机森林">3 随机森林</h1>
+<p>随机森林是 Bagging 的一个变体，在以决策树为基学习器构建 Bagging
+集成的基础上，进一步在决策树训练过程中引入了<strong>随机特征选择</strong>，更加增强了模型的多样性。</p>
+<ol type="1">
+<li>Bootstrap采样： 从原始数据集中使用 Bootstrap
+有放回抽样，形成多个子集，每个子集用于训练一颗决策树</li>
+<li>构建决策树：每棵树进行节点分裂时，不必考虑所有特征，而是随机选取一部分特征进行分裂</li>
+<li>集成学习：分类任务采用投票法，回归任务采用平均法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><br>model = RandomForestClassifier()<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>n_estimators</code>： 决策树数量，（default = 10）</li>
+<li><code>Criterion</code>： entropy、 或者 gini, (default = gini)</li>
+<li><code>max_depth</code>：指定树的最大深度， （default = None
+表示树会尽可能的生长）</li>
+<li><code>max_features</code>=“auto”，决策树构建时使用的最大特征数量
+<ul>
+<li>“auto”：<code>max _ features=sqrt(n _ features)</code></li>
+<li>“sqrt”： <code>max _ features=sqrt (n_ features)</code> (same as
+“auto”)</li>
+<li>“log2”：<code>max _features=log2(n_features)</code></li>
+<li>None：<code>max _ features=n_features</code></li>
+</ul></li>
+<li><code>bootstrap</code>：是否采用有放回抽样，如果为 False
+将会使用全部训练样本，（default = True）</li>
+</ul>
+<p>随机森林通过集成多个决策树提高了泛化能力且对噪声数据不敏感，适合解决复杂问题。</p>
+<h1 id="boosting-1">4 Boosting</h1>
+<h2 id="adaboost">4.1 AdaBoost</h2>
+<p>Adaptive Boosting（自适应提升）是基于 Boosting
+思想实现集成学习算法，自适应体现在根据前一轮模型的错误调整样本的权重。主要有两个特点：</p>
+<ol type="1">
+<li>提高上一轮被弱学习器分类错误的样本权重</li>
+<li>对弱学习器进行线性组合，提高分类效果好的弱学习器权重</li>
+</ol>
+<p>AdaBoost 训练过程：</p>
+<ol type="1">
+<li><p><strong>初始化样本权重</strong>：给每个样本分配一个相等的初始权重，对于
+<span class="math inline"><em>N</em></span> 个样本，初始权重为： <span
+class="math display">$$w_i^{(1)}=\frac{1}{N}$$</span></p></li>
+<li><p><strong>训练弱学习器</strong>：根据当前样本权重训练一个弱学习器，目标是最小化加权误差，第
+<span class="math inline"><em>t</em></span> 轮得到的弱学习器加权误差为：
+<span class="math display">$$\varepsilon_{t} = \sum_{i=1}^{N}
+w_{i}^{(t)} \cdot I(y_{i} \neq h_{t}(x_{i}))$$</span></p></li>
+</ol>
+<ul>
+<li><span class="math inline"><em>ε</em><sub><em>t</em></sub></span>: 第
+<span class="math inline"><em>t</em></span>
+轮弱分类器的加权错误率。</li>
+<li><span class="math inline"><em>N</em></span>: 训练样本的总数。</li>
+<li><span
+class="math inline"><em>w</em><sub><em>i</em></sub><sup>(<em>t</em>)</sup></span>:
+第 <span class="math inline"><em>t</em></span> 轮中第 <span
+class="math inline"><em>i</em></span>
+个样本的权重。权重在每轮迭代中都会根据前一轮的表现进行调整（分错的样本权重增加，分对的样本权重减少）。</li>
+<li><span class="math inline"><em>I</em>(⋅)</span>: 指示函数 (Indicator
+Function)。
+<ul>
+<li>如果括号内的条件 (<span
+class="math inline"><em>y</em><sub><em>i</em></sub> ≠ <em>h</em><sub><em>t</em></sub>(<em>x</em><sub><em>i</em></sub>)</span>)
+为真（即弱分类器 <span
+class="math inline"><em>h</em><sub><em>t</em></sub></span> 分错了样本
+<span
+class="math inline"><em>x</em><sub><em>i</em></sub></span>），则函数值为
+<span class="math inline">1</span>。</li>
+<li>如果条件为假（即弱分类器 <span
+class="math inline"><em>h</em><sub><em>t</em></sub></span> 分对了样本
+<span
+class="math inline"><em>x</em><sub><em>i</em></sub></span>），则函数值为
+<span class="math inline">0</span>。</li>
+</ul></li>
+<li><span class="math inline"><em>y</em><sub><em>i</em></sub></span>: 第
+<span class="math inline"><em>i</em></span> 个样本的真实标签。</li>
+<li><span
+class="math inline"><em>h</em><sub><em>t</em></sub>(<em>x</em><sub><em>i</em></sub>)</span>:
+第 <span class="math inline"><em>t</em></span> 轮弱分类器对第 <span
+class="math inline"><em>i</em></span> 个样本的预测结果。</li>
+</ul>
+<ol start="3" type="1">
+<li><p><strong>更新学习器权重</strong>：计算第 <span
+class="math inline"><em>t</em></span>
+轮弱学习器的权重，该弱学习器误差越小，权重越大，第 <span
+class="math inline"><em>t</em></span> 轮的弱学习器 <span
+class="math inline"><em>α</em><sub><em>t</em></sub></span> 的权重为：
+<span class="math display">$$\alpha_{t} = \frac{1}{2} ln \left( \frac{1
+- \varepsilon_{t}}{\varepsilon_{t}} \right)$$</span></p></li>
+<li><p><strong>更新样本权重</strong>：根据当前学习器的表现，更新样本权重，误分类样本的权重会增加，正确分类样本的权重会降低，权重更新公式为：
+<span
+class="math display"><em>w</em><sub><em>i</em></sub><sup>(<em>t</em> + 1)</sup> = <em>w</em><sub><em>i</em></sub><sup>(<em>t</em>)</sup> ⋅ <em>e</em><sup>−<em>α</em><sub><em>t</em></sub><em>y</em><sub><em>i</em></sub><em>h</em><sub><em>t</em></sub>(<em>x</em><sub><em>i</em></sub>)</sup></span></p></li>
+<li><p><strong>归一化权重</strong>：对所有样本的权重进行归一化，使所有样本权重和为
+1。</p></li>
+<li><p><strong>构建强学习器</strong>：对所有弱学习器进行加权组合，预测时通过加权投票确定最终类别。</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> AdaBoostClassifier, AdaBoostRegressor<br></code></pre></td></tr></table></figure>
+<p>AdaBoost 简单易实现，但是对异常值敏感，容易过拟合。</p>
+<h2 id="gbdt">4.2 GBDT</h2>
+<p>GBDT（Gradient Boosting Decision
+Trees）梯度提升树使用<strong>梯度提升</strong>的思想，通过迭代训练一系列决策树（通常是
+CART
+树），每次训练时通过减少前一个模型的误差（拟合残差）来提升模型的性能。</p>
+<p>GBDT
+使用梯度下降的方式来最小化损失函数。回归任务通常是均方误差（MSE），分类任务通常是对数损失（Log
+Loss）。</p>
+<ol type="1">
+<li><p><strong>初始化</strong>：初始化一个弱学习器，通常是一个常数（训练集的平均标签值）
+<span
+class="math display">$$\hat{y}_0=\frac{1}{n}\sum_{i=1}^ny_i$$</span></p></li>
+<li><p><strong>计算负梯度（残差）</strong>：计算损失函数在当前模型预测值处的负梯度，作为残差的近似值</p></li>
+<li><p><strong>训练决策树</strong>：构建一颗新的决策树，新决策树并不是拟合真实标签，而是尽可能地拟合残差</p></li>
+<li><p><strong>更新模型</strong>：将新树的预测结果乘以学习率 <span
+class="math inline"><em>η</em></span> 后加入到现有模型中 <span
+class="math display"><em>F</em><sub><em>m</em> + 1</sub>(<em>x</em>) = <em>F</em><sub><em>m</em></sub>(<em>x</em>) + <em>η</em><em>h</em><sub><em>m</em></sub>(<em>x</em>)</span></p></li>
+<li><p><strong>得到强学习器</strong>：最终将所有树的预测值求和得到最终结果</p></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> GradientBoostingClassifier, GradientBoostingRegressor<br></code></pre></td></tr></table></figure>
+<h2 id="xgboost">4.3 XGBoost</h2>
+<p>XGBoost 算法是 GBDT 算法的一种改进和优化，由陈天奇在其论文<a
+target="_blank" rel="noopener" href="https://arxiv.org/pdf/1603.02754">《<em>XGBoost: A Scalable Tree
+Boosting System</em>》</a>中提出。</p>
+<p>XGBoost 的算法流程与 GBDT 类似，但做了一些改进：</p>
+<ol type="1">
+<li>损失函数：引入正则化项，可以防止过拟合</li>
+<li>梯度提升：使用二阶泰勒展开近似损失函数，可以更精确地计算梯度和残差</li>
+<li>分裂点查找：实现了精确贪心算法和近似贪心算法，可以高效地查找最佳分裂点</li>
+<li>缺失值处理：可以自动学习缺失值的分裂方向</li>
+<li>运行速度：使用了加权分位数 sketch
+和稀疏感知算法，通过缓存优化和模型并行来提高算法速度</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> xgboost <span class="hljs-keyword">as</span> xgb<br><br><span class="hljs-comment"># 将数据处理成数据集格式DMatrix格式</span><br><span class="hljs-comment"># DMatrix数据结构 支持缺失值，优化存储和计算，，并且可以加速训练</span><br>dm_train = xgb.DMatrix(X_train, y_train)<br>dm_test = xgb.DMatrix(X_test)<br><br><span class="hljs-comment"># 设置模型参数</span><br>params = &#123;<br>    <span class="hljs-string">&#x27;booster&#x27;</span>: <span class="hljs-string">&#x27;gbtree&#x27;</span>,           <span class="hljs-comment"># 用于训练的基学习器类型</span><br>    <span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multi:softmax&#x27;</span>,  <span class="hljs-comment"># 指定模型的损失函数</span><br>    <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">3</span>,                <span class="hljs-comment"># 类别的数量</span><br>    <span class="hljs-string">&#x27;gamma&#x27;</span>: <span class="hljs-number">0.1</span>,                  <span class="hljs-comment"># 控制每次分裂的最小损失函数减少量</span><br>    <span class="hljs-string">&#x27;max_depth&#x27;</span>: <span class="hljs-number">6</span>,                <span class="hljs-comment"># 决策树最大深度</span><br>    <span class="hljs-string">&#x27;lambda&#x27;</span>: <span class="hljs-number">2</span>,                   <span class="hljs-comment"># L2正则化权重</span><br>    <span class="hljs-string">&#x27;subsample&#x27;</span>: <span class="hljs-number">0.8</span>,              <span class="hljs-comment"># 控制每棵树训练时随机选取的样本比例</span><br>    <span class="hljs-string">&#x27;colsample_bytree&#x27;</span>: <span class="hljs-number">0.8</span>,       <span class="hljs-comment"># 用于控制每棵树或每个节点的特征选择比例</span><br>    <span class="hljs-string">&#x27;eta&#x27;</span>: <span class="hljs-number">0.001</span>,                  <span class="hljs-comment"># 学习率</span><br>    <span class="hljs-string">&#x27;seed&#x27;</span>: <span class="hljs-number">10</span>,                    <span class="hljs-comment"># 设置随机数生成器的种子</span><br>    <span class="hljs-string">&#x27;nthread&#x27;</span>: <span class="hljs-number">16</span>,                 <span class="hljs-comment"># 指定了训练时并行使用的线程数</span><br>&#125;<br><br><span class="hljs-comment"># num_boost_round 代表 boosting 过程的迭代次数，也就是弱学习器的数量</span><br>model = xgb.train(params, dm_train, num_boost_round=<span class="hljs-number">200</span>)<br><br><span class="hljs-comment"># 模型预测</span><br>y_pred = model.predict(dm_test)<br></code></pre></td></tr></table></figure>
+<p><code>params</code>的参数：</p>
+<ol type="1">
+<li><code>booster</code>：指定用于训练的基学习器类型，默认值为
+<code>'gbtree'</code>，表示使用传统的决策树作为基学习器；其他的选项包括
+<code>'gblinear'</code>和
+<code>'dart'</code>，前者表示使用线性回归或逻辑回归，后者也是基于决策树的模型，但具有丢弃树的机制，降低过拟合风险。通常
+<code>'gbtree'</code>适用于大多数问题，尤其涉及到非线性关系；<code>'dart'</code>适用于复杂数据集，尤其是在出现过拟合时。如果数据集较小或线性关系较强，可以尝试使用
+<code>'gblinear'</code>。</li>
+<li><code>objective</code>：指定模型的损失函数（优化目标），常见的选项包括：
+<ul>
+<li><code>'reg:squarederror'</code>：回归任务中的均方误差（MSE），用于回归任务。</li>
+<li><code>'reg:logistic'</code>：回归任务中的逻辑回归，通常用于二分类任务。</li>
+<li><code>'binary:logistic'</code>：二分类任务中的逻辑回归，输出概率值。</li>
+<li><code>'binary:logitraw'</code>：二分类任务中的逻辑回归，输出未经过
+Sigmoid 处理的原始值。</li>
+<li><code>'multi:softmax'</code>：多分类任务，输出为每个类别的最大概率。</li>
+<li><code>'multi:softprob'</code>：多分类任务，输出为每个类别的概率分布。</li>
+</ul></li>
+<li><code>eta</code>/<code>learning_rate</code>：XGBoost
+中的学习率，默认值为 0.3，推荐将初始值设置为 0.01 到 0.1。</li>
+<li><code>alpha</code>和 <code>lambda</code>：前者控制 L1
+正则化项（Lasso）的强度，默认为 <code>0</code>；后者控制 L2
+正则化项（Ridge）的强度，默认为 <code>1</code>。</li>
+<li><code>scale_pos_weight</code>：用于处理类别不平衡问题，尤其是二分类问题。在类别严重不平衡的情况下，通过调整这个参数来加大少数类的权重，使得模型更关注少数类样本，默认值为
+1。</li>
+<li><code>gamma</code>：用来控制每次分裂的最小损失函数减少量，该参数控制树的生长，越大的
+<code>gamma</code> 会使得树更小，减小过拟合的风险，默认值为
+0，意味着模型不会受到分裂的限制，树会尽可能深，直到节点中没有足够的样本。</li>
+<li><code>num_class</code>：用于多分类任务的参数，表示类别的数量。对于二分类任务，无需设置该参数。</li>
+<li><code>colsample_bytree</code> / <code>colsample_bylevel</code> /
+<code>colsample_bynode</code>：控制在每棵树、每一层、每个节点上采样特征的比例。这些参数用于控制模型的复杂度。较小的值会增加模型的随机性，从而防止过拟合；较大的值则意味着每棵树使用更多的特征，可能导致过拟合。
+<ul>
+<li><code>colsample_bytree</code>：每棵树使用的特征比例（默认为
+1.0）。</li>
+<li><code>colsample_bylevel</code>：每一层使用的特征比例（默认为
+1.0）。</li>
+<li><code>colsample_bynode</code>：每个节点使用的特征比例（默认为
+1.0）。</li>
+</ul></li>
+</ol>
+<p>除了
+<code>param</code>字典提供的模型参数外，<code>train</code>函数也有一些超参数：</p>
+<ol type="1">
+<li><code>num_boost_round</code>：树的训练轮数，设置较小的
+<code>learning_rate</code>并增加训练轮数可以提高模型的稳定性。</li>
+<li><code>early_stopping_rounds</code>：用于实现早期停止机制。当指定轮次的训练中，验证集上的损失函数不再减少时，训练会自动停止，避免过拟合。</li>
+<li><code>feval</code>：设置用户自定义的评估函数，这种方式允许用户灵活地使用任何适合特定任务的评估指标，需要注意的是评估函数有两个参数，一个表示模型预测值（NumPy
+的 <code>ndarray</code>对象），一个是训练数据（XGBoost 的
+<code>DMatrix</code>对象）；函数返回一个二元组
+<code>(name, value)</code>，其中 <code>name</code>
+是评估指标的名称，<code>value</code> 是指标的值。</li>
+<li><code>obj</code>：设置用户自定义的目标函数，目标函数用于计算每一步的梯度和二阶导数，从而指导模型的优化过程，有兴趣的读者可以自行研究。</li>
+<li><code>evals</code>：用于指定一个或多个验证集，其值是包含一个或多个
+<code>(data, label)</code>
+元组的列表，每个元组代表一个评估数据集，数据集需要是
+<code>DMatrix</code>对象。在训练过程中，XGBoost
+会在每一轮迭代后评估验证集上的性能，通常用于监控训练过程中的过拟合或调整超参数。</li>
+<li><code>eval_results</code>：存储在训练过程中计算的所有评估结果，通常传入一个字典。</li>
+<li><code>verbose_eval</code>：控制训练过程中评估结果的输出频率，可以设置为一个整数，表示多少轮迭代输出一次评估结果，也可以设置为
+<code>True</code>或
+<code>False</code>，表示每轮都输出或不输出任何评估结果。</li>
+<li><code>xgb_model</code>：用于加载之前训练好的模型，以便从中断点继续训练。你可以指定一个
+<code>xgb_model</code> 文件或者传入一个 <code>Booster</code> 对象。</li>
+<li><code>callbacks</code>：在训练过程中添加自定义的回调函数，回调函数可以在每一轮迭代时提供额外的控制，如自动停止训练、调整学习。</li>
+</ol>
+<p>可以通过 <code>plot_importance</code> 查看每个特征的重要性。
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">fig, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">15</span>))<br><br><span class="hljs-comment"># ax 可以指定坐标系，此外还可以设置 max_num_features 限制特征数量</span><br>xgb.plot_importance(model, ax=ax)<br></code></pre></td></tr></table></figure> <img
+src="https://img.zhubaoduo.com/08_集成学习-08_xgb_plot_importance.png" srcset="/img/loading.gif" lazyload /></p>
+<h2 id="lightbgm">4.4 LightBGM</h2>
+<p>LightGBM（Light Gradient Boosting
+Machine）是由微软开发的梯度提升算法，相较于
+GBDT，有更快的训练速度，更低的内存消耗，更高的准确率，支持大规模数据和并行学习。</p>
+<p>核心技术：</p>
+<ol type="1">
+<li><strong>基于直方图的算法 (Histogram-based Algorithm)</strong>
+<ul>
+<li><strong>基本思想：</strong> 将连续的特征值离散化成若干个 bins
+(桶)，然后使用这些 bins
+来构建直方图。在寻找最佳分裂点时，只需遍历直方图中的
+bins，而不需要遍历所有的数据点。</li>
+<li><strong>优点：</strong>
+<ul>
+<li>减少了寻找最佳分裂点的计算量，提高了训练速度。</li>
+<li>降低了内存消耗，因为只需要存储直方图，而不需要存储原始的特征值。</li>
+</ul></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>离散化可能会损失一些信息，但通常情况下，这种损失可以忽略不计。</li>
+</ul></li>
+</ul></li>
+<li><strong>Leaf-wise 的生长策略 (Leaf-wise Tree Growth)</strong>
+<ul>
+<li><strong>基本思想：</strong> 每次从当前所有的叶子节点中，选择分裂收益最大的节点进行分裂，而不是像
+level-wise 那样，每次分裂所有的叶子节点。</li>
+<li><strong>优点：</strong>
+<ul>
+<li>可以生成更复杂的树模型，因为 leaf-wise
+每次只分裂一个节点，可以更精细地拟合数据。</li>
+<li>通常情况下，leaf-wise 的准确率比 level-wise 更高。</li>
+</ul></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>容易过拟合，特别是当数据集较小的时候。可以通过设置 <code>max_depth</code> 参数来限制树的深度，防止过拟合。</li>
+</ul></li>
+</ul></li>
+<li><strong>直接支持类别特征 (Direct Support for Categorical
+Features)</strong>
+<ul>
+<li><strong>基本思想：</strong> LightGBM
+可以直接处理类别特征，不需要进行 one-hot 编码。</li>
+<li><strong>优点：</strong>
+<ul>
+<li>节省了内存空间，因为不需要存储大量的 one-hot 编码。</li>
+<li>提高了训练速度，因为不需要对类别特征进行额外的处理。</li>
+</ul></li>
+</ul></li>
+<li><strong>Gradient-based One-Side Sampling (GOSS)</strong>
+<ul>
+<li><strong>基本思想：</strong> 在每次迭代中，LightGBM
+不是使用所有的样本来计算梯度，而是只使用一部分样本。GOSS
+算法选择梯度绝对值较大的样本（这些样本的梯度比较重要），并随机选择梯度绝对值较小的样本。</li>
+<li><strong>优点：</strong>
+<ul>
+<li>减少了计算梯度的样本数量，提高了训练速度。</li>
+</ul></li>
+</ul></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> lightgbm <span class="hljs-keyword">as</span> lgb<br><br><span class="hljs-comment"># 将数据转化为 LightGBM 的数据格式</span><br>train_data = lgb.Dataset(X_train, y_train)<br>test_data = lgb.Dataset(X_test, y_test, reference=train_data)<br><br><span class="hljs-comment"># 设置模型参数</span><br>params = &#123;<br>    <span class="hljs-string">&#x27;objective&#x27;</span>: <span class="hljs-string">&#x27;multiclass&#x27;</span>,   <span class="hljs-comment"># 多分类问题</span><br>    <span class="hljs-string">&#x27;num_class&#x27;</span>: <span class="hljs-number">3</span>,              <span class="hljs-comment"># 类别数量</span><br>    <span class="hljs-string">&#x27;metric&#x27;</span>: <span class="hljs-string">&#x27;multi_logloss&#x27;</span>,   <span class="hljs-comment"># 多分类对数损失函数</span><br>    <span class="hljs-string">&#x27;boosting_type&#x27;</span>: <span class="hljs-string">&#x27;gbdt&#x27;</span>,     <span class="hljs-comment"># 使用梯度提升树算法</span><br>    <span class="hljs-string">&#x27;num_leaves&#x27;</span>: <span class="hljs-number">31</span>,            <span class="hljs-comment"># 叶子节点数</span><br>    <span class="hljs-string">&#x27;learning_rate&#x27;</span>: <span class="hljs-number">0.05</span>,       <span class="hljs-comment"># 学习率</span><br>    <span class="hljs-string">&#x27;feature_fraction&#x27;</span>: <span class="hljs-number">0.75</span>,    <span class="hljs-comment"># 每次训练时随机选择特征的比例</span><br>    <span class="hljs-string">&#x27;early_stopping_rounds&#x27;</span>: <span class="hljs-number">10</span>  <span class="hljs-comment"># 连续多少论没有性能提升就停止迭代</span><br>&#125;<br><span class="hljs-comment"># 模型训练</span><br>model = lgb.train(params=params, train_set=train_data, num_boost_round=<span class="hljs-number">200</span>, valid_sets=[test_data])<br><br><span class="hljs-comment"># 模型预测，结果为各标签的概率值，类似 sklearn 的 predict_proba</span><br>y_proba = model.predict(X_test, num_iteration=model.best_iteration)<br><br><span class="hljs-comment"># 将预测结果处理成标签</span><br>y_pred= np.argmax(y_proba, axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>objective</code>：设置优化目标函数（损失函数），可选值有：
+<ul>
+<li><code>'regression'</code>：回归任务。</li>
+<li><code>'binary'</code>：二分类任务。</li>
+<li><code>'multiclass'</code>：多分类任务。</li>
+<li><code>'multiclassova'</code>：多分类任务，使用一对多的策略。</li>
+<li><code>'rank_xendcg'</code>、<code>'lambdarank'</code>：排名任务。</li>
+</ul></li>
+<li><code>metric</code>：评估模型性能的指标，可选值有：
+<ul>
+<li><code>'l2'</code>、<code>'mean_squared_error'</code>：回归任务中的均方误差。</li>
+<li><code>'binary_error'</code>：二分类错误率。</li>
+<li><code>'multi_logloss'</code>：多分类对数损失。</li>
+<li><code>'auc'</code>：二分类任务中的 AUC。</li>
+<li><code>'precision'</code>、<code>'recall'</code>、<code>'f1'</code>：精度、召回率、F1分数。</li>
+</ul></li>
+<li><code>boosting_type</code>：设置提升类型，可选值有：
+<ul>
+<li><code>'gbdt'</code>：传统的梯度提升树。</li>
+<li><code>'dart'</code>：具有随机丢弃树机制来防止过拟合的决策树。</li>
+<li><code>'goss'</code>：通过单边梯度抽样来加速训练。</li>
+<li><code>'rf'</code>：随机森林。</li>
+</ul></li>
+<li><code>num_leaves</code>/<code>max_depth</code>：决策树的叶子节点数 /
+决策树的最大深度，控制树的复杂度。</li>
+<li><code>lambda_l1</code>/<code>lambda_l2</code>：L1 和 L2
+正则化参数，用于控制模型的复杂度，防止过拟合。</li>
+<li><code>max_bin</code>：
+用于分割连续特征（数据分箱）的最大箱子数。</li>
+<li><code>feature_fraction</code>：每次训练时随机选择特征的比例。</li>
+<li><code>early_stopping_rounds</code>：
+设置评估指标在连续多少轮迭代中没有改进时，训练会提前停止。</li>
+<li><code>learning_rate</code>：学习率。</li>
+<li><code>n_estimators</code>：弱学习器的数量。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="category-chain-item">机器学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="print-no-link">#机器学习</a>
+      
+        <a href="/tags/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0/" class="print-no-link">#集成学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>08_集成学习</div>
+      <div>http://example.com/2024/07/22/大模型开发/04 机器学习/08_集成学习/08_集成学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月22日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/23/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/09_K-means%E8%81%9A%E7%B1%BB/09_K-means%E8%81%9A%E7%B1%BB/" title="09_K-means聚类">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">09_K-means聚类</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/19/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/04%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/07_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF/" title="07_朴素贝叶斯">
+                        <span class="hidden-mobile">07_朴素贝叶斯</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

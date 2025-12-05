@@ -1,0 +1,982 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 自然语言概述 自然语言处理 （Natural Language Processing，NLP）的目标就是让计算机理解人类语言，发展至今大致可以分为下面几个阶段：  1950年代 - 1970年代：基于规则的系统，如 ELIZA 聊天机器人。 1980年代 - 1990年代：基于统计方法，如 N-gram、隐马尔可夫（HMM）和最大熵模型。 1990年代 - 2010年代：基于机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05_RNN循环神经网络">
+<meta property="og:url" content="http://example.com/2024/08/10/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 自然语言概述 自然语言处理 （Natural Language Processing，NLP）的目标就是让计算机理解人类语言，发展至今大致可以分为下面几个阶段：  1950年代 - 1970年代：基于规则的系统，如 ELIZA 聊天机器人。 1980年代 - 1990年代：基于统计方法，如 N-gram、隐马尔可夫（HMM）和最大熵模型。 1990年代 - 2010年代：基于机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/dl.jpg">
+<meta property="article:published_time" content="2024-08-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:10:13.346Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/dl.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>05_RNN循环神经网络 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="05_RNN循环神经网络"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-10 00:00" pubdate>
+          2024年8月10日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="深度学习"
+        id="heading-8c5f70f85d5a691a5f1dc7be5473736b" role="tab" data-toggle="collapse" href="#collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+        aria-expanded="true"
+      >
+        深度学习
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+           role="tabpanel" aria-labelledby="heading-8c5f70f85d5a691a5f1dc7be5473736b">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/03/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/01_%E5%BC%A0%E9%87%8F%E5%92%8C%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/" title="01_张量和自动微分"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_张量和自动微分</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/05/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="02_神经网络基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_神经网络基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/07/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="03_损失函数和优化算法"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">03_损失函数和优化算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="04_CNN卷积神经网络"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_CNN卷积神经网络</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/10/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="05_RNN循环神经网络"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">05_RNN循环神经网络</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">05_RNN循环神经网络</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="自然语言概述">1 自然语言概述</h1>
+<p>自然语言处理 （Natural Language
+Processing，NLP）的目标就是让计算机理解人类语言，发展至今大致可以分为下面几个阶段：</p>
+<ol type="1">
+<li>1950年代 - 1970年代：基于规则的系统，如 ELIZA 聊天机器人。</li>
+<li>1980年代 - 1990年代：基于统计方法，如
+N-gram、隐马尔可夫（HMM）和最大熵模型。</li>
+<li>1990年代 -
+2010年代：基于机器学习阶段，如逻辑回归、SVM、决策树、条件随机场（CRF）等。</li>
+<li>2010年代至今：基于深度学习阶段，如 RNN、LSTM、GRU、Transformer
+等，取代了机器学习阶段复杂的手工特征工程。</li>
+</ol>
+<h1 id="词嵌入层">2 词嵌入层</h1>
+<p>词向量是用于表示单词语义的向量，也可以看作词的特征向量。将词映射到向量的技术称为<strong>词嵌入（Word
+Embedding）</strong>。</p>
+<ol type="1">
+<li>对文本进行分词，根据需要进行清洗和标准化。</li>
+<li>构建词表（Vocabulary），每个词对应一个索引。</li>
+<li>构建<strong>词嵌入矩阵（Embedding
+Matrix）</strong>，将词索引映射到对应的词向量。</li>
+</ol>
+<p>使用 <code>nn.Embedding</code>
+初始化词嵌入矩阵，刚开始是随机的，但是会根据训练数据进行更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br>torch.manual_seed(<span class="hljs-number">66</span>)<br><br><span class="hljs-comment"># num_embeddings: 词表大小</span><br><span class="hljs-comment"># embedding_dim: 词向量的维度</span><br>embed = nn.Embedding(num_embeddings=<span class="hljs-number">10</span>, embedding_dim=<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+<p>中文可以使用 jieba 进行分词，然后使用 embedding 进行词嵌入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> jieba<br><br>text = <span class="hljs-string">&quot;我爱自然语言处理，我爱机器学习。&quot;</span><br><br>stop_words = [<span class="hljs-string">&#x27;，&#x27;</span>, <span class="hljs-string">&#x27;。&#x27;</span>]<br><br><span class="hljs-comment"># 分词,过滤停用词</span><br>words = [word <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> jieba.lcut(text) <span class="hljs-keyword">if</span> word <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> stop_words]<br><br><span class="hljs-comment"># 去重,利用列表的天然索引,构建词表,也就是索引到词的映射</span><br>vocab = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>(words))<br><br><span class="hljs-comment"># 构建词到索引的映射</span><br>word2idx = &#123;word: idx <span class="hljs-keyword">for</span> idx, word <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(vocab)&#125;<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;vocab: <span class="hljs-subst">&#123;vocab&#125;</span>\nword2idx: <span class="hljs-subst">&#123;word2idx&#125;</span>\n&#x27;</span>)<br><br><span class="hljs-comment"># 构建词嵌入层,参数为词表的大小,词嵌入的维度</span><br>embed = nn.Embedding(num_embeddings=<span class="hljs-built_in">len</span>(vocab), embedding_dim=<span class="hljs-number">4</span>)<br><br><span class="hljs-keyword">for</span> word, idx <span class="hljs-keyword">in</span> word2idx.items():<br>    word_vector = embed(torch.tensor(idx))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;idx&#125;</span>:<span class="hljs-subst">&#123;word:&lt;<span class="hljs-number">5</span>&#125;</span>\t<span class="hljs-subst">&#123;word_vector.detach().numpy()&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">/opt/miniconda3/envs/dl/lib/python3.12/site-packages/jieba/_compat.py:18: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources
+Building prefix dict from the default dictionary ...
+Loading model from cache /var/folders/7s/cqjc9twd1ngbl_f7129vv6bc0000gn/T/jieba.cache
+Loading model cost 0.262 seconds.
+Prefix dict has been built successfully.
+
+
+vocab: [&#39;我&#39;, &#39;爱&#39;, &#39;学习&#39;, &#39;自然语言&#39;, &#39;处理&#39;, &#39;机器&#39;]
+word2idx: &#123;&#39;我&#39;: 0, &#39;爱&#39;: 1, &#39;学习&#39;: 2, &#39;自然语言&#39;: 3, &#39;处理&#39;: 4, &#39;机器&#39;: 5&#125;
+
+0:我     [ 0.4493519  0.5169413  1.2761555 -0.8370651]
+1:爱     [ 0.34803388 -1.4246558  -0.34050012  1.2940743 ]
+2:学习    [-0.6461887   0.34460533 -0.17983264  1.2675058 ]
+3:自然语言  [-0.93329114  0.03108138 -0.53790736  0.850731  ]
+4:处理    [-0.63556343  1.4519262  -2.4802206   0.20678595]
+5:机器    [ 0.76517206 -1.9815451  -0.8956107   0.71585   ]</code></pre>
+<h1 id="循环网络层">3 循环网络层</h1>
+<p>在这之前的神经网络都是前馈（feedforward）型神经网络，也就是传播方向是单向的，虽然结构简单，但是无法学习时序数据的本质关系。而语言是具有时序关系的，如果打乱文本顺序，那么语义将会发生改变。于是循环神经网络（Recurrent
+Neural Network，RNN）应运而生。</p>
+<p>循环神经网络（RNN）是一种具有隐藏状态并允许将过去输出用作输入的神经网络。</p>
+<ol type="1">
+<li>输入层：接收序列数据。</li>
+<li>隐藏层：循环神经网络的核心，隐藏层由一组循环连接的神经元组成。每个神经元不仅处理当前时间步的输入，还结合前一个时间步的隐藏状态信息。这种状态记录了网络对过去输入的记忆，使其能够理解当前元素的上下文。
+<ul>
+<li>循环连接：循环神经网络的关键，使得网络能够拥有时间维度上的记忆。通过将上一个时间步的隐藏状态传递到当前时间步，利用历史信息来影响当前的输出。</li>
+<li><span
+class="math display"><em>h</em><sub><em>t</em></sub> = <em>f</em>(<em>W</em><sub><em>h</em></sub><em>h</em><sub><em>t</em> − 1</sub> + <em>W</em><sub><em>x</em></sub><em>x</em><sub><em>t</em></sub> + <em>b</em><sub><em>h</em></sub>)</span></li>
+<li>当前时间步输入 <span
+class="math inline"><em>x</em><sub><em>t</em></sub></span> 和权重 <span
+class="math inline"><em>W</em><sub><em>x</em></sub></span>
+、上一个时间步的输出 <span
+class="math inline"><em>h</em><sub><em>t</em> − 1</sub></span> 和权重
+<span
+class="math inline"><em>W</em><sub><em>h</em></sub></span>，执行完求积后，加上偏置项
+<span class="math inline"><em>b</em><sub><em>h</em></sub></span>
+，经过激活函数 <span
+class="math inline"><em>f</em></span>，得到当前时间步的隐藏状态 <span
+class="math inline"><em>h</em><sub><em>t</em></sub></span> 。</li>
+</ul></li>
+<li>激活函数：激活函数对当前时间步的输入和前一个时间步的隐藏状态组合进行转换，以引入非线性特征，常用
+<code>tanh</code> ，或 <code>ReLU</code> 激活函数。</li>
+<li>输出层：输出层根据处理后的信息生成网络的预测结果，具体结构取决于具体任务。在语言模型中，它可能会预测序列中的下一个词。</li>
+</ol>
+<p><img
+src="https://img.zhubaoduo.com/05_RNN循环神经网络-rnn.png" srcset="/img/loading.gif" lazyload /></p>
+<p>在中间层中，可以使用多个隐藏层，每个隐藏层都有其自身的激活函数、权重和偏置。在一个隐藏层内，会循环多个时间步运行，所有时间步使用相同的权重。隐藏状态会递归地使用当前输入和前一个隐藏状态进行更新。</p>
+<p>使用 <code>nn.RNN</code> 构建 RNN 层。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># input_size: 输入的维度，也就是输入词向量的维度</span><br><span class="hljs-comment"># hidden_size: 隐藏层的维度，对应神经元的个数，也就是输出词向量的维度</span><br><span class="hljs-comment"># num_layers: 层数，可以直接堆叠多层 RNN，上一层的输出作为下一层的输入</span><br>rnn = nn.RNN(input_size=<span class="hljs-number">4</span>, hidden_size=<span class="hljs-number">5</span>, num_layers=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<p>由于第一个时间步没有上一个时间步，所以需要传入初始的隐状态 <span
+class="math inline"><em>h</em><sub>0</sub></span>，当然也可以省略此参数，默认为全零向量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">input_ = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>)<br>h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>)<br><br><span class="hljs-comment"># input: [seq_len, batch_size, input_size]，输入数据</span><br><span class="hljs-comment"># h0: [num_layers, batch_size, hidden_size]，初始隐状态</span><br>output, hn = rnn(input_, h0)<br><span class="hljs-comment"># output: [seq_len, batch_size, hidden_size]，输出数据</span><br><span class="hljs-comment"># hn: [num_layers, batch_size, hidden_size]，最终隐状态</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27; input shape: <span class="hljs-subst">&#123;<span class="hljs-built_in">list</span>(input_.shape)&#125;</span> h0 shape: <span class="hljs-subst">&#123;<span class="hljs-built_in">list</span>(h0.shape)&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;output shape: <span class="hljs-subst">&#123;<span class="hljs-built_in">list</span>(output.shape)&#125;</span> hn shape: <span class="hljs-subst">&#123;<span class="hljs-built_in">list</span>(hn.shape)&#125;</span>\n&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs"> input shape: [3, 2, 4] h0 shape: [2, 2, 5]
+output shape: [3, 2, 5] hn shape: [2, 2, 5]</code></pre>
+<p>这里只讨论最简单的单向 RNN，不考虑双向 RNN。</p>
+<p><code>input(3, 2, 4) [seq_len, batch_size, input_size]</code></p>
+<ul>
+<li>seq_len(输入序列的长度)：也就是时间步，对应每次处理多少个 token，在
+RNN 中循环迭代的次数，比如 [‘自然’, ‘语言’, ‘处理’]
+作为一个样本输入。</li>
+<li>batch_size(批量大小)：也就是每次处理多少个样本，2
+个样本就是两个序列为 3 的输入。</li>
+<li>input_size(输入大小)：也就是输入的维度，每个 token 的词向量维度为
+4.</li>
+</ul>
+<p><code>output(3, 2, 5) [seq_len, batch_size, hidden_size]</code></p>
+<ul>
+<li>seq_len 和 batch_size 和输入相同。</li>
+<li>hidden_size(隐藏层大小)：也就是输出的词向量维度，对应隐藏层神经元的个数。</li>
+</ul>
+<p><code>h0(2, 2, 5) [num_layers, batch_size, hidden_size]</code></p>
+<ul>
+<li>num_layers(层数)：初始隐状态的数量和层数相关。</li>
+</ul>
+<p>hn 就是下一层的初始隐状态，所以和 h0 维度完全一致。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;output: \n<span class="hljs-subst">&#123;output&#125;</span>\nhn: \n<span class="hljs-subst">&#123;hn&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">output: 
+tensor([[[ 0.7895,  0.2584,  0.6769, -0.7742, -0.3992],
+         [-0.1474,  0.2047,  0.6347, -0.5527,  0.4279]],
+
+        [[-0.4130,  0.1993,  0.1084, -0.2995,  0.4788],
+         [ 0.1983,  0.3894,  0.3309, -0.6349,  0.0103]],
+
+        [[ 0.3517, -0.1504,  0.1967, -0.5610,  0.2852],
+         [-0.2731,  0.2325,  0.1598, -0.6785,  0.2983]]],
+       grad_fn=&lt;StackBackward0&gt;)
+hn: 
+tensor([[[ 0.6711, -0.7225, -0.6723,  0.5355,  0.5065],
+         [-0.4187, -0.4725, -0.7022,  0.6706,  0.3087]],
+
+        [[ 0.3517, -0.1504,  0.1967, -0.5610,  0.2852],
+         [-0.2731,  0.2325,  0.1598, -0.6785,  0.2983]]],
+       grad_fn=&lt;StackBackward0&gt;)</code></pre>
+<ul>
+<li><code>input[3, 2, 4]</code>：3 个时间步，2 个批次，每个输入单词是 4
+维词向量。</li>
+<li><code>h0[2, 2, 5]</code>：2 层 RNN，2 个批次，每层 5
+个神经元都需要有初始隐状态输入。</li>
+<li><code>output[3, 2, 5]</code>：3 个时间步，2 个批次，每个单词变成了 5
+维词向量。</li>
+<li><code>hn[2, 2, 5]</code>：2 层 RNN，2 个批次，每层 5
+个神经元都需有输出。</li>
+</ul>
+<p>其中 output 对应的是最后一层 RNN 的所有时间步输出，而 hn
+对应的是每一层最后一个时间步的输出，一个是时间上的表示，一个是空间上的表示。具体使用哪个，需要根据具体任务来定。</p>
+<p>不使用
+<code>batch_first=True</code>，使用输入参数<code>seq_len=3, batch_size=2, input_size=4</code>，对应到实际场景
+<code>[["自然", "语言", "处理"], ["人", "喜欢", "狗"]]</code>，有如下表示：</p>
+<p><img
+src="https://img.zhubaoduo.com/05_RNN循环神经网络-rnn_param.png" srcset="/img/loading.gif" lazyload /></p>
+<p>建议设置
+<code>batch_first=True</code>，<code>input</code>的维度顺序变为<code>[batch_size, seq_len, input_size]</code>，<code>output</code>的维度顺序变为<code>[batch_size, seq_len, hidden_size]</code>。</p>
+<p><img
+src="https://img.zhubaoduo.com/05_RNN循环神经网络-batch_first.png" srcset="/img/loading.gif" lazyload /></p>
+<p>经过隐藏层之后输出只改变了每个词向量的维度，相当于改变了词向量的空间大小，由神经网络抽取了词的其他维度信息。</p>
+<h1 id="自定义-dataset">4 自定义 Dataset</h1>
+<p>我们希望输入一个序列 x，输出一个序列 y
+作为目标，需要自定义数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch.utils.data <span class="hljs-keyword">import</span> Dataset, DataLoader<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDataset</span>(<span class="hljs-title class_ inherited__">Dataset</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, sequences, seq_len</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        初始化函数。</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            sequences (list of int): 包含所有数据（词索引）的列表。</span><br><span class="hljs-string">            seq_len (int): RNN 的序列长度。</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.sequences = sequences<br>        <span class="hljs-variable language_">self</span>.seq_len = seq_len<br>        <span class="hljs-comment"># 计算样本数, 比如 len(sequences) = 10, seq_len = 3, 0~9的索引, </span><br>        <span class="hljs-comment"># 后 3 个数据 7~9 留给目标序列，那么输入样本范围为 0~6，共 7 个样本</span><br>        <span class="hljs-variable language_">self</span>.num_samples = <span class="hljs-built_in">len</span>(sequences) - seq_len<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        返回数据集的大小（序列的数量）。</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.num_samples<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, idx</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        获取指定索引的序列和目标。</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            idx (int): 序列的索引。</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            tuple: 包含序列和目标的元组。</span><br><span class="hljs-string">                   序列是一个 shape 为 (sequence_length) 的 LongTensor。</span><br><span class="hljs-string">                   目标是对应序列下一个单词的索引，是一个 LongTensor。</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">if</span> idx &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> idx &gt;= <span class="hljs-variable language_">self</span>.num_samples:<br>            <span class="hljs-keyword">raise</span> IndexError(<span class="hljs-string">&quot;Index out of range&quot;</span>)<br>        <br>        x = torch.tensor(<span class="hljs-variable language_">self</span>.sequences[idx: idx + <span class="hljs-variable language_">self</span>.seq_len])<br>        y = torch.tensor(<span class="hljs-variable language_">self</span>.sequences[idx + <span class="hljs-number">1</span>: idx + <span class="hljs-variable language_">self</span>.seq_len + <span class="hljs-number">1</span>])<br>        <br>        <span class="hljs-keyword">return</span> x, y<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">words = [<span class="hljs-string">&#x27;我&#x27;</span>, <span class="hljs-string">&#x27;爱&#x27;</span>, <span class="hljs-string">&#x27;自然语言&#x27;</span>, <span class="hljs-string">&#x27;处理&#x27;</span>, <span class="hljs-string">&#x27;我&#x27;</span>, <span class="hljs-string">&#x27;爱&#x27;</span>, <span class="hljs-string">&#x27;机器&#x27;</span>, <span class="hljs-string">&#x27;学习&#x27;</span>]<br>sequences_idx = [word2idx.get(word) <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words]<br><span class="hljs-built_in">print</span>(sequences_idx)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[0, 1, 3, 4, 0, 1, 5, 2]</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = MyDataset(sequences=sequences_idx, seq_len=<span class="hljs-number">3</span>)<br><span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> dataset:<br>    <span class="hljs-built_in">print</span>(x, y)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([0, 1, 3]) tensor([1, 3, 4])
+tensor([1, 3, 4]) tensor([3, 4, 0])
+tensor([3, 4, 0]) tensor([4, 0, 1])
+tensor([4, 0, 1]) tensor([0, 1, 5])
+tensor([0, 1, 5]) tensor([1, 5, 2])</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">dataloader = DataLoader(dataset=dataset, batch_size=<span class="hljs-number">2</span>, shuffle=<span class="hljs-literal">True</span>)<br><br><span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> dataloader:<br>    <span class="hljs-built_in">print</span>(x, y)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[4, 0, 1],
+        [1, 3, 4]]) tensor([[0, 1, 5],
+        [3, 4, 0]])
+tensor([[3, 4, 0],
+        [0, 1, 3]]) tensor([[4, 0, 1],
+        [1, 3, 4]])
+tensor([[0, 1, 5]]) tensor([[1, 5, 2]])</code></pre>
+<ul>
+<li><code>dataset</code>:</li>
+</ul>
+<p>使用 <code>for i in dataset</code> 遍历数据集触发
+<code>__getitem__(self, idx)</code> 方法，<code>idx</code>
+默认会一直累加，直到遇到抛出异常停止。如果传入的数据不会发生索引越界报错，便会陷入无限循环，此时需要自定义异常抛出，或者使用
+<code>for i in range(len(dataset))</code> 的方式遍历数据集。</p>
+<ul>
+<li><code>dataloader</code>:</li>
+</ul>
+<p>使用 <code>for i in dataloader</code> 遍历数据集触发
+<code>__getitem__(self, idx)</code> 方法，需要搭配
+<code>__len()__</code> 方法的重写, <code>idx</code> 的范围会被限制在
+<code>[0, len(dataset) - 1]</code> 中。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/RNN/" class="print-no-link">#RNN</a>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>05_RNN循环神经网络</div>
+      <div>http://example.com/2024/08/10/大模型开发/05 深度学习/05_RNN循环神经网络/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月10日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/12/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/06_%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/01_%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E4%B8%8E%E8%AF%8D%E8%A1%A8%E7%A4%BA/" title="01_文本处理与词表示">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">01_文本处理与词表示</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="04_CNN卷积神经网络">
+                        <span class="hidden-mobile">04_CNN卷积神经网络</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

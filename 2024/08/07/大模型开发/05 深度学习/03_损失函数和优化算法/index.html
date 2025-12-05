@@ -1,0 +1,1423 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/logo.png">
+  <link rel="icon" href="/img/logo.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#191E23">
+  <meta name="author" content="baoduozhu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1 损失函数 损失函数（loss function），也叫代价函数（cost function）、误差函数（error function）、目标函数（objective function），是用来衡量模型参数质量的函数，衡量的方式是比较网络输出（预测值）和真实输出（真实值）的差异。模型通过最小化损失函数的值来调整参数，使其输出更接近真实值。主要有性能评估和优化指导两大作用。 1.1 分类任">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03_损失函数和优化算法">
+<meta property="og:url" content="http://example.com/2024/08/07/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="朱宝铎的技术专栏">
+<meta property="og:description" content="1 损失函数 损失函数（loss function），也叫代价函数（cost function）、误差函数（error function）、目标函数（objective function），是用来衡量模型参数质量的函数，衡量的方式是比较网络输出（预测值）和真实输出（真实值）的差异。模型通过最小化损失函数的值来调整参数，使其输出更接近真实值。主要有性能评估和优化指导两大作用。 1.1 分类任">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.zhubaoduo.com/dl.jpg">
+<meta property="article:published_time" content="2024-08-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-12-05T12:10:05.017Z">
+<meta property="article:author" content="baoduozhu">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img.zhubaoduo.com/dl.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>03_损失函数和优化算法 - 朱宝铎的技术专栏</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Zhubd</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://img.zhubaoduo.com/j35.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="03_损失函数和优化算法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-07 00:00" pubdate>
+          2024年8月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          107 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar category-bar" style="margin-right: -1rem">
+    
+
+
+
+
+
+<div class="category-list">
+  
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item 
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="深度学习"
+        id="heading-8c5f70f85d5a691a5f1dc7be5473736b" role="tab" data-toggle="collapse" href="#collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+        aria-expanded="true"
+      >
+        深度学习
+        <span class="list-group-count">(5)</span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+      <div class="category-collapse collapse show" id="collapse-8c5f70f85d5a691a5f1dc7be5473736b"
+           role="tabpanel" aria-labelledby="heading-8c5f70f85d5a691a5f1dc7be5473736b">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/2024/08/03/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/01_%E5%BC%A0%E9%87%8F%E5%92%8C%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86/" title="01_张量和自动微分"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">01_张量和自动微分</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/05/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="02_神经网络基础"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">02_神经网络基础</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/07/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/" title="03_损失函数和优化算法"
+           class="list-group-item list-group-item-action
+           active">
+          <span class="category-post">03_损失函数和优化算法</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="04_CNN卷积神经网络"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">04_CNN卷积神经网络</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2024/08/10/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="05_RNN循环神经网络"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">05_RNN循环神经网络</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+</div>
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">03_损失函数和优化算法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="损失函数">1 损失函数</h1>
+<p>损失函数（loss function），也叫代价函数（cost
+function）、误差函数（error function）、目标函数（objective
+function），是用来衡量模型参数质量的函数，衡量的方式是比较网络输出（预测值）和真实输出（真实值）的差异。模型通过最小化损失函数的值来调整参数，使其输出更接近真实值。主要有<strong>性能评估和优化指导</strong>两大作用。</p>
+<h2 id="分类任务">1.1 分类任务</h2>
+<h3 id="二元交叉熵">1.1.1 二元交叉熵</h3>
+<p>二分类任务常用二元交叉熵损失函数（Binary Cross-Entropy Loss）。</p>
+<p><span
+class="math display">$$L=-\frac{1}{n}\sum_{i=1}^{n}\left(y_{i}\mathrm{log}\widehat{y}_{i}+(1-y_{i})\mathrm{log}(1-\widehat{y}_{i})\right)$$</span></p>
+<ul>
+<li><span class="math inline"><em>𝑦</em><sub><em>𝑖</em></sub></span>
+为真实值（通常为 0 或 1）</li>
+<li><span class="math inline"><em>𝑦̂</em><sub><em>𝑖</em></sub></span>
+为预测值（表示样本 𝑖 为 1 的概率）</li>
+</ul>
+<p>这个公式是针对单个样本的，它根据真实标签 <span
+class="math inline"><em>y</em></span> 的取值（0 或
+1）只保留其中一项来计算惩罚。BCE
+只惩罚模型对正确分类的预测概率，预测概率越大，损失越小。</p>
+<p>使用 sigmoid
+激活函数在输出层进行二分类时，输出层只有一个节点，这个节点的输出表示样本属于类
+1 的概率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br>torch.manual_seed(<span class="hljs-number">66</span>)<br><br><span class="hljs-comment"># 真实标签，必须为 one-hot 编码，且必须为浮点数</span><br>y_true = torch.tensor([[<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>], [<span class="hljs-number">0</span>]], dtype=torch.<span class="hljs-built_in">float</span>)<br><span class="hljs-comment"># 最后一层的输入</span><br>last_in = torch.rand(<span class="hljs-number">3</span>, <span class="hljs-number">1</span>)<br><span class="hljs-comment"># 预测结果，表示模型预测为 1 的概率</span><br>y_pred = torch.sigmoid(last_in)<br><br>criterion = nn.BCELoss()<br>loss = criterion(y_pred, y_true)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测概率为 1 的概率为：\n<span class="hljs-subst">&#123;y_pred&#125;</span>\n损失为：<span class="hljs-subst">&#123;loss:<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">预测概率为 1 的概率为：
+tensor([[0.6219],
+        [0.5057],
+        [0.5565]])
+损失为：0.664</code></pre>
+<h3 id="多分类交叉熵">1.1.2 多分类交叉熵</h3>
+<p>多分类任务常用多分类交叉熵损失函数（Categorical Cross-Entropy
+Loss）。</p>
+<p><span
+class="math display">$$L=-\frac{1}{n}\sum_{i=1}^n\sum_{c=1}^Cy_{i,c}\log\widehat{y_{i,c}}$$</span></p>
+<ul>
+<li><span class="math inline"><em>C</em></span> 为类别数</li>
+<li><span
+class="math inline"><em>y</em><sub><em>i</em>, <em>c</em></sub></span>
+表示第 <span class="math inline"><em>i</em></span> 个样本是否为 <span
+class="math inline"><em>c</em></span> 类，使用独热编码 0 或 1</li>
+<li><span class="math inline">$\widehat{y_{i,c}}$</span> 表示第 <span
+class="math inline"><em>i</em></span> 个样本是类别 <span
+class="math inline"><em>c</em></span> 的预测概率</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-cross_entropy.png" srcset="/img/loading.gif" lazyload /></p>
+<p>这个公式是针对 <span class="math inline"><em>C</em></span>
+个类别的多分类问题，它利用了 One-Hot
+编码的特性，只保留其中一项来计算惩罚，CCE 只惩罚对真实类别 <span
+class="math inline"><em>c</em></span> 的预测概率 <span
+class="math inline">$\widehat{y_{i,c}}$</span>，相当于对每一个样本的正确标签预测概率值取
+log ，然后求和。</p>
+<p>使用 softmax
+进行多分类时，有几个分类，输出层就有几个神经元，每个神经元输出一个分类的概率，所有概率和为
+1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 手动实现，y_pred为 softmaw 输出预测值，y_true 为真实标签或独热编码标签</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">cross_entropy_loss</span>(<span class="hljs-params">y_pred, y_true</span>):<br>    <span class="hljs-comment"># 如果二者形状一致，则说明 y_true 为独热编码标签</span><br>    <span class="hljs-keyword">if</span> y_pred.size == y_true.size:<br>        y_true = y_true.argmaw(dim=<span class="hljs-number">1</span>)  <span class="hljs-comment"># 转换为真实标签索引</span><br>    <br>    <span class="hljs-comment"># n 行代表 n 个样本</span><br>    n = y_pred.shape[<span class="hljs-number">0</span>]<br>    <br>    <span class="hljs-comment"># 加上一个小常数，防止 log(0)</span><br>    <span class="hljs-keyword">return</span> -np.<span class="hljs-built_in">sum</span>(np.log(y_pred[np.arange(n), y_true] + <span class="hljs-number">1e-7</span>)) / n<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 真实值为标签：必须是一维的，并且必须是 64 位长整型</span><br>y_true = torch.tensor([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>])<br><span class="hljs-comment"># 最后一层的输入矩阵，共 3 个样本，每个样本 5 个特征，对应最终输出层的 5 个类别</span><br>last_in = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br><span class="hljs-comment"># 经过 softmaw 激活，CrossEntropyLoss 不需要此步骤</span><br>y_pred = torch.softmax(last_in, dim=-<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># CrossEntropyLoss(Logits, Target) = NLLLoss(softmax(Logits)，Target)</span><br>criterion = nn.CrossEntropyLoss()<br>loss = criterion(last_in, y_true)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测概率：\n<span class="hljs-subst">&#123;y_pred&#125;</span>\n 损失：<span class="hljs-subst">&#123;loss:<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;自定义交叉熵损失：<span class="hljs-subst">&#123;cross_entropy_loss(y_pred.detach().numpy(), y_true.detach().numpy())&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">预测概率：
+tensor([[0.0875, 0.1952, 0.2651, 0.3005, 0.1516],
+        [0.1701, 0.5141, 0.1368, 0.0314, 0.1476],
+        [0.3212, 0.2801, 0.0933, 0.1782, 0.1272]])
+ 损失：1.463
+自定义交叉熵损失：1.4625852902730305</code></pre>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 真实值为概率：</span><br>y_true = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>).softmax(dim=-<span class="hljs-number">1</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;真实值：\n<span class="hljs-subst">&#123;y_true&#125;</span>&#x27;</span>)<br><br>loss = criterion(last_in, y_true)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测概率：\n<span class="hljs-subst">&#123;y_pred&#125;</span>\n 损失：<span class="hljs-subst">&#123;loss:<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">真实值：
+tensor([[0.3730, 0.2605, 0.1388, 0.1145, 0.1133],
+        [0.0738, 0.0385, 0.4177, 0.2543, 0.2157],
+        [0.3849, 0.4449, 0.0261, 0.1309, 0.0132]])
+预测概率：
+tensor([[0.0875, 0.1952, 0.2651, 0.3005, 0.1516],
+        [0.1701, 0.5141, 0.1368, 0.0314, 0.1476],
+        [0.3212, 0.2801, 0.0933, 0.1782, 0.1272]])
+ 损失：1.823</code></pre>
+<blockquote>
+<p>注意：<code>CrossEntropyLoss</code> 内部完成了 softmax
+操作和计算损失，因此不需要再进行 softmax
+操作，并且返回的是一批次的平均损失，结果是标量。<code>CrossEntropyLoss</code>
+等价于 <code>LogSoftmax</code> + <code>NLLLoss</code>。</p>
+</blockquote>
+<h2 id="回归任务">1.2 回归任务</h2>
+<h3 id="mael1-loss">1.2.1 MAE(L1 Loss)</h3>
+<p>平均绝对误差（Mean Absolute Error，MAE），也称 L1 Loss。</p>
+<p><span
+class="math display">$$L=\frac{1}{n}\sum_{i=1}^n|y_i-\hat{y_i}|$$</span></p>
+<p>L1 Loss对异常值不太敏感，0
+点不可导，产生稀疏矩阵，常常作为正则化项添加到其他损失函数中。 但是L1
+Loss 最大的问题就是在 0 处不平滑，在优化过程中会跳过极小值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">y_true = torch.tensor([<span class="hljs-number">5.0</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">4.0</span>])<br>y_pred = torch.tensor([<span class="hljs-number">5.5</span>, <span class="hljs-number">9.2</span>, <span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>])<br><br>criterion = nn.L1Loss()<br>loss = criterion(y_true, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;L1Loss: <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">L1Loss: 1.000</code></pre>
+<h3 id="msel2-loss">1.2.2 MSE(L2 Loss)</h3>
+<p>均方误差（Mean Squared Error ，MSE），也称 L2 Loss。</p>
+<p><span
+class="math display">$$L=\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\widehat{y}_{i})^{2}$$</span></p>
+<p>L2 Loss
+由于平方会放大误差，因此对离群点敏感，当预测值与真实值偏差较大时，容易发生梯度爆炸。也常常作为正则化项。</p>
+<p>梯度爆炸:网络层之间的梯度（值大于1.0）重复相乘导致的指数级增长会产生梯度爆炸。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">y_true = torch.tensor([<span class="hljs-number">5.0</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">4.0</span>])<br>y_pred = torch.tensor([<span class="hljs-number">5.5</span>, <span class="hljs-number">9.2</span>, <span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>])<br><br>criterion = nn.MSELoss()<br>loss = criterion(y_true, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;MSELoss: <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">MSELoss: 2.375</code></pre>
+<blockquote>
+<p>至于为什么 API 命名为 <code>L1Loss</code> 和
+<code>MSELoss</code>，如此不对称，是因为数学传统，<code>L1Loss</code>
+是基于 L1 范数的，而 <code>MSELoss</code> 基于 L2 范数的，但 MSE
+是平方而不是平方根，为了避免歧义，直接使用了 MSELoss，而不是
+L2Loss。</p>
+</blockquote>
+<h3 id="smooth-l1">1.2.3 Smooth L1</h3>
+<p>MAE 对异常值不敏感，但在 0 处不可导，MSE 在 0
+处光滑，但在误差较大时容易梯度爆炸。于是我们将两者结合，在绝对值小于 1
+时使用 MSE，大于 1 时使用 MAE，并进行缩放和平移，得到 Smooth L1
+损失函数，既光滑又对异常值不敏感。</p>
+<p><span class="math display">$$SmoothL1=
+\begin{cases}
+\frac{1}{2}(y_i-\widehat{y}_i)^2,|y_i-\widehat{y}_i|&lt;1 \\
+|y_i-\widehat{y}_i|-\frac{1}{2},|y_i-\widehat{y}_i|\geq1 &amp;
+\end{cases}$$</span></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">y_true = torch.tensor([<span class="hljs-number">5.0</span>, <span class="hljs-number">6.2</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">4.0</span>])<br>y_pred = torch.tensor([<span class="hljs-number">5.5</span>, <span class="hljs-number">9.2</span>, <span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>])<br><br>criterion = nn.SmoothL1Loss()<br>loss = criterion(y_true, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;SmppthL1Loss: <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">SmppthL1Loss: 0.688</code></pre>
+<p>可视化三个损失函数，L1 Loss 是将 MSE 压缩 0.5 倍，并将 MAE 下移
+0.5，使二者对齐平滑。此外还有很多对齐方法，比如 0.25 倍的 MSE 和 下移 1
+的 MAE，在 x=2 时可以对齐。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br>sns.set_theme()<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mae</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">abs</span>(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mse</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x ** <span class="hljs-number">2</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">smooth_l1</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.where(<span class="hljs-built_in">abs</span>(x) &lt; <span class="hljs-number">1</span>, <span class="hljs-number">0.5</span> * mse(x), mae(x) - <span class="hljs-number">0.5</span>)<br><br>x = np.arange(-<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.01</span>)<br>plt.plot(x, mae(x), label=<span class="hljs-string">&#x27;MAE&#x27;</span>)<br>plt.plot(x, mse(x), label=<span class="hljs-string">&#x27;MSE&#x27;</span>)<br>plt.plot(x, smooth_l1(x), label=<span class="hljs-string">&#x27;Smooth L1&#x27;</span>)<br>plt.legend()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;matplotlib.legend.Legend at 0x310ada210&gt;</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-03_损失函数和优化算法_31_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<h1 id="数值微分">2 数值微分</h1>
+<p>损失函数的值越小，说明我们的参数选择的越合适。想要求得损失函数的最小值，最基本的想法就是对损失函数求导，解出导数为
+0
+的点判断是否为极小值/最小值。然而实际的函数直接求导是困难的，不容易得到解析解，这时可以使用数值微分的方式，求到某点的导数，在实际工程中非常常见。</p>
+<blockquote>
+<p>注意：实际上，深度学习中的优化器（Optimizer）在训练时使用的并不是数值微分，而是基于解析梯度（Analytical
+Gradient），通过一个名为 <strong>反向传播（Backpropagation,
+BP）</strong>
+的算法来计算梯度，运算效率极高，这里使用数值微分旨在帮助理解梯度和它的作用。</p>
+</blockquote>
+<h2 id="导数">2.1 导数</h2>
+<p>回忆导数的定义：</p>
+<p><span
+class="math display">$$f^{\prime}(x)=\frac{df(x)}{dx}=\lim_{\Delta
+x\to0}\frac{f(x+\Delta x)-f(x)}{\Delta x}$$</span></p>
+<p>当 <span class="math inline"><em>x</em></span> 发生一个微小的变化
+<span class="math inline"><em>Δ</em><em>x</em></span> 时，函数值 <span
+class="math inline"><em>f</em>(<em>x</em>)</span> 也会发生变化；当 <span
+class="math inline"><em>Δ</em><em>x</em></span> 趋近于 0 时，此时 <span
+class="math inline"><em>f</em>(<em>x</em>)</span> 的“变化率”就是 <span
+class="math inline"><em>x</em></span> 这一点的导数值。</p>
+<p>利用这个定义，在深度学习这种黑箱中，我们可以在不知道导数表达式，甚至不知道函数表达式的情况下，直接以数值计算的方式，利用微小的差分来求函数某点的导数值，这种方法称为<strong>数值微分</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">x</span>):  <br>    <span class="hljs-keyword">return</span> x ** <span class="hljs-number">2</span><br><br><span class="hljs-comment"># 数值微分求导数，x 为标量</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">numerical_diff</span>(<span class="hljs-params">f, x</span>):<br>    h = <span class="hljs-number">1e-4</span><br>    <span class="hljs-keyword">return</span> (f(x + h) - f(x - h)) / (h * <span class="hljs-number">2</span>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;x=2 处的导数：<span class="hljs-subst">&#123;numerical_diff(f, <span class="hljs-number">2</span>):<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;x=4 处的导数：<span class="hljs-subst">&#123;numerical_diff(f, <span class="hljs-number">4</span>):<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">x=2 处的导数：4.000
+x=4 处的导数：8.000</code></pre>
+<p>这里以 x
+为中心，计算两边发生微小变化后的差分，可以避免只计算单向增大时的误差。这种方法称为
+中心差分。另外，微小值 delta
+不能太小，否则会导致浮点数表示的精度不够，出现舍入误差。</p>
+<h2 id="偏导数">2.2 偏导数</h2>
+<p>如果函数 <span class="math inline"><em>f</em></span>
+的自变量并非单个元素，而是多个元素。比如：</p>
+<p><span
+class="math display"><em>f</em>(<em>x</em>, <em>y</em>) = <em>x</em><sup>2</sup> + <em>y</em><sup>2</sup> + <em>x</em><em>y</em></span></p>
+<p>可以将其他自变量都置为常数，只求 <span
+class="math inline"><em>x</em></span> 和 <span
+class="math inline"><em>y</em></span> 一个自变量的导数，称为偏导数：</p>
+<p><span class="math display">$$ \frac{\partial f}{\partial x} = 2x + y
+\qquad \frac{\partial f}{\partial y} = 2y + x$$</span></p>
+<p>推广到多个自变量：</p>
+<p><span class="math display">$$\frac{\partial f}{\partial
+x_i}(a_1,a_2,...,a_n)=\lim_{\Delta x_i\to0}\frac{f(a_1,...a_i+\Delta
+x_i,...,a_n)-f(a_1,...a_i,...,a_n)}{\Delta x_i}$$</span></p>
+<p>偏导数同样可以用数值微分的方法求解，即只改变一个自变量、其它不变，做差分计算函数值的变化率。应用到深度学习中，就是只改变一个参数、其他不变，计算损失函数的偏导数。</p>
+<h2 id="梯度">2.3 梯度</h2>
+<p>多元函数 <span
+class="math inline"><em>𝑓</em>(<em>𝑥</em><sub>1</sub>, …, <em>𝑥</em><sub><em>𝑛</em></sub>)</span>
+关于每个变量 <span
+class="math inline"><em>𝑥</em><sub><em>𝑖</em></sub></span> 都有偏导数
+<span class="math inline">$\frac{\partial f}{\partial x_i}$</span>，在点
+<span class="math inline"><em>𝑎</em></span>
+处，这些偏导数定义了一个向量，称为 <span
+class="math inline"><em>f</em></span> 在点 <span
+class="math inline"><em>a</em></span> 的梯度：</p>
+<p><span class="math display">$$\nabla f(a)=\left[\frac{\partial
+f}{\partial x_1}(a),...,\frac{\partial f}{\partial
+x_n}(a)\right]$$</span></p>
+<p>函数 <span class="math inline"><em>f</em></span> 在点 <span
+class="math inline"><em>a</em></span> 有无数个方向导数，沿方向 <span
+class="math inline"><em>d̂</em></span> 移动时函数变化率为：</p>
+<p><span
+class="math display"><em>D</em><sub><em>d</em></sub><em>f</em> = |∇<em>f</em>|cos <em>θ</em></span></p>
+<p>其中 <span class="math inline"><em>θ</em></span> 是 <span
+class="math inline">∇<em>f</em></span> 与 <span
+class="math inline"><em>d̂</em></span>
+的夹角，要想找到让函数下降最快的方向，也就是让变化率最负，显然当 <span
+class="math inline">cos <em>θ</em> = −1</span>
+时，也就是梯度的反方向，下降最快。</p>
+<p>应用到深度学习中，使用数值微分计算出在 a
+点关于每个参数的偏导数，得到的向量也就是该点的梯度，梯度代表的是函数值增大最快的方向，寻找损失函数的最小值需要沿着<strong>负梯度方向</strong>。负梯度代表的是函数值减小最快的方向，但并不一定直接指向函数图像的最低点。</p>
+<p>在函数的极小值、极大值和鞍点处，梯度为 0。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">loss</span>(<span class="hljs-params">w</span>):  <span class="hljs-comment"># 损失函数可以不知道表达式，但可以通过计算得出确定参数计算出损失值</span><br>    w1, w2 = w<br>    <span class="hljs-keyword">return</span> w1 ** <span class="hljs-number">2</span> + w2 ** <span class="hljs-number">2</span> + <span class="hljs-number">5</span><br><br><br><span class="hljs-comment"># 数值微分求梯度，w 为向量</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_numerical_grad</span>(<span class="hljs-params">loss, w</span>):  <br>    h = <span class="hljs-number">1e-4</span><br>    grad = np.zeros_like(w)  <span class="hljs-comment"># 创建与 w 相同形状的梯度向量</span><br>    <br>    <span class="hljs-comment"># 遍历 w 的每一个自变量</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(w.size):<br>        tmp = w[i]  <span class="hljs-comment"># 保存当前自变量的值</span><br>        w[i] = tmp + h  <span class="hljs-comment"># 只改变当前自变量的值</span><br>        fwh1 = loss(w)  <span class="hljs-comment"># 计算 loss(w+h)</span><br>        w[i] = tmp - h  <span class="hljs-comment"># 只改变当前自变量的值</span><br>        fwh2 = loss(w)  <span class="hljs-comment"># 计算 loss(w-h)</span><br>        w[i] = tmp  <span class="hljs-comment"># 恢复当前自变量的值</span><br>        <br>        grad[i] = (fwh1 - fwh2) / (<span class="hljs-number">2</span> * h)  <span class="hljs-comment"># 计算梯度</span><br>        <br>    <span class="hljs-keyword">return</span> grad<br><br><br><span class="hljs-comment"># 数值微分求梯度，W 为输入矩阵，每一行为一个样本</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">numerical_grad</span>(<span class="hljs-params">loss, W</span>):<br>    <span class="hljs-keyword">if</span> W.ndim == <span class="hljs-number">1</span>:  <span class="hljs-comment"># 输入为向量</span><br>        <span class="hljs-keyword">return</span> _numerical_grad(loss, W)<br>    <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 输入为矩阵</span><br>        grad = np.zeros_like(W)  <span class="hljs-comment"># 创建一个和输入矩阵形状相同的梯度矩阵</span><br>        <span class="hljs-keyword">for</span> i, w <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(W):  <span class="hljs-comment"># 遍历矩阵每一行</span><br>            grad[i] = _numerical_grad(loss, w)<br>        <span class="hljs-keyword">return</span> grad<br><br><span class="hljs-comment"># 两个参数，三个样本求梯度</span><br>numerical_grad(loss, np.array([[<span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], [<span class="hljs-number">4.0</span>, <span class="hljs-number">5.0</span>], [<span class="hljs-number">6.0</span>, <span class="hljs-number">7.0</span>]]))<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">array([[ 4.,  6.],
+       [ 8., 10.],
+       [12., 14.]])</code></pre>
+<h2 id="利用数值微分训练神经网络">2.4 利用数值微分训练神经网络</h2>
+<p>这里不使用
+PyTorch，手动实现一个两层的神经网络，利用数值微分的思想计算梯度，来完成经典案例———手写数字识别。</p>
+<p>没有损失函数表达式如何求最小值？通过固定其他参数，只改变一个参数，求解损失函数对于该参数的导数，对所有参数做此操作，得到在当前点的梯度向量，然后按照梯度向量的反方向进行参数更新。</p>
+<p>激活函数实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">tanh</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.tanh(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">softmax</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> np.exp(x) / np.<span class="hljs-built_in">sum</span>(np.exp(x), axis=-<span class="hljs-number">1</span>).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p>损失函数在 1.1.2 节已经实现完毕，梯度下降在 2.3
+节已经实现完毕，这里不再重复。</p>
+<p>定义两层神经网络模型：</p>
+<ul>
+<li>输入层：输入维度 64，对应 8 * 8 的图片</li>
+<li>隐藏层：输入维度 50 ，经过 Tanh 激活函数，输出维度 10</li>
+<li>输出层：输入维度 10，经过 Softmax 激活函数，对应 10 个数字类别</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TwoLayerNet</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, input_size, output_size, hidden_size=<span class="hljs-number">50</span>, weight_init=<span class="hljs-number">0.01</span></span>):<br>        <span class="hljs-variable language_">self</span>.param = &#123;&#125;<br>        <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W1&#x27;</span>] = weight_init * np.random.randn(input_size, hidden_size)<br>        <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b1&#x27;</span>] = np.zeros(hidden_size)<br>        <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W2&#x27;</span>] = weight_init * np.random.randn(hidden_size, output_size)<br>        <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b2&#x27;</span>] = np.zeros(output_size)<br>        <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self,  x</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;前向传播，完成一次预测</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            x (_type_): 要预测的样本特征</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            _type_: 经过 softmax 的预测概率</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        W1, W2 = <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W1&#x27;</span>], <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W2&#x27;</span>]<br>        b1, b2 = <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b1&#x27;</span>], <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b2&#x27;</span>]<br>        <br>        a1 = x @ W1 + b1<br>        z1 = tanh(a1)<br>        a2 = z1 @ W2 + b2<br>        z2 = softmax(a2)<br>        <br>        <span class="hljs-keyword">return</span> z2<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">criterion</span>(<span class="hljs-params">self, y_proba, y_true</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;计算多元交叉熵损失</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            y_proba (_type_): 预测的概率值</span><br><span class="hljs-string">            y_true (_type_): 真实值标签</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            _type_: 损失值</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <br>        <span class="hljs-keyword">return</span> cross_entropy_loss(y_proba, y_true)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">accuracy</span>(<span class="hljs-params">self, y_proba, y_true</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;计算准确率</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            x (_type_): 预测的概率值</span><br><span class="hljs-string">            y_true (_type_): 真实值标签</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            _type_: 准确率</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        y_pred = np.argmax(y_proba, axis=<span class="hljs-number">1</span>)<br>        correct_num = (y_pred == y_true).<span class="hljs-built_in">sum</span>()<br>        acc = correct_num / <span class="hljs-built_in">len</span>(y_true)<br>        <br>        <span class="hljs-keyword">return</span> acc<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">grad</span>(<span class="hljs-params">self, x, y_true</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;计算当前参数的梯度</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Args:</span><br><span class="hljs-string">            x (_type_): 要预测的样本特征</span><br><span class="hljs-string">            y_true (_type_): 真实值标签</span><br><span class="hljs-string"></span><br><span class="hljs-string">        Returns:</span><br><span class="hljs-string">            _type_: 每个权重的梯度</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 这里 w 只是占位，没有实际作用，实际调用还是当前对象的 criterion 方法</span><br>        <span class="hljs-comment"># 充当适配器的作用</span><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">loss_func</span>(<span class="hljs-params">w</span>):<br>            <span class="hljs-comment"># 1. 执行前向传播</span><br>            y_proba = <span class="hljs-variable language_">self</span>.forward(x) <br>            <span class="hljs-comment"># 2. 计算损失</span><br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.criterion(y_proba, y_true)<br>        <br>        grads = &#123;&#125;<br>        <span class="hljs-comment"># 传递的 param 是引用，所以在函数内修改了 param，也会修改当前对象的 param</span><br>        grads[<span class="hljs-string">&#x27;W1&#x27;</span>] = numerical_grad(loss_func, <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W1&#x27;</span>])<br>        grads[<span class="hljs-string">&#x27;b1&#x27;</span>] = numerical_grad(loss_func, <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b1&#x27;</span>])<br>        grads[<span class="hljs-string">&#x27;W2&#x27;</span>] = numerical_grad(loss_func, <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;W2&#x27;</span>])<br>        grads[<span class="hljs-string">&#x27;b2&#x27;</span>] = numerical_grad(loss_func, <span class="hljs-variable language_">self</span>.param[<span class="hljs-string">&#x27;b2&#x27;</span>])<br>        <br>        <span class="hljs-keyword">return</span> grads<br></code></pre></td></tr></table></figure>
+<p>定义函数获取数据集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_digits<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> classification_report<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_data</span>():<br>    load_data = load_digits()<br>    X = load_data.data<br>    y = load_data.target.reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>    <br>    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=<span class="hljs-number">0.8</span>, stratify=y, random_state=<span class="hljs-number">66</span>)<br>    <br>    train_data = np.hstack([X_train, y_train])<br>    test_data  = np.hstack([X_test, y_test])<br>    <br>    <span class="hljs-keyword">return</span> train_data, test_data<br></code></pre></td></tr></table></figure>
+<p>定义函数进行训练，这里可以使用 <code>tensorboard</code>
+动态地可视化训练过程。使用 <code>pip install tensorboard</code>
+安装。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> torch.utils.tensorboard <span class="hljs-keyword">import</span> SummaryWriter<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>(<span class="hljs-params">epoch=<span class="hljs-number">100</span>, batch_size=<span class="hljs-number">32</span>, lr=<span class="hljs-number">0.1</span></span>):<br>    train_data, test_data = get_data()  <span class="hljs-comment"># 获取数据</span><br>    train_size = train_data.shape[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 训练集大小</span><br>    iter_num = train_size // batch_size + <span class="hljs-number">1</span>  <span class="hljs-comment"># 每个 epoch 迭代次数</span><br>    <br>    model = TwoLayerNet(input_size=<span class="hljs-number">64</span>, output_size=<span class="hljs-number">10</span>)<br>    <br>    <span class="hljs-string">&quot;&quot;&quot;创建 SummaryWriter 对象&quot;&quot;&quot;</span><br>    writer = SummaryWriter(<br>            log_dir=<span class="hljs-string">f&#x27;runs/<span class="hljs-subst">&#123;time.strftime(<span class="hljs-string">&#x27;%Y-%m-%d_%H-%M-%S&#x27;</span>)&#125;</span>&#x27;</span><br>        )<br>    <br>    loss_list = []<br>    acc_list = []<br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epoch):<br>        total_loss = <span class="hljs-number">0</span>  <span class="hljs-comment"># 每轮总损失</span><br>        batch_num = <span class="hljs-number">0</span>  <span class="hljs-comment"># 批次数</span><br>        correct_num = <span class="hljs-number">0</span>  <span class="hljs-comment"># 预测正确的数量</span><br>        train_num = <span class="hljs-number">0</span>  <span class="hljs-comment"># 总样本数</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(iter_num):<br>            <span class="hljs-comment"># 随机获取一个 batch 索引</span><br>            batch_mask = np.random.choice(train_size, batch_size)<br>            train = train_data[batch_mask]  <span class="hljs-comment"># 获取 batch 数据</span><br>            X_train, y_train = train[:, :-<span class="hljs-number">1</span>], train[:, -<span class="hljs-number">1</span>].astype(np.int64)  <span class="hljs-comment"># 划分特征和标签</span><br>            <br>            <span class="hljs-comment"># 前向传播，预测概率</span><br>            y_proba = model.forward(X_train)<br>            <span class="hljs-comment"># 计算损失，cross_entropy_loss 返回的是每批次的平均损失</span><br>            loss = model.criterion(y_proba, y_train)<br>            total_loss += loss<br>            batch_num += <span class="hljs-number">1</span><br>            <br>            <span class="hljs-comment"># 计算预测标签</span><br>            y_pred = y_proba.argmax(axis=<span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 计算批次正确个数和批次数量</span><br>            correct_num += (y_pred == y_train).<span class="hljs-built_in">sum</span>()<br>            train_num += <span class="hljs-built_in">len</span>(y_train)<br>            <br>            <span class="hljs-comment"># 计算梯度，更新参数</span><br>            grads = model.grad(X_train, y_train)  <br>            <span class="hljs-keyword">for</span> key <span class="hljs-keyword">in</span> model.param.keys():<br>                model.param[key] -= lr * grads[key]<br>            <br>            <span class="hljs-comment"># 手打进度条</span><br>            <span class="hljs-built_in">print</span>(<br>                <span class="hljs-string">f&quot;\rEpoch: <span class="hljs-subst">&#123;epoch+<span class="hljs-number">1</span>:<span class="hljs-number">0</span>&gt;<span class="hljs-number">2</span>&#125;</span>&quot;</span><br>                <span class="hljs-string">f&quot;[<span class="hljs-subst">&#123;<span class="hljs-string">&#x27;=&#x27;</span> * <span class="hljs-built_in">int</span>(batch_num / iter_num * <span class="hljs-number">30</span>):&lt;<span class="hljs-number">30</span>&#125;</span>] &quot;</span><br>                <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;batch_num / iter_num * <span class="hljs-number">100</span>:&gt;<span class="hljs-number">6.2</span>f&#125;</span>%  &quot;</span><br>                <span class="hljs-string">f&quot;Loss: <span class="hljs-subst">&#123;total_loss / batch_num:<span class="hljs-number">.3</span>f&#125;</span>  &quot;</span><br>                <span class="hljs-string">f&quot;Acc: <span class="hljs-subst">&#123;correct_num / train_num * <span class="hljs-number">100</span>:<span class="hljs-number">.3</span>f&#125;</span>%&quot;</span>, <br>                end=<span class="hljs-string">&#x27;&#x27;</span><br>            )<br>            <br>        <span class="hljs-built_in">print</span>()<br>        <br>        epoch_loss = total_loss / batch_num<br>        epoch_acc = correct_num / train_num<br>        loss_list.append(epoch_loss)<br>        acc_list.append(epoch_acc)<br>        <br>        <span class="hljs-string">&quot;&quot;&quot;记录 loss 和 acc 到 Tensorboard&quot;&quot;&quot;</span><br>        writer.add_scalar(<span class="hljs-string">&#x27;loss&#x27;</span>, epoch_loss, epoch)<br>        writer.add_scalar(<span class="hljs-string">&#x27;acc&#x27;</span>, epoch_acc, epoch)<br>        <br>    <span class="hljs-keyword">return</span> model, loss_list, acc_list<br><br><br><span class="hljs-comment"># 为了节省时间，这里只训练 5 轮</span><br>model, loss_list, acc_list = train(epoch=<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Epoch: 01[==============================] 100.00%  Loss: 1.295  Acc: 65.903%
+Epoch: 02[==============================] 100.00%  Loss: 0.349  Acc: 92.639%
+Epoch: 03[==============================] 100.00%  Loss: 0.222  Acc: 95.139%
+Epoch: 04[==============================] 100.00%  Loss: 0.156  Acc: 96.944%
+Epoch: 05[==============================] 100.00%  Loss: 0.111  Acc: 97.708%</code></pre>
+<p>使用现成工具 <code>tqdm</code> 显示进度条，不需要自己手写
+<code>print</code>。使用<code>pip install tqdm</code> 安装。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm<br><br>dataloader = <span class="hljs-built_in">range</span>(<span class="hljs-number">100000000</span>)<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> tqdm(dataloader, desc=<span class="hljs-string">&#x27;训练&#x27;</span>):<br>        <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">训练: 100%|██████████| 100000000/100000000 [00:06&lt;00:00, 16450174.04it/s]
+训练: 100%|██████████| 100000000/100000000 [00:06&lt;00:00, 16451340.61it/s]
+训练: 100%|██████████| 100000000/100000000 [00:06&lt;00:00, 16359374.67it/s]</code></pre>
+<p>也可以动态调整进度条后方显示的内容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">dataloader = <span class="hljs-built_in">range</span>(<span class="hljs-number">10000</span>)<br><br>loss = <span class="hljs-number">6.0</span><br>acc = <span class="hljs-number">0.1</span><br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):<br>    loop = tqdm(dataloader, desc=<span class="hljs-string">f&#x27;Epoch <span class="hljs-subst">&#123;epoch+<span class="hljs-number">1</span>&#125;</span>&#x27;</span>)<br>    <span class="hljs-keyword">for</span> batch <span class="hljs-keyword">in</span> loop:<br>        loop.set_postfix(loss=loss, acc=acc)<br>        loss -= <span class="hljs-number">0.0002</span><br>        acc += <span class="hljs-number">0.00003</span><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Epoch 1: 100%|██████████| 10000/10000 [00:02&lt;00:00, 3789.39it/s, acc=0.4, loss=4]    
+Epoch 2: 100%|██████████| 10000/10000 [00:02&lt;00:00, 3831.96it/s, acc=0.7, loss=2]    
+Epoch 3: 100%|██████████| 10000/10000 [00:02&lt;00:00, 3960.02it/s, acc=1, loss=0.0002]   </code></pre>
+<p>绘制损失函数和正确率对于训练轮次的曲线图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">_, axs = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">4</span>))<br>axs[<span class="hljs-number">0</span>].plot(loss_list)<br>axs[<span class="hljs-number">1</span>].plot(acc_list)<br><br>axs[<span class="hljs-number">0</span>].set_title(<span class="hljs-string">&#x27;Loss&#x27;</span>)<br>axs[<span class="hljs-number">0</span>].set_xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].set_title(<span class="hljs-string">&#x27;Accuracy&#x27;</span>)<br>axs[<span class="hljs-number">1</span>].set_xlabel(<span class="hljs-string">&#x27;Epoch&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">Text(0.5, 0, &#39;Epoch&#39;)</code></pre>
+<figure>
+<img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-03_损失函数和优化算法_62_1.png" srcset="/img/loading.gif" lazyload
+alt="png" />
+<figcaption aria-hidden="true">png</figcaption>
+</figure>
+<p>如果使用 <code>TensorBoard</code>，在命令行中输入
+<code>tensorboard --logdir=runs</code>(runs 为保存日志文件的目录)启动
+TensorBoard，在浏览器中打开 <code>http://localhost:6006</code>。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-tensorboard.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>在测试集完成预测，输出分类报告。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>():<br>    train_data, test_data = get_data()  <span class="hljs-comment"># 获取数据</span><br>    X_test, y_test = test_data[:, :-<span class="hljs-number">1</span>], test_data[:, -<span class="hljs-number">1</span>].astype(np.int64)<br>    y_proba = model.forward(X_test)<br>    y_pred = y_proba.argmax(axis=<span class="hljs-number">1</span>)<br>    <br>    <span class="hljs-built_in">print</span>(classification_report(y_test, y_pred))<br>    <br>    <br>test()<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">              precision    recall  f1-score   support
+
+           0       1.00      0.97      0.99        36
+           1       0.97      0.95      0.96        37
+           2       1.00      1.00      1.00        35
+           3       0.90      1.00      0.95        37
+           4       1.00      0.94      0.97        36
+           5       1.00      0.89      0.94        36
+           6       0.95      1.00      0.97        36
+           7       1.00      1.00      1.00        36
+           8       0.90      1.00      0.95        35
+           9       0.94      0.89      0.91        36
+
+    accuracy                           0.96       360
+   macro avg       0.97      0.96      0.96       360
+weighted avg       0.97      0.96      0.96       360</code></pre>
+<h1 id="梯度下降和优化">3 梯度下降和优化</h1>
+<h2 id="梯度下降法">3.1 梯度下降法</h2>
+<p>梯度下降法（Gradient
+Descent）就是一种利用梯度最小化损失函数的迭代优化算法。核心是沿着损失函数的负梯度方向逐步调整参数，从而逼近函数的最小值。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-gradient_descent.png" srcset="/img/loading.gif" lazyload /></p>
+<p>模拟梯度下降优化目标函数 <code>w1 ** 2 + w2 ** 2 + 5</code>，经过 15
+轮迭代已经非常逼近目标函数的最小值
+5，充分体现了梯度下降可以通过迭代寻找目标函数的最小值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">gradient_descent</span>(<span class="hljs-params">loss, init_W, lr=<span class="hljs-number">0.01</span>, epochs=<span class="hljs-number">100</span></span>):<br>    w = init_W.copy()<br>    <br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs):<br>        grad = numerical_grad(loss, w)<br>        w -= lr * grad<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;epoch: <span class="hljs-subst">&#123;epoch + <span class="hljs-number">1</span>&#125;</span>, w1=<span class="hljs-subst">&#123;w[<span class="hljs-number">0</span>]:<span class="hljs-number">.3</span>f&#125;</span>, w2=<span class="hljs-subst">&#123;w[<span class="hljs-number">1</span>]:<span class="hljs-number">.3</span>f&#125;</span>, loss=<span class="hljs-subst">&#123;loss(w):<span class="hljs-number">.3</span>f&#125;</span>&#x27;</span>)<br>        <br>    <span class="hljs-keyword">return</span> w<br><br>gradient_descent(loss, np.array([<span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>]), lr=<span class="hljs-number">0.1</span>, epochs=<span class="hljs-number">15</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">epoch: 1, w1=1.600, w2=2.400, loss=13.320
+epoch: 2, w1=1.280, w2=1.920, loss=10.325
+epoch: 3, w1=1.024, w2=1.536, loss=8.408
+epoch: 4, w1=0.819, w2=1.229, loss=7.181
+epoch: 5, w1=0.655, w2=0.983, loss=6.396
+epoch: 6, w1=0.524, w2=0.786, loss=5.893
+epoch: 7, w1=0.419, w2=0.629, loss=5.572
+epoch: 8, w1=0.336, w2=0.503, loss=5.366
+epoch: 9, w1=0.268, w2=0.403, loss=5.234
+epoch: 10, w1=0.215, w2=0.322, loss=5.150
+epoch: 11, w1=0.172, w2=0.258, loss=5.096
+epoch: 12, w1=0.137, w2=0.206, loss=5.061
+epoch: 13, w1=0.110, w2=0.165, loss=5.039
+epoch: 14, w1=0.088, w2=0.132, loss=5.025
+epoch: 15, w1=0.070, w2=0.106, loss=5.016
+
+
+
+
+
+array([0.07036874, 0.10555312])</code></pre>
+<h2 id="训练术语">3.2 训练术语</h2>
+<ul>
+<li><strong>Epoch</strong>：1 个 Epoch
+表示模型完整遍历一次训练数据集的过程。
+单次遍历数据集通常不足以让模型收敛，模型需要多次遍历数据集才能逐步优化模型参数、学习数据中的模式，</li>
+<li><strong>Batch Size</strong>：Batch Size
+是每次训练时输入的样本数量。例如 <code>batch_size=32</code> 表示每次用
+32 个样本计算一次梯度，并取平均值作为本次迭代的参数更新方向。
+小批量数据计算梯度比单样本更稳定，比全批量更高效。并且较小的 Batch Size
+可能带来更多噪声，有助于模型泛化。</li>
+<li><strong>Iteration</strong>：一次 Iteration 表示完成一个 Batch
+数据的正向传播（预测）和反向传播（更新参数）的过程，也就是训练轮数和批次数的乘积。</li>
+</ul>
+<h2 id="sgd">3.3 SGD</h2>
+<p>SGD(Stochastic Gradient
+Descent)原本只随机选择一个样本计算梯度来更新参数，但是在 PyTorch
+中经常使用 <code>optim.SGD</code> 配合
+<code>DataLoader</code>，实际上执行的是 Mini-Batch Gradient Descent
+(小批量梯度下降)。</p>
+<blockquote>
+<p>每个样本都对应一个自己的损失函数，Mini-Batch
+的思想就是选取一小批样本，计算它们的平均损失对模型参数的梯度，用来近似整个训练集的损失函数对参数的梯度。</p>
+</blockquote>
+<p>由于 Mini-Batch
+引入了梯度的随机性，这间接提高了模型的泛化能力并避免过拟合。</p>
+<p>Mini-Batch
+是对整个训练集真实梯度的一个有噪音的估计，这种噪音让优化过程不会笔直地冲向损失函数表面的最尖锐、最狭窄的局部极小值，而尖锐极小值通常与较差的泛化能力（过拟合）相关。随机性帮助优化过程探索更广阔的区域，更容易找到平坦的极小值。平坦的极小值意味着模型对输入数据的微小变化更不敏感，通常能带来更好的泛化能力。</p>
+<table>
+
+<thead>
+<tr>
+<th style="text-align: left;">Batch Size</th>
+<th style="text-align: left;">梯度估计</th>
+<th style="text-align: left;">泛化能力</th>
+<th style="text-align: left;">收敛速度（时间）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">大 Batch (e.g., 256+)</td>
+<td style="text-align: left;">准确稳定</td>
+<td
+style="text-align: left;">倾向于收敛到<strong>尖锐极小值</strong>，泛化能力<strong>可能较差</strong>（更容易过拟合）。</td>
+<td style="text-align: left;">训练时间短（利用并行计算）</td>
+</tr>
+<tr>
+<td style="text-align: left;">小 Batch (e.g., 16-64)</td>
+<td style="text-align: left;">噪音大</td>
+<td
+style="text-align: left;">倾向于收敛到<strong>平坦极小值</strong>，泛化能力<strong>强</strong>（不容易过拟合）。</td>
+<td style="text-align: left;">训练时间长（利用效率低）</td>
+</tr>
+<tr>
+<td style="text-align: left;">Full Batch (全批量)</td>
+<td style="text-align: left;">最准确</td>
+<td style="text-align: left;"><strong>最容易过拟合</strong></td>
+<td style="text-align: left;">训练时间最长</td>
+</tr>
+</tbody>
+</table>
+<p>注意这里讨论的是泛化能力，而不仅仅是收敛稳定性。</p>
+<p>虽然大批量的梯度更新在训练时看起来更稳定、路径更平滑，但它们会倾向于找到训练集损失最低但泛化能力差（对测试数据微小变化敏感）的尖锐极小值。</p>
+<p>而小批量的训练路径虽然波动，但这种波动（随机性）却是一种正则化形式，帮助模型找到了一个泛化性能更好、更鲁棒的平坦极小值。</p>
+<p>SGD 的更新公式：</p>
+<p><span
+class="math display"><em>W</em> ← <em>W</em> − <em>η</em>∇</span></p>
+<p>SGD 实现简单，理解方便，然而有些问题，比如：</p>
+<ul>
+<li>局部最优解：陷入局部最优，尤其在非凸函数中，难以找到全局最优解。</li>
+<li>鞍点：陷入鞍点，梯度为 0，导致训练停滞。</li>
+<li>收敛速度慢：高维或非凸函数中，收敛速度较慢。</li>
+<li>学习率选择：学习率过大导致震荡或不收敛，过小则收敛速度慢。</li>
+</ul>
+<p><img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-grad_desc_problem.png" srcset="/img/loading.gif" lazyload /></p>
+<p>针对以上问题，有些常用的优化算法如：</p>
+<ol type="1">
+<li>引入动量
+<ul>
+<li>Momentum</li>
+</ul></li>
+<li>学习率衰减</li>
+<li>自适应学习率
+<ul>
+<li>AdaGrad</li>
+<li>RMSprop</li>
+</ul></li>
+<li>结合自适应学习率和动量
+<ul>
+<li>Adam</li>
+</ul></li>
+</ol>
+<h2 id="momentum">3.4 Momentum</h2>
+<p>Momentum（动量法）模拟物理学中的动量概念。在梯度下降时，不仅仅考虑当前梯度，还考虑之前的梯度方向。</p>
+<p><span class="math display">$$v\leftarrow\alpha v+(1-\alpha)\nabla \\
+W\leftarrow W-\eta v$$</span></p>
+<ul>
+<li><span class="math inline"><em>v</em></span>:
+动量，历史负梯度的加权和</li>
+<li><span class="math inline"><em>α</em></span>:
+动量的衰减率，也就是历史梯度的权重，通常取 0.9</li>
+<li><span class="math inline"><em>η</em></span>: 学习率</li>
+<li><span class="math inline">∇</span>: 当前梯度</li>
+</ul>
+<p>动量法通过累计历史梯度，能够减缓优化过程中的震荡，并且很有可能在遇到鞍点或局部最优解时，冲过去从而取得更优解。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch.optim <span class="hljs-keyword">as</span> optim<br><br>model = nn.Linear(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 在 SGD 上直接使用 momentum 属性</span><br>optimizer = optim.SGD(model.parameters(), lr=<span class="hljs-number">0.1</span>, momentum=<span class="hljs-number">0.9</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>优点：
+<ul>
+<li>平滑梯度，减少梯度方向的震荡</li>
+<li>加速收敛，梯度方向一致时，可以加速参数的更新</li>
+<li>可以帮助模型冲出局部最小值</li>
+</ul></li>
+<li>缺点：
+<ul>
+<li>动量系数需要手动调整</li>
+<li>动量过大，模型可能越过最优解</li>
+</ul></li>
+</ul>
+<h2 id="学习率衰减">3.5 学习率衰减</h2>
+<p>较大的学习率可以加快收敛速度，
+但可能在最优解附近震荡或不收敛；较小的学习率可以提高收敛的精度，但训练速度慢，可能陷入局部最优解。学习率衰减是一种平衡策略，初期使用较大学习率快速接近最优解，后期逐渐减小学习率，使参数更稳定地收敛到最优解。</p>
+<ul>
+<li>等间隔衰减：每隔固定的训练周期（epoch），学习率按一定的比例下降。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 每过 10 轮，学习率衰减为之前的 0.6 倍</span><br>scheduler_lr = optim.lr_scheduler.StepLR(optimizer, step_size=<span class="hljs-number">10</span>, gamma=<span class="hljs-number">0.6</span>)<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):  <span class="hljs-comment"># 模拟一个 batch</span><br>        optimizer.step()  <span class="hljs-comment"># 每批更新优化器</span><br>    scheduler_lr.step()  <span class="hljs-comment"># 每轮更新学习率</span><br>    <span class="hljs-built_in">print</span>(scheduler_lr.get_last_lr(), end=<span class="hljs-string">&#x27; &#x27;</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">[0.1] [0.1] [0.1] [0.1] [0.1] [0.1] [0.1] [0.1] [0.1] [0.06] </code></pre>
+<ul>
+<li>制定间隔衰减：在指定的 epoch，让学习率按比例衰减。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 在 10、50、100 轮时，学习率衰减为 0.6 倍</span><br>optim.lr_scheduler.MultiStepLR(optimizer, milestones=[<span class="hljs-number">10</span>, <span class="hljs-number">50</span>, <span class="hljs-number">100</span>], gamma=<span class="hljs-number">0.6</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;torch.optim.lr_scheduler.MultiStepLR at 0x3160cf6b0&gt;</code></pre>
+<ul>
+<li>指数衰减：学习率按照指数函数进行衰减，一般底数要接近 1。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 底数为 0.95 的指数衰减</span><br>optim.lr_scheduler.ExponentialLR(optimizer, gamma=<span class="hljs-number">0.95</span>)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">&lt;torch.optim.lr_scheduler.ExponentialLR at 0x316895d30&gt;</code></pre>
+<h2 id="adagrad">3.6 AdaGrad</h2>
+<p>Adagrad（Adaptive Gradient）是一种自适应梯度优化算法，Adagrad
+的核心思想是为每个参数维护一个独立的学习率。它会根据每个参数的历史梯度平方和来调整学习率，对于更新频繁的参数，学习率会降低；对于更新不频繁的参数，学习率会增加。</p>
+<p><span class="math display">$$G_i \leftarrow G_i+\nabla^2 \\
+W_i \leftarrow W_i-\frac{\eta}{\sqrt{G_i}+\epsilon}\nabla$$</span></p>
+<ul>
+<li><span class="math inline"><em>G</em><sub><em>i</em></sub></span>：第
+i 个参数的历史梯度平方和</li>
+<li><span class="math inline"><em>η</em></span>：学习率</li>
+<li><span
+class="math inline"><em>ϵ</em></span>：一个很小的值，防止除零</li>
+</ul>
+<p>随着训练进行，累计梯度平方和变大，所对应的学习率会逐渐减小，所以
+AdaGrad 刚开始可以使用较大的学习率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">optimizer = optim.Adagrad(model.parameters(), lr=<span class="hljs-number">0.1</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>优点：
+<ul>
+<li>自适应学习率，不用手动调整</li>
+<li>适用于稀疏特征，大多数特征值为 0，对应的梯度也可能为
+0，对应参数的累计梯度和较小，能够保持较大的学习率，促进这些特征的学习，能够有效利用数据中信息</li>
+</ul></li>
+<li>缺点：
+<ul>
+<li>随着训练的进行，学习率最终会减小到非常小的值，过早使学习率过低可能导致算法无法找到最优解。</li>
+</ul></li>
+</ul>
+<h2 id="rmsprop">3.7 RMSProp</h2>
+<p>RMSProp（Root Mean Square Propagation，均方根传播）是在 AdaGrad
+基础上的改进，旨在解决 Adagrad
+在训练后期学习率降低过快的问题。它并非累计每个参数的历史梯度平方，而是逐渐遗忘过去的梯度，采用指数移动加权平均，呈指数地减小过去梯度的尺度。</p>
+<p><span class="math display">$$G_i \leftarrow \alpha G_i+
+(1-\alpha)\nabla^2 \\
+W_i \leftarrow W_i-\frac{\eta}{\sqrt{G_i}+\epsilon}\nabla$$</span></p>
+<ul>
+<li><span
+class="math inline"><em>α</em></span>：用于控制历史梯度的影响程度，通常取
+0.9-0.99 之间的值</li>
+<li><span class="math inline"><em>η</em></span>：学习率</li>
+<li><span class="math inline"><em>G</em><sub><em>i</em></sub></span>：第
+i 个参数的近期梯度平方的加权平均值</li>
+<li><span class="math inline"><em>ϵ</em></span>：小常数防止除零</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># alpha 控制历史梯度影响程度</span><br>optimizer = optim.RMSprop(model.parameters(), lr=<span class="hljs-number">0.01</span>, alpha=<span class="hljs-number">0.9</span>)<br></code></pre></td></tr></table></figure>
+<p>优点同 AdaGrad
+相同，解决了学习率过早衰减的问题，并且在非凸优化问题的解决上表现良好，缺点是超参数
+<span class="math inline"><em>α</em></span> 需要手动设置。</p>
+<h2 id="adam">3.8 Adam</h2>
+<p>Adam（Adaptive Moment Estimation，自适应矩估计）结合了 Momentum 和
+RMSprop 的优点，同时利用梯度的一阶矩估计（即动量）和二阶矩估计（即
+RMSprop
+中的平方梯度），能够适应性地调整每个参数的学习率，同时利用历史梯度的信息来加速训练。</p>
+$$
+<p>\</p>
+<p>WW-$$</p>
+<ul>
+<li><span
+class="math inline"><em>v</em></span>：一阶矩估计，类似动量</li>
+<li><span
+class="math inline"><em>h</em></span>：二阶矩估计，类似平方梯度</li>
+<li><span
+class="math inline"><em>α</em><sub>1</sub></span>：一阶矩估计的指数衰减率，控制历史梯度的影响程度，一般取
+0.9。值越大，历史信息的影响越大，梯度变化越平滑。</li>
+<li><span
+class="math inline"><em>α</em><sub>2</sub></span>：二阶矩估计的指数衰减率，控制历史平方梯度的影响程度，一般取
+0.999。值越大，历史信息的影响越大，学习率调整越平滑。</li>
+<li><span class="math inline"><em>v̂</em></span> 和 <span
+class="math inline"><em>ĥ</em></span>：修正后的估计，由于 <span
+class="math inline"><em>α</em></span>
+初始值较大，而历史梯度没有经过累计还很小，当前梯度信息被压缩太小，整个
+<span class="math inline"><em>v</em></span> 和 <span
+class="math inline"><em>h</em></span>
+会很小，通过除去指数修正偏差。</li>
+<li><span class="math inline"><em>t</em></span>：迭代次数</li>
+<li><span class="math inline"><em>ϵ</em></span>：小常数防止除零错误</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># beta = (0.9, 0.999) 分别代表 α1 和 α2</span><br>optimizer = optim.Adam(model.parameters(), lr=<span class="hljs-number">0.01</span>, betas=(<span class="hljs-number">0.9</span>, <span class="hljs-number">0.999</span>))<br></code></pre></td></tr></table></figure>
+<ul>
+<li>优点
+<ul>
+<li>自适应学习率</li>
+<li>快速收敛</li>
+<li>适用稀疏数据</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>强大的自适应性可能导致过拟合</li>
+</ul></li>
+</ul>
+<h1 id="正则化">4 正则化</h1>
+<p>过拟合是在模型训练中很容易遇到的问题，通过正则化的方式可以降低模型复杂度，从而防止过拟合。在深度学习中神经网络容易遇到的问题还有梯度消失和梯度爆炸，借鉴机器学习的思路，扩展了正则化的范围，常见的正则化方法有
+Batch Normalization、权值衰减、Dropout、早停法等。</p>
+<h2 id="batch-normalization">4.1 Batch Normalization</h2>
+<p>在深度神经网络训练过程中，由于前面层的参数更新会导致后面层输入的改变，每一层输入的分布都在不断变化，这种现象被称为内部协变量偏移
+(Internal Covariate Shift)。这会带来以下问题：</p>
+<ul>
+<li>训练缓慢： 每层都需要不断适应新的输入分布，导致学习效率降低。</li>
+<li>梯度消失/爆炸：
+输入分布的变化可能导致梯度变得过大或过小，影响训练的稳定性。</li>
+<li>对初始化敏感： 合适的初始化参数变得更加重要，否则难以训练。</li>
+</ul>
+<p>Batch Normalization
+通过将每层网络的输入归一化到一个标准分布，可以调整各层的激活值分布使其拥有适当的广度，BN
+层通常放在激活函数之前，这意味着经过 BN
+层之后的数据更加适合激活函数，不容易出现梯度爆炸和梯度消失。</p>
+<p><span
+class="math display">$$\hat{x}=\frac{x-\mu}{\sqrt{\sigma^2+\epsilon}}
+\qquad y=\gamma\hat{x}+\beta$$</span></p>
+<p>计算一个 batch 中每个特征通道的均值 <span
+class="math inline"><em>μ</em></span> 和方差 <span
+class="math inline"><em>σ</em></span>，然后除减均值除方差进行归一化（<span
+class="math inline"><em>ϵ</em></span>为小常数），为了保证网络的表达能力，引入两个可学习的参数
+<span class="math inline"><em>γ</em></span> (缩放因子）和 <span
+class="math inline"><em>β</em></span>
+（平移因子）对归一化后的输出进行缩放和平移。</p>
+<p>优点： - 加速训练：允许使用更高的学习率，加快收敛速度。 -
+提高泛化能力：在一定程度上具有正则化效果，因为它在训练过程中引入了噪声（由小批量估计的均值和方差产生的噪声）。
+-
+缓解初始化敏感性：使得模型对参数初始化的依赖性减小，从而提高了训练的稳定性。</p>
+<p>缺点： -
+对批次大小敏感：当批次大小很小时，均值和方差的估计可能不准确，影响归一化效果。
+- 在 RNN 中应用较为复杂：在循环神经网络（RNN）中应用 Batch Normalization
+较为复杂，需要进行特殊的处理。</p>
+<p>切换模型模式会有不同机制：</p>
+<ol type="1">
+<li><strong>训练时：</strong> <code>model.train()</code>
+<ul>
+<li>BN 层会计算当前批次的均值 <span
+class="math inline"><em>μ</em></span> 和方差 <span
+class="math inline"><em>σ</em>²</span>，并对当前批次的数据进行规范化。</li>
+<li>BN
+层还会维护一个<strong>全局均值</strong>和<strong>全局方差</strong>的移动平均值，用于推理阶段。</li>
+</ul></li>
+<li><strong>推理时：</strong> <code>model.eval()</code>
+<ul>
+<li>推理时，直接使用训练阶段计算的<strong>全局均值</strong>和<strong>全局方差</strong>。</li>
+</ul></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot; </span><br><span class="hljs-string">BatchNorm1d：主要应用于全连接层或处理一维数据的网络，例如文本处理。它接收形状为 (N, num_features) 的张量作为输入。</span><br><span class="hljs-string">BatchNorm2d：主要应用于卷积神经网络，处理二维图像数据或特征图。它接收形状为 (N, C, H, W) 的张量作为输入。</span><br><span class="hljs-string">BatchNorm3d：主要用于三维卷积神经网络 (3D CNN)，处理三维数据，例如视频或医学图像。它接收形状为 (N, C, D, H, W) 的张量作为输入。</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br>in_ = torch.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, size=(<span class="hljs-number">8</span>, <span class="hljs-number">3</span>), dtype=torch.float32)<br>bn2d = nn.BatchNorm1d(num_features=<span class="hljs-number">3</span>)<br>bn2d(in_)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[ 0.6912, -0.1234,  0.1234],
+        [-1.8892,  1.1929,  1.4397],
+        [-0.0461, -1.4397,  1.7688],
+        [ 1.0598, -0.7816, -0.2057],
+        [-0.7833, -1.1106, -0.5347],
+        [-0.7833,  1.5220, -0.8638],
+        [ 0.6912,  0.5347, -1.1929],
+        [ 1.0598,  0.2057, -0.5347]], grad_fn=&lt;NativeBatchNormBackward0&gt;)</code></pre>
+<h2 id="权值衰减">4.2 权值衰减</h2>
+<p>由于权重参数取值过大是很多过拟合产生的原因，因此可以在学习的过程中对大的权重进行惩罚，可以有效地抑制过拟合，这种方法被称为<strong>权值衰减</strong>。</p>
+<p>一般会对损失函数加上一个权重的范数；最常见的就是 L2 范数的平方：
+<span
+class="math display">$$L^{\prime}=L+\frac{1}{2}\cdot\lambda\cdot||W||^2$$</span></p>
+<ul>
+<li><span class="math inline">||<em>W</em>||</span>：权重<span
+class="math inline"><em>W</em> = (<em>w</em><sub>1</sub>, <em>w</em><sub>1</sub>, ..., <em>w</em><sub>1</sub>)</span>的
+L2 范数，即<span
+class="math inline">$\sqrt{w_1^2+w_2^2+...+w_n^2}$</span></li>
+<li><span
+class="math inline"><em>λ</em></span>：控制正则化强度的超参数</li>
+</ul>
+<p>惩罚项求导之后得到 <span
+class="math inline"><em>𝜆</em><em>𝑊</em></span>
+，所以在求权重梯度时，需要为之前误差反向传播法的结果加上 <span
+class="math inline"><em>𝜆</em><em>𝑊</em></span>。</p>
+<h2 id="dropout">4.3 Dropout</h2>
+<p>Dropout（随机失活，暂退法）是一种在学习的过程中随机关闭神经元的方法，通常放在激活函数之后，全连接层之前。</p>
+<p>训练时每个神经元都有概率 <span class="math inline"><em>𝑝</em></span>
+(通常为0.2~0.5)
+被临时关闭，迫使网络不依赖特定神经元，强迫网络学习到更加鲁棒的特征表示，同时未被关闭的神经元的输出值以
+<span class="math inline">$\frac{1}{(1−𝑝)}$</span>
+的比例进行缩放，以保持期望值不变。</p>
+<p>由于每次 Dropout
+是随机失活，迭代训练不同的子网络，引入了随机性，近似集成 Bagging
+的效果。</p>
+<p><img
+src="https://img.zhubaoduo.com/03_损失函数和优化算法-dropout.png" srcset="/img/loading.gif" lazyload /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">z = torch.randn(<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br>dropout = nn.Dropout(<span class="hljs-number">0.5</span>)<br><br><span class="hljs-comment"># 每个神经元的输出都有 50% 的概率被强制置零</span><br>dropout(z)<br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">tensor([[ 1.7553,  0.8046, -0.0000,  0.0000, -1.1799],
+        [-2.8858,  0.0000,  0.3864,  0.0000, -2.3464],
+        [-0.0000, -0.0000, -0.0000,  0.0000, -0.0000]])</code></pre>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="print-no-link">#深度学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>03_损失函数和优化算法</div>
+      <div>http://example.com/2024/08/07/大模型开发/05 深度学习/03_损失函数和优化算法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>baoduozhu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年8月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/08/09/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="04_CNN卷积神经网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">04_CNN卷积神经网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/08/05/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/05%20%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="02_神经网络基础">
+                        <span class="hidden-mobile">02_神经网络基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <p>© 2025 朱宝铎个人技术专栏</p>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
