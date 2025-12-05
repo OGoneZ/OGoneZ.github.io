@@ -161,9 +161,9 @@
     
     <tags>
       
-      <tag>RNN</tag>
-      
       <tag>NLP</tag>
+      
+      <tag>RNN</tag>
       
       <tag>LSTM</tag>
       
@@ -223,9 +223,9 @@
     
     <tags>
       
-      <tag>深度学习</tag>
-      
       <tag>RNN</tag>
+      
+      <tag>深度学习</tag>
       
     </tags>
     
@@ -336,11 +336,11 @@
   
   
   <entry>
-    <title>概率论常见术语</title>
-    <link href="/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%B8%B8%E8%A7%81%E6%9C%AF%E8%AF%AD/"/>
-    <url>/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%B8%B8%E8%A7%81%E6%9C%AF%E8%AF%AD/</url>
+    <title>数学文章汇总</title>
+    <link href="/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%95%B0%E5%AD%A6%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/"/>
+    <url>/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%95%B0%E5%AD%A6%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/</url>
     
-    <content type="html"><![CDATA[<ol type="1"><li><p>概率（Probability）<br />概率是指某个事件发生的可能性，通常用0到1之间的数字来表示：</p><ul><li>0 表示事件不可能发生</li><li>1 表示事件必然发生</li></ul></li><li><p>条件概率（Conditional Probability）<br />条件概率是指在知道事件 <span class="math inline"><em>A</em></span>已经发生的情况下，另一个事件 <span class="math inline"><em>B</em></span>发生的概率，记作 <spanclass="math inline"><em>P</em>(<em>B</em>|<em>A</em>)</span>。它的计算公式为：<br /><span class="math display">$$ P(B|A) = \frac{P(A \cap B)}{P(A)}$$</span><br />其中，<spanclass="math inline"><em>P</em>(<em>A</em> ∩ <em>B</em>)</span> 是事件<span class="math inline"><em>A</em></span> 和 <spanclass="math inline"><em>B</em></span> 同时发生的概率。</p></li><li><p>联合概率（Joint Probability）<br />联合概率是指事件 <span class="math inline"><em>A</em></span> 和事件<span class="math inline"><em>B</em></span> 同时发生的概率，记作 <spanclass="math inline"><em>P</em>(<em>A</em>, <em>B</em>)</span> 或 <spanclass="math inline"><em>P</em>(<em>A</em> ∩ <em>B</em>)</span>。</p></li><li><p>全概率（Total Probability）<br />全概率用于计算多个互斥事件下某个事件的总概率。例如，已知事件 <spanclass="math inline"><em>A</em><sub>1</sub>, <em>A</em><sub>2</sub>, …, <em>A</em><sub><em>n</em></sub></span>是一组互斥且完备的事件，那么事件 <spanclass="math inline"><em>B</em></span> 的全概率为：<br /><span class="math display">$$ P(B) = \sum_{i=1}^{n} P(B|A_i) \cdotP(A_i) $$</span></p></li><li><p>贝叶斯定理（Bayes’ Theorem）<br />贝叶斯定理是一个重要的公式，用于计算后验概率。其表述为：<br /><span class="math display">$$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$</span><br />这里：</p><ul><li><span class="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span>是在事件 <span class="math inline"><em>B</em></span>已发生的情况下，事件 <span class="math inline"><em>A</em></span>发生的后验概率。</li><li><span class="math inline"><em>P</em>(<em>B</em>|<em>A</em>)</span>是在事件 <span class="math inline"><em>A</em></span> 发生的情况下，事件<span class="math inline"><em>B</em></span> 发生的条件概率。</li><li><span class="math inline"><em>P</em>(<em>A</em>)</span> 是事件 <spanclass="math inline"><em>A</em></span> 的先验概率。</li><li><span class="math inline"><em>P</em>(<em>B</em>)</span> 是事件 <spanclass="math inline"><em>B</em></span> 的总概率。</li></ul></li><li><p>先验概率（Prior Probability）<br />先验概率是指在获得任何新信息之前对一个事件发生的概率的估计，记作 <spanclass="math inline"><em>P</em>(<em>A</em>)</span>。</p></li><li><p>后验概率（Posterior Probability）<br />后验概率是指在获得新信息（比如事件 <spanclass="math inline"><em>B</em></span>发生）后，对一个事件发生的概率的更新，记作 <spanclass="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span>。</p></li><li><p>似然（Likelihood）<br />似然通常指在给定模型参数的情况下，观察到数据的概率。在贝叶斯分类器中，似然反映了特征数据在给定类别下的分布。</p></li></ol>]]></content>
+    <content type="html"><![CDATA[<p><ahref="https://zhuanlan.zhihu.com/p/24709748">矩阵求导术（上）</a></p><p><ahref="https://zhuanlan.zhihu.com/p/24863977">矩阵求导术（下）</a></p><p><ahref="https://zhuanlan.zhihu.com/p/595273755">统计思维：解读数据</a></p>]]></content>
     
     
     <categories>
@@ -361,11 +361,11 @@
   
   
   <entry>
-    <title>数学文章汇总</title>
-    <link href="/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%95%B0%E5%AD%A6%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/"/>
-    <url>/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%95%B0%E5%AD%A6%E6%96%87%E7%AB%A0%E6%B1%87%E6%80%BB/</url>
+    <title>概率论常见术语</title>
+    <link href="/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%B8%B8%E8%A7%81%E6%9C%AF%E8%AF%AD/"/>
+    <url>/2024/07/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91/00%20%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/%E6%A6%82%E7%8E%87%E8%AE%BA%E5%B8%B8%E8%A7%81%E6%9C%AF%E8%AF%AD/</url>
     
-    <content type="html"><![CDATA[<p><ahref="https://zhuanlan.zhihu.com/p/24709748">矩阵求导术（上）</a></p><p><ahref="https://zhuanlan.zhihu.com/p/24863977">矩阵求导术（下）</a></p><p><ahref="https://zhuanlan.zhihu.com/p/595273755">统计思维：解读数据</a></p>]]></content>
+    <content type="html"><![CDATA[<ol type="1"><li><p>概率（Probability）<br />概率是指某个事件发生的可能性，通常用0到1之间的数字来表示：</p><ul><li>0 表示事件不可能发生</li><li>1 表示事件必然发生</li></ul></li><li><p>条件概率（Conditional Probability）<br />条件概率是指在知道事件 <span class="math inline"><em>A</em></span>已经发生的情况下，另一个事件 <span class="math inline"><em>B</em></span>发生的概率，记作 <spanclass="math inline"><em>P</em>(<em>B</em>|<em>A</em>)</span>。它的计算公式为：<br /><span class="math display">$$ P(B|A) = \frac{P(A \cap B)}{P(A)}$$</span><br />其中，<spanclass="math inline"><em>P</em>(<em>A</em> ∩ <em>B</em>)</span> 是事件<span class="math inline"><em>A</em></span> 和 <spanclass="math inline"><em>B</em></span> 同时发生的概率。</p></li><li><p>联合概率（Joint Probability）<br />联合概率是指事件 <span class="math inline"><em>A</em></span> 和事件<span class="math inline"><em>B</em></span> 同时发生的概率，记作 <spanclass="math inline"><em>P</em>(<em>A</em>, <em>B</em>)</span> 或 <spanclass="math inline"><em>P</em>(<em>A</em> ∩ <em>B</em>)</span>。</p></li><li><p>全概率（Total Probability）<br />全概率用于计算多个互斥事件下某个事件的总概率。例如，已知事件 <spanclass="math inline"><em>A</em><sub>1</sub>, <em>A</em><sub>2</sub>, …, <em>A</em><sub><em>n</em></sub></span>是一组互斥且完备的事件，那么事件 <spanclass="math inline"><em>B</em></span> 的全概率为：<br /><span class="math display">$$ P(B) = \sum_{i=1}^{n} P(B|A_i) \cdotP(A_i) $$</span></p></li><li><p>贝叶斯定理（Bayes’ Theorem）<br />贝叶斯定理是一个重要的公式，用于计算后验概率。其表述为：<br /><span class="math display">$$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$$</span><br />这里：</p><ul><li><span class="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span>是在事件 <span class="math inline"><em>B</em></span>已发生的情况下，事件 <span class="math inline"><em>A</em></span>发生的后验概率。</li><li><span class="math inline"><em>P</em>(<em>B</em>|<em>A</em>)</span>是在事件 <span class="math inline"><em>A</em></span> 发生的情况下，事件<span class="math inline"><em>B</em></span> 发生的条件概率。</li><li><span class="math inline"><em>P</em>(<em>A</em>)</span> 是事件 <spanclass="math inline"><em>A</em></span> 的先验概率。</li><li><span class="math inline"><em>P</em>(<em>B</em>)</span> 是事件 <spanclass="math inline"><em>B</em></span> 的总概率。</li></ul></li><li><p>先验概率（Prior Probability）<br />先验概率是指在获得任何新信息之前对一个事件发生的概率的估计，记作 <spanclass="math inline"><em>P</em>(<em>A</em>)</span>。</p></li><li><p>后验概率（Posterior Probability）<br />后验概率是指在获得新信息（比如事件 <spanclass="math inline"><em>B</em></span>发生）后，对一个事件发生的概率的更新，记作 <spanclass="math inline"><em>P</em>(<em>A</em>|<em>B</em>)</span>。</p></li><li><p>似然（Likelihood）<br />似然通常指在给定模型参数的情况下，观察到数据的概率。在贝叶斯分类器中，似然反映了特征数据在给定类别下的分布。</p></li></ol>]]></content>
     
     
     <categories>
